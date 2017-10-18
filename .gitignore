@@ -97,3 +97,4 @@ ENV/
 
 .idea/
 /test.py
+/association_members.json

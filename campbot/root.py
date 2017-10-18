@@ -26,6 +26,7 @@ class BaseBot(object):
     def _get(self, url):
         self._wait()
         logging.debug("GET %s", url)
+
         return requests.get(self.api_url + url,
                             headers=self.headers,
                             proxies=self.proxies).json()
@@ -78,3 +79,7 @@ class ForumBot(BaseBot):
 
     def get_voters(self, post_id):
         return self._get("/polls/voters.json?post_id={}&poll_name=poll".format(post_id))
+
+    def get_group_members(self, group_name):
+
+        return self._get("/groups/{}/members.json".format(group_name))
