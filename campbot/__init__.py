@@ -1,1 +1,1 @@
-from campbot.root import CampBot, ForumBot
+from campbot.root import CampBot
