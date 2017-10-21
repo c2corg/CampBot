@@ -58,6 +58,20 @@ class BaseBot(object):
 
         return res.content
 
+    def put(self, url, data):
+        self._wait()
+        logging.debug("POST %s", url)
+
+        res = self._session.put(self.api_url + url, json=data,
+                                proxies=self.proxies)
+
+        res.raise_for_status()
+
+        if res.headers['Content-type'].startswith('application/json'):
+            return res.json()
+
+        return res.content
+
 
 class WikiBot(BaseBot):
     def get_editions(self, **kwargs):
@@ -79,6 +93,12 @@ class WikiBot(BaseBot):
     def get_profile(self, user_id):
         return self.get("/profiles/{}".format(user_id))
 
+    def edit_profile(self, user_id, edit_foo):
+        doc = self.get_profile(user_id)
+        doc, message = edit_foo(doc)
+        payload = {"document": doc, "message": message}
+        return self.put("/profiles/{}".format(user_id), payload)
+
 
 class ForumBot(BaseBot):
     def get_voters(self, topic_id=None, post_number=None, url=None):
@@ -86,7 +106,8 @@ class ForumBot(BaseBot):
 
         result = {}
         for poll_name in post["polls"]:
-            result[poll_name] = self.get("/polls/voters.json?post_id={}&poll_name={}".format(post["id"], poll_name))[poll_name]
+            result[poll_name] = self.get("/polls/voters.json?post_id={}&poll_name={}".format(post["id"], poll_name))[
+                poll_name]
 
         return result
 
