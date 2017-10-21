@@ -86,7 +86,15 @@ class ForumBot(BaseBot):
         return self.get("/polls/voters.json?post_id={}&poll_name={}".format(post_id, poll_name))[poll_name]
 
     def get_group_members(self, group_name):
-        return self.get("/groups/{}/members.json".format(group_name))
+        result = []
+
+        expected_len = 1
+        while len(result) < expected_len:
+            data = self.get("/groups/{}/members.json?limit=50&offset={}".format(group_name, len(result)))
+            expected_len = data["meta"]["total"]
+            result += data["members"]
+
+        return result
 
 
 class CampBot(object):
@@ -116,14 +124,19 @@ class CampBot(object):
 
         return result
 
-    def check_voters(self, post_id, poll_name=None):
+    def check_voters(self, post_id, poll_name=None, allowed_groups=()):
         voters = []
+
         data = self.forum.get_voters(post_id, poll_name)
         for item in data:
             voters += data[item]
 
+        allowed_members = []
+        for group in allowed_groups:
+            allowed_members += self.forum.get_group_members(group)
+
+        allowed_members = {u["username"]: u for u in allowed_members}
         contributors = {u["forum_username"]: u for u in self.get_contributors()}
 
-        print("forum", "status")
         for voter in voters:
-            print(voter["username"], voter["username"] in contributors)
+            print(voter["username"], voter["username"] in contributors, voter["username"] in allowed_members)
