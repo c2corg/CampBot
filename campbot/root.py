@@ -127,10 +127,10 @@ class ForumBot(BaseBot):
 
     def get_post(self, topic_id=None, post_number=None, url=None):
         if url:
-            url = url.replace(self.api_url, "").split("/")
+            url = url.replace(self.api_url, "").split("?")[0].split("/")
             assert url[1] == 't'
             topic_id = url[3]
-            post_number = int(url[4].split("?")[0])
+            post_number = int(url[4]) if len(url) >= 5 else 1
 
         topic = self.get_topic(topic_id)
         post_id = topic["post_stream"]["stream"][post_number - 1]
