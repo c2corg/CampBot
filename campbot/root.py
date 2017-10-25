@@ -122,7 +122,12 @@ class ForumBot(BaseBot):
 
         return result
 
-    def get_topic(self, topic_id):
+    def get_topic(self, topic_id=None, url=None):
+        if url:
+            url = url.replace(self.api_url, "").split("?")[0].split("/")
+            assert url[1] == 't'
+            topic_id = int(url[3])
+
         return self.get("/t/{}.json".format(topic_id))
 
     def get_post(self, topic_id=None, post_number=None, url=None):
