@@ -99,17 +99,26 @@ class WikiBot(BaseBot):
         payload = {"document": doc, "message": message}
         return self.put("/profiles/{}".format(user_id), payload)
 
+    def get_contributions(self, user_id):
+        return self.get("/documents/changes?u={}".format(user_id))
+
 
 class ForumBot(BaseBot):
-    def get_voters(self, topic_id=None, post_number=None, url=None):
+    def get_polls(self, topic_id=None, post_number=None, url=None):
         post = self.get_post(topic_id=topic_id, post_number=post_number, url=url)
 
-        result = {}
         for poll_name in post["polls"]:
-            result[poll_name] = self.get("/polls/voters.json?post_id={}&poll_name={}".format(post["id"], poll_name))[
-                poll_name]
+            for option in post["polls"][poll_name]["options"]:
+                url = "/polls/voters.json?post_id={}&poll_name={}&option_id={}&offset={}"
+                offset = 0
+                option["voters"] = []
+                while len(option["voters"]) != option["votes"]:
+                    voters = self.get(url.format(post["id"], poll_name, option["id"], offset))[poll_name][option["id"]]
+                    assert len(voters) != 0
+                    option["voters"] += voters
+                    offset += 1
 
-        return result
+        return post["polls"]
 
     def get_group_members(self, group_name):
         result = []
@@ -141,6 +150,10 @@ class ForumBot(BaseBot):
         post_id = topic["post_stream"]["stream"][post_number - 1]
 
         return self.get("/posts/{}.json".format(post_id))
+
+    def get_participants(self, url):
+        topic = self.get_topic(url=url)
+        return topic["details"]["participants"]
 
 
 class CampBot(object):
@@ -177,18 +190,23 @@ class CampBot(object):
             allowed_members += self.forum.get_group_members(group)
 
         allowed_members = {u["username"]: u for u in allowed_members}
-        contributors = {u["forum_username"]: u for u in self.get_contributors()}
 
-        polls = self.forum.get_voters(url=url)
+        polls = self.forum.get_polls(url=url)
         for poll_name in polls:
-            voters = []
-            for item in polls[poll_name]:
-                voters += polls[poll_name][item]
+            for option in polls[poll_name]["options"]:
+                voters = option["voters"]
 
-            print(poll_name, ",", len(voters), "voters : ")
-            for voter in voters:
-                if voter["username"] not in contributors and voter["username"] not in allowed_members:
-                    print("    ", voter["username"], "is not allowed")
+                print(poll_name, option["html"], "has", len(voters), "voters : ")
+                for voter in voters:
+                    if voter["username"] in allowed_members:
+                        print("    ", voter["username"], "is allowed")
+                    else:
+                        contributor = self.get_user(forum_name=voter["username"])
+                        contributions = self.wiki.get_contributions(user_id=contributor["document_id"])
+                        if len(contributions["feed"]) == 0:
+                            print("    ", voter["username"], "has no contribution")
+                        else:
+                            print("    ", voter["username"], contributions["feed"][0]["written_at"])
 
             print()
 
