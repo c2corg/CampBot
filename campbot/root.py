@@ -186,3 +186,16 @@ class CampBot(object):
                     print("    ", voter["username"], "is not allowed")
 
             print()
+
+    def get_user(self, wiki_name=None, forum_name=None):
+        name = wiki_name or forum_name
+
+        data = self.wiki.get("/search?q={}&t=u&limit=50".format(name))
+
+        prop = "name" if wiki_name else "forum_username"
+
+        for item in data["users"]["documents"]:
+            if item[prop] == name:
+                return item
+
+        return None
