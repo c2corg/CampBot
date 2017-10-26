@@ -1,6 +1,6 @@
 # CampBot
 
-Bot framework for camptocamp.org editing
+Bot framework for camptocamp.org
 
 ## Usage
 
