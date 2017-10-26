@@ -6,12 +6,25 @@ from dateutil import parser
 import pytz
 import logging
 import time
+import re
+
+from . import objects
+
+try:
+    input = raw_input
+except NameError:
+    pass
+
+
+class UserInterrupt(BaseException):
+    pass
 
 
 class BaseBot(object):
     min_delay = timedelta(seconds=1)
 
-    def __init__(self, api_url, proxies=None):
+    def __init__(self, campbot, api_url, proxies=None):
+        self.campbot = campbot
         self.api_url = api_url
         self._session = requests.Session()
         self.proxies = proxies
@@ -74,52 +87,53 @@ class BaseBot(object):
 
 
 class WikiBot(BaseBot):
-    def get_editions(self, **kwargs):
+    def get_route(self, route_id):
+        return objects.Route(self.campbot, self.get("/routes/{}".format(route_id)))
 
-        oldest_date = kwargs.get("oldest_date", datetime.today() + timedelta(days=-1))
+    def get_user(self, user_id=None, wiki_name=None, forum_name=None):
+        if user_id:
+            return objects.WikiUser(self.campbot, self.get("/profiles/{}".format(user_id)))
+
+        name = wiki_name or forum_name
+
+        data = self.get("/search?q={}&t=u&limit=50".format(name))
+
+        prop = "name" if wiki_name else "forum_username"
+
+        for item in data["users"]["documents"]:
+            if item[prop] == name:
+                return self.get_user(user_id=item["document_id"])
+
+        return None
+
+    def get_contributions(self, **kwargs):
+
+        oldest_date = kwargs.get("oldest_date", None) or datetime.today() + timedelta(days=-1)
+        newest_date = kwargs.get("newest_date", None) or datetime.now()
+        user_id = kwargs.get("user_id", None)
+        user_filter = "&u={}".format(user_id) if user_id else ""
+
         oldest_date = oldest_date.replace(tzinfo=pytz.UTC)
+        newest_date = newest_date.replace(tzinfo=pytz.UTC)
 
-        d = self.get("/documents/changes?limit=50")
+        d = self.get("/documents/changes?limit=50" + user_filter)
         while True:
             for item in d["feed"]:
-                if oldest_date > parser.parse(item["written_at"]):
+                written_at = parser.parse(item["written_at"])
+                if oldest_date > written_at:
                     raise StopIteration
 
-                yield item
+                if newest_date > written_at:
+                    yield item
+
+            if "pagination_token" not in d:
+                break
 
             pagination_token = d["pagination_token"]
-            d = self.get("/documents/changes?limit=50&token=" + pagination_token)
-
-    def get_profile(self, user_id):
-        return self.get("/profiles/{}".format(user_id))
-
-    def edit_profile(self, user_id, edit_foo):
-        doc = self.get_profile(user_id)
-        doc, message = edit_foo(doc)
-        payload = {"document": doc, "message": message}
-        return self.put("/profiles/{}".format(user_id), payload)
-
-    def get_contributions(self, user_id):
-        return self.get("/documents/changes?u={}".format(user_id))
+            d = self.get("/documents/changes?limit=50&token=" + pagination_token + user_filter)
 
 
 class ForumBot(BaseBot):
-    def get_polls(self, topic_id=None, post_number=None, url=None):
-        post = self.get_post(topic_id=topic_id, post_number=post_number, url=url)
-
-        for poll_name in post["polls"]:
-            for option in post["polls"][poll_name]["options"]:
-                url = "/polls/voters.json?post_id={}&poll_name={}&option_id={}&offset={}"
-                offset = 0
-                option["voters"] = []
-                while len(option["voters"]) != option["votes"]:
-                    voters = self.get(url.format(post["id"], poll_name, option["id"], offset))[poll_name][option["id"]]
-                    assert len(voters) != 0
-                    option["voters"] += voters
-                    offset += 1
-
-        return post["polls"]
-
     def get_group_members(self, group_name):
         result = []
 
@@ -129,7 +143,7 @@ class ForumBot(BaseBot):
             expected_len = data["meta"]["total"]
             result += data["members"]
 
-        return result
+        return [objects.ForumUser(self.campbot, user) for user in result]
 
     def get_topic(self, topic_id=None, url=None):
         if url:
@@ -149,7 +163,7 @@ class ForumBot(BaseBot):
         topic = self.get_topic(topic_id)
         post_id = topic["post_stream"]["stream"][post_number - 1]
 
-        return self.get("/posts/{}.json".format(post_id))
+        return objects.Post(self.campbot, self.get("/posts/{}.json".format(post_id)))
 
     def get_participants(self, url):
         topic = self.get_topic(url=url)
@@ -158,8 +172,8 @@ class ForumBot(BaseBot):
 
 class CampBot(object):
     def __init__(self, proxies=None):
-        self.wiki = WikiBot("https://api.camptocamp.org", proxies=proxies)
-        self.forum = ForumBot("https://forum.camptocamp.org", proxies=proxies)
+        self.wiki = WikiBot(self, "https://api.camptocamp.org", proxies=proxies)
+        self.forum = ForumBot(self, "https://forum.camptocamp.org", proxies=proxies)
 
         self.forum.headers['X-Requested-With'] = "XMLHttpRequest"
         self.forum.headers['Host'] = "forum.camptocamp.org"
@@ -170,55 +184,70 @@ class CampBot(object):
         self.wiki.headers["Authorization"] = 'JWT token="{}"'.format(token)
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
 
-    def get_contributors(self, **kwargs):
-
-        contributors = {}
-
-        for item in self.wiki.get_editions(**kwargs):
-            contributors[item["user"]["user_id"]] = item["user"]
-
-        result = []
-        for user in contributors.values():
-            result.append(self.wiki.get_profile(user["user_id"]))
-
-        return result
-
     def check_voters(self, url, allowed_groups=()):
 
         allowed_members = []
         for group in allowed_groups:
             allowed_members += self.forum.get_group_members(group)
 
-        allowed_members = {u["username"]: u for u in allowed_members}
+        allowed_members = {u.username: u for u in allowed_members}
 
-        polls = self.forum.get_polls(url=url)
-        for poll_name in polls:
-            for option in polls[poll_name]["options"]:
-                voters = option["voters"]
-
-                print(poll_name, option["html"], "has", len(voters), "voters : ")
-                for voter in voters:
-                    if voter["username"] in allowed_members:
-                        print("    ", voter["username"], "is allowed")
+        post = self.forum.get_post(url=url)
+        for poll_name in post.polls:
+            for option in post.polls[poll_name].options:
+                print(poll_name, option.html, "has", option.votes, "voters : ")
+                for voter in option.get_voters(post.id, poll_name):
+                    if voter.username in allowed_members:
+                        print("    ", voter.username, "is allowed")
                     else:
-                        contributor = self.get_user(forum_name=voter["username"])
-                        contributions = self.wiki.get_contributions(user_id=contributor["document_id"])
-                        if len(contributions["feed"]) == 0:
-                            print("    ", voter["username"], "has no contribution")
+                        contributor = voter.get_wiki_user()
+                        last_contribution = contributor.get_last_contribution()
+                        if not last_contribution:
+                            print("    ", voter.username, "has no contribution")
                         else:
-                            print("    ", voter["username"], contributions["feed"][0]["written_at"])
+                            print("    ", voter.username, last_contribution["written_at"])
 
             print()
 
-    def get_user(self, wiki_name=None, forum_name=None):
-        name = wiki_name or forum_name
+    def clean_bbcode(self, route_ids):
+        def get_typo_cleaner(bbcode_tag, markdown_left_tag, markdown_right_tag=None):
+            remover = re.compile(pattern=r'\[' + bbcode_tag + r'\]( *)(.*?)( *)\[/' + bbcode_tag + '\]',
+                                 flags=re.IGNORECASE)
 
-        data = self.wiki.get("/search?q={}&t=u&limit=50".format(name))
+            markdown_right_tag = markdown_right_tag or markdown_left_tag
 
-        prop = "name" if wiki_name else "forum_username"
+            def result(markdown):
+                return remover.sub(repl=r"\1" + markdown_left_tag + r"\2" + markdown_right_tag + r"\3", string=markdown)
 
-        for item in data["users"]["documents"]:
-            if item[prop] == name:
-                return item
+            return result
 
-        return None
+        cleaners = [
+            get_typo_cleaner("b", "**"),
+            get_typo_cleaner("i", "*"),
+            get_typo_cleaner("c", "`"),
+            get_typo_cleaner("u", "__"),
+        ]
+
+        def bbcode_remover(markdown, field, locale):
+            result = markdown
+            for cleaner in cleaners:
+                result = cleaner(result)
+
+            for before, after in zip(markdown.split("\n"), result.split("\n")):
+                if before != after:
+                    print("<<<", before.replace("\r", ""))
+                    print(">>>", after.replace("\r", ""))
+                    print()
+
+            return result
+
+        for route_id in route_ids:
+            route = self.wiki.get_route(route_id)
+            updated = route.fix_markdown(bbcode_remover)
+
+            if updated:
+                print("https://www.camptocamp.org/routes/{}".format(route_id))
+                if input("Save? y/[n]:") != "y":
+                    raise UserInterrupt("Process cancelled by user")
+
+                print()
