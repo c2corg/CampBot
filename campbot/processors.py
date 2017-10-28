@@ -1,6 +1,8 @@
 import difflib
 import re
 
+__all__ = ['MarkdownProcessor', 'BBCodeRemover']
+
 
 class Converter(object):
     def __init__(self, pattern, repl, flags):

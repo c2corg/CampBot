@@ -14,6 +14,8 @@ try:
 except NameError:
     pass
 
+__all__ = ['CampBot', 'WikiBot', 'ForumBot', 'BaseBot']
+
 
 class UserInterrupt(BaseException):
     pass
