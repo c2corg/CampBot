@@ -21,7 +21,22 @@ class BotObject(dict):
         self[name] = {key: constructor(self._campbot, self[name][key]) for key in self[name]}
 
 
-class WikiUser(BotObject):
+class WikiObject(BotObject):
+    _url_path = None
+
+    def get_locale(self, lang):
+        for locale in self.locales:
+            if locale["lang"] == lang:
+                return locale
+
+    def save(self, message):
+        payload = {"document": self, "message": message}
+        return self._campbot.wiki.put("/{}/{}".format(self._url_path, self.document_id), payload)
+
+
+class WikiUser(WikiObject):
+    _url_path = "profiles"
+
     def get_contributions(self, oldest_date=None, newest_date=None):
         return self._campbot.wiki.get_contributions(user_id=self.document_id,
                                                     oldest_date=oldest_date,
@@ -33,31 +48,20 @@ class WikiUser(BotObject):
 
         return None
 
-    def save(self, message):
-        payload = {"document": self, "message": message}
-        return self._campbot.wiki.put("/profiles/{}".format(self.document_id), payload)
 
+class Route(WikiObject):
+    _url_path = "routes"
 
-class Route(BotObject):
     def fix_markdown(self, corrector):
         updated = False
         for locale in self.locales:
             for field in ("description", "gear", "remarks", "route_history", "summary"):
                 if locale[field]:
-                    new_value = corrector(locale[field], field, locale)
+                    new_value = corrector(locale[field], field, locale, self)
                     updated = updated or (new_value != locale[field])
                     locale[field] = new_value
 
         return updated
-
-    def get_locale(self, lang):
-        for locale in self.locales:
-            if locale["lang"] == lang:
-                return locale
-
-    def save(self, message):
-        payload = {"document": self, "message": message}
-        return self._campbot.wiki.put("/routes/{}".format(self.document_id), payload)
 
 
 class ForumUser(BotObject):
