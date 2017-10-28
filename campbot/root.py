@@ -89,6 +89,9 @@ class WikiBot(BaseBot):
     def get_route(self, route_id):
         return objects.Route(self.campbot, self.get("/routes/{}".format(route_id)))
 
+    def get_waypoint(self, waypoint_id):
+        return objects.Waypoint(self.campbot, self.get("/waypoints/{}".format(waypoint_id)))
+
     def get_user(self, user_id=None, wiki_name=None, forum_name=None):
         if user_id:
             return objects.WikiUser(self.campbot, self.get("/profiles/{}".format(user_id)))
@@ -208,17 +211,19 @@ class CampBot(object):
 
             print()
 
-    def fix_markdown(self, processor, route_ids):
-        for route_id in route_ids:
-            route = self.wiki.get_route(route_id)
-            updated = route.fix_markdown(processor)
+    def fix_markdown(self, processor, route_ids=None, waypoint_ids=None):
 
-            if updated:
-                if input("Save https://www.camptocamp.org/routes/{} y/[n]?".format(route_id)) == "y":
-                    print("Saving...")
-                    # route.save("Replace BBcode by Markdown")
+        for ids, getter, name in [(route_ids, self.wiki.get_route, "route"),
+                                  (waypoint_ids, self.wiki.get_waypoint, "waypoint"), ]:
+            for id in (ids or []):
+                item = getter(id)
+                updated = item.fix_markdown(processor)
 
-                print()
-            else:
-                print("Nothing found on https://www.camptocamp.org/routes/{}".format(route_id))
+                if updated:
+                    if input("Save https://www.camptocamp.org/{}s/{} y/[n]?".format(name, id)) == "y":
+                        print("Saving...")
+                        # item.save("Replace BBcode by Markdown")
 
+                    print()
+                else:
+                    print("Nothing found on https://www.camptocamp.org/{}s/{}".format(name, id))

@@ -29,6 +29,17 @@ class WikiObject(BotObject):
             if locale["lang"] == lang:
                 return locale
 
+    def fix_markdown(self, corrector):
+        updated = False
+        for locale in self.locales:
+            for field in ("description", "gear", "remarks", "route_history", "summary"):
+                if field in locale and locale[field]:
+                    new_value = corrector(locale[field], field, locale, self)
+                    updated = updated or (new_value != locale[field])
+                    locale[field] = new_value
+
+        return updated
+
     def save(self, message):
         payload = {"document": self, "message": message}
         return self._campbot.wiki.put("/{}/{}".format(self._url_path, self.document_id), payload)
@@ -52,16 +63,9 @@ class WikiUser(WikiObject):
 class Route(WikiObject):
     _url_path = "routes"
 
-    def fix_markdown(self, corrector):
-        updated = False
-        for locale in self.locales:
-            for field in ("description", "gear", "remarks", "route_history", "summary"):
-                if locale[field]:
-                    new_value = corrector(locale[field], field, locale, self)
-                    updated = updated or (new_value != locale[field])
-                    locale[field] = new_value
 
-        return updated
+class Waypoint(WikiObject):
+    _url_path = "waypoints"
 
 
 class ForumUser(BotObject):
