@@ -22,7 +22,7 @@ class BotObject(dict):
 
 
 class WikiObject(BotObject):
-    _url_path = None
+    url_path = None
 
     def get_locale(self, lang):
         for locale in self.locales:
@@ -42,11 +42,11 @@ class WikiObject(BotObject):
 
     def save(self, message):
         payload = {"document": self, "message": message}
-        return self._campbot.wiki.put("/{}/{}".format(self._url_path, self.document_id), payload)
+        return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id), payload)
 
 
 class WikiUser(WikiObject):
-    _url_path = "profiles"
+    url_path = "profiles"
 
     def get_contributions(self, oldest_date=None, newest_date=None):
         return self._campbot.wiki.get_contributions(user_id=self.document_id,
@@ -61,11 +61,19 @@ class WikiUser(WikiObject):
 
 
 class Route(WikiObject):
-    _url_path = "routes"
+    url_path = "routes"
 
 
 class Waypoint(WikiObject):
-    _url_path = "waypoints"
+    url_path = "waypoints"
+
+
+class Area(WikiObject):
+    url_path = "areas"
+
+
+class Outing(WikiObject):
+    url_path = "outings"
 
 
 class ForumUser(BotObject):
