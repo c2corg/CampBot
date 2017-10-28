@@ -7,6 +7,7 @@ import pytz
 import logging
 import time
 import re
+import difflib
 
 from . import objects
 
@@ -209,45 +210,82 @@ class CampBot(object):
 
             print()
 
-    def clean_bbcode(self, route_ids):
-        def get_typo_cleaner(bbcode_tag, markdown_left_tag, markdown_right_tag=None):
-            remover = re.compile(pattern=r'\[' + bbcode_tag + r'\]( *)(.*?)( *)\[/' + bbcode_tag + '\]',
-                                 flags=re.IGNORECASE)
+    def fix_markdown(self, processor, route_ids):
+        for route_id in route_ids:
+            route = self.wiki.get_route(route_id)
+            updated = route.fix_markdown(processor)
 
-            markdown_right_tag = markdown_right_tag or markdown_left_tag
+            if updated:
+                if input("Save https://www.camptocamp.org/routes/{} y/[n]?".format(route_id)) == "y":
+                    print("Saving...")
+                    # route.save("Replace BBcode by Markdown")
+
+                print()
+            else:
+                print("Nothing found on https://www.camptocamp.org/routes/{}".format(route_id))
+
+
+class MarkdownProcessor(object):
+    def __call__(self, markdown, field, locale, wiki_object):
+        raise NotImplementedError()
+
+
+class Converter(object):
+    def __init__(self, pattern, repl, flags):
+        self.re = re.compile(pattern=pattern, flags=flags)
+        self.repl = repl
+        self.flags = flags
+
+    def __call__(self, text):
+        return self.re.sub(repl=self.repl, string=text)
+
+
+class BBCodeRemover(MarkdownProcessor):
+    def __init__(self):
+        def get_typo_cleaner(bbcode_tag, markdown_tag):
+            converters = [
+
+                Converter(pattern=r'\n *\[' + bbcode_tag + r'\] *',
+                          repl=r"\n[" + bbcode_tag + r"]",
+                          flags=re.IGNORECASE),
+
+                Converter(pattern=r'\[' + bbcode_tag + r'\] +',
+                          repl=r" [" + bbcode_tag + r"]",
+                          flags=re.IGNORECASE),
+
+                Converter(pattern=r' +\[/' + bbcode_tag + r'\]',
+                          repl=r"[" + bbcode_tag + r"] ",
+                          flags=re.IGNORECASE),
+
+                Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
+                          repl=markdown_tag + r"\1" + markdown_tag,
+                          flags=re.IGNORECASE),
+            ]
 
             def result(markdown):
-                return remover.sub(repl=r"\1" + markdown_left_tag + r"\2" + markdown_right_tag + r"\3", string=markdown)
+                for converter in converters:
+                    markdown = converter(markdown)
+
+                return markdown
 
             return result
 
-        cleaners = [
+        self.cleaners = [
             get_typo_cleaner("b", "**"),
             get_typo_cleaner("i", "*"),
             get_typo_cleaner("c", "`"),
-            get_typo_cleaner("u", "__"),
+            # get_typo_cleaner("u", "__"),
         ]
 
-        def bbcode_remover(markdown, field, locale):
-            result = markdown
-            for cleaner in cleaners:
-                result = cleaner(result)
+    def __call__(self, markdown, field, locale, wiki_object):
+        result = markdown
+        for cleaner in self.cleaners:
+            result = cleaner(result)
 
-            for before, after in zip(markdown.split("\n"), result.split("\n")):
-                if before != after:
-                    print("<<<", before.replace("\r", ""))
-                    print(">>>", after.replace("\r", ""))
-                    print()
+        d = difflib.Differ()
+        diff = d.compare(markdown.split("\n"), result.split("\n"))
+        for dd in diff:
+            if dd[0] != " ":
+                print(dd)
 
-            return result
-
-        for route_id in route_ids:
-            route = self.wiki.get_route(route_id)
-            updated = route.fix_markdown(bbcode_remover)
-
-            if updated:
-                print("https://www.camptocamp.org/routes/{}".format(route_id))
-                if input("Save? y/[n]:") != "y":
-                    raise UserInterrupt("Process cancelled by user")
-
-                print()
+        return result
