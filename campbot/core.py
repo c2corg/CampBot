@@ -199,6 +199,8 @@ class CampBot(object):
 
         allowed_members = {u.username: u for u in allowed_members}
 
+        oldest_date = datetime.today() - timedelta(days=180)
+
         post = self.forum.get_post(url=url)
         for poll_name in post.polls:
             for option in post.polls[poll_name].options:
@@ -208,7 +210,7 @@ class CampBot(object):
                         print("    ", voter.username, "is allowed")
                     else:
                         contributor = voter.get_wiki_user()
-                        last_contribution = contributor.get_last_contribution()
+                        last_contribution = contributor.get_last_contribution(oldest_date=oldest_date)
                         if not last_contribution:
                             print("    ", voter.username, "has no contribution")
                         else:
