@@ -59,6 +59,11 @@ class BBCodeRemover(MarkdownProcessor):
             get_typo_cleaner("i", "*"),
             get_typo_cleaner("c", "`"),
             # get_typo_cleaner("u", "__"),
+
+            Converter(pattern=r'\[i\]\*\*([^\n\r\*\`]*?)\*\*\[/i\]',
+                      repl=r"***\1***",
+                      flags=re.IGNORECASE),
+
         ]
 
     def __call__(self, markdown, field, locale, wiki_object):

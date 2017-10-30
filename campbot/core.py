@@ -226,7 +226,10 @@ class CampBot(object):
             for id in (ids or []):
                 item = self.wiki.get_wiki_object(constructor, id)
 
-                if item.protected:
+                if "redirects_to" in item:
+                    print("https://www.camptocamp.org/{}/{} is a redirection".format(constructor.url_path, id))
+
+                elif item.protected:
                     print("https://www.camptocamp.org/{}/{} is protected".format(constructor.url_path, id))
 
                 elif item.fix_markdown(processor):
