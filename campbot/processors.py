@@ -24,6 +24,10 @@ class BBCodeRemover(MarkdownProcessor):
         def get_typo_cleaner(bbcode_tag, markdown_tag):
             converters = [
 
+                Converter(pattern=r'\[' + bbcode_tag + r'\]\[/' + bbcode_tag + '\]',
+                          repl=r"",
+                          flags=re.IGNORECASE),
+
                 Converter(pattern=r'\n *\[' + bbcode_tag + r'\] *',
                           repl=r"\n[" + bbcode_tag + r"]",
                           flags=re.IGNORECASE),
@@ -33,7 +37,7 @@ class BBCodeRemover(MarkdownProcessor):
                           flags=re.IGNORECASE),
 
                 Converter(pattern=r' +\[/' + bbcode_tag + r'\]',
-                          repl=r"[" + bbcode_tag + r"] ",
+                          repl=r"[/" + bbcode_tag + r"] ",
                           flags=re.IGNORECASE),
 
                 Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
@@ -42,8 +46,9 @@ class BBCodeRemover(MarkdownProcessor):
             ]
 
             def result(markdown):
-                for converter in converters:
-                    markdown = converter(markdown)
+                if '[center][{}]'.format(bbcode_tag) not in markdown:
+                    for converter in converters:
+                        markdown = converter(markdown)
 
                 return markdown
 
