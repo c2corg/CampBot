@@ -21,6 +21,29 @@ class BotObject(dict):
         self[name] = {key: constructor(self._campbot, self[name][key]) for key in self[name]}
 
 
+class Contribution(BotObject):
+    def get_diff_url(self):
+        history = self._campbot.wiki.get("/document/{}/history/{}".format(self.document["document_id"], self.lang))
+
+        previous = None
+        for version in history["versions"]:
+            if version["version_id"] == self.version_id:
+                break
+
+            previous = version
+
+        url_type = {"a": "areas"}[self.document["type"]]
+
+        return "{}/{}/diff/{}/{}/{}/{}".format(
+            self._campbot.wiki.api_url.replace("api", "www"),
+            url_type,
+            self.document["document_id"],
+            self.lang,
+            previous["version_id"],
+            self.version_id
+        )
+
+
 class WikiObject(BotObject):
     url_path = None
 

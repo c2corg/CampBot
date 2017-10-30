@@ -131,7 +131,7 @@ class WikiBot(BaseBot):
                     raise StopIteration
 
                 if newest_date > written_at:
-                    yield item
+                    yield objects.Contribution(self.campbot, item)
 
             if "pagination_token" not in d:
                 break
@@ -218,19 +218,22 @@ class CampBot(object):
 
             print()
 
-    def fix_markdown(self, processor, route_ids=None, waypoint_ids=None):
+    def fix_markdown(self, processor, route_ids=None, waypoint_ids=None, area_ids=None, user_ids=None):
 
         for ids, constructor in [(route_ids, objects.Route),
-                                 (waypoint_ids, objects.Waypoint), ]:
+                                 (waypoint_ids, objects.Waypoint),
+                                 (area_ids, objects.Area), ]:
             for id in (ids or []):
                 item = self.wiki.get_wiki_object(constructor, id)
-                updated = item.fix_markdown(processor)
 
-                if updated:
-                    if input("Save https://www.camptocamp.org/{}s/{} y/[n]?".format(constructor.url_path, id)) == "y":
-                        print("Saving...")
-                        # item.save("Replace BBcode by Markdown")
+                if item.protected:
+                    print("https://www.camptocamp.org/{}/{} is protected".format(constructor.url_path, id))
+
+                elif item.fix_markdown(processor):
+                    if input("Save https://www.camptocamp.org/{}/{} y/[n]?".format(constructor.url_path, id)) == "y":
+                        print("Saving https://www.camptocamp.org/{}/{}".format(constructor.url_path, id))
+                        item.save("Replace BBcode by Markdown")
 
                     print()
                 else:
-                    print("Nothing found on https://www.camptocamp.org/{}s/{}".format(constructor.url_path, id))
+                    print("Nothing found on https://www.camptocamp.org/{}/{}".format(constructor.url_path, id))
