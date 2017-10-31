@@ -48,7 +48,7 @@ class BBCodeRemover(MarkdownProcessor):
                           repl=r"[/" + bbcode_tag + r"]\r\n",
                           flags=re.IGNORECASE),
 
-                Converter(pattern=r'\[' + bbcode_tag + r'\] *\r\n([^*]?)',
+                Converter(pattern=r'\[' + bbcode_tag + r'\] *\r\n([^\*\#]?)',
                           repl=r"\r\n[" + bbcode_tag + r"]\1",
                           flags=re.IGNORECASE),
 
