@@ -40,6 +40,10 @@ class BBCodeRemover(MarkdownProcessor):
                           repl=r"[/" + bbcode_tag + r"] ",
                           flags=re.IGNORECASE),
 
+                Converter(pattern=r'\r\n\[/' + bbcode_tag + r'\]',
+                          repl=r"[/" + bbcode_tag + r"]\r\n",
+                          flags=re.IGNORECASE),
+
                 Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
                           repl=markdown_tag + r"\1" + markdown_tag,
                           flags=re.IGNORECASE),
