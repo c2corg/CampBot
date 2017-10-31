@@ -78,3 +78,62 @@ class BBCodeRemover(MarkdownProcessor):
                 print(dd)
 
         return result
+
+    class LtagCleaner(MarkdownProcessor):
+        def __init__(self):
+            self.modifiers = []
+            self.init_modifiers()
+
+        def init_modifiers(self):
+            raise NotImplementedError()
+
+        def __call__(self, markdown, field, locale, wiki_object):
+            result = "\n" + markdown
+
+            for modifier in self.modifiers:
+                result = modifier(result)
+
+            result = result[1:]
+
+            d = difflib.Differ()
+            diff = d.compare(markdown.split("\n"), result.split("\n"))
+            for dd in diff:
+                if dd[0] != " ":
+                    print(dd)
+
+            return markdown  # need to be tested
+            # return result
+
+    class LtagNewLineCleaner(LtagCleaner):
+        def init_modifiers(self):
+            self.modifiers.append(Converter(pattern=r'(\n[LR]#)([^\n]+)\n(|.|[^RL\n][^#\n][^\n]*)(\n[LR]#|\n)',
+                                            repl=r"\1\2>>>\n>>>\3\4",
+                                            flags=re.IGNORECASE))
+
+    class LtagSeparatorCleaner(LtagCleaner):
+        def init_modifiers(self):
+
+            # replace leanding `:` by `|`
+            leading_converter = Converter(pattern=r'(\n[LR]#)([^\n \|\:]*) *::?',
+                                          repl=r"\n\1\2 |",
+                                          flags=re.IGNORECASE)
+
+            # replace multiple consecutives  `:` or  `|` by `|`
+            multiple_converter = Converter(pattern=r'[\:\|]{2,}',
+                                           repl=r"|",
+                                           flags=re.IGNORECASE)
+
+            def modifier(markdown):
+                lines = markdown.split("\n")
+                result = []
+
+                for line in lines:
+                    if line.startswith("L#") or line.startswith("R#"):
+                        line = leading_converter(line)
+                        line = multiple_converter(line)
+
+                    result.append(line)
+
+                return "\n".join(result)
+
+            self.modifiers.append(modifier)

@@ -67,6 +67,12 @@ class WikiObject(BotObject):
         payload = {"document": self, "message": message}
         return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id), payload)
 
+    def is_valid(self):
+        return self.get_invalidity_reason() is None
+
+    def get_invalidity_reason(self):
+        return None
+
 
 class WikiUser(WikiObject):
     url_path = "profiles"
@@ -89,6 +95,15 @@ class Route(WikiObject):
 
 class Waypoint(WikiObject):
     url_path = "waypoints"
+
+    def get_invalidity_reason(self):
+        if self.waypoint_type in ("hut", "gite") and self.custodianship is None:
+            return "custodianship is missing"
+
+        if self.elevation is None:
+            return "elevation is missing"
+
+        return None
 
 
 class Area(WikiObject):

@@ -225,18 +225,22 @@ class CampBot(object):
                                  (area_ids, objects.Area), ]:
             for id in (ids or []):
                 item = self.wiki.get_wiki_object(constructor, id)
+                url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, id)
 
                 if "redirects_to" in item:
-                    print("https://www.camptocamp.org/{}/{} is a redirection".format(constructor.url_path, id))
+                    print("{} is a redirection".format(url))
 
                 elif item.protected:
-                    print("https://www.camptocamp.org/{}/{} is protected".format(constructor.url_path, id))
+                    print("{} is protected".format(url))
+
+                elif not item.is_valid():
+                    print("{} : {}".format(url, item.get_invalidity_reason()))
 
                 elif item.fix_markdown(processor):
-                    if input("Save https://www.camptocamp.org/{}/{} y/[n]?".format(constructor.url_path, id)) == "y":
-                        print("Saving https://www.camptocamp.org/{}/{}".format(constructor.url_path, id))
+                    if input("Save {} y/[n]?".format(url)) == "y":
+                        print("Saving {}".format(url))
                         item.save("Replace BBcode by Markdown")
 
                     print()
                 else:
-                    print("Nothing found on https://www.camptocamp.org/{}/{}".format(constructor.url_path, id))
+                    print("Nothing found on {}".format(url))
