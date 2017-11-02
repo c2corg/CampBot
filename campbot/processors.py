@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals, division
+
 import difflib
 import re
 
@@ -23,10 +25,6 @@ class BBCodeRemover(MarkdownProcessor):
     def __init__(self):
         def get_typo_cleaner(bbcode_tag, markdown_tag):
             converters = [
-
-                Converter(pattern=r'\[/?center\]',
-                          repl=r"",
-                          flags=re.IGNORECASE),
 
                 Converter(pattern=r'\[' + bbcode_tag + r'\]\[/' + bbcode_tag + '\]',
                           repl=r"",
@@ -55,11 +53,6 @@ class BBCodeRemover(MarkdownProcessor):
                 Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
                           repl=markdown_tag + r"\1" + markdown_tag,
                           flags=re.IGNORECASE),
-
-                # at the very end, remove it!
-                #                Converter(pattern=r'\[/?' + bbcode_tag + '\]',
-                #                          repl=r"",
-                #                          flags=re.IGNORECASE),
             ]
 
             def result(markdown):
@@ -74,12 +67,18 @@ class BBCodeRemover(MarkdownProcessor):
             get_typo_cleaner("b", "**"),
             get_typo_cleaner("i", "*"),
             get_typo_cleaner("c", "`"),
-            # get_typo_cleaner("u", "__"),
 
             Converter(pattern=r'\[i\]\*\*([^\n\r\*\`]*?)\*\*\[/i\]',
                       repl=r"***\1***",
                       flags=re.IGNORECASE),
 
+            Converter(pattern=r'\[(/?)imp\]',
+                      repl=r"[\1important]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)warn\]',
+                      repl=r"[\1warning]",
+                      flags=re.IGNORECASE),
         ]
 
     def __call__(self, markdown, field, locale, wiki_object):
@@ -95,61 +94,81 @@ class BBCodeRemover(MarkdownProcessor):
 
         return result
 
-    class LtagCleaner(MarkdownProcessor):
-        def __init__(self):
-            self.modifiers = []
-            self.init_modifiers()
 
-        def init_modifiers(self):
-            raise NotImplementedError()
+class LtagCleaner(MarkdownProcessor):
+    _tests = [
+        {
+            "source": "L#|1:2",
+            "result": "L# | 1:2"
+        },
+        {
+            "source": "L#|1::2",
+            "result": "L# | 1 | 2"
+        },
+        {
+            "source": "L#:1::2",
+            "result": "L# | 1 | 2"
+        },
+        {
+            "source": "L#::1::2||3:: ::5|6| |7::8:aussi 8|9",
+            "result": "L# | 1 | 2 | 3 |  | 5 | 6 |  | 7 | 8:aussi 8 | 9"
+        },
+    ]
 
-        def __call__(self, markdown, field, locale, wiki_object):
-            result = "\n" + markdown
+    def do_tests(self):
+        for test in self._tests:
+            result = self(test["source"], "", "", "")
+            if result != test["result"]:
+                print("source   ", test["source"])
+                print("expected ", test["result"])
+                print("result   ", result)
+                print()
 
-            for modifier in self.modifiers:
-                result = modifier(result)
+    def __init__(self):
+        self.modifiers = []
 
-            result = result[1:]
+        newline_converter = Converter(pattern=r'(\n[LR]#)([^\n]+)\n(|.|[^RL\n][^#\n][^\n]*)(\n[LR]#|\n)',
+                                      repl=r"\1\2<br>\3\4",
+                                      flags=re.IGNORECASE)
 
-            d = difflib.Differ()
-            diff = d.compare(markdown.split("\n"), result.split("\n"))
-            for dd in diff:
-                if dd[0] != " ":
-                    print(dd)
+        # replace leanding `:` by `|`
+        leading_converter = Converter(pattern=r'^([LR]#)([^\n \|\:]*) *\:+',
+                                      repl=r"\1\2 |",
+                                      flags=re.IGNORECASE)
 
-            return markdown  # need to be tested
-            # return result
+        # replace multiple consecutives  `:` or  `|` by `|`
+        multiple_converter = Converter(pattern=r' *([\:\|]{2,}|\|) *',
+                                       repl=r" | ",
+                                       flags=re.IGNORECASE)
 
-    class LtagNewLineCleaner(LtagCleaner):
-        def init_modifiers(self):
-            self.modifiers.append(Converter(pattern=r'(\n[LR]#)([^\n]+)\n(|.|[^RL\n][^#\n][^\n]*)(\n[LR]#|\n)',
-                                            repl=r"\1\2>>>\n>>>\3\4",
-                                            flags=re.IGNORECASE))
+        def modifier(markdown):
+            lines = markdown.split("\n")
+            result = []
 
-    class LtagSeparatorCleaner(LtagCleaner):
-        def init_modifiers(self):
+            for line in lines:
+                if line.startswith("L#") or line.startswith("R#"):
+                    line = leading_converter(line)
+                    line = multiple_converter(line)
 
-            # replace leanding `:` by `|`
-            leading_converter = Converter(pattern=r'(\n[LR]#)([^\n \|\:]*) *::?',
-                                          repl=r"\n\1\2 |",
-                                          flags=re.IGNORECASE)
+                result.append(line)
 
-            # replace multiple consecutives  `:` or  `|` by `|`
-            multiple_converter = Converter(pattern=r'[\:\|]{2,}',
-                                           repl=r"|",
-                                           flags=re.IGNORECASE)
+            return "\n".join(result)
 
-            def modifier(markdown):
-                lines = markdown.split("\n")
-                result = []
+        self.modifiers.append(newline_converter)
+        self.modifiers.append(modifier)
 
-                for line in lines:
-                    if line.startswith("L#") or line.startswith("R#"):
-                        line = leading_converter(line)
-                        line = multiple_converter(line)
+    def __call__(self, markdown, field, locale, wiki_object):
+        result = "\n" + markdown
 
-                    result.append(line)
+        for modifier in self.modifiers:
+            result = modifier(result)
 
-                return "\n".join(result)
+        result = result[1:]
 
-            self.modifiers.append(modifier)
+        # d = difflib.Differ()
+        # diff = d.compare(markdown.split("\n"), result.split("\n"))
+        # for dd in diff:
+        #     if dd[0] != " ":
+        #         print(dd)
+
+        return result
