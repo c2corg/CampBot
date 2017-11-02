@@ -100,7 +100,7 @@ class Waypoint(WikiObject):
         if self.waypoint_type in ("hut", "gite") and self.custodianship is None:
             return "custodianship is missing"
 
-        if self.elevation is None:
+        if self.elevation is None and self.waypoint_type not in ("climbing_indoor",):
             return "elevation is missing"
 
         return None
