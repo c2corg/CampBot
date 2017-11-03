@@ -20,12 +20,7 @@ class MarkdownProcessor(object):
     modifiers = []
 
     def __call__(self, markdown, field, locale, wiki_object):
-        result = "\n" + markdown
-
-        for modifier in self.modifiers:
-            result = modifier(result)
-
-        result = result[1:]
+        result = self.modify(markdown)
 
         d = difflib.Differ()
         diff = d.compare(markdown.replace("\r", "").split("\n"), result.split("\n"))
@@ -33,6 +28,15 @@ class MarkdownProcessor(object):
             if dd[0] != " ":
                 print(dd)
 
+        return result
+
+    def modify(self, markdown):
+        result = "\n" + markdown
+
+        for modifier in self.modifiers:
+            result = modifier(result)
+
+        result = result[1:]
         return result
 
 
@@ -96,19 +100,6 @@ class BBCodeRemover(MarkdownProcessor):
                       flags=re.IGNORECASE),
         ]
 
-    def __call__(self, markdown, field, locale, wiki_object):
-        result = markdown
-        for modifier in self.modifiers:
-            result = modifier(result)
-
-        d = difflib.Differ()
-        diff = d.compare(markdown.split("\n"), result.split("\n"))
-        for dd in diff:
-            if dd[0] != " ":
-                print(dd)
-
-        return result
-
 
 class LtagCleaner(MarkdownProcessor):
     _tests = [
@@ -135,6 +126,10 @@ class LtagCleaner(MarkdownProcessor):
         {
             "source": "L#{} | 12 | 2\nL#{} | 1 | 2\n3\n\n4",
             "result": "L#{} | 12 | 2\nL#{} | 1 | 2<br>3\n\n4"
+        },
+        {
+            "source": "L#{}:1::2\n##Titre",
+            "result": "L#{}|1|2\n##Titre"
         },
         {
             "source": "L#{} |1::2",
@@ -175,7 +170,7 @@ class LtagCleaner(MarkdownProcessor):
 
     def do_tests(self):
         def do_test(source, expected):
-            result = self(source, "", "", "")
+            result = self.modify(source)
             if result != expected:
                 print("source   ", repr(source))
                 print("expected ", repr(expected))
@@ -231,12 +226,17 @@ class LtagCleaner(MarkdownProcessor):
                 if line.startswith("L#") or line.startswith("R#"):
                     result.append(line)
                     last_line_is_ltag = True
-                else:
-                    if line == "" or line.startswith("L#") or line.startswith("R#") or not last_line_is_ltag:
-                        last_line_is_ltag = False
-                        result.append(line)
-                    elif last_line_is_ltag:
-                        result[len(result) - 1] += "<br>" + line
+
+                elif line.startswith("#") or line == "":
+                    result.append(line)
+                    last_line_is_ltag = False
+
+                elif not last_line_is_ltag:
+                    last_line_is_ltag = False
+                    result.append(line)
+
+                else:  # last_line_is_ltag is true here
+                    result[len(result) - 1] += "<br>" + line
 
             markdown = "\n".join(result)
 
