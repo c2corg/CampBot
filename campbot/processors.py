@@ -17,8 +17,23 @@ class Converter(object):
 
 
 class MarkdownProcessor(object):
+    modifiers = []
+
     def __call__(self, markdown, field, locale, wiki_object):
-        raise NotImplementedError()
+        result = "\n" + markdown
+
+        for modifier in self.modifiers:
+            result = modifier(result)
+
+        result = result[1:]
+
+        d = difflib.Differ()
+        diff = d.compare(markdown.replace("\r", "").split("\n"), result.split("\n"))
+        for dd in diff:
+            if dd[0] != " ":
+                print(dd)
+
+        return result
 
 
 class BBCodeRemover(MarkdownProcessor):
@@ -63,7 +78,7 @@ class BBCodeRemover(MarkdownProcessor):
 
             return result
 
-        self.cleaners = [
+        self.modifiers = [
             get_typo_cleaner("b", "**"),
             get_typo_cleaner("i", "*"),
             get_typo_cleaner("c", "`"),
@@ -83,8 +98,8 @@ class BBCodeRemover(MarkdownProcessor):
 
     def __call__(self, markdown, field, locale, wiki_object):
         result = markdown
-        for cleaner in self.cleaners:
-            result = cleaner(result)
+        for modifier in self.modifiers:
+            result = modifier(result)
 
         d = difflib.Differ()
         diff = d.compare(markdown.split("\n"), result.split("\n"))
@@ -239,19 +254,3 @@ class LtagCleaner(MarkdownProcessor):
             return "\n".join(result)
 
         self.modifiers.append(modifier)
-
-    def __call__(self, markdown, field, locale, wiki_object):
-        result = "\n" + markdown
-
-        for modifier in self.modifiers:
-            result = modifier(result)
-
-        result = result[1:]
-
-        # d = difflib.Differ()
-        # diff = d.compare(markdown.replace("\r", "").split("\n"), result.split("\n"))
-        # for dd in diff:
-        #     if dd[0] != " ":
-        #         print(dd)
-
-        return result
