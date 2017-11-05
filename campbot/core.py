@@ -229,7 +229,12 @@ class CampBot(object):
 
             print()
 
-    def fix_markdown(self, processor, route_ids=None, waypoint_ids=None, area_ids=None, user_ids=None):
+    def fix_markdown(self, processor, ask_before_saving=True,
+                     route_ids=None, waypoint_ids=None, area_ids=None, user_ids=None):
+
+        logging.info("Fix markdown with {} processor".format(processor  ))
+        logging.info("Ask before saving : {}".format(ask_before_saving))
+        logging.info("Delay between each request : {}".format(self.wiki.min_delay))
 
         for ids, constructor in [(route_ids, objects.Route),
                                  (waypoint_ids, objects.Waypoint),
@@ -251,7 +256,7 @@ class CampBot(object):
                     if not processor.ready_for_production:
                         print("{} is impacted".format(url))
 
-                    elif input("Save {} y/[n]?".format(url)) == "y":
+                    elif not ask_before_saving or input("Save {} y/[n]?".format(url)) == "y":
                         print("Saving {}".format(url))
                         item.save(processor.comment)
 
