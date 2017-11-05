@@ -3,7 +3,7 @@ CampBot, Python bot framework for camptocamp.org
 
 Usage:
   campbot check_voters <message_url> --login=<login> --password=<password> [--delay=<seconds>]
-  campbot fix_markdown <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
 
 Options:
   --login=<login>          Bot login
@@ -34,7 +34,7 @@ def get_campbot():
 if args["check_voters"]:
     get_campbot().check_voters(url=args["<message_url>"])
 
-elif args["fix_markdown"]:
+elif args["remove_bbcode"]:
     from campbot.utils import get_ids_from_file
     from campbot.processors import BBCodeRemover
 
