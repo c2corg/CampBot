@@ -2,12 +2,13 @@
 CampBot, Python bot framework for camptocamp.org
 
 Usage:
-  campbot check_voters <message_url> --login=<login> --password=<password>
-  campbot fix_markdown <ids_file> --login=<login> --password=<password>
+  campbot check_voters <message_url> --login=<login> --password=<password> [--delay=<seconds>]
+  campbot fix_markdown <ids_file> --login=<login> --password=<password> [--delay=<seconds>]
 
 Options:
   --login=<login>          Bot login
   --password=<password>    Bot password
+  --delay=<seconds>        Minimum delay between each request. Default : 1 second
 
 """
 
@@ -19,7 +20,8 @@ args = docopt(__doc__)
 def get_campbot():
     from campbot import CampBot
 
-    bot = CampBot()
+    print(args)
+    bot = CampBot(min_delay=args["--delay"])
     bot.login(login=args["--login"], password=args["--password"])
 
     return bot

@@ -24,12 +24,13 @@ class UserInterrupt(BaseException):
 class BaseBot(object):
     min_delay = timedelta(seconds=1)
 
-    def __init__(self, campbot, api_url, proxies=None):
+    def __init__(self, campbot, api_url, proxies=None, min_delay=None):
         self.campbot = campbot
         self.api_url = api_url
         self._session = requests.Session()
         self.proxies = proxies
         self._next_request_datetime = datetime.now()
+        self.min_delay = timedelta(seconds=float(min_delay or 1))
 
     @property
     def headers(self):
@@ -188,9 +189,9 @@ class ForumBot(BaseBot):
 
 
 class CampBot(object):
-    def __init__(self, proxies=None):
-        self.wiki = WikiBot(self, "https://api.camptocamp.org", proxies=proxies)
-        self.forum = ForumBot(self, "https://forum.camptocamp.org", proxies=proxies)
+    def __init__(self, proxies=None, min_delay=None):
+        self.wiki = WikiBot(self, "https://api.camptocamp.org", proxies=proxies, min_delay=min_delay)
+        self.forum = ForumBot(self, "https://forum.camptocamp.org", proxies=proxies, min_delay=min_delay)
 
         self.forum.headers['X-Requested-With'] = "XMLHttpRequest"
         self.forum.headers['Host'] = "forum.camptocamp.org"
