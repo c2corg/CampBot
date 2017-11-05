@@ -139,6 +139,16 @@ class WikiBot(BaseBot):
             pagination_token = d["pagination_token"]
             d = self.get("/documents/changes?limit=50&token=" + pagination_token + user_filter)
 
+    def get_route_ids(self):
+        offset = 0
+
+        while True:
+            data = self.get("/routes?offset={}".format(offset))
+            for route in data["documents"]:
+                yield route["document_id"]
+
+            offset += 50
+
 
 class ForumBot(BaseBot):
     def get_group_members(self, group_name):
@@ -237,9 +247,12 @@ class CampBot(object):
                     print("{} : {}".format(url, item.get_invalidity_reason()))
 
                 elif item.fix_markdown(processor):
-                    if input("Save {} y/[n]?".format(url)) == "y":
+                    if not processor.ready_for_production:
+                        print("{} is impacted".format(url))
+
+                    elif input("Save {} y/[n]?".format(url)) == "y":
                         print("Saving {}".format(url))
-                        item.save("Replace BBcode by Markdown")
+                        item.save(processor.comment)
 
                     print()
                 else:

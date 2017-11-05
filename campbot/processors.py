@@ -18,12 +18,14 @@ class Converter(object):
 
 class MarkdownProcessor(object):
     modifiers = []
+    ready_for_production = False
+    comment = NotImplemented
 
     def __call__(self, markdown, field, locale, wiki_object):
         result = self.modify(markdown)
 
         d = difflib.Differ()
-        diff = d.compare(markdown.replace("\r", "").split("\n"), result.split("\n"))
+        diff = d.compare(markdown.replace("\r", "").split("\n"), result.replace("\r", "").split("\n"))
         for dd in diff:
             if dd[0] != " ":
                 print(dd)
@@ -41,6 +43,9 @@ class MarkdownProcessor(object):
 
 
 class BBCodeRemover(MarkdownProcessor):
+    ready_for_production = True
+    comment = "Replace BBcode by Markdown"
+
     def __init__(self):
         def get_typo_cleaner(bbcode_tag, markdown_tag):
             converters = [
@@ -102,6 +107,9 @@ class BBCodeRemover(MarkdownProcessor):
 
 
 class LtagCleaner(MarkdownProcessor):
+    ready_for_production = False
+    comment = "Simplify L# syntax"
+
     _tests = [
         {
             "source": "L#{} | 1 | 2\nL# | 1 | 2\n\nautre texte",
