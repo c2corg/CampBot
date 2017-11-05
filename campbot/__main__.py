@@ -39,5 +39,4 @@ elif args["remove_bbcode"]:
     from campbot.processors import BBCodeRemover
 
     ids = get_ids_from_file(args["<ids_file>"])
-    get_campbot().fix_markdown(BBCodeRemover(), ask_before_saving=args["--batch"] is None,
-                               **ids)
+    get_campbot().fix_markdown(BBCodeRemover(), ask_before_saving=not args["--batch"], **ids)

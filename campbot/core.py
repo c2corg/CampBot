@@ -230,7 +230,9 @@ class CampBot(object):
             print()
 
     def fix_markdown(self, processor, ask_before_saving=True,
-                     route_ids=None, waypoint_ids=None, area_ids=None, user_ids=None):
+                     route_ids=None, waypoint_ids=None, area_ids=None, user_ids=None,
+                     images_ids=None, outing_ids=None, xreport_ids=None, article_ids=None,
+                     image_ids=None, book_ids=None):
 
         logging.info("Fix markdown with {} processor".format(processor  ))
         logging.info("Ask before saving : {}".format(ask_before_saving))
