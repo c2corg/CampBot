@@ -238,7 +238,8 @@ class CampBot(object):
         logging.info("Ask before saving : {}".format(ask_before_saving))
         logging.info("Delay between each request : {}".format(self.wiki.min_delay))
 
-        for ids, constructor in [(route_ids, objects.Route),
+        for ids, constructor in [(article_ids, objects.Article),
+                                 (route_ids, objects.Route),
                                  (waypoint_ids, objects.Waypoint),
                                  (area_ids, objects.Area), ]:
             for id in (ids or []):

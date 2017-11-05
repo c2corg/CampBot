@@ -93,6 +93,10 @@ class Route(WikiObject):
     url_path = "routes"
 
 
+class Article(WikiObject):
+    url_path = "articles"
+
+
 class Waypoint(WikiObject):
     url_path = "waypoints"
 
