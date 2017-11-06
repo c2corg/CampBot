@@ -106,6 +106,55 @@ class BBCodeRemover(MarkdownProcessor):
         ]
 
 
+class BBCodeUrlRemover(MarkdownProcessor):
+    ready_for_production = True
+    comment = "Replace BBcode [url] by Markdown"
+
+    _tests = [
+        {
+            "source": "[url]http://www.google.com[/url]",
+            "result": "http://www.google.com"
+        },
+        {
+            "source": "[url]http://www.google.com[/url] x [url]http://www.google2.com[/url]",
+            "result": "http://www.google.com x http://www.google2.com"
+        },
+        {
+            "source": "[url=http://www.google.com]google[/url]",
+            "result": "[google](http://www.google.com)",
+        },
+        {
+            "source": "[url=http://www.google.com]google[/url] et [url=http://www.google2.com]google2[/url]",
+            "result": "[google](http://www.google.com) et [google2](http://www.google2.com)"
+        }
+    ]
+
+    def do_tests(self):
+        def do_test(source, expected):
+            result = self.modify(source)
+            if result != expected:
+                print("source   ", repr(source))
+                print("expected ", repr(expected))
+                print("result   ", repr(result))
+                print()
+
+        for test in self._tests:
+            source = test["source"]
+            expected = test["result"]
+            do_test(source, expected)
+
+    def __init__(self):
+        self.modifiers = [
+            Converter(pattern=r'\[url\](.*?)\[/url\]',
+                      repl=r"\1",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[url\=(.*?)\](.*?)\[\/url\]',
+                      repl=r"[\2](\1)",
+                      flags=re.IGNORECASE),
+        ]
+
+
 class LtagCleaner(MarkdownProcessor):
     ready_for_production = False
     comment = "Simplify L# syntax"
