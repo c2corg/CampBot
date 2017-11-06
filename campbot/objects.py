@@ -97,6 +97,18 @@ class Article(WikiObject):
     url_path = "articles"
 
 
+class Image(WikiObject):
+    url_path = "images"
+
+
+class Book(WikiObject):
+    url_path = "books"
+
+
+class Xreport(WikiObject):
+    url_path = "xreports"
+
+
 class Waypoint(WikiObject):
     url_path = "waypoints"
 

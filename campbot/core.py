@@ -231,16 +231,22 @@ class CampBot(object):
 
     def fix_markdown(self, processor, ask_before_saving=True,
                      route_ids=None, waypoint_ids=None, area_ids=None, user_ids=None,
-                     images_ids=None, outing_ids=None, xreport_ids=None, article_ids=None,
-                     image_ids=None, book_ids=None):
+                     image_ids=None, outing_ids=None, xreport_ids=None, article_ids=None,
+                     book_ids=None):
 
-        logging.info("Fix markdown with {} processor".format(processor  ))
+        logging.info("Fix markdown with {} processor".format(processor))
         logging.info("Ask before saving : {}".format(ask_before_saving))
         logging.info("Delay between each request : {}".format(self.wiki.min_delay))
 
-        for ids, constructor in [(article_ids, objects.Article),
-                                 (route_ids, objects.Route),
+        for ids, constructor in [(route_ids, objects.Route),
                                  (waypoint_ids, objects.Waypoint),
+                                 (article_ids, objects.Article),
+                                 (image_ids, objects.Image),
+                                 (outing_ids, objects.Outing),
+                                 (book_ids, objects.Book),
+                                 (user_ids, objects.WikiUser),
+                                 (xreport_ids, objects.Xreport),
+                                 (outing_ids, objects.Book),
                                  (area_ids, objects.Area), ]:
             for id in (ids or []):
                 item = self.wiki.get_wiki_object(constructor, id)
