@@ -3,7 +3,7 @@ from __future__ import print_function, unicode_literals, division
 import difflib
 import re
 
-__all__ = ['MarkdownProcessor', 'BBCodeRemover']
+__all__ = ['MarkdownProcessor', 'BBCodeRemover', 'LtagCleaner', 'BBCodeUrlRemover']
 
 
 class Converter(object):
