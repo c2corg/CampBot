@@ -91,6 +91,10 @@ class WikiUser(WikiObject):
 
         return None
 
+    def is_personal(self):
+        return True
+
+
 
 class Route(WikiObject):
     url_path = "routes"
@@ -117,6 +121,10 @@ class Book(WikiObject):
 class Xreport(WikiObject):
     url_path = "xreports"
 
+    def is_personal(self):
+        return True
+
+
 
 class Waypoint(WikiObject):
     url_path = "waypoints"
@@ -137,6 +145,9 @@ class Area(WikiObject):
 
 class Outing(WikiObject):
     url_path = "outings"
+
+    def is_personal(self):
+        return True
 
 
 class ForumUser(BotObject):
