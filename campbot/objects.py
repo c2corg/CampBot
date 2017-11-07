@@ -55,7 +55,7 @@ class WikiObject(BotObject):
     def fix_markdown(self, corrector):
         updated = False
         for locale in self.locales:
-            for field in ("description", "gear", "remarks", "route_history", "summary"):
+            for field in ("description", "gear", "remarks", "route_history", "summary", "access", "access_period"):
                 if field in locale and locale[field]:
                     new_value = corrector(locale[field], field, locale, self)
                     updated = updated or (new_value != locale[field])
