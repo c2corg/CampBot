@@ -113,45 +113,76 @@ class BBCodeUrlRemover(MarkdownProcessor):
     _tests = [
         {
             "source": "[url]http://www.google.com[/url]",
-            "result": "http://www.google.com"
+            "expected": "http://www.google.com"
         },
         {
             "source": "[url]http://www.google.com[/url] x [url]http://www.google2.com[/url]",
-            "result": "http://www.google.com x http://www.google2.com"
+            "expected": "http://www.google.com x http://www.google2.com"
         },
         {
             "source": "[url=http://www.google.com]google[/url]",
-            "result": "[google](http://www.google.com)",
+            "expected": "[google](http://www.google.com)",
         },
         {
             "source": "[url=http://www.google.com]google[/url] et [url=http://www.google2.com]google2[/url]",
-            "result": "[google](http://www.google.com) et [google2](http://www.google2.com)"
-        }
+            "expected": "[google](http://www.google.com) et [google2](http://www.google2.com)"
+        },
+        {
+            "source": "[url]http://www.google.com?a=b&c=d[/url]",
+            "expected": "[url]http://www.google.com?a=b&c=d[/url]"
+        },
+        {
+            "source": "[url]http://www.google.com?a=b&c=d[/url] x [url]http://www.google2.com?a=b&c=d[/url]",
+            "expected": "[url]http://www.google.com?a=b&c=d[/url] x [url]http://www.google2.com?a=b&c=d[/url]"
+        },
+        {
+            "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
+            "expected": "[url=http://www.google.com?a=b&c=d]google[/url]",
+        },
+        {
+            "source": "[url=http://www.google.com?a=b&c=d]go[/url] et [url=http://www.google2.com?a=b&c=d]o[/url]",
+            "expected": "[url=http://www.google.com?a=b&c=d]go[/url] et [url=http://www.google2.com?a=b&c=d]o[/url]"
+        },
+        {
+            "source": "[email]dev@camptocamp.org[/email]",
+            "expected": "[dev@camptocamp.org](mailto:dev@camptocamp.org)"
+        },
+        {
+            "source": "[email=dev@camptocamp.org]email[/email]",
+            "expected": "[email](mailto:dev@camptocamp.org)"
+        },
     ]
 
     def do_tests(self):
         def do_test(source, expected):
             result = self.modify(source)
             if result != expected:
-                print("source   ", repr(source))
-                print("expected ", repr(expected))
-                print("result   ", repr(result))
+                print("Source   ", repr(source))
+                print("Expected ", repr(expected))
+                print("Result   ", repr(result))
                 print()
 
         for test in self._tests:
-            source = test["source"]
-            expected = test["result"]
-            do_test(source, expected)
+            do_test(**test)
 
     def __init__(self):
         self.modifiers = [
-            Converter(pattern=r'\[url\](.*?)\[/url\]',
+            Converter(pattern=r'\[url\]([^\n\&]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
                       repl=r"\1",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[url\=(.*?)\](.*?)\[\/url\]',
+            Converter(pattern=r'\[url\=([^\n\&]*?)\](.*?)\[\/url\]',  # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
                       repl=r"[\2](\1)",
                       flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[email\](.*?)\[/email\]',
+                      repl=r"[\1](mailto:\1)",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[email\=(.*?)\](.*?)\[\/email\]',
+                      repl=r"[\2](mailto:\1)",
+                      flags=re.IGNORECASE),
+
         ]
 
 
