@@ -238,16 +238,19 @@ class CampBot(object):
         logging.info("Ask before saving : {}".format(ask_before_saving))
         logging.info("Delay between each request : {}".format(self.wiki.min_delay))
 
-        for ids, constructor in [(route_ids, objects.Route),
-                                 (waypoint_ids, objects.Waypoint),
-                                 (article_ids, objects.Article),
-                                 (image_ids, objects.Image),
-                                 (outing_ids, objects.Outing),
-                                 (book_ids, objects.Book),
-                                 (user_ids, objects.WikiUser),
-                                 (xreport_ids, objects.Xreport),
-                                 (outing_ids, objects.Book),
-                                 (area_ids, objects.Area), ]:
+        for ids, constructor in [
+            (route_ids, objects.Route),
+            (waypoint_ids, objects.Waypoint),
+            (article_ids, objects.Article),
+            (image_ids, objects.Image),
+            (outing_ids, objects.Outing),
+            (book_ids, objects.Book),
+            (area_ids, objects.Area),
+            (user_ids, objects.WikiUser),
+            (xreport_ids, objects.Xreport),
+            (outing_ids, objects.Book),
+        ]:
+
             for id in (ids or []):
                 item = self.wiki.get_wiki_object(constructor, id)
                 url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, id)
