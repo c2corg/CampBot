@@ -111,13 +111,18 @@ class BBCodeUrlRemover(MarkdownProcessor):
     comment = "Replace BBcode [url] by Markdown"
 
     _tests = [
+
+        {
+            "source": "[url=]http://www.zone-di-tranquillita.ch/[/url]",
+            "expected": "http://www.zone-di-tranquillita.ch/ "
+        },
         {
             "source": "[url]http://www.google.com[/url]",
-            "expected": "http://www.google.com"
+            "expected": "http://www.google.com "
         },
         {
             "source": "[url]http://www.google.com[/url] x [url]http://www.google2.com[/url]",
-            "expected": "http://www.google.com x http://www.google2.com"
+            "expected": "http://www.google.com  x http://www.google2.com "
         },
         {
             "source": "[url=http://www.google.com]google[/url]",
@@ -168,6 +173,10 @@ class BBCodeUrlRemover(MarkdownProcessor):
     def __init__(self):
         self.modifiers = [
             Converter(pattern=r'\[url\]([^\n\&]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
+                      repl=r"\1 ",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[url\=\](.*?)\[\/url\]',  # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
                       repl=r"\1 ",
                       flags=re.IGNORECASE),
 
