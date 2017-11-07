@@ -255,7 +255,7 @@ class CampBot(object):
                 if "redirects_to" in item:
                     print("{} is a redirection".format(url))
 
-                elif item.protected:
+                elif item.protected or (item.type == 'c' and item.article_type == "personal"):
                     print("{} is protected".format(url))
 
                 elif not item.is_valid():

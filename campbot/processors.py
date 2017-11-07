@@ -168,7 +168,7 @@ class BBCodeUrlRemover(MarkdownProcessor):
     def __init__(self):
         self.modifiers = [
             Converter(pattern=r'\[url\]([^\n\&]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
-                      repl=r"\1",
+                      repl=r"\1 ",
                       flags=re.IGNORECASE),
 
             Converter(pattern=r'\[url\=([^\n\&]*?)\](.*?)\[\/url\]',  # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
