@@ -70,6 +70,9 @@ class WikiObject(BotObject):
     def is_valid(self):
         return self.get_invalidity_reason() is None
 
+    def is_personal(self):
+        return False
+
     def get_invalidity_reason(self):
         return None
 
@@ -96,9 +99,15 @@ class Route(WikiObject):
 class Article(WikiObject):
     url_path = "articles"
 
+    def is_personal(self):
+        return self.article_type == "personal"
+
 
 class Image(WikiObject):
     url_path = "images"
+
+    def is_personal(self):
+        return self.image_type == "personal"
 
 
 class Book(WikiObject):

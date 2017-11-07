@@ -243,12 +243,11 @@ class CampBot(object):
             (waypoint_ids, objects.Waypoint),
             (article_ids, objects.Article),
             (image_ids, objects.Image),
-            (outing_ids, objects.Outing),
             (book_ids, objects.Book),
             (area_ids, objects.Area),
+            (outing_ids, objects.Outing),
             (user_ids, objects.WikiUser),
             (xreport_ids, objects.Xreport),
-            (outing_ids, objects.Book),
         ]:
 
             for id in (ids or []):
@@ -258,7 +257,7 @@ class CampBot(object):
                 if "redirects_to" in item:
                     print("{} is a redirection".format(url))
 
-                elif item.protected or (item.type == 'c' and item.article_type == "personal"):
+                elif item.protected or item.is_personal():
                     print("{} is protected".format(url))
 
                 elif not item.is_valid():
