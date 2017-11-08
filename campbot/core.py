@@ -249,28 +249,30 @@ class CampBot(object):
             (user_ids, objects.WikiUser),
             (xreport_ids, objects.Xreport),
         ]:
+            if ids and len(ids) != 0:
+                for id, i in zip(ids, range(len(ids))):
+                    item = self.wiki.get_wiki_object(constructor, id)
 
-            for id in (ids or []):
-                item = self.wiki.get_wiki_object(constructor, id)
-                url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, id)
+                    url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, id)
+                    progress = "{}/{}".format(i + 1, len(ids))
 
-                if "redirects_to" in item:
-                    print("{} is a redirection".format(url))
+                    if "redirects_to" in item:
+                        print(progress, "{} is a redirection".format(url))
 
-                elif item.protected or item.is_personal():
-                    print("{} is protected".format(url))
+                    elif item.protected or item.is_personal():
+                        print(progress, "{} is protected".format(url))
 
-                elif not item.is_valid():
-                    print("{} : {}".format(url, item.get_invalidity_reason()))
+                    elif not item.is_valid():
+                        print(progress, "{} : {}".format(url, item.get_invalidity_reason()))
 
-                elif item.fix_markdown(processor):
-                    if not processor.ready_for_production:
-                        print("{} is impacted".format(url))
+                    elif item.fix_markdown(processor):
+                        if not processor.ready_for_production:
+                            print(progress, "{} is impacted".format(url))
 
-                    elif not ask_before_saving or input("Save {} y/[n]?".format(url)) == "y":
-                        print("Saving {}".format(url))
-                        item.save(processor.comment)
+                        elif not ask_before_saving or input(progress, "Save {} y/[n]?".format(url)) == "y":
+                            print(progress, "Saving {}".format(url))
+                            item.save(processor.comment)
 
-                    print()
-                else:
-                    print("Nothing found on {}".format(url))
+                        print()
+                    else:
+                        print(progress, "Nothing found on {}".format(url))
