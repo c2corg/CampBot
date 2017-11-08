@@ -192,13 +192,14 @@ class CampBot(object):
     def __init__(self, proxies=None, min_delay=None):
         self.wiki = WikiBot(self, "https://api.camptocamp.org", proxies=proxies, min_delay=min_delay)
         self.forum = ForumBot(self, "https://forum.camptocamp.org", proxies=proxies, min_delay=min_delay)
-
+        self.moderator = False
         self.forum.headers['X-Requested-With'] = "XMLHttpRequest"
         self.forum.headers['Host'] = "forum.camptocamp.org"
 
     def login(self, login, password):
         res = self.wiki.post("/users/login", {"username": login, "password": password, "discourse": True})
         token = res["token"]
+        self.moderator = "moderator" in res["roles"]
         self.wiki.headers["Authorization"] = 'JWT token="{}"'.format(token)
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
 
@@ -230,25 +231,27 @@ class CampBot(object):
             print()
 
     def fix_markdown(self, processor, ask_before_saving=True,
-                     route_ids=None, waypoint_ids=None, area_ids=None, user_ids=None,
-                     image_ids=None, outing_ids=None, xreport_ids=None, article_ids=None,
-                     book_ids=None):
+                     route_ids=None, waypoint_ids=None, area_ids=None,
+                     user_ids=None, image_ids=None, outing_ids=None,
+                     xreport_ids=None, article_ids=None, book_ids=None):
 
         logging.info("Fix markdown with {} processor".format(processor))
         logging.info("Ask before saving : {}".format(ask_before_saving))
         logging.info("Delay between each request : {}".format(self.wiki.min_delay))
 
-        for ids, constructor in [
-            (route_ids, objects.Route),
-            (waypoint_ids, objects.Waypoint),
-            (article_ids, objects.Article),
-            (image_ids, objects.Image),
-            (book_ids, objects.Book),
-            (area_ids, objects.Area),
-            (outing_ids, objects.Outing),
-            (user_ids, objects.WikiUser),
-            (xreport_ids, objects.Xreport),
-        ]:
+        lists = [(route_ids, objects.Route),
+                 (waypoint_ids, objects.Waypoint),
+                 (article_ids, objects.Article),
+                 (image_ids, objects.Image),
+                 (book_ids, objects.Book),
+                 (area_ids, objects.Area)]
+
+        if self.moderator:
+            lists += [(outing_ids, objects.Outing),
+                      (user_ids, objects.WikiUser),
+                      (xreport_ids, objects.Xreport)]
+
+        for ids, constructor in lists:
             if ids and len(ids) != 0:
                 for id, i in zip(ids, range(len(ids))):
                     item = self.wiki.get_wiki_object(constructor, id)
@@ -259,7 +262,7 @@ class CampBot(object):
                     if "redirects_to" in item:
                         print(progress, "{} is a redirection".format(url))
 
-                    elif item.protected or item.is_personal():
+                    elif not self.moderator and (item.protected or item.is_personal()):
                         print(progress, "{} is protected".format(url))
 
                     elif not item.is_valid():
