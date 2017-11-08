@@ -6,6 +6,8 @@ from dateutil import parser
 import pytz
 import logging
 import time
+from requests.exceptions import HTTPError
+import sys
 
 from . import objects
 
@@ -239,12 +241,13 @@ class CampBot(object):
         logging.info("Ask before saving : {}".format(ask_before_saving))
         logging.info("Delay between each request : {}".format(self.wiki.min_delay))
 
-        lists = [(route_ids, objects.Route),
-                 (waypoint_ids, objects.Waypoint),
-                 (article_ids, objects.Article),
-                 (image_ids, objects.Image),
-                 (book_ids, objects.Book),
-                 (area_ids, objects.Area)]
+        lists = [
+            (route_ids, objects.Route),
+            (waypoint_ids, objects.Waypoint),
+            (article_ids, objects.Article),
+            (image_ids, objects.Image),
+            (book_ids, objects.Book),
+            (area_ids, objects.Area)]
 
         if self.moderator:
             lists += [(outing_ids, objects.Outing),
@@ -272,9 +275,12 @@ class CampBot(object):
                         if not processor.ready_for_production:
                             print(progress, "{} is impacted".format(url))
 
-                        elif not ask_before_saving or input(progress, "Save {} y/[n]?".format(url)) == "y":
+                        elif not ask_before_saving or input("Save {} y/[n]?".format(url)) == "y":
                             print(progress, "Saving {}".format(url))
-                            item.save(processor.comment)
+                            try:
+                                item.save(processor.comment)
+                            except HTTPError as e:
+                                print("Error while saving", url, e, file=sys.stderr)
 
                         print()
                     else:
