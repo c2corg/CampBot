@@ -95,7 +95,6 @@ class WikiUser(WikiObject):
         return True
 
 
-
 class Route(WikiObject):
     url_path = "routes"
 
@@ -111,7 +110,7 @@ class Image(WikiObject):
     url_path = "images"
 
     def is_personal(self):
-        return self.image_type == "personal"
+        return self.image_type in ("personal", "copyright")
 
 
 class Book(WikiObject):
@@ -123,7 +122,6 @@ class Xreport(WikiObject):
 
     def is_personal(self):
         return True
-
 
 
 class Waypoint(WikiObject):
