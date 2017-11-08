@@ -133,8 +133,12 @@ class BBCodeUrlRemover(MarkdownProcessor):
             "expected": "[google](http://www.google.com) et [google2](http://www.google2.com)"
         },
         {
-            "source": "[url]http://www.google.com?a=b&c=d[/url]",
-            "expected": "[url]http://www.google.com?a=b&c=d[/url]"
+            "source": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]",
+            "expected": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]"
+        },
+        {
+            "source": "[url]http://www.google.com?a=b;d[/url]",
+            "expected": "[url]http://www.google.com?a=b;d[/url]"
         },
         {
             "source": "[url]http://www.google.com?a=b&c=d[/url] x [url]http://www.google2.com?a=b&c=d[/url]",
@@ -172,15 +176,12 @@ class BBCodeUrlRemover(MarkdownProcessor):
 
     def __init__(self):
         self.modifiers = [
-            Converter(pattern=r'\[url\]([^\n\&]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
+            Converter(pattern=r'\[url=?\]([^\n\&\!\;]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
                       repl=r"\1 ",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[url\=\](.*?)\[\/url\]',  # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
-                      repl=r"\1 ",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[url\=([^\n\&]*?)\](.*?)\[\/url\]',  # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
+            Converter(pattern=r'\[url\=([^\n\&\!\;]*?)\](.*?)\[\/url\]',
+                      # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
                       repl=r"[\2](\1)",
                       flags=re.IGNORECASE),
 
