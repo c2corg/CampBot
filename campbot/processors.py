@@ -41,6 +41,7 @@ class MarkdownProcessor(object):
         result = result[1:]
         return result
 
+
 class BBCodeRemover(MarkdownProcessor):
     ready_for_production = True
     comment = "Replace BBcode by Markdown"
@@ -134,7 +135,7 @@ class BBCodeRemover(MarkdownProcessor):
         self.modifiers = [
             get_typo_cleaner("b", "**"),
             get_typo_cleaner("i", "*"),
-            get_typo_cleaner("c", "`"),
+            #    get_typo_cleaner("c", "`"),
 
             Converter(pattern=r'\[i\]\*\*([^\n\r\*\`]*?)\*\*\[/i\]',
                       repl=r"***\1***",
@@ -181,8 +182,8 @@ class BBCodeUrlRemover(MarkdownProcessor):
             "expected": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]"
         },
         {
-            "source": "[url]http://www.google.com?a=b;d[/url]",
-            "expected": "[url]http://www.google.com?a=b;d[/url]"
+            "source": "[url]http://www.google.com?a=b;d[/url] et [url]pas.touche.fr[/url]",
+            "expected": "[url]http://www.google.com?a=b;d[/url] et [url]pas.touche.fr[/url]"
         },
         {
             "source": "[url]http://www.google.com?a=b&c=d[/url] x [url]http://www.google2.com?a=b&c=d[/url]",
@@ -220,8 +221,8 @@ class BBCodeUrlRemover(MarkdownProcessor):
 
     def __init__(self):
         self.modifiers = [
-            Converter(pattern=r'\[url=?\]([^\n\&\!\;]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
-                      repl=r"\1 ",
+            Converter(pattern=r'\[url=?\](http|www)([^\n\&\!\;]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
+                      repl=r"\1\2 ",
                       flags=re.IGNORECASE),
 
             Converter(pattern=r'\[url\=([^\n\&\!\;]*?)\](.*?)\[\/url\]',
