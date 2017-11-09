@@ -108,7 +108,7 @@ class BBCodeRemover(MarkdownProcessor):
 
 class BBCodeUrlRemover(MarkdownProcessor):
     ready_for_production = True
-    comment = "Replace BBcode [url] by Markdown"
+    comment = "Replace BBcode url tag by Markdown syntax"
 
     _tests = [
 
