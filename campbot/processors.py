@@ -352,3 +352,33 @@ class LtagCleaner(MarkdownProcessor):
             return "\n".join(result)
 
         self.modifiers.append(modifier)
+
+
+class ColorAndUnderlineRemover(MarkdownProcessor):
+    ready_for_production = True
+    comment = "Remove color and u tags"
+
+    _tests = [
+        {
+            "source": "test [u]underlines[/u] and [color=#FFdd1E]color[/color] et [color=red]color[/color]",
+            "expected": "test underlines and color et color"
+        },
+    ]
+
+    def do_tests(self):
+        def do_test(source, expected):
+            result = self.modify(source)
+            if result != expected:
+                print("source   ", repr(source))
+                print("expected ", repr(expected))
+                print("result   ", repr(result))
+                print()
+
+        for test in self._tests:
+            do_test(**test)
+
+    def __init__(self):
+        self.modifiers = []
+        self.modifiers.append(Converter(pattern=r'\[/?(color|u)(=#?[a-zA-Z0-9]{3,10})?\]',
+                                        repl=r"",
+                                        flags=re.IGNORECASE), )
