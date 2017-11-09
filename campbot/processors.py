@@ -41,10 +41,44 @@ class MarkdownProcessor(object):
         result = result[1:]
         return result
 
-
 class BBCodeRemover(MarkdownProcessor):
     ready_for_production = True
     comment = "Replace BBcode by Markdown"
+
+    _tests = [
+        {
+            "source": "un texte en [b]gras [/b]et un en [i]italique[/i] [i][/i] ",
+            "expected": "un texte en **gras** et un en *italique*  ",
+        },
+        {
+            "source": "un texte en [b][i]gras et italique[/i][/b]",
+            "expected": "un texte en ***gras et italique***",
+        },
+        {
+            "source": "[center][b]outside![/b][/center]",
+            "expected": "**[center]outside![/center]**",
+        },
+        {
+            "source": "[url=http:google.fr][i]outside![/i][/url]",
+            "expected": "*[url=http:google.fr]outside![/url]*",
+        },
+        {
+            "source": "[b]\r\ngrep!\r\n[/b]",
+            "expected": "\r\n**grep!**\r\n",
+        },
+    ]
+
+    def do_tests(self):
+        def do_test(source, expected):
+            result = self.modify(source)
+            if result != expected:
+                print("Source   ", repr(source))
+                print("Expected ", repr(expected))
+                print("Result   ", repr(result))
+                print()
+
+        for test in self._tests:
+            do_test(**test)
 
     def __init__(self):
         def get_typo_cleaner(bbcode_tag, markdown_tag):
@@ -73,6 +107,16 @@ class BBCodeRemover(MarkdownProcessor):
                 Converter(pattern=r'\[' + bbcode_tag + r'\] *\r\n([^\*\#]?)',
                           repl=r"\r\n[" + bbcode_tag + r"]\1",
                           flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[center] *\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\] *\[/center]',
+                    repl=markdown_tag + r"[center]\1[/center]" + markdown_tag,
+                    flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[url=(.*?)] *\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\] *\[/url]',
+                    repl=markdown_tag + r"[url=\1]\2[/url]" + markdown_tag,
+                    flags=re.IGNORECASE),
 
                 Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
                           repl=markdown_tag + r"\1" + markdown_tag,
