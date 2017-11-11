@@ -135,7 +135,6 @@ class BBCodeRemover(MarkdownProcessor):
         self.modifiers = [
             get_typo_cleaner("b", "**"),
             get_typo_cleaner("i", "*"),
-            #    get_typo_cleaner("c", "`"),
 
             Converter(pattern=r'\[i\]\*\*([^\n\r\*\`]*?)\*\*\[/i\]',
                       repl=r"***\1***",
