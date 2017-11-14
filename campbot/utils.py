@@ -18,7 +18,7 @@ def get_ids_from_file(filename):
             if item_type not in result:
                 result[item_type] = []
 
-            elif int(item_id) not in result[item_type]:
+            if int(item_id) not in result[item_type]:
                 result[item_type].append(int(item_id))
 
     return result

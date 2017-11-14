@@ -122,6 +122,10 @@ class BBCodeRemover(MarkdownProcessor):
                 Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
                           repl=markdown_tag + r"\1" + markdown_tag,
                           flags=re.IGNORECASE),
+
+                Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\r?\n([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
+                          repl=markdown_tag + r"\1\n\2" + markdown_tag,
+                          flags=re.IGNORECASE),
             ]
 
             def result(markdown):
@@ -220,11 +224,11 @@ class BBCodeUrlRemover(MarkdownProcessor):
 
     def __init__(self):
         self.modifiers = [
-            Converter(pattern=r'\[url=?\](http|www)([^\n\&\!\;]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
+            Converter(pattern=r'\[url=?\](http|www)([^\n\&\;]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
                       repl=r"\1\2 ",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[url\=([^\n\&\!\;]*?)\](.*?)\[\/url\]',
+            Converter(pattern=r'\[url\=([^\n\&\;]*?)\](.*?)\[\/url\]',
                       # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
                       repl=r"[\2](\1)",
                       flags=re.IGNORECASE),

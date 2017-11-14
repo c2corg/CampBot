@@ -247,7 +247,8 @@ class CampBot(object):
             (article_ids, objects.Article),
             (image_ids, objects.Image),
             (book_ids, objects.Book),
-            (area_ids, objects.Area)]
+            (area_ids, objects.Area)
+        ]
 
         if self.moderator:
             lists += [(outing_ids, objects.Outing),
