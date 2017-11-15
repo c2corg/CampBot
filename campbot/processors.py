@@ -7,7 +7,7 @@ __all__ = ['MarkdownProcessor', 'BBCodeRemover', 'LtagCleaner', 'BBCodeUrlRemove
 
 
 class Converter(object):
-    def __init__(self, pattern, repl, flags):
+    def __init__(self, pattern, repl, flags=0):
         self.re = re.compile(pattern=pattern, flags=flags)
         self.repl = repl
         self.flags = flags
@@ -66,6 +66,22 @@ class BBCodeRemover(MarkdownProcessor):
         {
             "source": "[b]\r\ngrep!\r\n[/b]",
             "expected": "\r\n**grep!**\r\n",
+        },
+        {
+            "source": "#c coucou ##c s",
+            "expected": "# coucou ##c s",
+        },
+        {
+            "source": "line\n####c coucou ##c s",
+            "expected": "line\n#### coucou ##c s",
+        },
+        {
+            "source": "###coucou",
+            "expected": "###coucou",
+        },
+        {
+            "source": "###C bien",
+            "expected": "###C bien",
         },
     ]
 
@@ -151,6 +167,10 @@ class BBCodeRemover(MarkdownProcessor):
             Converter(pattern=r'\[(/?)warn\]',
                       repl=r"[\1warning]",
                       flags=re.IGNORECASE),
+
+            Converter(pattern=r'(^|\n)(#+)c +',
+                      repl=r"\1\2 "),
+
         ]
 
 
