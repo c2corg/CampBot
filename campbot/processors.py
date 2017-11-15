@@ -3,7 +3,7 @@ from __future__ import print_function, unicode_literals, division
 import difflib
 import re
 
-__all__ = ['MarkdownProcessor', 'BBCodeRemover', 'LtagCleaner', 'BBCodeUrlRemover']
+__all__ = ['MarkdownProcessor', 'BBCodeRemover', 'LtagCleaner']
 
 
 class Converter(object):
@@ -25,7 +25,8 @@ class MarkdownProcessor(object):
         result = self.modify(markdown)
 
         d = difflib.Differ()
-        diff = d.compare(markdown.replace("\r", "").split("\n"), result.replace("\r", "").split("\n"))
+        diff = d.compare(markdown.replace("\r", "").split("\n"),
+                         result.replace("\r", "").split("\n"))
         for dd in diff:
             if dd[0] != " ":
                 print(dd)
@@ -61,7 +62,7 @@ class BBCodeRemover(MarkdownProcessor):
         },
         {
             "source": "[url=http:google.fr][i]outside![/i][/url]",
-            "expected": "*[url=http:google.fr]outside![/url]*",
+            "expected": "*[outside!](http:google.fr)*",
         },
         {
             "source": "[b]\r\ngrep!\r\n[/b]",
@@ -83,106 +84,6 @@ class BBCodeRemover(MarkdownProcessor):
             "source": "###C bien",
             "expected": "###C bien",
         },
-    ]
-
-    def do_tests(self):
-        def do_test(source, expected):
-            result = self.modify(source)
-            if result != expected:
-                print("Source   ", repr(source))
-                print("Expected ", repr(expected))
-                print("Result   ", repr(result))
-                print()
-
-        for test in self._tests:
-            do_test(**test)
-
-    def __init__(self):
-        def get_typo_cleaner(bbcode_tag, markdown_tag):
-            converters = [
-
-                Converter(pattern=r'\[' + bbcode_tag + r'\]\[/' + bbcode_tag + '\]',
-                          repl=r"",
-                          flags=re.IGNORECASE),
-
-                Converter(pattern=r'\n *\[' + bbcode_tag + r'\] *',
-                          repl=r"\n[" + bbcode_tag + r"]",
-                          flags=re.IGNORECASE),
-
-                Converter(pattern=r'\[' + bbcode_tag + r'\] +',
-                          repl=r" [" + bbcode_tag + r"]",
-                          flags=re.IGNORECASE),
-
-                Converter(pattern=r' +\[/' + bbcode_tag + r'\]',
-                          repl=r"[/" + bbcode_tag + r"] ",
-                          flags=re.IGNORECASE),
-
-                Converter(pattern=r'\r\n\[/' + bbcode_tag + r'\]',
-                          repl=r"[/" + bbcode_tag + r"]\r\n",
-                          flags=re.IGNORECASE),
-
-                Converter(pattern=r'\[' + bbcode_tag + r'\] *\r\n([^\*\#]?)',
-                          repl=r"\r\n[" + bbcode_tag + r"]\1",
-                          flags=re.IGNORECASE),
-
-                Converter(
-                    pattern=r'\[center] *\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\] *\[/center]',
-                    repl=markdown_tag + r"[center]\1[/center]" + markdown_tag,
-                    flags=re.IGNORECASE),
-
-                Converter(
-                    pattern=r'\[url=(.*?)] *\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\] *\[/url]',
-                    repl=markdown_tag + r"[url=\1]\2[/url]" + markdown_tag,
-                    flags=re.IGNORECASE),
-
-                Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
-                          repl=markdown_tag + r"\1" + markdown_tag,
-                          flags=re.IGNORECASE),
-
-                Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]+?)\r?\n([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
-                          repl=markdown_tag + r"\1\n\2" + markdown_tag,
-                          flags=re.IGNORECASE),
-
-                Converter(pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]+?)\r?\n([^\n\r\*\`]+?)\r?\n([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
-                          repl=markdown_tag + r"\1\n\2\n\3" + markdown_tag,
-                          flags=re.IGNORECASE),
-            ]
-
-            def result(markdown):
-                for converter in converters:
-                    markdown = converter(markdown)
-
-                return markdown
-
-            return result
-
-        self.modifiers = [
-            get_typo_cleaner("b", "**"),
-            get_typo_cleaner("i", "*"),
-
-            Converter(pattern=r'\[i\]\*\*([^\n\r\*\`]*?)\*\*\[/i\]',
-                      repl=r"***\1***",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[(/?)imp\]',
-                      repl=r"[\1important]",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[(/?)warn\]',
-                      repl=r"[\1warning]",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'(^|\n)(#+)c +',
-                      repl=r"\1\2 "),
-
-        ]
-
-
-class BBCodeUrlRemover(MarkdownProcessor):
-    ready_for_production = True
-    comment = "Replace BBcode url tag by Markdown syntax"
-
-    _tests = [
 
         {
             "source": "[url=]http://www.zone-di-tranquillita.ch/[/url]",
@@ -231,7 +132,7 @@ class BBCodeUrlRemover(MarkdownProcessor):
         {
             "source": "[email=dev@camptocamp.org]email[/email]",
             "expected": "[email](mailto:dev@camptocamp.org)"
-        },
+        }
     ]
 
     def do_tests(self):
@@ -247,12 +148,96 @@ class BBCodeUrlRemover(MarkdownProcessor):
             do_test(**test)
 
     def __init__(self):
+        def get_typo_cleaner(bbcode_tag, markdown_tag):
+            converters = [
+
+                Converter(
+                    pattern=r'\[' + bbcode_tag + r'\]\[/' + bbcode_tag + '\]',
+                    repl=r"",
+                    flags=re.IGNORECASE),
+
+                Converter(pattern=r'\n *\[' + bbcode_tag + r'\] *',
+                          repl=r"\n[" + bbcode_tag + r"]",
+                          flags=re.IGNORECASE),
+
+                Converter(pattern=r'\[' + bbcode_tag + r'\] +',
+                          repl=r" [" + bbcode_tag + r"]",
+                          flags=re.IGNORECASE),
+
+                Converter(pattern=r' +\[/' + bbcode_tag + r'\]',
+                          repl=r"[/" + bbcode_tag + r"] ",
+                          flags=re.IGNORECASE),
+
+                Converter(pattern=r'\r\n\[/' + bbcode_tag + r'\]',
+                          repl=r"[/" + bbcode_tag + r"]\r\n",
+                          flags=re.IGNORECASE),
+
+                Converter(pattern=r'\[' + bbcode_tag + r'\] *\r\n([^\*\#]?)',
+                          repl=r"\r\n[" + bbcode_tag + r"]\1",
+                          flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[center] *\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\] *\[/center]',
+                    repl=markdown_tag + r"[center]\1[/center]" + markdown_tag,
+                    flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[url=(.*?)] *\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\] *\[/url]',
+                    repl=markdown_tag + r"[url=\1]\2[/url]" + markdown_tag,
+                    flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]*?)\[/' + bbcode_tag + '\]',
+                    repl=markdown_tag + r"\1" + markdown_tag,
+                    flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[' + bbcode_tag + r'\]([^\n\r\*\`]+?)\r?\n([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
+                    repl=markdown_tag + r"\1\n\2" + markdown_tag,
+                    flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[' + bbcode_tag + r'\]' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
+                    repl=markdown_tag + r"\1\n\2\n\3" + markdown_tag,
+                    flags=re.IGNORECASE),
+            ]
+
+            def result(markdown):
+                for converter in converters:
+                    markdown = converter(markdown)
+
+                return markdown
+
+            return result
+
         self.modifiers = [
-            Converter(pattern=r'\[url=?\](http|www)([^\n\&\;]*?)\[/url\]',  # r'\[url\](.*?)\[/url\]' for all urls
+            get_typo_cleaner("b", "**"),
+            get_typo_cleaner("i", "*"),
+
+            Converter(pattern=r'\[i\]\*\*([^\n\r\*\`]*?)\*\*\[/i\]',
+                      repl=r"***\1***",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)imp\]',
+                      repl=r"[\1important]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)warn\]',
+                      repl=r"[\1warning]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'(^|\n)(#+)c +',
+                      repl=r"\1\2 "),
+
+            Converter(pattern=r'\[url=?\](http|www)([^\n\&\;\!]*?)\[/url\]',
+                      # r'\[url\](.*?)\[/url\]' for all urls
                       repl=r"\1\2 ",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[url\=([^\n\&\;]*?)\](.*?)\[\/url\]',
+            Converter(pattern=r'\[url\=([^\n\&\;\!]*?)\](.*?)\[\/url\]',
                       # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
                       repl=r"[\2](\1)",
                       flags=re.IGNORECASE),
@@ -335,7 +320,8 @@ class LtagCleaner(MarkdownProcessor):
         },
     ]
 
-    _numbering_postfixs = ["", "12", "+3", "+", "-25", "-+2", "+2-+1", "bis", "bis2", "*5bis", "+5bis", "_", "+bis",
+    _numbering_postfixs = ["", "12", "+3", "+", "-25", "-+2", "+2-+1", "bis",
+                           "bis2", "*5bis", "+5bis", "_", "+bis",
                            "''", "+''", "!", "2!", "+2!", "="]
 
     def do_tests(self):
@@ -372,14 +358,16 @@ class LtagCleaner(MarkdownProcessor):
                                       flags=re.IGNORECASE)
 
         # replace no first sep by `|`
-        no_leading_converter = Converter(pattern=r'^([LR]#)([^\n \|\:]*)( +)([^\:\|\ ])',
-                                         repl=r"\1\2\3|\4",
-                                         flags=re.IGNORECASE)
+        no_leading_converter = Converter(
+            pattern=r'^([LR]#)([^\n \|\:]*)( +)([^\:\|\ ])',
+            repl=r"\1\2\3|\4",
+            flags=re.IGNORECASE)
 
         # replace multiple consecutives  `:` or  `|` by `|`
-        multiple_converter = Converter(pattern=r'( *)(<br>)?( *)([\:\|]{2,}|\|)( *)(<br>)?( *)',
-                                       repl=r"\1\3|\5\7",
-                                       flags=re.IGNORECASE)
+        multiple_converter = Converter(
+            pattern=r'( *)(<br>)?( *)([\:\|]{2,}|\|)( *)(<br>)?( *)',
+            repl=r"\1\3|\5\7",
+            flags=re.IGNORECASE)
 
         def modifier(markdown):
             markdown = markdown.replace("\r\n", "\n")
@@ -414,7 +402,8 @@ class LtagCleaner(MarkdownProcessor):
             result = []
 
             for line in lines:
-                if (line.startswith("L#") or line.startswith("R#")) and line[2] != "~":
+                if (line.startswith("L#") or line.startswith("R#")) and line[
+                    2] != "~":
                     line = leading_converter(line)
                     line = no_leading_converter(line)
                     line = multiple_converter(line)
@@ -451,6 +440,7 @@ class ColorAndUnderlineRemover(MarkdownProcessor):
 
     def __init__(self):
         self.modifiers = []
-        self.modifiers.append(Converter(pattern=r'\[/?(color|u)(=#?[a-zA-Z0-9]{3,10})?\]',
-                                        repl=r"",
-                                        flags=re.IGNORECASE), )
+        self.modifiers.append(
+            Converter(pattern=r'\[/?(color|u)(=#?[a-zA-Z0-9]{3,10})?\]',
+                      repl=r"",
+                      flags=re.IGNORECASE), )

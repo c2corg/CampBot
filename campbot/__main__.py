@@ -4,7 +4,6 @@ CampBot, Python bot framework for camptocamp.org
 Usage:
   campbot check_voters <message_url> --login=<login> --password=<password> [--delay=<seconds>]
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
-  campbot clean_bbcode_links <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
 
 
@@ -43,13 +42,6 @@ elif args["remove_bbcode"]:
 
     ids = get_ids_from_file(args["<ids_file>"])
     get_campbot().fix_markdown(BBCodeRemover(), ask_before_saving=not args["--batch"], **ids)
-
-elif args["clean_bbcode_links"]:
-    from campbot.utils import get_ids_from_file
-    from campbot.processors import BBCodeUrlRemover
-
-    ids = get_ids_from_file(args["<ids_file>"])
-    get_campbot().fix_markdown(BBCodeUrlRemover(), ask_before_saving=not args["--batch"], **ids)
 
 elif args["clean_color_u"]:
     from campbot.utils import get_ids_from_file
