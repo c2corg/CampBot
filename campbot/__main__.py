@@ -5,6 +5,7 @@ Usage:
   campbot check_voters <message_url> --login=<login> --password=<password> [--delay=<seconds>]
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot remove_bbcode2 <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
 
 
 Options:
@@ -41,13 +42,22 @@ elif args["remove_bbcode"]:
     from campbot.processors import BBCodeRemover
 
     ids = get_ids_from_file(args["<ids_file>"])
-    get_campbot().fix_markdown(BBCodeRemover(), ask_before_saving=not args["--batch"], **ids)
+    get_campbot().fix_markdown(BBCodeRemover(),
+                               ask_before_saving=not args["--batch"], **ids)
 
 elif args["clean_color_u"]:
     from campbot.utils import get_ids_from_file
     from campbot.processors import ColorAndUnderlineRemover
 
     ids = get_ids_from_file(args["<ids_file>"])
-    get_campbot().fix_markdown(ColorAndUnderlineRemover(), ask_before_saving=not args["--batch"], **ids)
+    get_campbot().fix_markdown(ColorAndUnderlineRemover(),
+                               ask_before_saving=not args["--batch"], **ids)
 
 
+elif args["remove_bbcode2"]:
+    from campbot.utils import get_ids_from_file
+    from campbot.processors import BBCodeRemover2
+
+    ids = get_ids_from_file(args["<ids_file>"])
+    get_campbot().fix_markdown(BBCodeRemover2(),
+                               ask_before_saving=not args["--batch"], **ids)

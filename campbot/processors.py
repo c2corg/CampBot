@@ -3,7 +3,7 @@ from __future__ import print_function, unicode_literals, division
 import difflib
 import re
 
-__all__ = ['MarkdownProcessor', 'BBCodeRemover', 'LtagCleaner']
+__all__ = ['MarkdownProcessor', 'BBCodeRemover', 'LtagCleaner', 'BBCodeRemover2']
 
 
 class Converter(object):
@@ -41,6 +41,32 @@ class MarkdownProcessor(object):
 
         result = result[1:]
         return result
+
+
+class BBCodeRemover2(MarkdownProcessor):
+    def __init__(self):
+
+        self.modifiers = [
+            Converter(pattern=r'\n?\[hr\]\n?',
+                      repl=r"\n----\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)sub\]',
+                      repl=r"<\1sub>",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)sup\]',
+                      repl=r"<\1sup>",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)s\]',
+                      repl=r"<\1s>",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[p]',
+                      repl=r"<p></p>",
+                      flags=re.IGNORECASE),
+        ]
 
 
 class BBCodeRemover(MarkdownProcessor):

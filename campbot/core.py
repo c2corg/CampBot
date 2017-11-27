@@ -266,7 +266,9 @@ class CampBot(object):
                     if "redirects_to" in item:
                         print(progress, "{} is a redirection".format(url))
 
-                    elif not self.moderator and (item.protected or item.is_personal()):
+                    elif processor.ready_for_production and \
+                            not self.moderator and \
+                            (item.protected or item.is_personal()):
                         print(progress, "{} is protected".format(url))
 
                     elif not item.is_valid():
@@ -283,6 +285,6 @@ class CampBot(object):
                             except HTTPError as e:
                                 print("Error while saving", url, e, file=sys.stderr)
 
-                        print()
+                            print()
                     else:
                         print(progress, "Nothing found on {}".format(url))
