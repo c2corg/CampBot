@@ -91,14 +91,25 @@ class BaseBot(object):
 
 
 class WikiBot(BaseBot):
-    def get_wiki_object(self, constructor, id):
+    def get_wiki_object(self, id, constructor=None, document_type=None):
+        if not constructor:
+            constructor = {"u": objects.WikiUser,
+                           "a": objects.Area,
+                           "w": objects.Waypoint,
+                           "o": objects.Outing,
+                           "i": objects.Image,
+                           "x": objects.Xreport,
+                           "c": objects.Article,
+                           "b": objects.Book,
+                           "r": objects.Route}[document_type]
+
         return constructor(self.campbot, self.get("/{}/{}".format(constructor.url_path, id)))
 
     def get_route(self, route_id):
-        return self.get_wiki_object(objects.Route, route_id)
+        return self.get_wiki_object(route_id, constructor=objects.Route)
 
     def get_waypoint(self, waypoint_id):
-        return self.get_wiki_object(objects.Waypoint, waypoint_id)
+        return self.get_wiki_object(waypoint_id, constructor=objects.Waypoint)
 
     def get_user(self, user_id=None, wiki_name=None, forum_name=None):
         if user_id:
@@ -258,7 +269,7 @@ class CampBot(object):
         for ids, constructor in lists:
             if ids and len(ids) != 0:
                 for id, i in zip(ids, range(len(ids))):
-                    item = self.wiki.get_wiki_object(constructor, id)
+                    item = self.wiki.get_wiki_object(id, constructor=constructor)
 
                     url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, id)
                     progress = "{}/{}".format(i + 1, len(ids))
@@ -288,3 +299,33 @@ class CampBot(object):
                             print()
                     else:
                         print(progress, "Nothing found on {}".format(url))
+
+    def check_recent_changes(self, check_message_url):
+
+        post = self.forum.get_post(url=check_message_url)
+
+        tests = []
+        test = None
+        for line in post.raw.split("\n"):
+            if line.startswith("#"):
+                test = (line, [])
+                tests.append(test)
+            elif line.startswith("    ") and test:
+                test[1].append(line.strip())
+
+        documents = {}
+        for contrib in self.wiki.get_contributions():
+            documents[contrib["document"]["document_id"]] = contrib["document"]
+
+        docs = [self.wiki.get_wiki_object(doc["document_id"], document_type=doc["type"]) for doc in documents.values()]
+
+        for test_id, patterns in tests:
+            result = [(doc, doc.search(patterns)) for doc in docs]
+            result = [(doc, locales) for doc, locales in result if
+                      len(locales) != 0]
+
+            if len(result):
+                print("\n{}".format(test_id))
+                for doc, locales in result:
+                    for locale in locales:
+                        print("* https://www.camptocamp.org" + doc.get_url(locale.lang))

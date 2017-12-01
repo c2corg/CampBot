@@ -4,6 +4,7 @@ from __future__ import print_function, unicode_literals, division
 
 import re
 
+
 class BotObject(dict):
     def __init__(self, campbot, data):
         super(BotObject, self).__init__(data)
@@ -19,15 +20,14 @@ class BotObject(dict):
         self[name] = [constructor(self._campbot, data) for data in self[name]]
 
     def _convert_dict(self, name, constructor):
-        self[name] = {key: constructor(self._campbot, self[name][key]) for key
-                      in self[name]}
+        if name in self:
+            self[name] = {key: constructor(self._campbot, self[name][key]) for key in self[name]}
 
 
 class Contribution(BotObject):
     def get_diff_url(self):
         history = self._campbot.wiki.get(
-            "/document/{}/history/{}".format(self.document["document_id"],
-                                             self.lang))
+            "/document/{}/history/{}".format(self.document["document_id"], self.lang))
 
         previous = None
         for version in history["versions"]:
@@ -48,18 +48,28 @@ class Contribution(BotObject):
         )
 
 
+class Locale(BotObject):
+    pass
+
+
 class WikiObject(BotObject):
     url_path = None
 
+    def __init__(self, campbot, data):
+        super(WikiObject, self).__init__(campbot, data)
+        self._convert_list("locales", Locale)
+
+    def get_url(self, lang=None):
+        return "/{}/{}{}".format(self.url_path, self.document_id, "" if lang is None else "/" + lang)
+
     def get_locale(self, lang):
         for locale in self.locales:
-            if locale["lang"] == lang:
+            if locale.lang == lang:
                 return locale
 
     def get_locale_fields(self):
-        return (
-            "description", "gear", "remarks", "route_history",
-            "summary", "access", "access_period")
+        return ("description", "gear", "remarks", "route_history",
+                "summary", "access", "access_period")
 
     def search(self, patterns):
 
@@ -86,8 +96,7 @@ class WikiObject(BotObject):
 
     def save(self, message):
         payload = {"document": self, "message": message}
-        return self._campbot.wiki.put(
-            "/{}/{}".format(self.url_path, self.document_id), payload)
+        return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id), payload)
 
     def is_valid(self):
         return self.get_invalidity_reason() is None
