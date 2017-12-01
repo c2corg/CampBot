@@ -176,20 +176,23 @@ class ForumBot(BaseBot):
 
         return [objects.ForumUser(self.campbot, user) for user in result]
 
+    def _get_post_ids(self, url):
+        url = url.replace(self.api_url, "").split("?")[0].split("/")
+        assert url[1] == 't'
+        topic_id = url[3]
+        post_number = int(url[4]) if len(url) >= 5 else 1
+
+        return topic_id, post_number
+
     def get_topic(self, topic_id=None, url=None):
         if url:
-            url = url.replace(self.api_url, "").split("?")[0].split("/")
-            assert url[1] == 't'
-            topic_id = int(url[3])
+            topic_id, _ = self._get_post_ids(url)
 
         return self.get("/t/{}.json".format(topic_id))
 
     def get_post(self, topic_id=None, post_number=None, url=None):
         if url:
-            url = url.replace(self.api_url, "").split("?")[0].split("/")
-            assert url[1] == 't'
-            topic_id = url[3]
-            post_number = int(url[4]) if len(url) >= 5 else 1
+            topic_id, _ = self._get_post_ids(url)
 
         topic = self.get_topic(topic_id)
         post_id = topic["post_stream"]["stream"][post_number - 1]
