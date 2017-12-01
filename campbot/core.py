@@ -165,6 +165,10 @@ class WikiBot(BaseBot):
 
 
 class ForumBot(BaseBot):
+    def post_message(self, message, url):
+        topic_id, _ = self._get_post_ids(url)
+        self.post("/posts", {"topic_id": topic_id, "raw": message})
+
     def get_group_members(self, group_name):
         result = []
 
@@ -218,6 +222,7 @@ class CampBot(object):
         self.moderator = "moderator" in res["roles"]
         self.wiki.headers["Authorization"] = 'JWT token="{}"'.format(token)
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
+        self.forum.headers['X-CSRF-Token'] = self.forum.get("/session/csrf")["csrf"]
 
     def check_voters(self, url, allowed_groups=()):
 
