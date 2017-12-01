@@ -2,6 +2,7 @@
 
 from __future__ import print_function, unicode_literals, division
 
+import re
 
 class BotObject(dict):
     def __init__(self, campbot, data):
@@ -18,12 +19,15 @@ class BotObject(dict):
         self[name] = [constructor(self._campbot, data) for data in self[name]]
 
     def _convert_dict(self, name, constructor):
-        self[name] = {key: constructor(self._campbot, self[name][key]) for key in self[name]}
+        self[name] = {key: constructor(self._campbot, self[name][key]) for key
+                      in self[name]}
 
 
 class Contribution(BotObject):
     def get_diff_url(self):
-        history = self._campbot.wiki.get("/document/{}/history/{}".format(self.document["document_id"], self.lang))
+        history = self._campbot.wiki.get(
+            "/document/{}/history/{}".format(self.document["document_id"],
+                                             self.lang))
 
         previous = None
         for version in history["versions"]:
@@ -52,10 +56,27 @@ class WikiObject(BotObject):
             if locale["lang"] == lang:
                 return locale
 
+    def get_locale_fields(self):
+        return (
+            "description", "gear", "remarks", "route_history",
+            "summary", "access", "access_period")
+
+    def search(self, patterns):
+
+        def search(locale):
+            for field in self.get_locale_fields():
+                if field in locale and locale[field]:
+                    for pattern in patterns:
+                        if re.search(pattern, locale[field]):
+                            return True
+            return False
+
+        return [locale for locale in self.locales if search(locale)]
+
     def fix_markdown(self, corrector):
         updated = False
         for locale in self.locales:
-            for field in ("description", "gear", "remarks", "route_history", "summary", "access", "access_period"):
+            for field in self.get_locale_fields():
                 if field in locale and locale[field]:
                     new_value = corrector(locale[field], field, locale, self)
                     updated = updated or (new_value != locale[field])
@@ -65,7 +86,8 @@ class WikiObject(BotObject):
 
     def save(self, message):
         payload = {"document": self, "message": message}
-        return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id), payload)
+        return self._campbot.wiki.put(
+            "/{}/{}".format(self.url_path, self.document_id), payload)
 
     def is_valid(self):
         return self.get_invalidity_reason() is None
@@ -86,7 +108,8 @@ class WikiUser(WikiObject):
                                                     newest_date=newest_date)
 
     def get_last_contribution(self, oldest_date=None, newest_date=None):
-        for contribution in self.get_contributions(oldest_date=oldest_date, newest_date=newest_date):
+        for contribution in self.get_contributions(oldest_date=oldest_date,
+                                                   newest_date=newest_date):
             return contribution
 
         return None
@@ -131,7 +154,8 @@ class Waypoint(WikiObject):
         if self.waypoint_type in ("hut", "gite") and self.custodianship is None:
             return "custodianship is missing"
 
-        if self.elevation is None and self.waypoint_type not in ("climbing_indoor",):
+        if self.elevation is None and self.waypoint_type not in (
+                "climbing_indoor",):
             return "elevation is missing"
 
         return None
@@ -170,7 +194,8 @@ class PollOption(BotObject):
         url = "/polls/voters.json?post_id={}&poll_name={}&option_id={}&offset={}"
         offset = 0
         while True:
-            data = self._campbot.forum.get(url.format(post_id, poll_name, self.id, offset))[poll_name]
+            data = self._campbot.forum.get(
+                url.format(post_id, poll_name, self.id, offset))[poll_name]
 
             if self.id not in data or len(data[self.id]) == 0:
                 raise StopIteration
