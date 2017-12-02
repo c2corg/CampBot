@@ -3,6 +3,7 @@ CampBot, Python bot framework for camptocamp.org
 
 Usage:
   campbot check_voters <message_url> --login=<login> --password=<password> [--delay=<seconds>]
+  campbot check_recent_changes  <message_url> --login=<login> --password=<password> [--delay=<seconds>]
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot remove_bbcode2 <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
@@ -36,6 +37,9 @@ def get_campbot():
 
 if args["check_voters"]:
     get_campbot().check_voters(url=args["<message_url>"])
+
+elif args["check_recent_changes"]:
+    get_campbot().check_recent_changes(check_message_url=args["<message_url>"])
 
 elif args["remove_bbcode"]:
     from campbot.utils import get_ids_from_file
