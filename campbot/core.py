@@ -341,7 +341,6 @@ class CampBot(object):
             for locale in doc.locales:
                 if not locale.route_history or len(locale.route_history) == 0:
                     append_report_line(missing_history, doc, locale)
-                    print(doc)
 
         if len(missing_history) != 0:
             messages.append("## Missing history")
