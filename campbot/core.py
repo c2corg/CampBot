@@ -309,6 +309,13 @@ class CampBot(object):
 
     def check_recent_changes(self, check_message_url):
 
+        def append_report_line(messages, doc, locale):
+            messages.append("* {} [{}](https://www.camptocamp.org{}) ({})".format(
+                doc.url_path,
+                locale.title,
+                doc.get_url(locale.lang),
+                locale.lang))
+
         post = self.forum.get_post(url=check_message_url)
 
         tests = []
@@ -320,26 +327,34 @@ class CampBot(object):
             elif line.startswith("    ") and test:
                 test[1].append(line.strip())
 
-        documents = {}
+        contribs = {}
         for contrib in self.wiki.get_contributions():
-            documents[contrib["document"]["document_id"]] = contrib["document"]
+            contribs[contrib.document["document_id"]] = contrib
 
-        docs = [self.wiki.get_wiki_object(doc["document_id"], document_type=doc["type"]) for doc in documents.values()]
+        docs = [contrib.get_full_document() for contrib in contribs.values()]
 
-        message = []
+        messages = []
+
+        # Check history
+        missing_history = []
+        for doc in [doc for doc in docs if doc.type == "r"]:
+            for locale in doc.locales:
+                if not locale.route_history or len(locale.route_history) == 0:
+                    append_report_line(missing_history, doc, locale)
+                    print(doc)
+
+        if len(missing_history) != 0:
+            messages.append("## Missing history")
+            messages += missing_history
+
         for test_id, patterns in tests:
             result = [(doc, doc.search(patterns)) for doc in docs]
             result = [(doc, locales) for doc, locales in result if len(locales) != 0]
 
             if len(result):
-                message.append(test_id)
+                messages.append(test_id)
                 for doc, locales in result:
                     for locale in locales:
-                        message.append("* {} [{}](https://www.camptocamp.org{}) ({})".format(
-                            doc.url_path,
-                            locale.title,
-                            doc.get_url(locale.lang),
-                            locale.lang)
-                        )
+                        append_report_line(messages, doc, locale)
 
-        self.forum.post_message("\n".join(message), check_message_url)
+        self.forum.post_message("\n".join(messages), check_message_url)

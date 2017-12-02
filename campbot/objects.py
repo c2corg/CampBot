@@ -25,6 +25,10 @@ class BotObject(dict):
 
 
 class Contribution(BotObject):
+    def get_full_document(self):
+        return self._campbot.wiki.get_wiki_object(self.document["document_id"],
+                                                  document_type=self.document["type"])
+
     def get_diff_url(self):
         history = self._campbot.wiki.get(
             "/document/{}/history/{}".format(self.document["document_id"], self.lang))
