@@ -65,8 +65,7 @@ class BaseBot(object):
         self._wait()
         logging.debug("POST %s", url)
 
-        res = self._session.post(self.api_url + url, json=data,
-                                 proxies=self.proxies)
+        res = self._session.post(self.api_url + url, json=data, proxies=self.proxies)
 
         res.raise_for_status()
 
@@ -196,7 +195,7 @@ class ForumBot(BaseBot):
 
     def get_post(self, topic_id=None, post_number=None, url=None):
         if url:
-            topic_id, _ = self._get_post_ids(url)
+            topic_id, post_number = self._get_post_ids(url)
 
         topic = self.get_topic(topic_id)
         post_id = topic["post_stream"]["stream"][post_number - 1]
@@ -327,13 +326,20 @@ class CampBot(object):
 
         docs = [self.wiki.get_wiki_object(doc["document_id"], document_type=doc["type"]) for doc in documents.values()]
 
+        message = []
         for test_id, patterns in tests:
             result = [(doc, doc.search(patterns)) for doc in docs]
-            result = [(doc, locales) for doc, locales in result if
-                      len(locales) != 0]
+            result = [(doc, locales) for doc, locales in result if len(locales) != 0]
 
             if len(result):
-                print("\n{}".format(test_id))
+                message.append(test_id)
                 for doc, locales in result:
                     for locale in locales:
-                        print("* https://www.camptocamp.org" + doc.get_url(locale.lang))
+                        message.append("* {} [{}](https://www.camptocamp.org{}) ({})".format(
+                            doc.url_path,
+                            locale.title,
+                            doc.get_url(locale.lang),
+                            locale.lang)
+                        )
+
+        self.forum.post_message("\n".join(message), check_message_url)
