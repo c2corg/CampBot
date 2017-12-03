@@ -356,4 +356,7 @@ class CampBot(object):
                     for locale in locales:
                         append_report_line(messages, doc, locale)
 
+        for m in messages:
+            print(m)
+
         self.forum.post_message("\n".join(messages), check_message_url)
