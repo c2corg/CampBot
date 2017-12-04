@@ -17,7 +17,8 @@ class BotObject(dict):
         return self[item]
 
     def _convert_list(self, name, constructor):
-        self[name] = [constructor(self._campbot, data) for data in self[name]]
+        if name in self:
+            self[name] = [constructor(self._campbot, data) for data in self[name]]
 
     def _convert_dict(self, name, constructor):
         if name in self:
@@ -53,7 +54,11 @@ class Contribution(BotObject):
 
 
 class Locale(BotObject):
-    pass
+    def get_title(self):
+        if "title_prefix" in self:
+            return "{} : {}".format(self.title_prefix, self.title)
+        else:
+            return self.title
 
 
 class WikiObject(BotObject):
@@ -75,7 +80,7 @@ class WikiObject(BotObject):
         return ("description", "gear", "remarks", "route_history",
                 "summary", "access", "access_period")
 
-    def search(self, patterns):
+    def search(self, patterns, langs):
 
         def search(locale):
             for field in self.get_locale_fields():
@@ -85,7 +90,7 @@ class WikiObject(BotObject):
                             return True
             return False
 
-        return [locale for locale in self.locales if search(locale)]
+        return [locale for locale in self.locales if (locale.lang in langs and search(locale))]
 
     def fix_markdown(self, corrector):
         updated = False

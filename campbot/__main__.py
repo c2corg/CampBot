@@ -3,18 +3,19 @@ CampBot, Python bot framework for camptocamp.org
 
 Usage:
   campbot check_voters <message_url> --login=<login> --password=<password> [--delay=<seconds>]
-  campbot check_recent_changes  <message_url> --login=<login> --password=<password> [--delay=<seconds>]
+  campbot check_recent_changes <message_url> --langs=<langs> --login=<login> --password=<password> [--delay=<seconds>]
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot remove_bbcode2 <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
 
 
 Options:
-  --login=<login>          Bot login
-  --password=<password>    Bot password
-  --delay=<seconds>        Minimum delay between each request. Default : 1 second
-  --batch                  Batch mode, means that no confirmation is required before saving
-                           Use very carefully
+  --login=<login>           Bot login
+  --password=<password>     Bot password
+  --delay=<seconds>         Minimum delay between each request. Default : 1 second
+  --batch                   Batch mode, means that no confirmation is required before saving
+                            Use very carefully
+  --langs=<langs>           Limit check to his langs
 
 """
 
@@ -39,7 +40,8 @@ if args["check_voters"]:
     get_campbot().check_voters(url=args["<message_url>"])
 
 elif args["check_recent_changes"]:
-    get_campbot().check_recent_changes(check_message_url=args["<message_url>"])
+    get_campbot().check_recent_changes(check_message_url=args["<message_url>"],
+                                       langs=args["--langs"].split(","))
 
 elif args["remove_bbcode"]:
     from campbot.utils import get_ids_from_file

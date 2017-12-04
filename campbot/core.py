@@ -307,14 +307,13 @@ class CampBot(object):
                     else:
                         print(progress, "Nothing found on {}".format(url))
 
-    def check_recent_changes(self, check_message_url):
+    def check_recent_changes(self, check_message_url, langs):
 
         def append_report_line(messages, doc, locale):
-            messages.append("* {} [{}](https://www.camptocamp.org{}) ({})".format(
+            messages.append("* {} [{}](https://www.camptocamp.org{})".format(
                 doc.url_path,
-                locale.title,
-                doc.get_url(locale.lang),
-                locale.lang))
+                locale.get_title(),
+                doc.get_url(locale.lang)))
 
         post = self.forum.get_post(url=check_message_url)
 
@@ -332,14 +331,16 @@ class CampBot(object):
             contribs[contrib.document["document_id"]] = contrib
 
         docs = [contrib.get_full_document() for contrib in contribs.values()]
+        docs = [doc for doc in docs if "redirects_to" not in doc]
 
         messages = []
 
         # Check history
         missing_history = []
         for doc in [doc for doc in docs if doc.type == "r"]:
-            for locale in doc.locales:
-                if not locale.route_history or len(locale.route_history) == 0:
+            for lang in langs:
+                locale = doc.get_locale(lang)
+                if locale and (not locale.route_history or len(locale.route_history) == 0):
                     append_report_line(missing_history, doc, locale)
 
         if len(missing_history) != 0:
@@ -347,7 +348,7 @@ class CampBot(object):
             messages += missing_history
 
         for test_id, patterns in tests:
-            result = [(doc, doc.search(patterns)) for doc in docs]
+            result = [(doc, doc.search(patterns, langs)) for doc in docs]
             result = [(doc, locales) for doc, locales in result if len(locales) != 0]
 
             if len(result):
