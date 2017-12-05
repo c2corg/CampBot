@@ -309,11 +309,21 @@ class CampBot(object):
 
     def check_recent_changes(self, check_message_url, langs):
 
-        def append_report_line(messages, doc, locale):
-            messages.append("* {} [{}](https://www.camptocamp.org{})".format(
+        def append_report_line(messages, doc, locale, contribs):
+
+            def user_link(contrib):
+                user = contrib.user
+                return "[{}](https://www.camptocamp.org/whatsnew#u={})".format(user["username"], user["user_id"])
+
+            contribs = filter(lambda c: c.lang == locale.lang, contribs)
+            users = set(map(user_link, contribs))
+
+            messages.append("* {} [{}](https://www.camptocamp.org{}) - {}".format(
                 doc.url_path,
                 locale.get_title(),
-                doc.get_url(locale.lang)))
+                doc.get_url(locale.lang),
+                ", ".join(users)
+            ))
 
         post = self.forum.get_post(url=check_message_url)
 
@@ -324,40 +334,45 @@ class CampBot(object):
                 test = (line, [])
                 tests.append(test)
             elif line.startswith("    ") and test:
-                test[1].append(line.strip())
+                test[1].append(line[4:])
 
         contribs = {}
         for contrib in self.wiki.get_contributions():
-            contribs[contrib.document["document_id"]] = contrib
+            if contrib.document["document_id"] not in contribs:
+                contribs[contrib.document["document_id"]] = (contrib.get_full_document(), [])
 
-        docs = [contrib.get_full_document() for contrib in contribs.values()]
-        docs = [doc for doc in docs if "redirects_to" not in doc]
+            contribs[contrib.document["document_id"]][1].append(contrib)
+
+        docs = [(doc, contribs) for doc, contribs in contribs.values() if "redirects_to" not in doc]
 
         messages = []
 
         # Check history
         missing_history = []
-        for doc in [doc for doc in docs if doc.type == "r"]:
-            for lang in langs:
-                locale = doc.get_locale(lang)
-                if locale and (not locale.route_history or len(locale.route_history) == 0):
-                    append_report_line(missing_history, doc, locale)
+        activities_with_history = ["snow_ice_mixed", "mountain_climbing", "rock_climbing", "ice_climbing"]
+
+        for doc, contribs in docs:
+            if doc.type == "r" and len([act for act in doc.activities if act in activities_with_history]) != 0:
+                for lang in langs:
+                    locale = doc.get_locale(lang)
+                    if locale and (not locale.route_history or len(locale.route_history) == 0):
+                        append_report_line(missing_history, doc, locale, contribs)
 
         if len(missing_history) != 0:
             messages.append("## Missing history")
             messages += missing_history
 
         for test_id, patterns in tests:
-            result = [(doc, doc.search(patterns, langs)) for doc in docs]
-            result = [(doc, locales) for doc, locales in result if len(locales) != 0]
+            result = [(doc, doc.search(patterns, langs), contribs) for doc, contribs in docs]
+            result = [(doc, locales, contribs) for doc, locales, contribs in result if len(locales) != 0]
 
             if len(result):
                 messages.append(test_id)
-                for doc, locales in result:
+                for doc, locales, contribs in result:
                     for locale in locales:
-                        append_report_line(messages, doc, locale)
+                        append_report_line(messages, doc, locale, contribs)
 
         for m in messages:
             print(m)
 
-        self.forum.post_message("\n".join(messages), check_message_url)
+            # self.forum.post_message("\n".join(messages), check_message_url)
