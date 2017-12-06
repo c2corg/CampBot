@@ -5,6 +5,18 @@ from __future__ import print_function, unicode_literals, division
 import re
 
 
+def get_constructor(document_type):
+    return {"u": WikiUser,
+            "a": Area,
+            "w": Waypoint,
+            "o": Outing,
+            "i": Image,
+            "x": Xreport,
+            "c": Article,
+            "b": Book,
+            "r": Route}[document_type]
+
+
 class BotObject(dict):
     def __init__(self, campbot, data):
         super(BotObject, self).__init__(data)
@@ -25,32 +37,32 @@ class BotObject(dict):
             self[name] = {key: constructor(self._campbot, self[name][key]) for key in self[name]}
 
 
-class Contribution(BotObject):
-    def get_full_document(self):
-        return self._campbot.wiki.get_wiki_object(self.document["document_id"],
-                                                  document_type=self.document["type"])
+class Version(BotObject):
+    def __init__(self, campbot, data):
+        super(Version, self).__init__(campbot, data)
+        self['document'] = get_constructor(self['document']['type'])(campbot, self['document'])
 
-    def get_diff_url(self):
-        history = self._campbot.wiki.get(
-            "/document/{}/history/{}".format(self.document["document_id"], self.lang))
-
-        previous = None
-        for version in history["versions"]:
-            if version["version_id"] == self.version_id:
-                break
-
-            previous = version
-
-        url_type = {"a": "areas"}[self.document["type"]]
+    def get_diff_url(self, lang):
+        constructor = get_constructor(document_type=self.document.type)
 
         return "{}/{}/diff/{}/{}/{}/{}".format(
             self._campbot.wiki.api_url.replace("api", "www"),
-            url_type,
+            constructor.url_path,
             self.document["document_id"],
-            self.lang,
-            previous["version_id"],
-            self.version_id
+            lang,
+            self.previous_version_id,
+            self.version["version_id"]
         )
+
+
+class Contribution(BotObject):
+    def __init__(self, campbot, data):
+        super(Contribution, self).__init__(campbot, data)
+        self['document'] = get_constructor(self['document']['type'])(campbot, self['document'])
+
+    def get_full_document(self):
+        return self._campbot.wiki.get_wiki_object(self.document["document_id"],
+                                                  document_type=self.document["type"])
 
 
 class Locale(BotObject):
@@ -59,6 +71,18 @@ class Locale(BotObject):
             return "{} : {}".format(self.title_prefix, self.title)
         else:
             return self.title
+
+    def get_locale_fields(self):
+        return ("description", "gear", "remarks", "route_history",
+                "summary", "access", "access_period")
+
+    def get_length(self):
+        result = 0
+        for field in self.get_locale_fields():
+            if field in self and self[field]:
+                result += len(self[field])
+
+        return result
 
 
 class WikiObject(BotObject):

@@ -3,6 +3,7 @@ from __future__ import print_function, unicode_literals, division
 import requests
 from datetime import datetime, timedelta
 from dateutil import parser
+from collections import OrderedDict
 import pytz
 import logging
 import time
@@ -90,17 +91,20 @@ class BaseBot(object):
 
 
 class WikiBot(BaseBot):
+    def get_wiki_object_version(self, id, document_type, lang, version_id):
+        if not version_id:
+            return None
+
+        constructor = objects.get_constructor(document_type)
+
+        url = "/{}/{}/{}/{}"
+        data = self.get(url.format(constructor.url_path, id, lang, version_id))
+
+        return objects.Version(self.campbot, data)
+
     def get_wiki_object(self, id, constructor=None, document_type=None):
         if not constructor:
-            constructor = {"u": objects.WikiUser,
-                           "a": objects.Area,
-                           "w": objects.Waypoint,
-                           "o": objects.Outing,
-                           "i": objects.Image,
-                           "x": objects.Xreport,
-                           "c": objects.Article,
-                           "b": objects.Book,
-                           "r": objects.Route}[document_type]
+            constructor = objects.get_constructor(document_type)
 
         return constructor(self.campbot, self.get("/{}/{}".format(constructor.url_path, id)))
 
@@ -309,70 +313,188 @@ class CampBot(object):
 
     def check_recent_changes(self, check_message_url, langs):
 
-        def append_report_line(messages, doc, locale, contribs):
+        class LengthTest(object):
+            def __init__(self):
+                self.name = "Document size"
 
-            def user_link(contrib):
-                user = contrib.user
-                return "[{}](https://www.camptocamp.org/whatsnew#u={})".format(user["username"], user["user_id"])
+                self.fail_marker = emoji("/images/emoji/apple/rage.png?v=3", self.name)
+                self.success_marker = ""
 
-            contribs = filter(lambda c: c.lang == locale.lang, contribs)
-            users = set(map(user_link, contribs))
+            def __call__(self, old_version, new_version):
+                old_doc = old_version.document if old_version else None
+                new_doc = new_version.document if new_version else None
 
-            messages.append("* {} [{}](https://www.camptocamp.org{}) - {}".format(
-                doc.url_path,
-                locale.get_title(),
-                doc.get_url(locale.lang),
-                ", ".join(users)
-            ))
+                if not old_doc or "redirects_to" in old_doc:
+                    return [], []
+
+                if not new_doc or "redirects_to" in new_doc:
+                    return [], []
+
+                result = []
+                for lang in langs:
+                    old_locale_length = old_doc.get_locale(lang).get_length()
+                    new_locale_length = new_doc.get_locale(lang).get_length()
+
+                    if old_locale_length != 0 and new_locale_length / old_locale_length < 0.5:
+                        result.append(new_doc.get_locale(lang))
+
+                return [], result
+
+        class ReTest(object):
+            def __init__(self, name):
+                self.name = name
+                self.patterns = []
+                self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
+                self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3",
+                                            self.name + " is now correct")
+
+            def __call__(self, old_version, new_version):
+                old_doc = old_version.document if old_version else None
+                new_doc = new_version.document if new_version else None
+
+                def test(doc):
+                    if not doc or "redirects_to" in doc:
+                        return []
+
+                    return doc.search(self.patterns, langs)
+
+                return test(old_doc), test(new_doc)
+
+        class HistoryTest(object):
+            activities_with_history = ["snow_ice_mixed", "mountain_climbing", "rock_climbing", "ice_climbing"]
+
+            def __init__(self):
+                self.name = "History"
+                self.fail_marker = emoji("/images/emoji/apple/closed_book.png?v=3", self.name)
+                self.success_marker = emoji("/images/emoji/apple/green_book.png?v=3", self.name + " is now correct")
+
+            def __call__(self, old_version, new_version):
+                old_doc = old_version.document if old_version else None
+                new_doc = new_version.document if new_version else None
+
+                def test(doc):
+                    if not doc or "redirects_to" in doc or doc.type != "r":
+                        return []
+
+                    if len([act for act in doc.activities if act in self.activities_with_history]) == 0:
+                        return []
+
+                    for lang in langs:
+                        locale = doc.get_locale(lang)
+                        if locale and (not locale.route_history or len(locale.route_history) == 0):
+                            return [locale, ]
+
+                    return []
+
+                return test(old_doc), test(new_doc)
+
+        def doc_link(doc, lang=None):
+            title = doc.get_locale(lang).get_title()
+            title = title if len(title) else "*Vide*"
+
+            return "[{}](https://www.camptocamp.org{})".format(
+                title,
+                doc.get_url(lang),
+            )
+
+        def user_link(user):
+            return "[{}](https://www.camptocamp.org/whatsnew#u={})".format(user["name"], user["user_id"])
+
+        def hist_link(doc, lang):
+            return "[hist](https://www.camptocamp.org/routes/history/{}/{})".format(doc.document_id, lang)
+
+        def diff_link(version, lang):
+            if not version.previous_version_id:
+                return "**New**"
+
+            return "[diff]({})".format(version.get_diff_url(lang))
+
+        def emoji(src, text):
+            return '<img src="{}" class="emoji" title="{}" alt="{}">'.format(src, text, text)
+
+        tests = [HistoryTest(), LengthTest()]
 
         post = self.forum.get_post(url=check_message_url)
-
-        tests = []
         test = None
         for line in post.raw.split("\n"):
             if line.startswith("#"):
-                test = (line, [])
+                test = ReTest(line)
                 tests.append(test)
             elif line.startswith("    ") and test:
-                test[1].append(line[4:])
-
-        contribs = {}
-        for contrib in self.wiki.get_contributions():
-            if contrib.document["document_id"] not in contribs:
-                contribs[contrib.document["document_id"]] = (contrib.get_full_document(), [])
-
-            contribs[contrib.document["document_id"]][1].append(contrib)
-
-        docs = [(doc, contribs) for doc, contribs in contribs.values() if "redirects_to" not in doc]
+                pattern = line[4:]
+                if len(pattern.strip()) != 0:
+                    test.patterns.append(line[4:])
 
         messages = []
 
-        # Check history
-        missing_history = []
-        activities_with_history = ["snow_ice_mixed", "mountain_climbing", "rock_climbing", "ice_climbing"]
+        items = OrderedDict()
+        for contrib in self.wiki.get_contributions():
+            if contrib.lang in langs:
+                if contrib.document["document_id"] not in items:
+                    items[contrib.document["document_id"]] = (contrib.get_full_document(), [])
 
-        for doc, contribs in docs:
-            if doc.type == "r" and len([act for act in doc.activities if act in activities_with_history]) != 0:
-                for lang in langs:
-                    locale = doc.get_locale(lang)
-                    if locale and (not locale.route_history or len(locale.route_history) == 0):
-                        append_report_line(missing_history, doc, locale, contribs)
+                items[contrib.document["document_id"]][1].append(contrib)
 
-        if len(missing_history) != 0:
-            messages.append("## Missing history")
-            messages += missing_history
+        for doc, contribs in items.values():
+            need_report = False
+            report = []
 
-        for test_id, patterns in tests:
-            result = [(doc, doc.search(patterns, langs), contribs) for doc, contribs in docs]
-            result = [(doc, locales, contribs) for doc, locales, contribs in result if len(locales) != 0]
+            if len(contribs) != 1:
+                report.append("* {} modifications ".format(
+                    len(contribs),
+                ))
 
-            if len(result):
-                messages.append(test_id)
-                for doc, locales, contribs in result:
-                    for locale in locales:
-                        append_report_line(messages, doc, locale, contribs)
+            for contrib in contribs:
+                new = self.wiki.get_wiki_object_version(contrib.document.document_id,
+                                                        contrib.document.type,
+                                                        contrib.lang,
+                                                        contrib.version_id)
 
-        for m in messages:
-            print(m)
+                old = self.wiki.get_wiki_object_version(contrib.document.document_id,
+                                                        contrib.document.type,
+                                                        contrib.lang,
+                                                        new.previous_version_id)
 
-            # self.forum.post_message("\n".join(messages), check_message_url)
+                emojis = []
+
+                for test in tests:
+                    old_is_ok, new_is_ok = test(old, new)
+                    old_is_ok, new_is_ok = len(old_is_ok) == 0, len(new_is_ok) == 0
+
+                    if old_is_ok and not new_is_ok:
+                        emojis.append(test.fail_marker)
+                        need_report = True
+                    elif not old_is_ok and new_is_ok:
+                        emojis.append(test.success_marker)
+
+                delta = new.document.get_locale(contrib.lang).get_length()
+                delta -= old.document.get_locale(contrib.lang).get_length() if old else 0
+
+                if delta < 0:
+                    delta = "<del>{:+d}</del>".format(delta)
+                elif delta > 0:
+                    delta = "<ins>{:+d}</ins>".format(delta)
+                else:
+                    delta = "-"
+
+                report.append("{}* {} {} {} ({} | {}) ({}) - {} →‎ *{}*".format(
+                    "" if len(contribs) == 1 else "  ",
+                    parser.parse(contrib.written_at).strftime("%H:%M"),
+                    "".join(emojis),
+                    doc_link(new.document, contrib.lang),
+                    diff_link(new, contrib.lang),
+                    hist_link(new.document, contrib.lang),
+                    delta,
+                    user_link(contrib.user),
+                    contrib.comment if len(contrib.comment) else "&nbsp;"
+                ))
+
+            if need_report:
+                messages += report
+
+        if len(messages) != 0:
+
+            for m in messages:
+                print(m)
+
+            self.forum.post_message("\n".join(messages), check_message_url)
