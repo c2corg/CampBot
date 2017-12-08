@@ -3,7 +3,7 @@ CampBot, Python bot framework for camptocamp.org
 
 Usage:
   campbot check_voters <message_url> --login=<login> --password=<password> [--delay=<seconds>]
-  campbot check_recent_changes <message_url> --langs=<langs> --login=<login> --password=<password> [--delay=<seconds>]
+  campbot check_recent_changes <message_url> --lang=<lang> --login=<login> --password=<password> [--delay=<seconds>]
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot remove_bbcode2 <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
@@ -15,7 +15,7 @@ Options:
   --delay=<seconds>         Minimum delay between each request. Default : 1 second
   --batch                   Batch mode, means that no confirmation is required before saving
                             Use very carefully
-  --langs=<langs>           Limit check to his langs
+  --lang=<lang>            Limit check to this lang
 
 """
 
@@ -41,7 +41,7 @@ if args["check_voters"]:
 
 elif args["check_recent_changes"]:
     get_campbot().check_recent_changes(check_message_url=args["<message_url>"],
-                                       langs=args["--langs"].split(","))
+                                       lang=args["--lang"].strip())
 
 elif args["remove_bbcode"]:
     from campbot.utils import get_ids_from_file
