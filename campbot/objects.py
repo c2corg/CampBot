@@ -104,17 +104,16 @@ class WikiObject(BotObject):
         return ("description", "gear", "remarks", "route_history",
                 "summary", "access", "access_period")
 
-    def search(self, patterns, langs):
+    def search(self, patterns, lang):
 
-        def search(locale):
-            for field in self.get_locale_fields():
-                if field in locale and locale[field]:
-                    for pattern in patterns:
-                        if re.search(pattern, locale[field]):
-                            return True
-            return False
+        locale = self.get_locale(lang)
 
-        return [locale for locale in self.locales if (locale.lang in langs and search(locale))]
+        for field in self.get_locale_fields():
+            if field in locale and locale[field]:
+                for pattern in patterns:
+                    if re.search(pattern, locale[field]):
+                        return True
+        return False
 
     def fix_markdown(self, corrector):
         updated = False

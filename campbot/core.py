@@ -311,7 +311,7 @@ class CampBot(object):
                     else:
                         print(progress, "Nothing found on {}".format(url))
 
-    def check_recent_changes(self, check_message_url, langs):
+    def check_recent_changes(self, check_message_url, lang):
 
         class LengthTest(object):
             def __init__(self):
@@ -325,20 +325,20 @@ class CampBot(object):
                 new_doc = new_version.document if new_version else None
 
                 if not old_doc or "redirects_to" in old_doc:
-                    return [], []
+                    return True, True
 
                 if not new_doc or "redirects_to" in new_doc:
-                    return [], []
+                    return True, True
 
-                result = []
-                for lang in langs:
-                    old_locale_length = old_doc.get_locale(lang).get_length()
-                    new_locale_length = new_doc.get_locale(lang).get_length()
+                result = True
 
-                    if old_locale_length != 0 and new_locale_length / old_locale_length < 0.5:
-                        result.append(new_doc.get_locale(lang))
+                old_locale_length = old_doc.get_locale(lang).get_length()
+                new_locale_length = new_doc.get_locale(lang).get_length()
 
-                return [], result
+                if old_locale_length != 0 and new_locale_length / old_locale_length < 0.5:
+                    result = False
+
+                return True, result
 
         class ReTest(object):
             def __init__(self, name):
@@ -354,9 +354,9 @@ class CampBot(object):
 
                 def test(doc):
                     if not doc or "redirects_to" in doc:
-                        return []
+                        return True
 
-                    return doc.search(self.patterns, langs)
+                    return not doc.search(self.patterns, lang)
 
                 return test(old_doc), test(new_doc)
 
@@ -374,17 +374,16 @@ class CampBot(object):
 
                 def test(doc):
                     if not doc or "redirects_to" in doc or doc.type != "r":
-                        return []
+                        return True
 
                     if len([act for act in doc.activities if act in self.activities_with_history]) == 0:
-                        return []
+                        return True
 
-                    for lang in langs:
-                        locale = doc.get_locale(lang)
-                        if locale and (not locale.route_history or len(locale.route_history) == 0):
-                            return [locale, ]
+                    locale = doc.get_locale(lang)
+                    if locale and (not locale.route_history or len(locale.route_history) == 0):
+                        return False
 
-                    return []
+                    return True
 
                 return test(old_doc), test(new_doc)
 
@@ -405,7 +404,7 @@ class CampBot(object):
 
         def diff_link(version, lang):
             if not version.previous_version_id:
-                return "**New**"
+                return "*New*"
 
             return "[diff]({})".format(version.get_diff_url(lang))
 
@@ -429,7 +428,7 @@ class CampBot(object):
 
         items = OrderedDict()
         for contrib in self.wiki.get_contributions():
-            if contrib.lang in langs:
+            if contrib.lang == lang:
                 if contrib.document["document_id"] not in items:
                     items[contrib.document["document_id"]] = (contrib.get_full_document(), [])
 
@@ -459,7 +458,6 @@ class CampBot(object):
 
                 for test in tests:
                     old_is_ok, new_is_ok = test(old, new)
-                    old_is_ok, new_is_ok = len(old_is_ok) == 0, len(new_is_ok) == 0
 
                     if old_is_ok and not new_is_ok:
                         emojis.append(test.fail_marker)
@@ -475,9 +473,9 @@ class CampBot(object):
                 elif delta > 0:
                     delta = "<ins>{:+d}</ins>".format(delta)
                 else:
-                    delta = "-"
+                    delta = "**=**"
 
-                report.append("{}* {} {} {} ({} | {}) ({}) - {} →‎ *{}*".format(
+                report.append("{}* {} {} {} ({} | {}) **·** ({}) **·** {} →‎ *{}*".format(
                     "" if len(contribs) == 1 else "  ",
                     parser.parse(contrib.written_at).strftime("%H:%M"),
                     "".join(emojis),
@@ -497,4 +495,4 @@ class CampBot(object):
             for m in messages:
                 print(m)
 
-            self.forum.post_message("\n".join(messages), check_message_url)
+                #  self.forum.post_message("\n".join(messages), check_message_url)
