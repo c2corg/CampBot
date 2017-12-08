@@ -9,7 +9,7 @@ import logging
 import time
 from requests.exceptions import HTTPError
 import sys
-
+from . import checkers
 from . import objects
 
 try:
@@ -91,6 +91,10 @@ class BaseBot(object):
 
 
 class WikiBot(BaseBot):
+    @property
+    def ui_url(self):
+        return self.api_url.replace("api", "www")
+
     def get_wiki_object_version(self, id, document_type, lang, version_id):
         if not version_id:
             return None
@@ -313,116 +317,8 @@ class CampBot(object):
 
     def check_recent_changes(self, check_message_url, lang):
 
-        class LengthTest(object):
-            def __init__(self):
-                self.name = "Document size"
-
-                self.fail_marker = emoji("/images/emoji/apple/rage.png?v=3", self.name)
-                self.success_marker = ""
-
-            def __call__(self, old_version, new_version):
-                old_doc = old_version.document if old_version else None
-                new_doc = new_version.document if new_version else None
-
-                if not old_doc or "redirects_to" in old_doc:
-                    return True, True
-
-                if not new_doc or "redirects_to" in new_doc:
-                    return True, True
-
-                result = True
-
-                old_locale_length = old_doc.get_locale(lang).get_length()
-                new_locale_length = new_doc.get_locale(lang).get_length()
-
-                if old_locale_length != 0 and new_locale_length / old_locale_length < 0.5:
-                    result = False
-
-                return True, result
-
-        class ReTest(object):
-            def __init__(self, name):
-                self.name = name
-                self.patterns = []
-                self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
-                self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3",
-                                            self.name + " is now correct")
-
-            def __call__(self, old_version, new_version):
-                old_doc = old_version.document if old_version else None
-                new_doc = new_version.document if new_version else None
-
-                def test(doc):
-                    if not doc or "redirects_to" in doc:
-                        return True
-
-                    return not doc.search(self.patterns, lang)
-
-                return test(old_doc), test(new_doc)
-
-        class HistoryTest(object):
-            activities_with_history = ["snow_ice_mixed", "mountain_climbing", "rock_climbing", "ice_climbing"]
-
-            def __init__(self):
-                self.name = "History"
-                self.fail_marker = emoji("/images/emoji/apple/closed_book.png?v=3", self.name)
-                self.success_marker = emoji("/images/emoji/apple/green_book.png?v=3", self.name + " is now correct")
-
-            def __call__(self, old_version, new_version):
-                old_doc = old_version.document if old_version else None
-                new_doc = new_version.document if new_version else None
-
-                def test(doc):
-                    if not doc or "redirects_to" in doc or doc.type != "r":
-                        return True
-
-                    if len([act for act in doc.activities if act in self.activities_with_history]) == 0:
-                        return True
-
-                    locale = doc.get_locale(lang)
-                    if locale and (not locale.route_history or len(locale.route_history) == 0):
-                        return False
-
-                    return True
-
-                return test(old_doc), test(new_doc)
-
-        def doc_link(doc, lang=None):
-            title = doc.get_locale(lang).get_title()
-            title = title if len(title) else "*Vide*"
-
-            return "[{}](https://www.camptocamp.org{})".format(
-                title,
-                doc.get_url(lang),
-            )
-
-        def user_link(user):
-            return "[{}](https://www.camptocamp.org/whatsnew#u={})".format(user["name"], user["user_id"])
-
-        def hist_link(doc, lang):
-            return "[hist](https://www.camptocamp.org/routes/history/{}/{})".format(doc.document_id, lang)
-
-        def diff_link(version, lang):
-            if not version.previous_version_id:
-                return "*New*"
-
-            return "[diff]({})".format(version.get_diff_url(lang))
-
-        def emoji(src, text):
-            return '<img src="{}" class="emoji" title="{}" alt="{}">'.format(src, text, text)
-
-        tests = [HistoryTest(), LengthTest()]
-
-        post = self.forum.get_post(url=check_message_url)
-        test = None
-        for line in post.raw.split("\n"):
-            if line.startswith("#"):
-                test = ReTest(line)
-                tests.append(test)
-            elif line.startswith("    ") and test:
-                pattern = line[4:]
-                if len(pattern.strip()) != 0:
-                    test.patterns.append(line[4:])
+        tests = [checkers.HistoryTest(lang), checkers.LengthTest(lang)]
+        tests += checkers.get_re_tests(self.forum.get_post(url=check_message_url), lang)
 
         messages = []
 
@@ -479,11 +375,11 @@ class CampBot(object):
                     "" if len(contribs) == 1 else "  ",
                     parser.parse(contrib.written_at).strftime("%H:%M"),
                     "".join(emojis),
-                    doc_link(new.document, contrib.lang),
-                    diff_link(new, contrib.lang),
-                    hist_link(new.document, contrib.lang),
+                    checkers.doc_link(new.document, contrib.lang),
+                    checkers.diff_link(new, contrib.lang),
+                    checkers.hist_link(new.document, contrib.lang),
                     delta,
-                    user_link(contrib.user),
+                    checkers.user_link(contrib.user),
                     contrib.comment if len(contrib.comment) else "&nbsp;"
                 ))
 

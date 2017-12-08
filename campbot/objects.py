@@ -46,7 +46,7 @@ class Version(BotObject):
         constructor = get_constructor(document_type=self.document.type)
 
         return "{}/{}/diff/{}/{}/{}/{}".format(
-            self._campbot.wiki.api_url.replace("api", "www"),
+            self._campbot.wiki.ui_url,
             constructor.url_path,
             self.document["document_id"],
             lang,
@@ -93,7 +93,10 @@ class WikiObject(BotObject):
         self._convert_list("locales", Locale)
 
     def get_url(self, lang=None):
-        return "/{}/{}{}".format(self.url_path, self.document_id, "" if lang is None else "/" + lang)
+        return "{}/{}/{}{}".format(self._campbot.wiki.ui_url,
+                                   self.url_path,
+                                   self.document_id,
+                                   "" if lang is None else "/" + lang)
 
     def get_locale(self, lang):
         for locale in self.locales:
