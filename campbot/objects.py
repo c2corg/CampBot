@@ -45,10 +45,13 @@ class Version(BotObject):
     def get_diff_url(self, lang):
         constructor = get_constructor(document_type=self.document.type)
 
+        if not self.previous_version_id:
+            return self.document.get_url(lang)
+
         return "{}/{}/diff/{}/{}/{}/{}".format(
-            self._campbot.wiki.api_url.replace("api", "www"),
+            self._campbot.wiki.ui_url,
             constructor.url_path,
-            self.document["document_id"],
+            self.document.document_id,
             lang,
             self.previous_version_id,
             self.version["version_id"]
@@ -59,6 +62,7 @@ class Contribution(BotObject):
     def __init__(self, campbot, data):
         super(Contribution, self).__init__(campbot, data)
         self['document'] = get_constructor(self['document']['type'])(campbot, self['document'])
+        self['user'] = WikiUser(campbot, self['user'])
 
     def get_full_document(self):
         return self._campbot.wiki.get_wiki_object(self.document["document_id"],
@@ -93,7 +97,20 @@ class WikiObject(BotObject):
         self._convert_list("locales", Locale)
 
     def get_url(self, lang=None):
-        return "/{}/{}{}".format(self.url_path, self.document_id, "" if lang is None else "/" + lang)
+        return "{}/{}/{}{}".format(self._campbot.wiki.ui_url,
+                                   self.url_path,
+                                   self.document_id,
+                                   "" if lang is None else "/" + lang)
+
+    def get_history_url(self, lang):
+        return "{}/{}/history/{}/{}".format(self._campbot.wiki.ui_url,
+                                            self.url_path,
+                                            self.document_id,
+                                            lang)
+
+    def get_title(self, lang):
+        locale = self.get_locale(lang)
+        return locale.get_title() if locale else ""
 
     def get_locale(self, lang):
         for locale in self.locales:
@@ -157,6 +174,9 @@ class WikiUser(WikiObject):
 
     def is_personal(self):
         return True
+
+    def get_contributions_url(self):
+        return "{}/whatsnew#u={}".format(self._campbot.wiki.ui_url, self.user_id)
 
 
 class Route(WikiObject):
