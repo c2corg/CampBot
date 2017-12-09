@@ -413,4 +413,4 @@ class CampBot(object):
             for m in messages:
                 print(m)
 
-                #  self.forum.post_message("\n".join(messages), check_message_url)
+            self.forum.post_message("\n".join(messages), check_message_url)
