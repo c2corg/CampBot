@@ -322,6 +322,18 @@ class CampBot(object):
 
         messages = []
 
+        messages.append("[details=Signification des icônes]\n<table>")
+        messages.append("<tr><th>Test</th><th>A corriger</th><th>Corrigé</th></tr>")
+
+        for test in tests:
+            messages.append("<tr>")
+            messages.append("<th>{}</th>".format(test.name))
+            messages.append("<td>{}</td>".format(test.fail_marker))
+            messages.append("<td>{}</td>".format(test.success_marker))
+            messages.append("</tr>")
+
+        messages.append("</table>\n[/details]\n\n----\n\n")
+
         items = OrderedDict()
         for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1)):
             if contrib.lang == lang:

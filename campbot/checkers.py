@@ -1,6 +1,6 @@
 class LengthTest(object):
     def __init__(self, lang):
-        self.name = "Document size"
+        self.name = "Grosse suppression"
         self.lang = lang
 
         self.fail_marker = emoji("/images/emoji/apple/rage.png?v=3", self.name)
@@ -34,7 +34,7 @@ class ReTest(object):
         self.patterns = []
         self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
         self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3",
-                                    self.name + " is now correct")
+                                    self.name + " corrigé")
 
     def __call__(self, old_version, new_version):
         old_doc = old_version.document if old_version else None
@@ -53,10 +53,10 @@ class HistoryTest(object):
     activities_with_history = ["snow_ice_mixed", "mountain_climbing", "rock_climbing", "ice_climbing"]
 
     def __init__(self, lang):
-        self.name = "History"
+        self.name = "Champ historique"
         self.lang = lang
         self.fail_marker = emoji("/images/emoji/apple/closed_book.png?v=3", self.name)
-        self.success_marker = emoji("/images/emoji/apple/green_book.png?v=3", self.name + " is now correct")
+        self.success_marker = emoji("/images/emoji/apple/green_book.png?v=3", self.name + " rempli")
 
     def __call__(self, old_version, new_version):
         old_doc = old_version.document if old_version else None
@@ -95,4 +95,4 @@ def get_re_tests(configuration, lang):
             if len(pattern.strip()) != 0:
                 test.patterns.append(line[4:])
 
-    return result
+    return filter(lambda t: len(t.patterns) != 0, result)
