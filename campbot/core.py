@@ -323,7 +323,7 @@ class CampBot(object):
         messages = []
 
         items = OrderedDict()
-        for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=2)):
+        for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1)):
             if contrib.lang == lang:
                 if contrib.document["document_id"] not in items:
                     items[contrib.document["document_id"]] = (contrib.get_full_document(), [])
