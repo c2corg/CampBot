@@ -34,6 +34,7 @@ class BaseBot(object):
         self.proxies = proxies
         self._next_request_datetime = datetime.now()
         self.min_delay = timedelta(seconds=float(min_delay or 1))
+        self._cache = {}
 
     @property
     def headers(self):
@@ -48,19 +49,24 @@ class BaseBot(object):
         self._next_request_datetime = datetime.now() + self.min_delay
 
     def get(self, url, **kwargs):
-        self._wait()
-        logging.debug("GET %s", url)
+        key = (url, str(kwargs))
 
-        res = self._session.get(self.api_url + url,
-                                proxies=self.proxies,
-                                params=kwargs)
+        if key not in self._cache:
+            self._wait()
+            logging.debug("GET %s", url)
 
-        res.raise_for_status()
+            res = self._session.get(self.api_url + url,
+                                    proxies=self.proxies,
+                                    params=kwargs)
 
-        if res.headers['Content-type'].startswith('application/json'):
-            return res.json()
+            res.raise_for_status()
 
-        return res.content
+            if res.headers['Content-type'].startswith('application/json'):
+                self._cache[key] = res.json()
+            else:
+                self._cache[key] = res.content
+
+        return self._cache[key]
 
     def post(self, url, data):
         self._wait()
@@ -322,6 +328,7 @@ class CampBot(object):
 
         messages = []
 
+        messages.append("[Explications]({})".format(check_message_url))
         messages.append("[details=Signification des icônes]\n<table>")
         messages.append("<tr><th>Test</th><th>A corriger</th><th>Corrigé</th></tr>")
 
@@ -338,11 +345,11 @@ class CampBot(object):
         for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1)):
             if contrib.lang == lang:
                 if contrib.document["document_id"] not in items:
-                    items[contrib.document["document_id"]] = (contrib.get_full_document(), [])
+                    items[contrib.document["document_id"]] = []
 
-                items[contrib.document["document_id"]][1].append(contrib)
+                items[contrib.document["document_id"]].append(contrib)
 
-        for doc, contribs in items.values():
+        for contribs in items.values():
             need_report = False
             report = []
 
