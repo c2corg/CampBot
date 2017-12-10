@@ -62,7 +62,7 @@ class Contribution(BotObject):
     def __init__(self, campbot, data):
         super(Contribution, self).__init__(campbot, data)
         self['document'] = get_constructor(self['document']['type'])(campbot, self['document'])
-        self['user'] = WikiUser(campbot, self['user'])
+        self['user'] = ShortWikiUser(campbot, self['user'])
 
     def get_full_document(self):
         return self._campbot.wiki.get_wiki_object(self.document["document_id"],
@@ -157,6 +157,18 @@ class WikiObject(BotObject):
         return None
 
 
+class ShortWikiUser(BotObject):
+    def get_contributions_url(self):
+        return "{}/whatsnew#u={}".format(self._campbot.wiki.ui_url, self.user_id)
+
+    def is_newbie(self):
+        contribs = self._campbot.wiki.get("/documents/changes?limit=50&u={}".format(self.user_id))
+        return len(contribs["feed"]) < 50
+
+    def get_wiki_user(self):
+        return self._campbot.wiki.get_user(user_id=self.user_id)
+
+
 class WikiUser(WikiObject):
     url_path = "profiles"
 
@@ -174,9 +186,6 @@ class WikiUser(WikiObject):
 
     def is_personal(self):
         return True
-
-    def get_contributions_url(self):
-        return "{}/whatsnew#u={}".format(self._campbot.wiki.ui_url, self.user_id)
 
 
 class Route(WikiObject):

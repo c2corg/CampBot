@@ -323,14 +323,14 @@ class CampBot(object):
 
     def check_recent_changes(self, check_message_url, lang):
 
-        tests = [checkers.HistoryTest(lang), checkers.LengthTest(lang)]
+        tests = [checkers.HistoryTest(lang), checkers.LengthTest(lang), checkers.NewbieTest()]
         tests += checkers.get_re_tests(self.forum.get_post(url=check_message_url), lang)
 
         messages = []
 
         messages.append("[Explications]({})\n".format(check_message_url))
         messages.append("[details=Signification des icônes]\n<table>")
-        messages.append("<tr><th>Test</th><th>A corriger</th><th>Corrigé</th></tr>")
+        messages.append("<tr><th>Test</th><th>A relire</th><th>Corrigé</th></tr>")
 
         for test in tests:
             messages.append("<tr>")
@@ -343,7 +343,7 @@ class CampBot(object):
 
         items = OrderedDict()
         for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1.2)):
-            if contrib.lang == lang:
+            if contrib.lang == lang and contrib.document.type not in ("i", "o"):
                 if contrib.document["document_id"] not in items:
                     items[contrib.document["document_id"]] = []
 
@@ -372,7 +372,7 @@ class CampBot(object):
                 emojis = []
 
                 for test in tests:
-                    old_is_ok, new_is_ok = test(old, new)
+                    old_is_ok, new_is_ok = test(contrib, old, new)
 
                     if old_is_ok and not new_is_ok:
                         emojis.append(test.fail_marker)

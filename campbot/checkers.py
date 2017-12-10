@@ -6,7 +6,7 @@ class LengthTest(object):
         self.fail_marker = emoji("/images/emoji/apple/rage.png?v=3", self.name)
         self.success_marker = ""
 
-    def __call__(self, old_version, new_version):
+    def __call__(self, contrib, old_version, new_version):
         old_doc = old_version.document if old_version else None
         new_doc = new_version.document if new_version else None
 
@@ -27,6 +27,20 @@ class LengthTest(object):
         return True, result
 
 
+class NewbieTest(object):
+    def __init__(self):
+        self.name = "Nouvel utilisateur"
+
+        self.fail_marker = emoji("/images/emoji/apple/gift.png?v=3", self.name)
+        self.success_marker = ""
+
+    def __call__(self, contrib, old_version, new_version):
+        if contrib.user.is_newbie():
+            return True, False
+        else:
+            return False, False
+
+
 class ReTest(object):
     def __init__(self, name, lang):
         self.name = name
@@ -36,7 +50,7 @@ class ReTest(object):
         self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3",
                                     self.name + " corrigé")
 
-    def __call__(self, old_version, new_version):
+    def __call__(self, contrib, old_version, new_version):
         old_doc = old_version.document if old_version else None
         new_doc = new_version.document if new_version else None
 
@@ -58,7 +72,7 @@ class HistoryTest(object):
         self.fail_marker = emoji("/images/emoji/apple/closed_book.png?v=3", self.name)
         self.success_marker = emoji("/images/emoji/apple/green_book.png?v=3", self.name + " rempli")
 
-    def __call__(self, old_version, new_version):
+    def __call__(self, contrib, old_version, new_version):
         old_doc = old_version.document if old_version else None
         new_doc = new_version.document if new_version else None
 
