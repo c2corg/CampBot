@@ -328,7 +328,7 @@ class CampBot(object):
 
         messages = []
 
-        messages.append("[Explications]({})".format(check_message_url))
+        messages.append("[Explications]({})\n".format(check_message_url))
         messages.append("[details=Signification des icônes]\n<table>")
         messages.append("<tr><th>Test</th><th>A corriger</th><th>Corrigé</th></tr>")
 
@@ -342,7 +342,7 @@ class CampBot(object):
         messages.append("</table>\n[/details]\n\n----\n\n")
 
         items = OrderedDict()
-        for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1)):
+        for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1.2)):
             if contrib.lang == lang:
                 if contrib.document["document_id"] not in items:
                     items[contrib.document["document_id"]] = []
