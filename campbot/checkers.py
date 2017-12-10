@@ -94,5 +94,12 @@ def get_re_tests(configuration, lang):
             pattern = line[4:]
             if len(pattern.strip()) != 0:
                 test.patterns.append(line[4:])
+        else:
+            parts = line.split(":", 1)
+
+            if parts[0].strip() in ("* Erreur",):
+                test.fail_marker = parts[1].strip()
+            elif parts[0].strip() in ("* Corrigé",):
+                test.success_marker = parts[1].strip()
 
     return filter(lambda t: len(t.patterns) != 0, result)
