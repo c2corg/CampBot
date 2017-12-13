@@ -1,3 +1,34 @@
+def emoji(src, text):
+    return '<img src="{}" class="emoji" title="{}" alt="{}">'.format(src, text, text)
+
+
+def get_re_tests(configuration, lang):
+    result = []
+
+    test = None
+    for line in configuration.raw.split("\n"):
+        if line.startswith("#"):
+            test = ReTest(line.lstrip("# "), lang)
+            result.append(test)
+        elif line.startswith("    ") and test:
+            pattern = line[4:]
+            if len(pattern.strip()) != 0:
+                test.patterns.append(line[4:])
+        else:
+            parts = line.split(":", 1)
+
+            if parts[0].strip() in ("* Erreur",):
+                test.fail_marker = parts[1].strip()
+            elif parts[0].strip() in ("* Corrigé",):
+                test.success_marker = parts[1].strip()
+
+    return filter(lambda t: len(t.patterns) != 0, result)
+
+
+def get_fixed_tests(lang):
+    return [HistoryTest(lang), LengthTest(lang), NewbieTest(), MainWaypointTest(), RouteTypeTest()]
+
+
 class LengthTest(object):
     def __init__(self, lang):
         self.name = "Grosse suppression"
@@ -92,28 +123,35 @@ class HistoryTest(object):
         return test(old_doc), test(new_doc)
 
 
-def emoji(src, text):
-    return '<img src="{}" class="emoji" title="{}" alt="{}">'.format(src, text, text)
+class MainWaypointTest(object):
+    def __init__(self):
+        self.name = "Main waypoint"
+        self.fail_marker = emoji("https://www.openstreetmap.org/assets/marker-red.png", self.name)
+        self.success_marker = emoji("https://www.openstreetmap.org/assets/marker-green.png", self.name + " corrigé")
+
+    def __call__(self, contrib, old_version, new_version):
+        if contrib.document.type != "r":
+            return True, True
+
+        old_is_ok = old_version.document.main_waypoint_id is not None if old_version else True
+        new_is_ok = new_version.document.main_waypoint_id is not None
+
+        return old_is_ok, new_is_ok
 
 
-def get_re_tests(configuration, lang):
-    result = []
+class RouteTypeTest(object):
+    def __init__(self):
+        self.name = "Type de voie renseigné"
+        self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
+        self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3",
+                                    self.name + " corrigé")
 
-    test = None
-    for line in configuration.raw.split("\n"):
-        if line.startswith("#"):
-            test = ReTest(line.lstrip("# "), lang)
-            result.append(test)
-        elif line.startswith("    ") and test:
-            pattern = line[4:]
-            if len(pattern.strip()) != 0:
-                test.patterns.append(line[4:])
-        else:
-            parts = line.split(":", 1)
+    def __call__(self, contrib, old_version, new_version):
+        if contrib.document.type != "r" or "rock_climbing" not in new_version.document.activities:
+            return True, True
 
-            if parts[0].strip() in ("* Erreur",):
-                test.fail_marker = parts[1].strip()
-            elif parts[0].strip() in ("* Corrigé",):
-                test.success_marker = parts[1].strip()
+        def test(version):
+            climbing_outdoor_type = version.document.climbing_outdoor_type
+            return climbing_outdoor_type is not None and len(climbing_outdoor_type) != 0
 
-    return filter(lambda t: len(t.patterns) != 0, result)
+        return test(old_version), test(new_version)

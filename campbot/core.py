@@ -323,7 +323,7 @@ class CampBot(object):
 
     def check_recent_changes(self, check_message_url, lang):
 
-        tests = [checkers.HistoryTest(lang), checkers.LengthTest(lang), checkers.NewbieTest()]
+        tests = checkers.get_fixed_tests(lang)
         tests += checkers.get_re_tests(self.forum.get_post(url=check_message_url), lang)
 
         messages = []
@@ -420,4 +420,4 @@ class CampBot(object):
             for m in messages:
                 print(m)
 
-            self.forum.post_message("\n".join(messages), check_message_url)
+                self.forum.post_message("\n".join(messages), check_message_url)
