@@ -11,6 +11,7 @@ def get_constructor(document_type):
             "w": Waypoint,
             "o": Outing,
             "i": Image,
+            "m": Map,
             "x": Xreport,
             "c": Article,
             "b": Book,
@@ -233,6 +234,10 @@ class Waypoint(WikiObject):
 
 class Area(WikiObject):
     url_path = "areas"
+
+
+class Map(WikiObject):
+    url_path = "maps"
 
 
 class Outing(WikiObject):
