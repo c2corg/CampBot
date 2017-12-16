@@ -147,10 +147,11 @@ class RouteTypeTest(object):
                                     self.name + " corrigé")
 
     def __call__(self, contrib, old_version, new_version):
-        if contrib.document.type != "r" or "rock_climbing" not in new_version.document.activities:
-            return True, True
 
         def test(version):
+            if not version or version.document.type != "r" or "rock_climbing" not in version.document.activities:
+                return True
+
             climbing_outdoor_type = version.document.climbing_outdoor_type
             return climbing_outdoor_type is not None and len(climbing_outdoor_type) != 0
 
