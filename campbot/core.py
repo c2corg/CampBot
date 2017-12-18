@@ -167,14 +167,26 @@ class WikiBot(BaseBot):
             d = self.get("/documents/changes?limit=50&token=" + pagination_token + user_filter)
 
     def get_route_ids(self):
+        for doc in self.get_documents_raw(objects.Route.url_path):
+            yield doc["document_id"]
+
+    def get_documents(self, constructor):
+        for doc in self.get_documents_raw(constructor.url_path):
+            yield constructor(self.campbot, doc)
+
+    def get_documents_raw(self, url_path):
         offset = 0
 
         while True:
-            data = self.get("/routes?offset={}".format(offset))
-            for route in data["documents"]:
-                yield route["document_id"]
+            data = self.get("/{}?offset={}".format(url_path, offset))
 
-            offset += 50
+            if len(data["documents"]) == 0:
+                raise StopIteration
+
+            for doc in data["documents"]:
+                yield doc
+
+            offset += 30
 
 
 class ForumBot(BaseBot):
@@ -415,9 +427,8 @@ class CampBot(object):
             if need_report:
                 messages += report
 
+        for m in messages:
+            print(m)
+
         if len(messages) != 0:
-
-            for m in messages:
-                print(m)
-
-                self.forum.post_message("\n".join(messages), check_message_url)
+            self.forum.post_message("\n".join(messages), check_message_url)
