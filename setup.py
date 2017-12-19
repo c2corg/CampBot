@@ -2,6 +2,10 @@ from setuptools import setup, find_packages
 
 import campbot
 
+
+with open('requirements.txt') as f:
+    requires = f.read().splitlines()
+
 setup(
     name='campbot',
     version=campbot.__version__,
@@ -11,7 +15,7 @@ setup(
     description="Package for automatic edition of camptocamp.org",
     long_description=open('README.md').read(),
 
-    install_requires=["requests", "python-dateutil", "pytz"],
+    install_requires=requires,
 
     include_package_data=True,
 
