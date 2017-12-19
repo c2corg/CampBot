@@ -10,6 +10,21 @@ Bot framework for camptocamp.org
 
 ## Command line usage
 
+### Export recent contribution
+
+This command will load all contributions made in the last 24 hours
+
+```batch
+    campbot contributions
+```
+
+Optional arguments : 
+
+* `-starts=2017-12-07` : will export all contributions after this date (included)
+* `-starts=2017-12-07` : will export all contributions before this date (excluded)
+* `--out=data.csv` : out file name, default value is `contributions.csv`
+
+
 ### Migrate BBCodes
 
 ```batch
