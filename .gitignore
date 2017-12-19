@@ -96,5 +96,4 @@ ENV/
 .ropeproject
 
 .idea/
-/test.py
-/association_members.json
+/bbcode_ids.txt

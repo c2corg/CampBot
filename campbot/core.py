@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import print_function, unicode_literals, division
 
 import requests
@@ -13,9 +15,11 @@ from . import checkers
 from . import objects
 
 try:
+    # py2
     input = raw_input
 except NameError:
-    pass
+    # py3
+    basestring = (str,)
 
 __all__ = ['CampBot', 'WikiBot', 'ForumBot', 'BaseBot']
 
@@ -144,6 +148,13 @@ class WikiBot(BaseBot):
 
         oldest_date = kwargs.get("oldest_date", None) or datetime.today() + timedelta(days=-1)
         newest_date = kwargs.get("newest_date", None) or datetime.now()
+
+        if isinstance(oldest_date, basestring):
+            oldest_date = parser.parse(oldest_date)
+
+        if isinstance(newest_date, basestring):
+            newest_date = parser.parse(newest_date)
+
         user_id = kwargs.get("user_id", None)
         user_filter = "&u={}".format(user_id) if user_id else ""
 
@@ -154,7 +165,7 @@ class WikiBot(BaseBot):
         while True:
             for item in d["feed"]:
                 written_at = parser.parse(item["written_at"])
-                if oldest_date > written_at:
+                if written_at < oldest_date:
                     raise StopIteration
 
                 if newest_date > written_at:

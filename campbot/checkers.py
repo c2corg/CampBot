@@ -1,3 +1,6 @@
+# coding: utf-8
+
+
 def emoji(src, text):
     return '<img src="{}" class="emoji" title="{}" alt="{}">'.format(src, text, text)
 
@@ -147,7 +150,6 @@ class RouteTypeTest(object):
                                     self.name + " corrigé")
 
     def __call__(self, contrib, old_version, new_version):
-
         def test(version):
             if not version or version.document.type != "r" or "rock_climbing" not in version.document.activities:
                 return True

@@ -22,9 +22,12 @@ Options:
 
 """
 
+from __future__ import unicode_literals, print_function
+
 from docopt import docopt
 import logging
 import os
+import io
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 
@@ -84,7 +87,7 @@ elif args["contributions"]:
     message = ("{timestamp};{type};{document_id};{version_id};{document_version};"
                "{title};{quality};{user};{lang}\n")
 
-    with open(args["--out"] or "contributions.csv", "w", encoding="utf-8") as f:
+    with io.open(args["--out"] or "contributions.csv", "w", encoding="utf-8") as f:
 
         def write(**kwargs):
             f.write(message.format(**kwargs))
@@ -112,7 +115,7 @@ elif args["outings"]:
 
     filters = {k: v for k, v in (v.split("=") for v in args["<filters>"].split("&"))}
 
-    with open(args["--out"] or "outings.csv", "w", encoding="utf-8") as f:
+    with io.open(args["--out"] or "outings.csv", "w", encoding="utf-8") as f:
         f.write(message.format(**{h: h for h in headers}))
         for doc in get_campbot().wiki.get_documents(Outing, filters):
             data = {h: doc.get(h, "") for h in headers}
