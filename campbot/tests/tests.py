@@ -22,6 +22,7 @@ messages = {
     ('GET', 'https://forum.camptocamp.org/sso'): {},
     ('POST', 'https://forum.camptocamp.org/posts'): {},
     ('PUT', 'https://api.camptocamp.org/profiles/286726'): {},
+    ('PUT', 'https://api.camptocamp.org/routes/293549'): {},
     ("GET", "https://api.camptocamp.org/documents/changes?limit=50"): get_message("changes"),
     ('GET', 'https://forum.camptocamp.org/t/201480.json'): get_message("topic"),
     ('GET', 'https://forum.camptocamp.org/posts/2003993.json'): get_message("post"),

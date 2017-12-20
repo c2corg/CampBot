@@ -21,6 +21,12 @@ class MarkdownProcessor(object):
     ready_for_production = False
     comment = NotImplemented
 
+    def __init__(self):
+        self.do_tests()
+
+    def do_tests(self):
+        raise NotImplemented()
+
     def __call__(self, markdown, field, locale, wiki_object):
         result = self.modify(markdown)
 
@@ -45,6 +51,7 @@ class MarkdownProcessor(object):
 
 class BBCodeRemover2(MarkdownProcessor):
     def __init__(self):
+        super(BBCodeRemover2, self).__init__()
 
         self.modifiers = [
             Converter(pattern=r'\n?\[hr\]\n?',
@@ -67,6 +74,9 @@ class BBCodeRemover2(MarkdownProcessor):
                       repl=r"<p></p>",
                       flags=re.IGNORECASE),
         ]
+
+    def do_tests(self):
+        pass
 
 
 class BBCodeRemover(MarkdownProcessor):
@@ -174,6 +184,7 @@ class BBCodeRemover(MarkdownProcessor):
             do_test(**test)
 
     def __init__(self):
+        super(BBCodeRemover, self).__init__()
         def get_typo_cleaner(bbcode_tag, markdown_tag):
             converters = [
 
@@ -366,6 +377,7 @@ class LtagCleaner(MarkdownProcessor):
                 do_test(source, expected)
 
     def __init__(self):
+        super(LtagCleaner, self).__init__()
         self.modifiers = []
 
         newline_converters = [
@@ -465,6 +477,7 @@ class ColorAndUnderlineRemover(MarkdownProcessor):
             do_test(**test)
 
     def __init__(self):
+        super(ColorAndUnderlineRemover, self).__init__()
         self.modifiers = []
         self.modifiers.append(
             Converter(pattern=r'\[/?(color|u)(=#?[a-zA-Z0-9]{3,10})?\]',

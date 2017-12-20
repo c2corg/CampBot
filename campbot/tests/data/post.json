@@ -76,7 +76,16 @@
   "wiki": true,
   "polls": {
     "poll": {
-      "options": []
+      "options": [
+        {
+          "id": "option_id",
+          "html": "choix 1",
+          "votes": [
+            "CharlesB",
+            "CharlesC"
+          ]
+        }
+      ]
     }
   }
 }
