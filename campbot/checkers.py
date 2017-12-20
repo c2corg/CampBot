@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from __future__ import unicode_literals, print_function, division
+
 
 def emoji(src, text):
     return '<img src="{}" class="emoji" title="{}" alt="{}">'.format(src, text, text)
