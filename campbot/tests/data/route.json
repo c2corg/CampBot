@@ -1,0 +1,836 @@
+{
+  "protected": false,
+  "risk_rating": null,
+  "aid_rating": "A0+",
+  "configuration": null,
+  "locales": [
+    {
+      "remarks": null,
+      "topic_id": null,
+      "gear": null,
+      "description": "Desde el refugio Llu\u00eds Estasen seguir el camino de la Tartera hasta rebasar el primer corredor. Coger una senda a la derecha en la zona de bosque que sigue o se pierde en horribles tarteras y donde sube hasta el pie de la cara.\nLa via inicia cuando se unen el pilar de izquierda y el de la placa grande. Es igual que la Via del Guarda y se concoce por un spit que se\u00f1ala Joan Mart\u00ed.\n\n## V\u00eda\nL# | V+ |  | Diedro-fisura (V+, poco equipada pero bastante facil de proteger). Reunion en la cornisa de izquierda.\nL# | IV, A0 |  | Atravesar a la derecha (IV) y terminar por una travesia (A0 con viejos).\nL# | IV+ |  | Seguir la travesia y subir por un corredor (III, un paso de IV+).\nL# |  |  | Corto largo que llega a la reunion cuando se reunen la placa y el pilar.\n\nEs posible seguir por un resalte de 200m (II-III pero roca no muy buena). Desaconsejado si hay cordadas debajo.\n\n## Bajada\nCon 3 rapeles todo recto en otra via en placa, reuniones buenas.",
+      "title": "V\u00eda Cerd\u00e0 Albert",
+      "lang": "es",
+      "title_prefix": "Pedraforca - Dent dels Cabirols",
+      "version": 6,
+      "route_history": "Apertura : 7 de julio de 1968 - R. Albert, J. Cerd\u00e0, L. Costa, A. Francesc.",
+      "summary": null,
+      "external_resources": "- \"**Pedraforca todas las ascensiones y escaladas**\", Joan Miquel Dalmau.\n- [Esquema](http://www.lanochedelloro.es/wp-content/uploads/2017/03/7dentcabCivis.png) en [La Noche del Loro]( http://www.lanochedelloro.es/index.php/pedraforca/).\n- [Foto]( http://2.bp.blogspot.com/-rN3ygAFu_iI/TwHHkTywKHI/AAAAAAAAADM/FkHHrjX3FaY/s1600/Vies+Cabirols.jpg) en [Refugi Llu\u00eds Estasen](http://refugiestasen.blogspot.fr/2012/01/escalades-al-pedraforca.html) (2012).\n- Topo, fotos en [Escalatroncs](https://escalatroncs.com/2017/09/17/cerda-albert-same-cabirols-pedraforca/)."
+    },
+    {
+      "remarks": null,
+      "topic_id": null,
+      "gear": null,
+      "description": "##Approche\nDu refuge Llu\u00eds Estasen suivre le chemin de la Tartera jusqu'\u00e0 d\u00e9passer le premier couloir. Prendre une sente \u00e0 droite dans la bande de for\u00eat qui suit qui se perd dans d'affreux \u00e9boulis o\u00f9 on monte jusqu'au pied de la face.\nLa voie d\u00e9bute \u00e0 la jonction du pilier de gauche et de la grande dalle. Elle est commune avec la Via del Guarda et marqu\u00e9e par un spit qui \u00e9voque Joan Mart\u00ed.\n\n## Voie\nL# | V+ |  | Di\u00e8dre-fissure (V+, peu \u00e9quip\u00e9 mais assez facile \u00e0 prot\u00e9ger). Relais sur la vire \u00e0 gauche.\nL# | A0 |  | Traverser \u00e0 droite (IV) puis terminer par une travers\u00e9e (A0 sur pitons antiques \u00e0 remplacer).\nL# | IV+ |  | Poursuivre la travers\u00e9e puis monter par un couloir (III, un pas de IV+).\nL# |  |  | Courte longueur qui rejoint le relais \u00e0 la jonction de la dalle et du pilier.\n\nIl est possible de poursuivre par le ressaut de 200m (II-III mais rocher peu s\u00fbr). Non recommand\u00e9 et d\u00e9conseill\u00e9 s'il y a des cord\u00e9es en dessous.\n\n##Descente\nEn 3 rappels tout droit dans une autre voie pleine dalle, relais solides.",
+      "title": "Voie Cerd\u00e0 Albert",
+      "lang": "fr",
+      "title_prefix": "Pedraforca - Dent dels Cabirols",
+      "version": 8,
+      "route_history": "Ouverture : 7 juillet 1968 - R. Albert, J. Cerd\u00e0, L. Costa, A. Francesc.",
+      "summary": null,
+      "external_resources": "- \"**Pedraforca todas las ascensiones y escaladas**\", Joan Miquel Dalmau \n- [Sch\u00e9ma](http://www.lanochedelloro.es/wp-content/uploads/2017/03/7dentcabCivis.png) sur [La Noche del Loro]( http://www.lanochedelloro.es/index.php/pedraforca/).\n- [Photo]( http://2.bp.blogspot.com/-rN3ygAFu_iI/TwHHkTywKHI/AAAAAAAAADM/FkHHrjX3FaY/s1600/Vies+Cabirols.jpg) sur [Refuge Llu\u00eds Estasen](http://refugiestasen.blogspot.fr/2012/01/escalades-al-pedraforca.html) (2012).\n- Topo, photos sur [Escalatroncs](https://escalatroncs.com/2017/09/17/cerda-albert-same-cabirols-pedraforca/).\n"
+    }
+  ],
+  "height_diff_down": null,
+  "main_waypoint_id": 952999,
+  "glacier_gear": "no",
+  "engagement_rating": "II",
+  "route_types": [
+    "return_same_way"
+  ],
+  "height_diff_access": null,
+  "activities": [
+    "rock_climbing"
+  ],
+  "orientations": [
+    "E"
+  ],
+  "rock_required_rating": "5c",
+  "elevation_min": 1668,
+  "durations": [
+    "1"
+  ],
+  "height_diff_up": null,
+  "difficulties_height": null,
+  "document_id": 293549,
+  "quality": "medium",
+  "maps": [],
+  "type": "r",
+  "global_rating": "TD-",
+  "geometry": {
+    "version": 4,
+    "geom": "{\"type\": \"Point\", \"coordinates\": [191248.92604017473, 5197576.832845771]}",
+    "geom_detail": null
+  },
+  "equipment_rating": "P2",
+  "rock_free_rating": "5c",
+  "elevation_max": null,
+  "exposition_rock_rating": null,
+  "lift_access": null,
+  "climbing_outdoor_type": "multi",
+  "height_diff_difficulties": null,
+  "areas": [
+    {
+      "type": "a",
+      "version": 11,
+      "locales": [
+        {
+          "title": "Estat espanyol",
+          "lang": "ca",
+          "version": 3
+        },
+        {
+          "title": "Spanien",
+          "lang": "de",
+          "version": 1
+        },
+        {
+          "title": "Spain",
+          "lang": "en",
+          "version": 1
+        },
+        {
+          "title": "Espa\u00f1a",
+          "lang": "es",
+          "version": 1
+        },
+        {
+          "title": "Espainia",
+          "lang": "eu",
+          "version": 1
+        },
+        {
+          "title": "Espagne",
+          "lang": "fr",
+          "version": 4
+        },
+        {
+          "title": "Spagna",
+          "lang": "it",
+          "version": 1
+        }
+      ],
+      "protected": false,
+      "area_type": "country",
+      "document_id": 14267,
+      "available_langs": null
+    },
+    {
+      "type": "a",
+      "version": 1,
+      "locales": [
+        {
+          "title": "Prov\u00edncia de Barcelona",
+          "lang": "ca",
+          "version": 1
+        },
+        {
+          "title": "Provinz Barcelona",
+          "lang": "de",
+          "version": 1
+        },
+        {
+          "title": "Province of Barcelona",
+          "lang": "en",
+          "version": 1
+        },
+        {
+          "title": "Provincia de Barcelona",
+          "lang": "es",
+          "version": 1
+        },
+        {
+          "title": "Bartzelonako probintzia",
+          "lang": "eu",
+          "version": 1
+        },
+        {
+          "title": "Province de Barcelone",
+          "lang": "fr",
+          "version": 1
+        },
+        {
+          "title": "Provincia di Barcelona",
+          "lang": "it",
+          "version": 2
+        }
+      ],
+      "protected": false,
+      "area_type": "admin_limits",
+      "document_id": 279930,
+      "available_langs": null
+    },
+    {
+      "type": "a",
+      "version": 1,
+      "locales": [
+        {
+          "title": "Serres catalanes",
+          "lang": "fr",
+          "version": 10
+        },
+        {
+          "title": "Serralades catalanes",
+          "lang": "ca",
+          "version": 2
+        },
+        {
+          "title": "Catalan ranges",
+          "lang": "en",
+          "version": 2
+        },
+        {
+          "title": "Sierras catalanes",
+          "lang": "es",
+          "version": 1
+        }
+      ],
+      "protected": false,
+      "area_type": "range",
+      "document_id": 294791,
+      "available_langs": null
+    }
+  ],
+  "version": 3,
+  "rock_types": [
+    "calcaire"
+  ],
+  "associations": {
+    "waypoints": [
+      {
+        "type": "w",
+        "geometry": {
+          "version": 2,
+          "geom": "{\"type\": \"Point\", \"coordinates\": [191781.88665559603, 5198083.739243067]}"
+        },
+        "waypoint_type": "access",
+        "locales": [
+          {
+            "title": "Mirador de Gresolet",
+            "lang": "ca",
+            "version": 1,
+            "summary": null
+          },
+          {
+            "title": "Mirador de Gresolet",
+            "lang": "fr",
+            "version": 1,
+            "summary": null
+          }
+        ],
+        "protected": false,
+        "elevation": 1570,
+        "document_id": 128898,
+        "available_langs": [
+          "ca",
+          "fr"
+        ],
+        "version": 2,
+        "quality": "medium",
+        "areas": [
+          {
+            "type": "a",
+            "version": 11,
+            "locales": [
+              {
+                "title": "Estat espanyol",
+                "lang": "ca",
+                "version": 3
+              },
+              {
+                "title": "Spanien",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "Spain",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Espa\u00f1a",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "Espainia",
+                "lang": "eu",
+                "version": 1
+              },
+              {
+                "title": "Espagne",
+                "lang": "fr",
+                "version": 4
+              },
+              {
+                "title": "Spagna",
+                "lang": "it",
+                "version": 1
+              }
+            ],
+            "protected": false,
+            "area_type": "country",
+            "document_id": 14267,
+            "available_langs": null
+          },
+          {
+            "type": "a",
+            "version": 1,
+            "locales": [
+              {
+                "title": "Prov\u00edncia de Barcelona",
+                "lang": "ca",
+                "version": 1
+              },
+              {
+                "title": "Provinz Barcelona",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "Province of Barcelona",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Provincia de Barcelona",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "Bartzelonako probintzia",
+                "lang": "eu",
+                "version": 1
+              },
+              {
+                "title": "Province de Barcelone",
+                "lang": "fr",
+                "version": 1
+              },
+              {
+                "title": "Provincia di Barcelona",
+                "lang": "it",
+                "version": 2
+              }
+            ],
+            "protected": false,
+            "area_type": "admin_limits",
+            "document_id": 279930,
+            "available_langs": null
+          },
+          {
+            "type": "a",
+            "version": 1,
+            "locales": [
+              {
+                "title": "Serres catalanes",
+                "lang": "fr",
+                "version": 10
+              },
+              {
+                "title": "Serralades catalanes",
+                "lang": "ca",
+                "version": 2
+              },
+              {
+                "title": "Catalan ranges",
+                "lang": "en",
+                "version": 2
+              },
+              {
+                "title": "Sierras catalanes",
+                "lang": "es",
+                "version": 1
+              }
+            ],
+            "protected": false,
+            "area_type": "range",
+            "document_id": 294791,
+            "available_langs": null
+          }
+        ]
+      },
+      {
+        "type": "w",
+        "geometry": {
+          "version": 1,
+          "geom": "{\"type\": \"Point\", \"coordinates\": [191049.62704515728, 5197766.7418497475]}"
+        },
+        "waypoint_type": "hut",
+        "locales": [
+          {
+            "title": "Refugi Pedraforca \"Llu\u00eds Estasen\"",
+            "lang": "ca",
+            "version": 1,
+            "summary": null
+          },
+          {
+            "title": "Refugio Pedraforca \"Llu\u00eds Estasen\"",
+            "lang": "es",
+            "version": 1,
+            "summary": null
+          },
+          {
+            "title": "Refuge Pedraforca \"Llu\u00eds Estasen\"",
+            "lang": "fr",
+            "version": 2,
+            "summary": "[Refuge Estasen](http://refugiestasen.blogspot.fr/2012/01/ressenyes-vies-descalada.html)"
+          }
+        ],
+        "protected": false,
+        "elevation": 1674,
+        "document_id": 293915,
+        "available_langs": [
+          "ca",
+          "es",
+          "fr"
+        ],
+        "version": 1,
+        "quality": "medium",
+        "areas": [
+          {
+            "type": "a",
+            "version": 11,
+            "locales": [
+              {
+                "title": "Estat espanyol",
+                "lang": "ca",
+                "version": 3
+              },
+              {
+                "title": "Spanien",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "Spain",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Espa\u00f1a",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "Espainia",
+                "lang": "eu",
+                "version": 1
+              },
+              {
+                "title": "Espagne",
+                "lang": "fr",
+                "version": 4
+              },
+              {
+                "title": "Spagna",
+                "lang": "it",
+                "version": 1
+              }
+            ],
+            "protected": false,
+            "area_type": "country",
+            "document_id": 14267,
+            "available_langs": null
+          },
+          {
+            "type": "a",
+            "version": 1,
+            "locales": [
+              {
+                "title": "Prov\u00edncia de Barcelona",
+                "lang": "ca",
+                "version": 1
+              },
+              {
+                "title": "Provinz Barcelona",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "Province of Barcelona",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Provincia de Barcelona",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "Bartzelonako probintzia",
+                "lang": "eu",
+                "version": 1
+              },
+              {
+                "title": "Province de Barcelone",
+                "lang": "fr",
+                "version": 1
+              },
+              {
+                "title": "Provincia di Barcelona",
+                "lang": "it",
+                "version": 2
+              }
+            ],
+            "protected": false,
+            "area_type": "admin_limits",
+            "document_id": 279930,
+            "available_langs": null
+          },
+          {
+            "type": "a",
+            "version": 1,
+            "locales": [
+              {
+                "title": "Serres catalanes",
+                "lang": "fr",
+                "version": 10
+              },
+              {
+                "title": "Serralades catalanes",
+                "lang": "ca",
+                "version": 2
+              },
+              {
+                "title": "Catalan ranges",
+                "lang": "en",
+                "version": 2
+              },
+              {
+                "title": "Sierras catalanes",
+                "lang": "es",
+                "version": 1
+              }
+            ],
+            "protected": false,
+            "area_type": "range",
+            "document_id": 294791,
+            "available_langs": null
+          }
+        ]
+      },
+      {
+        "type": "w",
+        "geometry": {
+          "version": 1,
+          "geom": "{\"type\": \"Point\", \"coordinates\": [190915.26441977083, 5196880.0174445]}"
+        },
+        "waypoint_type": "summit",
+        "locales": [
+          {
+            "title": "Pedraforca - Dent dels Cabirols",
+            "lang": "fr",
+            "version": 1,
+            "summary": null
+          }
+        ],
+        "protected": false,
+        "elevation": 2105,
+        "document_id": 952999,
+        "available_langs": [
+          "fr"
+        ],
+        "version": 1,
+        "quality": "draft",
+        "areas": [
+          {
+            "type": "a",
+            "version": 11,
+            "locales": [
+              {
+                "title": "Estat espanyol",
+                "lang": "ca",
+                "version": 3
+              },
+              {
+                "title": "Spanien",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "Spain",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Espa\u00f1a",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "Espainia",
+                "lang": "eu",
+                "version": 1
+              },
+              {
+                "title": "Espagne",
+                "lang": "fr",
+                "version": 4
+              },
+              {
+                "title": "Spagna",
+                "lang": "it",
+                "version": 1
+              }
+            ],
+            "protected": false,
+            "area_type": "country",
+            "document_id": 14267,
+            "available_langs": null
+          },
+          {
+            "type": "a",
+            "version": 1,
+            "locales": [
+              {
+                "title": "Prov\u00edncia de Barcelona",
+                "lang": "ca",
+                "version": 1
+              },
+              {
+                "title": "Provinz Barcelona",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "Province of Barcelona",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Provincia de Barcelona",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "Bartzelonako probintzia",
+                "lang": "eu",
+                "version": 1
+              },
+              {
+                "title": "Province de Barcelone",
+                "lang": "fr",
+                "version": 1
+              },
+              {
+                "title": "Provincia di Barcelona",
+                "lang": "it",
+                "version": 2
+              }
+            ],
+            "protected": false,
+            "area_type": "admin_limits",
+            "document_id": 279930,
+            "available_langs": null
+          },
+          {
+            "type": "a",
+            "version": 1,
+            "locales": [
+              {
+                "title": "Serres catalanes",
+                "lang": "fr",
+                "version": 10
+              },
+              {
+                "title": "Serralades catalanes",
+                "lang": "ca",
+                "version": 2
+              },
+              {
+                "title": "Catalan ranges",
+                "lang": "en",
+                "version": 2
+              },
+              {
+                "title": "Sierras catalanes",
+                "lang": "es",
+                "version": 1
+              }
+            ],
+            "protected": false,
+            "area_type": "range",
+            "document_id": 294791,
+            "available_langs": null
+          }
+        ]
+      }
+    ],
+    "images": [],
+    "xreports": [],
+    "articles": [],
+    "routes": [],
+    "books": [],
+    "recent_outings": {
+      "documents": [
+        {
+          "date_start": "2011-08-15",
+          "date_end": "2011-08-15",
+          "author": {
+            "user_id": 12797,
+            "name": "Olivier Dumas"
+          },
+          "elevation_max": null,
+          "version": 2,
+          "locales": [
+            {
+              "title": "Pedraforca\u00a0: Dent de Cabirols Inferior - Voie Cerda Albert",
+              "lang": "fr",
+              "version": 2,
+              "summary": null
+            }
+          ],
+          "height_diff_difficulties": null,
+          "geometry": {
+            "version": 1,
+            "geom": "{\"type\": \"Point\", \"coordinates\": [190803.9078224805, 5197610.714531071]}",
+            "has_geom_detail": false
+          },
+          "engagement_rating": "II",
+          "global_rating": "TD-",
+          "condition_rating": "excellent",
+          "type": "o",
+          "activities": [
+            "mountain_climbing"
+          ],
+          "protected": false,
+          "height_diff_up": null,
+          "document_id": 293550,
+          "areas": [
+            {
+              "type": "a",
+              "version": 11,
+              "locales": [
+                {
+                  "title": "Estat espanyol",
+                  "lang": "ca",
+                  "version": 3
+                },
+                {
+                  "title": "Spanien",
+                  "lang": "de",
+                  "version": 1
+                },
+                {
+                  "title": "Spain",
+                  "lang": "en",
+                  "version": 1
+                },
+                {
+                  "title": "Espa\u00f1a",
+                  "lang": "es",
+                  "version": 1
+                },
+                {
+                  "title": "Espainia",
+                  "lang": "eu",
+                  "version": 1
+                },
+                {
+                  "title": "Espagne",
+                  "lang": "fr",
+                  "version": 4
+                },
+                {
+                  "title": "Spagna",
+                  "lang": "it",
+                  "version": 1
+                }
+              ],
+              "protected": false,
+              "area_type": "country",
+              "document_id": 14267,
+              "available_langs": null
+            },
+            {
+              "type": "a",
+              "version": 1,
+              "locales": [
+                {
+                  "title": "Prov\u00edncia de Barcelona",
+                  "lang": "ca",
+                  "version": 1
+                },
+                {
+                  "title": "Provinz Barcelona",
+                  "lang": "de",
+                  "version": 1
+                },
+                {
+                  "title": "Province of Barcelona",
+                  "lang": "en",
+                  "version": 1
+                },
+                {
+                  "title": "Provincia de Barcelona",
+                  "lang": "es",
+                  "version": 1
+                },
+                {
+                  "title": "Bartzelonako probintzia",
+                  "lang": "eu",
+                  "version": 1
+                },
+                {
+                  "title": "Province de Barcelone",
+                  "lang": "fr",
+                  "version": 1
+                },
+                {
+                  "title": "Provincia di Barcelona",
+                  "lang": "it",
+                  "version": 2
+                }
+              ],
+              "protected": false,
+              "area_type": "admin_limits",
+              "document_id": 279930,
+              "available_langs": null
+            },
+            {
+              "type": "a",
+              "version": 1,
+              "locales": [
+                {
+                  "title": "Serres catalanes",
+                  "lang": "fr",
+                  "version": 10
+                },
+                {
+                  "title": "Serralades catalanes",
+                  "lang": "ca",
+                  "version": 2
+                },
+                {
+                  "title": "Catalan ranges",
+                  "lang": "en",
+                  "version": 2
+                },
+                {
+                  "title": "Sierras catalanes",
+                  "lang": "es",
+                  "version": 1
+                }
+              ],
+              "protected": false,
+              "area_type": "range",
+              "document_id": 294791,
+              "available_langs": null
+            }
+          ],
+          "img_count": 0,
+          "quality": "medium",
+          "available_langs": [
+            "fr"
+          ]
+        }
+      ],
+      "total": 1
+    }
+  },
+  "available_langs": [
+    "es",
+    "fr"
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "geometry": {
+    "version": 4,
+    "geom": "{\"coordinates\": [264744.57710368576, 6249820.950418977], \"type\": \"Point\"}",
+    "geom_detail": null
+  },
+  "activities": [
+    "snow_ice_mixed",
+    "mountain_climbing",
+    "rock_climbing"
+  ],
+  "locales": [
+    {
+      "description": "\n\n",
+      "lang": "fr",
+      "version": 23,
+      "summary": null,
+      "topic_id": null
+    },
+    {
+      "description": null,
+      "lang": "en",
+      "version": 1,
+      "summary": null,
+      "topic_id": null
+    }
+  ],
+  "name": "Charles",
+  "categories": [
+    "amateur"
+  ],
+  "type": "u",
+  "version": 5,
+  "forum_username": "CharlesB",
+  "protected": false,
+  "document_id": 286726,
+  "areas": [
+    {
+      "type": "a",
+      "version": 11,
+      "area_type": "country",
+      "protected": false,
+      "locales": [
+        {
+          "title": "Estat franc\u00e8s",
+          "lang": "ca",
+          "version": 2
+        },
+        {
+          "title": "Frankreich",
+          "lang": "de",
+          "version": 1
+        },
+        {
+          "title": "France",
+          "lang": "en",
+          "version": 1
+        },
+        {
+          "title": "Francia",
+          "lang": "es",
+          "version": 1
+        },
+        {
+          "title": "France",
+          "lang": "eu",
+          "version": 2
+        },
+        {
+          "title": "France",
+          "lang": "fr",
+          "version": 4
+        },
+        {
+          "title": "Francia",
+          "lang": "it",
+          "version": 1
+        }
+      ],
+      "document_id": 14274,
+      "available_langs": null
+    },
+    {
+      "type": "a",
+      "version": 8,
+      "area_type": "admin_limits",
+      "protected": false,
+      "locales": [
+        {
+          "title": "Par\u00eds",
+          "lang": "ca",
+          "version": 1
+        },
+        {
+          "title": "Paris",
+          "lang": "de",
+          "version": 1
+        },
+        {
+          "title": "Paris",
+          "lang": "en",
+          "version": 1
+        },
+        {
+          "title": "Par\u00eds",
+          "lang": "es",
+          "version": 1
+        },
+        {
+          "title": "Paris",
+          "lang": "eu",
+          "version": 1
+        },
+        {
+          "title": "Paris",
+          "lang": "fr",
+          "version": 2
+        },
+        {
+          "title": "Parigi",
+          "lang": "it",
+          "version": 1
+        }
+      ],
+      "document_id": 14294,
+      "available_langs": null
+    }
+  ],
+  "associations": {
+    "images": []
+  },
+  "quality": "draft",
+  "available_langs": [
+    "fr",
+    "en"
+  ]
+}

@@ -1,0 +1,470 @@
+{
+  "members": [
+    {
+      "id": 9288,
+      "username": "Greg_H",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/greg_h/{size}/6623_1.png",
+      "name": "Grégoire Huguin",
+      "title": null,
+      "last_posted_at": "2017-12-18T10:03:42.342Z",
+      "last_seen_at": "2017-12-20T21:57:01.494Z"
+    },
+    {
+      "id": 34857,
+      "username": "A.C",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/a/53a042/{size}.png",
+      "name": "A.C",
+      "title": null,
+      "last_posted_at": "2017-12-20T21:27:28.352Z",
+      "last_seen_at": "2017-12-20T22:01:33.052Z"
+    },
+    {
+      "id": 1974,
+      "username": "Aiace",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/a/ee7513/{size}.png",
+      "name": "Franco Pecchio",
+      "title": null,
+      "last_posted_at": "2017-12-19T18:16:10.643Z",
+      "last_seen_at": "2017-12-20T23:01:55.471Z"
+    },
+    {
+      "id": 22547,
+      "username": "alex_buisse",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/alex_buisse/{size}/4397_1.png",
+      "name": "Alex Buisse",
+      "title": null,
+      "last_posted_at": "2017-12-14T20:17:05.038Z",
+      "last_seen_at": "2017-12-20T15:26:53.723Z"
+    },
+    {
+      "id": 372,
+      "username": "alexduchablais",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/a/ecb155/{size}.png",
+      "name": "Alex Saunier",
+      "title": null,
+      "last_posted_at": "2017-12-20T10:09:35.247Z",
+      "last_seen_at": "2017-12-20T23:01:38.516Z"
+    },
+    {
+      "id": 33463,
+      "username": "AntoineM",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/antoinem/{size}/33_1.png",
+      "name": "Antoine Marnat",
+      "title": null,
+      "last_posted_at": "2017-12-20T19:00:20.723Z",
+      "last_seen_at": "2017-12-20T19:02:11.427Z"
+    },
+    {
+      "id": 1878,
+      "username": "Arnaud",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/a/e8c25b/{size}.png",
+      "name": "Arnaud Saint Léger",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2008-12-27T07:55:14.000Z"
+    },
+    {
+      "id": 11706,
+      "username": "B.A",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/b.a/{size}/657_1.png",
+      "name": "Bernard ANGELIN",
+      "title": null,
+      "last_posted_at": "2017-12-18T09:56:41.732Z",
+      "last_seen_at": "2017-12-20T21:52:48.414Z"
+    },
+    {
+      "id": 21872,
+      "username": "Basi",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/b/a3d4f5/{size}.png",
+      "name": "Basi",
+      "title": null,
+      "last_posted_at": "2017-11-22T21:50:41.529Z",
+      "last_seen_at": "2017-12-20T22:12:19.689Z"
+    },
+    {
+      "id": 15050,
+      "username": "b_b",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/b_b/{size}/74_1.png",
+      "name": "Bruno Besson",
+      "title": null,
+      "last_posted_at": "2017-12-20T21:48:50.904Z",
+      "last_seen_at": "2017-12-20T22:33:48.723Z"
+    },
+    {
+      "id": 8886,
+      "username": "benland",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/b/7ea924/{size}.png",
+      "name": "Benoît Landeche",
+      "title": null,
+      "last_posted_at": "2017-12-11T12:09:46.605Z",
+      "last_seen_at": "2017-12-20T21:21:56.561Z"
+    },
+    {
+      "id": 43723,
+      "username": "benoit_g645449",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/b/838e76/{size}.png",
+      "name": "benoît_g",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2017-12-18T22:31:07.107Z"
+    },
+    {
+      "id": 449,
+      "username": "BertrandCH",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/bertrandch/{size}/401_1.png",
+      "name": "BertrandSemelet",
+      "title": null,
+      "last_posted_at": "2017-12-13T07:44:29.047Z",
+      "last_seen_at": "2017-12-20T13:42:50.076Z"
+    },
+    {
+      "id": 27763,
+      "username": "bibotte",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/bibotte/{size}/537_1.png",
+      "name": "bibotte",
+      "title": null,
+      "last_posted_at": "2017-12-04T05:51:40.917Z",
+      "last_seen_at": "2017-12-19T06:09:59.434Z"
+    },
+    {
+      "id": 41895,
+      "username": "Bobyes",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/b/13edae/{size}.png",
+      "name": "Bobyes",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2016-10-07T16:29:44.000Z"
+    },
+    {
+      "id": 26631,
+      "username": "Borut",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/borut/{size}/7088_1.png",
+      "name": "Borut",
+      "title": null,
+      "last_posted_at": "2017-12-19T09:28:06.000Z",
+      "last_seen_at": "2017-12-20T08:40:23.470Z"
+    },
+    {
+      "id": 286,
+      "username": "Bubu",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png",
+      "name": "Frédéric Bunoz",
+      "title": null,
+      "last_posted_at": "2017-12-20T21:05:15.558Z",
+      "last_seen_at": "2017-12-20T23:06:22.472Z"
+    },
+    {
+      "id": 13016,
+      "username": "cagm",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/c/7ba0ec/{size}.png",
+      "name": "Gus Morton",
+      "title": null,
+      "last_posted_at": "2017-04-21T21:04:58.463Z",
+      "last_seen_at": "2017-12-20T16:48:04.801Z"
+    },
+    {
+      "id": 1,
+      "username": "Camptocamp-Association",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/camptocamp-association/{size}/535_1.png",
+      "name": "Camptocamp-Association",
+      "title": null,
+      "last_posted_at": "2017-12-12T14:53:33.752Z",
+      "last_seen_at": "2017-12-12T15:00:29.752Z"
+    },
+    {
+      "id": 16905,
+      "username": "Carcharoth",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/carcharoth/{size}/100_1.png",
+      "name": "Carcharoth",
+      "title": null,
+      "last_posted_at": "2017-12-20T20:12:26.753Z",
+      "last_seen_at": "2017-12-20T20:18:29.916Z"
+    },
+    {
+      "id": 1984,
+      "username": "catherine",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/catherine/{size}/16_1.png",
+      "name": "Catherine-H",
+      "title": null,
+      "last_posted_at": "2017-12-20T16:38:32.471Z",
+      "last_seen_at": "2017-12-20T20:31:30.947Z"
+    },
+    {
+      "id": 14938,
+      "username": "Cesc_Grau",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/c/9dc877/{size}.png",
+      "name": "Cesc Grau",
+      "title": null,
+      "last_posted_at": "2017-11-21T22:33:05.420Z",
+      "last_seen_at": "2017-11-21T22:32:47.691Z"
+    },
+    {
+      "id": 27899,
+      "username": "CharlesB",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+      "name": "Charles",
+      "title": null,
+      "last_posted_at": "2017-12-20T10:06:07.554Z",
+      "last_seen_at": "2017-12-20T23:00:02.019Z"
+    },
+    {
+      "id": 255,
+      "username": "Christian",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/christian/{size}/442_1.png",
+      "name": "Christian",
+      "title": null,
+      "last_posted_at": "2017-12-20T22:37:09.712Z",
+      "last_seen_at": "2017-12-20T22:45:53.471Z"
+    },
+    {
+      "id": 130,
+      "username": "Chti.nain",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/chti.nain/{size}/51_1.png",
+      "name": "Céline Stern-Kiener",
+      "title": null,
+      "last_posted_at": "2017-12-20T20:55:28.657Z",
+      "last_seen_at": "2017-12-20T21:26:52.398Z"
+    },
+    {
+      "id": 8033,
+      "username": "cimaxi",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/c/df788c/{size}.png",
+      "name": "cimaxi",
+      "title": null,
+      "last_posted_at": "2017-08-18T12:50:26.940Z",
+      "last_seen_at": "2017-12-20T21:18:45.459Z"
+    },
+    {
+      "id": 5412,
+      "username": "Clem",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/c/6a8cbe/{size}.png",
+      "name": "Clément Cabanac",
+      "title": null,
+      "last_posted_at": "2017-04-18T21:29:27.832Z",
+      "last_seen_at": "2017-12-17T12:32:49.823Z"
+    },
+    {
+      "id": 20227,
+      "username": "Colnais",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/c/e274bd/{size}.png",
+      "name": "Colnais",
+      "title": null,
+      "last_posted_at": "2017-07-13T21:43:53.268Z",
+      "last_seen_at": "2017-10-22T16:00:24.857Z"
+    },
+    {
+      "id": 50687,
+      "username": "Courgette",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/courgette/{size}/3187_1.png",
+      "name": "Nicolas Michel",
+      "title": null,
+      "last_posted_at": "2017-12-18T15:06:59.398Z",
+      "last_seen_at": "2017-12-20T19:14:20.436Z"
+    },
+    {
+      "id": 3,
+      "username": "cphilipona",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/c/46a35a/{size}.png",
+      "name": "Claude Philipona",
+      "title": null,
+      "last_posted_at": "2017-02-12T11:28:02.414Z",
+      "last_seen_at": "2017-04-23T21:47:20.069Z"
+    },
+    {
+      "id": 17096,
+      "username": "csv",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/csv/{size}/26_1.png",
+      "name": "csv",
+      "title": null,
+      "last_posted_at": "2017-12-20T20:23:21.915Z",
+      "last_seen_at": "2017-12-20T23:02:46.296Z"
+    },
+    {
+      "id": 8568,
+      "username": "D8655",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/d/aeb1de/{size}.png",
+      "name": "Serge",
+      "title": null,
+      "last_posted_at": "2017-12-04T12:24:12.287Z",
+      "last_seen_at": "2017-12-20T21:04:35.823Z"
+    },
+    {
+      "id": 7817,
+      "username": "Dani",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/dani/{size}/2841_1.png",
+      "name": "Dani",
+      "title": null,
+      "last_posted_at": "2017-12-20T17:42:23.974Z",
+      "last_seen_at": "2017-12-19T18:51:27.035Z"
+    },
+    {
+      "id": 39098,
+      "username": "danirichmond",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/d/c2a13f/{size}.png",
+      "name": "danirichmond",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "1970-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 751,
+      "username": "djonglez",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/d/6de8d8/{size}.png",
+      "name": "David Jonglez",
+      "title": null,
+      "last_posted_at": "2017-11-29T12:12:27.000Z",
+      "last_seen_at": "2017-12-20T06:50:54.637Z"
+    },
+    {
+      "id": 45547,
+      "username": "el_celtico_de_la_pampa",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/el_celtico_de_la_pampa/{size}/190_1.png",
+      "name": "el_celtico_de_la_pampa",
+      "title": null,
+      "last_posted_at": "2017-12-20T21:01:52.078Z",
+      "last_seen_at": "2017-12-20T22:48:49.074Z"
+    },
+    {
+      "id": 34435,
+      "username": "Emmanuel403182",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/emmanuel403182/{size}/2083_1.png",
+      "name": "Emmanuel",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2017-11-02T15:21:31.192Z"
+    },
+    {
+      "id": 9337,
+      "username": "eveline",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/e/4491bb/{size}.png",
+      "name": "eveli'ne",
+      "title": null,
+      "last_posted_at": "2017-12-10T18:52:28.333Z",
+      "last_seen_at": "2017-12-20T20:15:52.240Z"
+    },
+    {
+      "id": 7431,
+      "username": "Fabrizio64",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/f/b782af/{size}.png",
+      "name": "Fabrizio Righetti",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2017-07-04T19:30:03.297Z"
+    },
+    {
+      "id": 46331,
+      "username": "felba7315",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/f/c2a13f/{size}.png",
+      "name": "felba7315",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2017-03-25T12:40:58.001Z"
+    },
+    {
+      "id": 27139,
+      "username": "ferdi",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/f/e19adc/{size}.png",
+      "name": "ferdi",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2017-01-21T14:51:46.213Z"
+    },
+    {
+      "id": 20748,
+      "username": "ffoxi",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/f/5f8ce5/{size}.png",
+      "name": "ffoxi",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2013-11-14T09:54:59.000Z"
+    },
+    {
+      "id": 21054,
+      "username": "FlicFlac",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/f/439d5e/{size}.png",
+      "name": "FlicFlac",
+      "title": null,
+      "last_posted_at": "2017-12-15T18:03:57.482Z",
+      "last_seen_at": "2017-12-20T19:29:29.768Z"
+    },
+    {
+      "id": 41462,
+      "username": "Florence_B",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/florence_b/{size}/102_1.png",
+      "name": "Florence B",
+      "title": null,
+      "last_posted_at": "2017-11-20T20:19:49.712Z",
+      "last_seen_at": "2017-11-20T20:19:22.335Z"
+    },
+    {
+      "id": 21351,
+      "username": "foffer74",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/foffer74/{size}/6218_1.png",
+      "name": "Sophie Ferlin",
+      "title": null,
+      "last_posted_at": "2017-12-19T22:24:48.770Z",
+      "last_seen_at": "2017-12-19T22:41:47.886Z"
+    },
+    {
+      "id": 29932,
+      "username": "FORNER_jean_francois",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/f/bb73d2/{size}.png",
+      "name": "FORNER jean françois",
+      "title": null,
+      "last_posted_at": null,
+      "last_seen_at": "2017-12-20T12:13:26.614Z"
+    },
+    {
+      "id": 12419,
+      "username": "FQU",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/f/49beb7/{size}.png",
+      "name": "Fabien Quétier",
+      "title": null,
+      "last_posted_at": "2017-10-22T18:39:53.106Z",
+      "last_seen_at": "2017-12-18T18:28:48.959Z"
+    },
+    {
+      "id": 3096,
+      "username": "fr4nco1s",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/fr4nco1s/{size}/647_1.png",
+      "name": "ƒЯ4nç¤1$",
+      "title": null,
+      "last_posted_at": "2017-12-18T18:30:29.793Z",
+      "last_seen_at": "2017-12-18T18:33:48.716Z"
+    },
+    {
+      "id": 494,
+      "username": "Francois",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/f/77aa72/{size}.png",
+      "name": "Francois Gremillard",
+      "title": null,
+      "last_posted_at": "2017-12-20T19:51:18.957Z",
+      "last_seen_at": "2017-12-20T21:29:26.001Z"
+    },
+    {
+      "id": 12315,
+      "username": "Gastou",
+      "avatar_template": "/letter_avatar_proxy/v2/letter/g/838e76/{size}.png",
+      "name": "Gastou",
+      "title": null,
+      "last_posted_at": "2017-10-24T09:16:25.846Z",
+      "last_seen_at": "2017-12-20T19:59:50.995Z"
+    }
+  ],
+  "owners": [
+    {
+      "id": 9288,
+      "username": "Greg_H",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/greg_h/{size}/6623_1.png",
+      "name": "Grégoire Huguin",
+      "title": null,
+      "last_posted_at": "2017-12-18T10:03:42.342Z",
+      "last_seen_at": "2017-12-20T21:57:01.494Z"
+    }
+  ],
+  "meta": {
+    "total": 50,
+    "limit": 50,
+    "offset": 0
+  }
+}

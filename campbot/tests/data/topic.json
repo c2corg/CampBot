@@ -1,0 +1,3341 @@
+{
+  "post_stream": {
+    "posts": [
+      {
+        "id": 2003993,
+        "name": "rabot",
+        "username": "rabot",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png",
+        "created_at": "2017-12-02T00:22:18.787Z",
+        "cooked": "\u003ch2\u003eObjectif\u003c/h2\u003e\n\n\u003cp\u003eCe thread sert à donner une aide à l'entretien du topoguide de Camptocamp. \u003c/p\u003e\n\n\u003cp\u003eLe robot \u003ca class=\"mention\" href=\"/u/rabot\"\u003e@rabot\u003c/a\u003e fera un rapport quotidien des contributions qui échoueront à un ensemble de vérification. Ainsi, ceux qui le souhaitent pourront revoir, et corriger si besoin, ces modifications.\u003c/p\u003e\n\n\u003chr\u003e\n\n\u003ch2\u003eVérifications fixes\u003c/h2\u003e\n\n\u003cul\u003e\n\u003cli\u003eLe champ historique est-il rempli?\u003c/li\u003e\n\u003cli\u003eLe document a-t-il été vidé en grande partie?\u003c/li\u003e\n\u003cli\u003eL'utilisateur est-il récemment arrivé (moins de 50 contributions)?\u003c/li\u003e\n\u003cli\u003eLe point de passage principal a-t-il été renseigné?\u003c/li\u003e\n\u003cli\u003eLe type de voie est-il renseigné pour les itinéraires d'escalade?\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003chr\u003e\n\n\u003ch2\u003eVérification paramétrables\u003c/h2\u003e\n\n\u003cp\u003e\u003cem\u003eCe post est un wiki, vous pouvez le mettre à jour.\u003c/em\u003e N'hésitez pas à demander de l'aide dans ce thread si vous voulez rajouter des vérifications.\u003c/p\u003e\n\n\u003cp\u003eVous trouverez ci dessous une liste de motifs à rechercher dans les documents du topoguide. Pour inspiration, voici la \u003ca href=\"https://fr.wikipedia.org/wiki/Utilisateur:Salebot/Config\"\u003eliste des vérifications faites sur la Wikipédia française\u003c/a\u003e.\u003c/p\u003e\n\n\u003chr\u003e\n\n\u003ch2\u003eFautes d'orthographe courantes\u003c/h2\u003e\n\n\u003cp\u003e\u003cem\u003eCette vérification remonte les mots qui sont couramment mal orthographiés.\u003c/em\u003e\u003c/p\u003e\n\n\u003cdetails\u003e\u003csummary\u003eListe des fautes courantes\u003c/summary\u003e\n\n\u003cul\u003e\n\u003cli\u003eErreur : \u003cimg src=\"https://forum.camptocamp.org/images/emoji/apple/apple.png?v=3\" class=\"emoji\" title=\"Faute d'orthographe\" alt=\"Faute d'orthographe\"\u003e\n\u003c/li\u003e\n\u003cli\u003eCorrigé : \u003cimg src=\"https://forum.camptocamp.org/images/emoji/apple/green_apple.png?v=3\" class=\"emoji\" title=\"Orthographe corrigée\" alt=\"Orthographe corrigée\"\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003cp\u003e\u003cem\u003eAttention, il faut commencer et terminer chaque mot par \u003cstrong\u003e\u003ccode\u003e\\b\u003c/code\u003e\u003c/strong\u003e : ceci indique un séparateur de mot (début de phrase, virgule, point, espace...)\u003c/em\u003e\u003c/p\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\betre\\b\n\\bdeja\\b\n\\bar[eè]te\\b\n\\ba jour\\b\n\\bchaine\\b\n\\bchaines\\b\n\\btres\\b\n\\ba droite\\b\n\\ba gauche\\b\n\\bdiedres?\\b\n\\b[Pp]remieres?\\b\n\\b[Dd]ernieres?\\b\n\\btot\\b\n\\bjusqu'a\\b\n\\b\\d+ m\\b\n\\bcable\\b\u003c/code\u003e\u003c/pre\u003e\n\n\u003c/details\u003e\n\n\u003chr\u003e\n\n\u003ch2\u003eErreurs de syntaxe\u003c/h2\u003e\n\n\u003cp\u003e\u003cem\u003eCette vérification remonte des syntaxes markdown valides, mais qui ne correspondent pas à nos conventions.\u003c/em\u003e\u003c/p\u003e\n\n\u003cdetails\u003e\u003csummary\u003eListe des erreurs de syntaxes courantes\u003c/summary\u003e\n\n\u003ch3\u003eTitre de niveau 1\u003c/h3\u003e\n\n\u003cp\u003e\u003cem\u003eCe test remonte l'utilisation des titres avec un unique #. Il faut utiliser des titres de niveau 2 (2 dièses)\u003c/em\u003e\u003c/p\u003e\n\n\u003cpre\u003e\u003ccode\u003e(\\n|^)#[^#]\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eMauvais usage de la balise L# \u003c/h3\u003e\n\n\u003cp\u003e\u003cem\u003eLes contributeurs ne connaissant pas L# vont avoir tendance à mettre L1, L2, etc en début de ligne. Le motif suivant recherche un L ou R, suivi d'un nombre, suivi d'espaces, et enfin une virgule, ou deux petits points, ou un pipe (|).\u003c/em\u003e\u003c/p\u003e\n\n\u003cpre\u003e\u003ccode\u003e(\\n|^)[LR]\\d+ *[,\\|\\:]\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eFausse liste numérotée\u003c/h3\u003e\n\n\u003cp\u003e\u003cem\u003eL'utilisateur utilise \u003ccode\u003e1)\u003c/code\u003e, \u003ccode\u003e2)\u003c/code\u003e pour faire une liste numérotée. Il faut utiliser \u003ccode\u003e1.\u003c/code\u003e\u003c/em\u003e\u003c/p\u003e\n\n\u003cpre\u003e\u003ccode\u003e(\\n|^)1\\)\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eTitre terminant par deux petits-points\u003c/h3\u003e\n\n\u003cp\u003e\u003cem\u003eIl ne faut pas mettre de ponctuation à la fin d'un titre\u003c/em\u003e\u003c/p\u003e\n\n\u003cpre\u003e\u003ccode\u003e(\\n|^)#+.*: *(\\r|\\n|$)\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eBidouille de mise en forme\u003c/h3\u003e\n\n\u003cp\u003e\u003cem\u003eIl ne faut pas utiliser la syntaxe pour bidouiller la mise en forme, car le rendu ne sera pas maîtrisé\u003c/em\u003e\u003c/p\u003e\n\n\u003cpre\u003e\u003ccode\u003e(\\n|^) *\\* *(\\r|\\n|$)\u003c/code\u003e\u003c/pre\u003e\n\n\u003c/details\u003e\n\n\u003chr\u003e\n\n\u003ch2\u003eUtilisation de Nord, sud...\u003c/h2\u003e\n\n\u003cdetails\u003e\u003csummary\u003eOn doit les écrire S, N, W ou E.\u003c/summary\u003e\n\n\u003cp\u003e\u003cem\u003eLe motif \u003cstrong\u003eest\u003c/strong\u003e est précédé d'un \"l\" apostrophe pour éviter de détecter le verbe être à la troisième personne, comme dans \u003cstrong\u003ec'est\u003c/strong\u003e .\u003c/em\u003e\u003c/p\u003e\n\n\u003cul\u003e\n\u003cli\u003eErreur : \u003cimg src=\"http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/simple-red-glossy-icons-transport-travel/040845-simple-red-glossy-icon-transport-travel-compass2.png\" class=\"emoji\" title=\"Utilisation de nord, sud...\" alt=\"Utilisation de nord, sud...\"\u003e\n\u003c/li\u003e\n\u003cli\u003e\n\u003cp\u003eCorrigé : \u003cimg src=\"http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/retro-green-floral-icons-transport-travel/040536-retro-green-floral-icon-transport-travel-compass2.png\" class=\"emoji\" title=\"Utilisation de nord, sud corrigé\" alt=\"Utilisation de nord, sud corrigé\"\u003e\u003c/p\u003e\n\u003cp\u003e\\bnord\\b\u003cbr\u003e\\bNord\\b\u003cbr\u003e\\bsud\\b\u003cbr\u003e\\bSud\\b\u003cbr\u003e\\bouest\\b\u003cbr\u003e\\bOuest\\b\u003cbr\u003e\\bNO\\b\u003cbr\u003e\\bSO\\b\u003cbr\u003e\\bO\\b\u003cbr\u003e\\bdirection est\\b\u003cbr\u003e\\bdirection Est\\b\u003cbr\u003e\\bplein est\\b\u003cbr\u003e\\bplein Est\\b\u003cbr\u003e\\bl'est\\b\u003cbr\u003e\\bl'Est\\b\u003c/p\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003c/details\u003e\n\n\u003chr\u003e\n\n\u003ch2\u003eProjet de migration BBCode\u003c/h2\u003e\n\n\u003cp\u003e\u003cem\u003eToutes ces requêtes sont dans le cadre du projet de migration du parser. Elles permettent de vérifier que rien n'est oublié.\u003c/em\u003e\u003c/p\u003e\n\n\u003cdetails\u003e\u003csummary\u003eGros paquet totalement indigeste\u003c/summary\u003e\n\n\u003ch3\u003eLiens internes cassés\u003c/h3\u003e\n\n\u003cp\u003eCe sont les vieux liens V5 du type : \u003ccode\u003e[[1234]]\u003c/code\u003e. Il faut maintenant preciser le type de document.\u003c/p\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\[\\[\\d\n\\[\\[http\n\\[\\[www\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eVieilles balises BBCodes [b], [i] et [c]\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\[/?[bic]\\]\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003evieux liens V5 vers le forum\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e#t\\d+\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eBalises Url pouvant etre migrées\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\[url[\\]\\=][^\\n \\\u0026amp;\\]\\[]*?[\\]\\[]\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eVieilles balises email\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\[email[\\]\\=]\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eVieilles balises color avec valeur, et u\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\[(color\\=|u\\])\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eVieilles balises col, pénible à migrer\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\[/?col\\]\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eAncres\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\{#\\w+\\}\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003ePictos\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e\\[picto\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eL# avec un pipe à retirer\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e(\\n|^)L#\\~ *\\|\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eL# avec des deux petits-points en separateurs\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e(\\n|^)L#.*::\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003eBalises sans équivalent, mais qui fonctionnent toujours\u003c/h3\u003e\n\n\u003cp\u003e\u003cem\u003eLes checks suivants sont desactivés\u003c/em\u003e\u003c/p\u003e\n\n\u003ch3\u003eBalises url avec esperluette (ne pas corriger)\u003c/h3\u003e\n\n\u003cp\u003e\u003ccode\u003e\\[url[\\]\\=][^\\n \\]\\[]*?\\\u0026amp;\u003c/code\u003e\u003c/p\u003e\n\n\u003ch3\u003eBalises BBCode de placement\u003c/h3\u003e\n\n\u003cp\u003e\u003ccode\u003e\\[/?(center|right|left)\\]\u003c/code\u003e\u003c/p\u003e\n\n\u003ch3\u003eVieilles balises code\u003c/h3\u003e\n\n\u003cp\u003e\u003ccode\u003e\\[(c|code)\\]\u003c/code\u003e\u003c/p\u003e\n\n\u003ch3\u003ebbcode à remplacer plus tard par du html\u003c/h3\u003e\n\n\u003cp\u003e\u003ccode\u003e\\[/?(sub|sub|s|p|q|acr|hr)\\]\u003c/code\u003e\u003c/p\u003e\n\n\u003ch3\u003eVieilles balise citations\u003c/h3\u003e\n\n\u003cp\u003e\u003ccode\u003e\\[/?quote\\]\u003c/code\u003e\u003c/p\u003e\n\n\u003ch3\u003eVielles balises BBcode théoriquement migrées\u003c/h3\u003e\n\n\u003cpre\u003e\u003ccode\u003e(\\n|^)#+c  \n\\[/?(imp|warn|abs|abstract|list)\\] \n\\[\\/\\*\\]\u003c/code\u003e\u003c/pre\u003e\n\n\u003c/details\u003e",
+        "post_number": 1,
+        "post_type": 1,
+        "updated_at": "2017-12-20T13:38:23.950Z",
+        "reply_count": 0,
+        "reply_to_post_number": null,
+        "quote_count": 0,
+        "avg_time": 35,
+        "incoming_link_count": 194,
+        "reads": 195,
+        "score": 1012.75,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "rabot",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 48,
+        "can_edit": true,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "link_counts": [
+          {
+            "url": "https://fr.wikipedia.org/wiki/Utilisateur:Salebot/Config",
+            "internal": false,
+            "reflection": false,
+            "title": "Utilisateur:Salebot/Config — Wikipédia",
+            "clicks": 13
+          },
+          {
+            "url": "https://forum.camptocamp.org/t/verifications-automatiques-sur-forum-public/201731",
+            "internal": true,
+            "reflection": true,
+            "title": "Vérifications automatiques sur le forum public",
+            "clicks": 1
+          },
+          {
+            "url": "https://forum.camptocamp.org/t/verifications-automatiques-sur-le-forum-public/201731/67",
+            "internal": true,
+            "reflection": true,
+            "title": "Vérifications automatiques sur le forum public",
+            "clicks": 0
+          }
+        ],
+        "read": true,
+        "user_title": null,
+        "bookmarked": true,
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 56361,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 1,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": true
+      },
+      {
+        "id": 2003996,
+        "name": "rabot",
+        "username": "rabot",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png",
+        "created_at": "2017-12-02T00:31:47.917Z",
+        "cooked": "\u003ch3\u003eVielles balises BBCodes\u003c/h3\u003e\n\n\u003cul\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54873/es\"\u003epilar sw\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54873/fr\"\u003ePilier SW\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/151910/ca\"\u003eAJUDA: Paginació i format del text\u003c/a\u003e (ca)\u003c/li\u003e\n\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/151910/en\"\u003eHELP : text formatting and layouting\u003c/a\u003e (en)\u003c/li\u003e\n\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/151910/es\"\u003eAYUDA: Puesta en pagina y formato del texto\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/151910/it\"\u003eAIUTO : La formattazione del testo\u003c/a\u003e (it)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/841070/fr\"\u003eYellow Cop is Watching you\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/793226/fr\"\u003eChanger d'approche : idées de sorties sans voiture dans le Parc Naturel Régional du Verdon\u003c/a\u003e (fr)\u003c/li\u003e\n\u003c/ul\u003e",
+        "post_number": 3,
+        "post_type": 1,
+        "updated_at": "2017-12-02T00:31:47.917Z",
+        "reply_count": 0,
+        "reply_to_post_number": null,
+        "quote_count": 0,
+        "avg_time": 13,
+        "incoming_link_count": 2,
+        "reads": 160,
+        "score": 42.65,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "rabot",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "link_counts": [
+          {
+            "url": "https://www.camptocamp.org/routes/54873/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Croix de Fer : Pilier SW - Camptocamp.org",
+            "clicks": 5
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54873/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Croix de Fer : pilar sw - Camptocamp.org",
+            "clicks": 4
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/841070/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "La Meije - Pyramide Duhamel : Yellow Cop is Watching you - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/793226/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Changer d'approche : idées de sorties sans voiture dans le Parc Naturel Régional du Verdon",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/151910/en",
+            "internal": false,
+            "reflection": false,
+            "title": "HELP : text formatting and layouting",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/151910/it",
+            "internal": false,
+            "reflection": false,
+            "title": "AIUTO : La formattazione del testo",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/151910/es",
+            "internal": false,
+            "reflection": false,
+            "title": "AYUDA: Puesta en pagina y formato del texto",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/151910/ca",
+            "internal": false,
+            "reflection": false,
+            "title": "AJUDA: Paginació i format del text",
+            "clicks": 0
+          }
+        ],
+        "read": true,
+        "user_title": null,
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 56361,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 1,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2003999,
+        "name": "Charles",
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "created_at": "2017-12-02T00:41:34.114Z",
+        "cooked": "\u003cp\u003eBon, allez, dodo. Demain, je rajoute le \"petit\" test : historique vide? \u003cimg src=\"https://forum.camptocamp.org/images/emoji/apple/slight_smile.png?v=3\" title=\":slight_smile:\" class=\"emoji\" alt=\":slight_smile:\"\u003e\u003c/p\u003e",
+        "post_number": 4,
+        "post_type": 1,
+        "updated_at": "2017-12-02T00:41:34.114Z",
+        "reply_count": 1,
+        "reply_to_post_number": null,
+        "quote_count": 0,
+        "avg_time": 10,
+        "incoming_link_count": 3,
+        "reads": 154,
+        "score": 81.3,
+        "yours": true,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Charles",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": true,
+        "can_delete": true,
+        "can_recover": false,
+        "can_wiki": true,
+        "read": true,
+        "user_title": null,
+        "actions_summary": [
+          {
+            "id": 2,
+            "count": 2
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 27899,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": false
+      },
+      {
+        "id": 2004060,
+        "name": "rabot",
+        "username": "rabot",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png",
+        "created_at": "2017-12-02T10:58:24.779Z",
+        "cooked": "\u003ch2\u003eMissing history\u003c/h2\u003e\n\n\u003cul\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/232536/es\"\u003ePéril en la demeure\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/55073/es\"\u003eVol et Volupté\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/273708/fr\"\u003eL'arbre perché\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/273708/de\"\u003eL'arbre perché\u003c/a\u003e (de)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/273708/es\"\u003eL'arbre perché\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949038/fr\"\u003eBuzz l'éclair\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949039/fr\"\u003eShérif Woody\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949042/fr\"\u003eScène de panique tranquille\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/55095/en\"\u003eSapeyrlipopette\u003c/a\u003e (en)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54872/es\"\u003ej'ai vu la maison de napoleon\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54872/fr\"\u003eJ'ai vu la maison de Napoléon\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/222811/de\"\u003eYEEEH\u003c/a\u003e (de)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/222811/es\"\u003eYEEEH\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/222811/fr\"\u003eYEEEH\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949089/fr\"\u003eBecca France en boucle depuis Verrogne\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/917607/fr\"\u003eVersant NW (voie normale)\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/57407/es\"\u003eEl Somni de Quimfer\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/57407/fr\"\u003eEl Somni de Quimfer\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/355964/es\"\u003eL'infini péril de la volupté\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54848/es\"\u003eParoi du Masque\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54848/fr\"\u003eParoi du Masque\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/300168/fr\"\u003eMorpionnibus\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/300168/es\"\u003eMorpionnibus\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/300168/de\"\u003eMorpionnibus\u003c/a\u003e (de)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54924/es\"\u003ezig zag\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54924/fr\"\u003eZig Zag\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/860050/fr\"\u003eEs pas homogène\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/580501/fr\"\u003eCapitaine Flint\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/580501/es\"\u003eCapitaine Flint\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/580501/de\"\u003eCapitaine Flint\u003c/a\u003e (de)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/571552/fr\"\u003eSmilla\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/571552/de\"\u003eSmilla\u003c/a\u003e (de)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/571552/es\"\u003eSmilla\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/57534/fr\"\u003eL'amie serfouette\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/57534/de\"\u003eL'amie serfouette\u003c/a\u003e (de)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/57534/es\"\u003eL'amie serfouette\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/56525/es\"\u003eLleida\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/834020/fr\"\u003eVent de folie\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/446454/fr\"\u003eMakoki\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/446454/es\"\u003eMakoki\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/470775/es\"\u003eLa Cosa Nostra\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/470775/fr\"\u003eLa Cosa Nostra\u003c/a\u003e (fr)\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003ch3\u003eVielles balises BBCodes\u003c/h3\u003e\n\n\u003cul\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/841070/fr\"\u003eYellow Cop is Watching you\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/185337/fr\"\u003eTéoufil\u003c/a\u003e (fr)\u003c/li\u003e\n\u003c/ul\u003e",
+        "post_number": 5,
+        "post_type": 1,
+        "updated_at": "2017-12-02T10:58:24.779Z",
+        "reply_count": 0,
+        "reply_to_post_number": null,
+        "quote_count": 0,
+        "avg_time": 16,
+        "incoming_link_count": 1,
+        "reads": 145,
+        "score": 34.8,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "rabot",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "link_counts": [
+          {
+            "url": "https://www.camptocamp.org/routes/55095/en",
+            "internal": false,
+            "reflection": false,
+            "title": "Sapey - Pointe de Dran : Sapeyrlipopette - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/185337/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Le Rocher du Corbeau : Téoufil - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/841070/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "La Meije - Pyramide Duhamel : Yellow Cop is Watching you - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54924/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Mont Baron : Zig Zag - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/470775/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Vilanova de Meià - Roca dels Arcs : La Cosa Nostra - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/446454/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Vilanova de Meià - Roca dels Arcs : Makoki - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949042/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Scène de panique tranquille - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/834020/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Protéine/TGV : Vent de folie - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54848/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Roc des Bœufs : Paroi du Masque - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/273708/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : L'arbre perché - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/232536/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Tenailles de Montbrison : Péril en la demeure - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/470775/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Vilanova de Meià - Roca dels Arcs : La Cosa Nostra - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/446454/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Vilanova de Meià - Roca dels Arcs : Makoki - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/56525/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Vilanova de Meià - Roca dels Arcs : Lleida - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/57534/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - GR4b+ : L'amie serfouette - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/57534/de",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - GR4b+ : L'amie serfouette - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/57534/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - GR4b+ : L'amie serfouette - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/571552/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - GR4b+ : Smilla - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/571552/de",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - GR4b+ : Smilla - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/571552/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - GR4b+ : Smilla - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/580501/de",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Capitaine Flint - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/580501/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Capitaine Flint - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/580501/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Capitaine Flint - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/860050/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Telegraph Road : Es pas homogène - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54924/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Mont Baron : zig zag - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/300168/de",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Morpionnibus - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/300168/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Morpionnibus - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/300168/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Morpionnibus - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54848/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Roc des Bœufs : Paroi du Masque - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/355964/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Tenailles de Montbrison : L'infini péril de la volupté - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/57407/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Vilanova de Meià - Roca dels Arcs : El Somni de Quimfer - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/57407/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Vilanova de Meià - Roca dels Arcs : El Somni de Quimfer - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/917607/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Pic Semionova/Семенова-Тяньшанского : Versant NW (voie normale) - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949089/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Becca France : Becca France en boucle depuis Verrogne - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/222811/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : YEEEH - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/222811/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : YEEEH - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/222811/de",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : YEEEH - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54872/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Chapeau de Napoléon : J'ai vu la maison de Napoléon - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54872/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Chapeau de Napoléon : j'ai vu la maison de napoleon - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949039/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quintal [Dry-tooling] : Shérif Woody - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949038/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quintal [Dry-tooling] : Buzz l'éclair - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/273708/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : L'arbre perché - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/273708/de",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : L'arbre perché - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/55073/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Tenailles de Montbrison : Vol et Volupté - Camptocamp.org",
+            "clicks": 0
+          }
+        ],
+        "read": true,
+        "user_title": null,
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 56361,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 1,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2004061,
+        "name": "Charles",
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "created_at": "2017-12-02T10:59:17.059Z",
+        "cooked": "\u003caside class=\"quote\" data-post=\"4\" data-topic=\"201480\"\u003e\u003cdiv class=\"title\"\u003e\n\u003cdiv class=\"quote-controls\"\u003e\u003c/div\u003e\n\u003cimg alt=\"\" width=\"20\" height=\"20\" src=\"https://forum.camptocamp.org/user_avatar/forum.camptocamp.org/charlesb/40/739_1.png\" class=\"avatar\"\u003eCharlesB:\u003c/div\u003e\n\u003cblockquote\u003e\u003cp\u003eDemain, je rajoute le \"petit\" test : historique vide?\u003c/p\u003e\u003c/blockquote\u003e\u003c/aside\u003e\n\n\u003cp\u003eDone. Par contre, c'est pertinent de mettre aussi les versions autre que françaises?\u003c/p\u003e",
+        "post_number": 6,
+        "post_type": 1,
+        "updated_at": "2017-12-02T10:59:17.059Z",
+        "reply_count": 1,
+        "reply_to_post_number": 4,
+        "quote_count": 1,
+        "avg_time": 9,
+        "incoming_link_count": 0,
+        "reads": 126,
+        "score": 30.65,
+        "yours": true,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Charles",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": true,
+        "can_delete": true,
+        "can_recover": false,
+        "can_wiki": true,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "CharlesB",
+          "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png"
+        },
+        "actions_summary": [
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 27899,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": false
+      },
+      {
+        "id": 2004064,
+        "name": "Mathieu des Noes",
+        "username": "Miko",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/miko/{size}/4885_1.png",
+        "created_at": "2017-12-02T11:02:57.916Z",
+        "cooked": "\u003cp\u003eTu peux avoir des itinéraires en italien uniquement\u003c/p\u003e",
+        "post_number": 7,
+        "post_type": 1,
+        "updated_at": "2017-12-02T11:02:57.916Z",
+        "reply_count": 1,
+        "reply_to_post_number": 6,
+        "quote_count": 0,
+        "avg_time": 9,
+        "incoming_link_count": 0,
+        "reads": 123,
+        "score": 30.05,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Mathieu des Noes",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "CharlesB",
+          "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png"
+        },
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 7440,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2004065,
+        "name": "Charles",
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "created_at": "2017-12-02T11:04:31.447Z",
+        "cooked": "\u003cp\u003eYep. Bon, c'est assez flexible, \u003ca class=\"mention\" href=\"/u/moderation_topoguide\"\u003e@Moderation_Topoguide\u003c/a\u003e, n'hésitez pas à donner vos idées dans tout ce qui pourrait vous simplifier la vie.\u003c/p\u003e",
+        "post_number": 8,
+        "post_type": 1,
+        "updated_at": "2017-12-02T11:04:31.447Z",
+        "reply_count": 0,
+        "reply_to_post_number": 7,
+        "quote_count": 0,
+        "avg_time": 9,
+        "incoming_link_count": 1,
+        "reads": 123,
+        "score": 30.05,
+        "yours": true,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Charles",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": true,
+        "can_delete": true,
+        "can_recover": false,
+        "can_wiki": true,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "Miko",
+          "avatar_template": "/user_avatar/forum.camptocamp.org/miko/{size}/4885_1.png"
+        },
+        "actions_summary": [
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 27899,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": false
+      },
+      {
+        "id": 2004526,
+        "name": "rabot",
+        "username": "rabot",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png",
+        "created_at": "2017-12-03T13:27:24.171Z",
+        "cooked": "\u003ch2\u003eMissing history\u003c/h2\u003e\n\n\u003cul\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54547/es\"\u003edalle de rosiere- solstice d'été\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54547/fr\"\u003eDalle de la Rosière - Solstice d'été\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54547/en\"\u003eDalle de la Rosière - Solstice d'été\u003c/a\u003e (en)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/56087/en\"\u003eL'Été Indien\u003c/a\u003e (en)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/946724/es\"\u003eAC grands crus\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/946724/fr\"\u003eAC - Grands Crus\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/576087/fr\"\u003eParfum d'Altitude\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/576087/es\"\u003eParfum d'Altitude\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54994/de\"\u003eSalluard-Route\u003c/a\u003e (de)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/925290/es\"\u003evía sin nombre a la tete des mesures\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/947570/fr\"\u003eTraversée E → W\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54945/es\"\u003eLorelei\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54945/fr\"\u003eLorelei\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54946/es\"\u003elooser magnifique\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54946/fr\"\u003eLooser magnifique\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54949/en\"\u003eHarmonie\u003c/a\u003e (en)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/893095/es\"\u003eaustralo p'tite tete\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/893095/fr\"\u003eAustralo p'tite tête\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/893106/es\"\u003esa lime à vélo\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/893106/fr\"\u003eSa lime à vélo\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54963/es\"\u003eLa directe des Bœufs\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949175/fr\"\u003eDepuis le foyer du Barioz (version hivernale)\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/882123/en\"\u003eGébroulaz \u0026gt; Borgne\u003c/a\u003e (en)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/927699/es\"\u003eBloques de la colombiere\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/927699/fr\"\u003eBlocs de la Colombière\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/57083/es\"\u003eLes Années Zizanie\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/57083/fr\"\u003eLes Années Zizanie\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949241/fr\"\u003eCouenne\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949242/fr\"\u003eCouenne\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949243/fr\"\u003eCouenne\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949244/fr\"\u003eCouenne\u003c/a\u003e (fr)\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003ch3\u003eFautes d'orthographe courantes\u003c/h3\u003e\n\n\u003cul\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54547/en\"\u003eDalle de la Rosière - Solstice d'été\u003c/a\u003e (en)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/926770/es\"\u003ezenith\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/56272/es\"\u003ePeppermint\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54994/es\"\u003evia salluard\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54994/fr\"\u003eVoie Salluard\u003c/a\u003e (fr)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/915838/es\"\u003evillard ladies\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/188805/es\"\u003eXin Xan\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54925/es\"\u003ele toit des monchus\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54949/es\"\u003eharmonie\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/230826/es\"\u003eGéminis\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/54963/es\"\u003eLa directe des Bœufs\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/882123/en\"\u003eGébroulaz \u0026gt; Borgne\u003c/a\u003e (en)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/190924/es\"\u003eEsperó dels Elfos\u003c/a\u003e (es)\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/57083/es\"\u003eLes Années Zizanie\u003c/a\u003e (es)\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003ch4\u003eVieilles balises BBCodes [b], [i] et [c]\u003c/h4\u003e\n\n\u003cul\u003e\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/55560/fr\"\u003eCaturgeas - partie inférieure\u003c/a\u003e (fr)\u003c/li\u003e\u003c/ul\u003e\n\n\u003ch4\u003eAncres sur titre\u003c/h4\u003e\n\n\u003cul\u003e\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/426084/fr\"\u003eRègles du topoguide\u003c/a\u003e (fr)\u003c/li\u003e\u003c/ul\u003e\n\n\u003ch4\u003ePictos\u003c/h4\u003e\n\n\u003cul\u003e\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/506514/fr\"\u003eAIDE : Topoguide - Modération mode d'emploi\u003c/a\u003e (fr)\u003c/li\u003e\u003c/ul\u003e",
+        "post_number": 11,
+        "post_type": 1,
+        "updated_at": "2017-12-03T13:27:24.171Z",
+        "reply_count": 1,
+        "reply_to_post_number": null,
+        "quote_count": 0,
+        "avg_time": 23,
+        "incoming_link_count": 2,
+        "reads": 113,
+        "score": 38.75,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "rabot",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "link_counts": [
+          {
+            "url": "https://www.camptocamp.org/routes/54945/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Val de Fier : Lorelei - Camptocamp.org",
+            "clicks": 5
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54994/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Pointe Adolphe Rey : Voie Salluard - Camptocamp.org",
+            "clicks": 3
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/893106/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Le Petit Désert : Sa lime à vélo - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54547/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Tête Ronde : Dalle de la Rosière - Solstice d'été - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/55560/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "La Grave - Malaval versant S : Caturgeas - partie inférieure - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/57083/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - La Poire : Les Années Zizanie - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/188805/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Paret d'Escales : Xin Xan - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/915838/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Pointe Dzérat (Pointe E du Midi) : villard ladies - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/56272/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Peppermint : Peppermint - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/926770/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Falaise de Balme : zenith - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949244/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Falaise de Pont-Chrétien - Chabenet : Couenne - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949242/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Falaise de Bois-Ramier : Couenne - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949241/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Pont des Piles : Couenne - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54946/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Val de Fier : Looser magnifique - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54945/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Val de Fier : Lorelei - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54547/en",
+            "internal": false,
+            "reflection": false,
+            "title": "Tête Ronde : Dalle de la Rosière - Solstice d'été - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54925/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Falaise de Balme : le toit des monchus - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/925290/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Vallon de Bérard : vía sin nombre a la tete des mesures - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54994/de",
+            "internal": false,
+            "reflection": false,
+            "title": "Pointe Adolphe Rey : Salluard-Route - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/576087/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - La Poire : Parfum d'Altitude - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/946724/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Le Petit Désert : AC - Grands Crus - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/946724/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Le Petit Désert : AC grands crus - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54547/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Tête Ronde : dalle de rosiere- solstice d'été - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/576087/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - La Poire : Parfum d'Altitude - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/893095/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Les Brieux : australo p'tite tete - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/56087/en",
+            "internal": false,
+            "reflection": false,
+            "title": "Mont Oreb : L'Été Indien - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54946/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Val de Fier : looser magnifique - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/506514/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "AIDE : Topoguide - Modération mode d'emploi",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/426084/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Règles du topoguide",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/190924/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Paret d'Escales : Esperó dels Elfos - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/230826/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Muraille du Gallinero : Géminis - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54949/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Les Grandes Suites : harmonie - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54994/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Pointe Adolphe Rey : via salluard - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949243/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Site de La Fileuse : Couenne - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/57083/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - La Poire : Les Années Zizanie - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/927699/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Col de la Colombière : Blocs de la Colombière - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/927699/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Col de la Colombière : Bloques de la colombiere - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/882123/en",
+            "internal": false,
+            "reflection": false,
+            "title": "Col de Gébroulaz : Gébroulaz \u003e Borgne - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949175/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Crêt du Poulet : Depuis le foyer du Barioz (version hivernale) - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54963/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Roc des Bœufs : La directe des Bœufs - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/893106/es",
+            "internal": false,
+            "reflection": false,
+            "title": "Le Petit Désert : sa lime à vélo - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/893095/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Les Brieux : Australo p'tite tête - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/54949/en",
+            "internal": false,
+            "reflection": false,
+            "title": "Les Grandes Suites : Harmonie - Camptocamp.org",
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/947570/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Puy des Pourroys : Traversée E → W - Camptocamp.org",
+            "clicks": 0
+          }
+        ],
+        "read": true,
+        "user_title": null,
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 56361,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 1,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2004529,
+        "name": "Frédéric Bunoz",
+        "username": "Bubu",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png",
+        "created_at": "2017-12-03T13:34:19.089Z",
+        "cooked": "\u003cp\u003eC'est quoi l'idée ?\u003cbr\u003eCar selon les critères, on pourra avoir des listes avec 5000 ou 10000 itinéraires, je ne vois pas trop l'intérêt de poster ça en vrac dans le forum.\u003cbr\u003eEn tout cas pour les itinéraires, il faut le nom complet car le titre \"Face S\" n'est pas bien utile.\u003c/p\u003e",
+        "post_number": 12,
+        "post_type": 1,
+        "updated_at": "2017-12-03T13:35:20.104Z",
+        "reply_count": 2,
+        "reply_to_post_number": null,
+        "quote_count": 0,
+        "avg_time": 24,
+        "incoming_link_count": 0,
+        "reads": 100,
+        "score": 31.2,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Frédéric Bunoz",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "read": true,
+        "user_title": null,
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": true,
+        "admin": true,
+        "staff": true,
+        "user_id": 286,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 4,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2004532,
+        "name": "Charles",
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "created_at": "2017-12-03T13:44:36.392Z",
+        "cooked": "\u003cp\u003eL'idée, c'est de lutter contre l'entropie : tu auras beau, à un instant T, prendre une action pour  lutter contre un biais du wiki (genre un bibliothon car tes champs historiques ne sont pas assez remplis), le fonctionnement du wiki fait que le bordel augmente dans le temps. Donc \u003c/p\u003e\n\n\u003cul\u003e\n\u003cli\u003esoit tu fait tous les X ans une grosse action, mais tu acceptes qu'entre temps la qualité se dégrade petit à petit.\u003c/li\u003e\n\u003cli\u003eSoit tu monitores, et corriges, en live les soucis. De cette manière, tu arrives à conserver le niveau de qualité que tu as réussi à obtenir.\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003cp\u003eDans l'idéal, le robot tourne en temps continu et te fait une sorte de fenetre \u003ca href=\"https://www.camptocamp.org/whatsnew\"\u003ewhatsnew\u003c/a\u003e améliorée, en rajoutant des warning sur ce qu'il trouve.\u003c/p\u003e\n\n\u003cp\u003eJe n'ai pas d'ordi qui puisse faire ça pour le moment, donc a defaut, une fois par jour me semble faire le job. \u003c/p\u003e\n\n\u003cp\u003eMais ce qui est sur, c'est que ces tests doivent etre utiles à \u003ca class=\"mention-group\" href=\"/groups/Modo_Topo_FR\"\u003e@Modo_Topo_FR\u003c/a\u003e, car un humain doit passer derrière  pour corriger, voir discuter avec le contributeur si besoin. D'ou l'importance de passer le prmeier post en wiki pour que vous puissiez vous-meme mettre ce qui vous sera vraiment utile, et virer ce qui occasionne du bruit inutile.\u003c/p\u003e",
+        "post_number": 13,
+        "post_type": 1,
+        "updated_at": "2017-12-03T13:46:36.175Z",
+        "reply_count": 1,
+        "reply_to_post_number": 12,
+        "quote_count": 0,
+        "avg_time": 25,
+        "incoming_link_count": 1,
+        "reads": 103,
+        "score": 31.85,
+        "yours": true,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Charles",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": true,
+        "can_delete": true,
+        "can_recover": false,
+        "can_wiki": true,
+        "link_counts": [
+          {
+            "url": "/groups/Modo_Topo_FR",
+            "internal": true,
+            "reflection": false,
+            "clicks": 0
+          },
+          {
+            "url": "https://www.camptocamp.org/whatsnew",
+            "internal": false,
+            "reflection": false,
+            "title": "Latest changes - Camptocamp.org",
+            "clicks": 0
+          }
+        ],
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "Bubu",
+          "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png"
+        },
+        "actions_summary": [
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 27899,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": false
+      },
+      {
+        "id": 2004548,
+        "name": "Charles",
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "created_at": "2017-12-03T14:35:07.325Z",
+        "cooked": "\u003caside class=\"quote\" data-post=\"12\" data-topic=\"201480\"\u003e\u003cdiv class=\"title\"\u003e\n\u003cdiv class=\"quote-controls\"\u003e\u003c/div\u003e\n\u003cimg alt=\"\" width=\"20\" height=\"20\" src=\"https://forum.camptocamp.org/letter_avatar_proxy/v2/letter/b/779978/40.png\" class=\"avatar\"\u003eBubu:\u003c/div\u003e\n\u003cblockquote\u003e\u003cp\u003eil faut le nom complet car le titre \"Face S\" n'est pas bien utile.\u003c/p\u003e\u003c/blockquote\u003e\u003c/aside\u003e\n\n\u003cp\u003eCorrigé.\u003c/p\u003e",
+        "post_number": 14,
+        "post_type": 1,
+        "updated_at": "2017-12-03T14:35:07.325Z",
+        "reply_count": 0,
+        "reply_to_post_number": 12,
+        "quote_count": 1,
+        "avg_time": 22,
+        "incoming_link_count": 0,
+        "reads": 98,
+        "score": 20.7,
+        "yours": true,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Charles",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": true,
+        "can_delete": true,
+        "can_recover": false,
+        "can_wiki": true,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "Bubu",
+          "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png"
+        },
+        "actions_summary": [
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 27899,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": false
+      },
+      {
+        "id": 2004551,
+        "name": "Frédéric Bunoz",
+        "username": "Bubu",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png",
+        "created_at": "2017-12-03T14:44:42.078Z",
+        "cooked": "\u003cp\u003eOk, c'est juste pour les derniers documents ?\u003cbr\u003eEn fait le problème est que vu la quantité de document, on a beau avoir un champ correct à 95%, les 5%  restant font quand même des centaines ou milliers de documents. Si on met des listes avec des centaines de doc tous les jours sur le forum, plus personne ne les regardera au bout de qq jours, car le sentiment d'impossibilité dominera (à quoi bon corriger 3-4 documents, vu qu'il en sort tous les jours des centaines d'autres avec d'autres problèmes ?).\u003cbr\u003eD'autant plus que parmi les contributeurs, certains ou la plupart n'ont rien à faire de certains champs, comme l'altitude max d'une voie d'escalade, qui est souvent inutile quand on regarde l'itinéraire mais qui est utile pour le filtre, ou pour des stats.\u003c/p\u003e\n\n\u003cp\u003eOk pour le concept, mais il faut réfléchir à son utilisation pour éviter d'être noyé sous des listes postées automatiquement.\u003c/p\u003e",
+        "post_number": 15,
+        "post_type": 1,
+        "updated_at": "2017-12-03T14:44:42.078Z",
+        "reply_count": 1,
+        "reply_to_post_number": 13,
+        "quote_count": 0,
+        "avg_time": 16,
+        "incoming_link_count": 0,
+        "reads": 100,
+        "score": 25.8,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Frédéric Bunoz",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "CharlesB",
+          "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png"
+        },
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": true,
+        "admin": true,
+        "staff": true,
+        "user_id": 286,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 4,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2004580,
+        "name": "Charles",
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "created_at": "2017-12-03T16:31:41.575Z",
+        "cooked": "\u003cp\u003eC'est pour les documents édités recemment, ce qui inclut donc les derniers documents. Je peux même rajouter une petit mention pour distinguer les créations des simples modifications.\u003c/p\u003e",
+        "post_number": 16,
+        "post_type": 1,
+        "updated_at": "2017-12-03T16:31:41.575Z",
+        "reply_count": 0,
+        "reply_to_post_number": 15,
+        "quote_count": 0,
+        "avg_time": 12,
+        "incoming_link_count": 0,
+        "reads": 96,
+        "score": 19.8,
+        "yours": true,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Charles",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": true,
+        "can_delete": true,
+        "can_recover": false,
+        "can_wiki": true,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "Bubu",
+          "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png"
+        },
+        "actions_summary": [
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 27899,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": false
+      },
+      {
+        "id": 2004747,
+        "name": "Alexis Demongeot",
+        "username": "Gros",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/gros/{size}/168_1.png",
+        "created_at": "2017-12-03T20:26:52.628Z",
+        "cooked": "\u003caside class=\"quote\" data-post=\"11\" data-topic=\"201480\"\u003e\u003cdiv class=\"title\"\u003e\n\u003cdiv class=\"quote-controls\"\u003e\u003c/div\u003e\n\u003cimg alt=\"\" width=\"20\" height=\"20\" src=\"https://forum.camptocamp.org/user_avatar/forum.camptocamp.org/rabot/40/7020_1.png\" class=\"avatar\"\u003erabot:\u003c/div\u003e\n\u003cblockquote\u003e\u003cp\u003eroutes Lorelei (es)\u003cbr\u003eroutes Lorelei (fr)\u003c/p\u003e\u003c/blockquote\u003e\u003c/aside\u003e\n\n\u003cp\u003eOK, fait.\u003c/p\u003e",
+        "post_number": 17,
+        "post_type": 1,
+        "updated_at": "2017-12-03T20:26:52.628Z",
+        "reply_count": 0,
+        "reply_to_post_number": 11,
+        "quote_count": 1,
+        "avg_time": 12,
+        "incoming_link_count": 0,
+        "reads": 93,
+        "score": 19.2,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Alexis Demongeot",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "rabot",
+          "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png"
+        },
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 2806,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 3,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2005289,
+        "name": "rabot",
+        "username": "rabot",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png",
+        "created_at": "2017-12-04T21:24:46.715Z",
+        "cooked": "\u003ch2\u003eMissing history\u003c/h2\u003e\n\n\u003cul\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/600187/fr\"\u003eLa Seya : Couloir NE\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/219785/fr\"\u003eBec de l'Aigle : Tour\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/761489/fr\"\u003eCol du Mont : Par le refuge d'Archeboc\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/325060/fr\"\u003eHohneck : Couloir du Falimont\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/300459/fr\"\u003eGrimsel - Gerstenegg - Azalée Beach : Kristall\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/55080/fr\"\u003eDents de Lanfon : Traversée classique des arêtes\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949042/fr\"\u003eQuié de Sinsat - Pubis - Ce printemps là : Scène de panique tranquille\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949558/fr\"\u003eBallon d'Alsace : Tricotage au Ballon d'Alsace\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/701752/fr\"\u003eMlačca : Glace en moulinette\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949587/fr\"\u003ePointe Anne : Voie Anne : arête sud depuis le col situé au sud de la pointe Anne\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/580501/fr\"\u003eQuié de Sinsat - Pubis - Ce printemps là : Capitaine Flint\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949681/fr\"\u003eMarseilleveyre : Sommet depuis Campagne Pastré\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/949697/fr\"\u003eMarseilleveyre : Sommet depuis Les Goudes\u003c/a\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003ch4\u003eLiens internes cassés\u003c/h4\u003e\n\n\u003cul\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/196648/fr\"\u003eCap Canaille - Belvédère : Canaille 16\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/452217/fr\"\u003eCap Canaille - Belvédère : Anaconda\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/505099/fr\"\u003eCap Canaille - 14 juillet : Frères de la côte\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/190805/fr\"\u003eCap Canaille - 14 juillet : Mala Vida\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eroutes \u003ca href=\"https://www.camptocamp.org/routes/194396/fr\"\u003eCap Canaille - Belvédère : Voie du Belvédère\u003c/a\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003ch4\u003eVieilles balises BBCodes [b], [i] et [c]\u003c/h4\u003e\n\n\u003cul\u003e\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/793226/fr\"\u003eChanger d'approche : idées de sorties sans voiture dans le Parc Naturel Régional du Verdon\u003c/a\u003e\n\u003c/li\u003e\u003c/ul\u003e\n\n\u003ch4\u003eBalises Url pouvant etre migrées\u003c/h4\u003e\n\n\u003cul\u003e\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/707818/fr\"\u003eChanger d'approche :  Idées de sorties sans voiture dans le massif des Vosges\u003c/a\u003e\n\u003c/li\u003e\u003c/ul\u003e\n\n\u003ch4\u003eBalises url avec esperluette\u003c/h4\u003e\n\n\u003cul\u003e\n\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/107228/fr\"\u003ePréparation de votre course - liens Utiles : Météo, Bulletin Avalanche, Neige,...\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/707818/fr\"\u003eChanger d'approche :  Idées de sorties sans voiture dans le massif des Vosges\u003c/a\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003ch4\u003eAncres\u003c/h4\u003e\n\n\u003cul\u003e\u003cli\u003earticles \u003ca href=\"https://www.camptocamp.org/articles/106728/fr\"\u003eLicence des contenus\u003c/a\u003e\n\u003c/li\u003e\u003c/ul\u003e",
+        "post_number": 18,
+        "post_type": 1,
+        "updated_at": "2017-12-04T21:24:46.715Z",
+        "reply_count": 2,
+        "reply_to_post_number": null,
+        "quote_count": 0,
+        "avg_time": 18,
+        "incoming_link_count": 1,
+        "reads": 95,
+        "score": 34.9,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "rabot",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "link_counts": [
+          {
+            "url": "https://www.camptocamp.org/routes/300459/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Grimsel - Gerstenegg - Azalée Beach : Kristall - Camptocamp.org",
+            "clicks": 4
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/190805/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Cap Canaille - 14 juillet : Mala Vida - Camptocamp.org",
+            "clicks": 3
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/580501/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Capitaine Flint - Camptocamp.org",
+            "clicks": 3
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949587/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Pointe Anne : Voie Anne : arête sud depuis le col situé au sud de la pointe Anne - Camptocamp.org",
+            "clicks": 3
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949697/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Marseilleveyre : Sommet depuis Les Goudes - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/600187/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "La Seya : Couloir NE - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949042/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Quié de Sinsat - Pubis - Ce printemps là : Scène de panique tranquille - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/325060/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Hohneck : Couloir du Falimont - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/793226/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Changer d'approche : idées de sorties sans voiture dans le Parc Naturel Régional du Verdon",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/452217/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Cap Canaille - Belvédère : Anaconda - Camptocamp.org",
+            "clicks": 2
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/196648/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Cap Canaille - Belvédère : Canaille 16 - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949681/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Marseilleveyre : Sommet depuis Campagne Pastré - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/701752/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Mlačca : Glace en moulinette - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/949558/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Ballon d'Alsace : Tricotage au Ballon d'Alsace - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/55080/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Dents de Lanfon : Traversée classique des arêtes - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/761489/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Col du Mont : Par le refuge d'Archeboc - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/219785/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Bec de l'Aigle : Tour - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/194396/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Cap Canaille - Belvédère : Voie du Belvédère - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/106728/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Licence des contenus",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/707818/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Changer d'approche : Idées de sorties sans voiture dans le massif des Vosges",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/routes/505099/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Cap Canaille - 14 juillet : Frères de la côte - Camptocamp.org",
+            "clicks": 1
+          },
+          {
+            "url": "https://www.camptocamp.org/articles/107228/fr",
+            "internal": false,
+            "reflection": false,
+            "title": "Préparation de votre course - liens Utiles : Météo, Bulletin Avalanche, Neige,...",
+            "clicks": 0
+          }
+        ],
+        "read": true,
+        "user_title": null,
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 56361,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 1,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2005290,
+        "name": "Frédéric Bunoz",
+        "username": "Bubu",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png",
+        "created_at": "2017-12-04T21:33:15.992Z",
+        "cooked": "\u003caside class=\"quote\" data-post=\"18\" data-topic=\"201480\"\u003e\u003cdiv class=\"title\"\u003e\n\u003cdiv class=\"quote-controls\"\u003e\u003c/div\u003e\n\u003cimg alt=\"\" width=\"20\" height=\"20\" src=\"https://forum.camptocamp.org/user_avatar/forum.camptocamp.org/rabot/40/7020_1.png\" class=\"avatar\"\u003erabot:\u003c/div\u003e\n\u003cblockquote\u003e\u003cp\u003eMissing history\u003cbr\u003eroutes Ballon d'Alsace : Tricotage au Ballon d'Alsace\u003c/p\u003e\u003c/blockquote\u003e\u003c/aside\u003e\n\n\u003cp\u003eOuais, si on commence à s'alarmer pour l'absence d'historique sur un itinéraire de ski de rando, on n'est pas rendu \u003cimg src=\"https://forum.camptocamp.org/images/emoji/apple/slight_smile.png?v=3\" title=\":slight_smile:\" class=\"emoji\" alt=\":slight_smile:\"\u003e\u003c/p\u003e\n\n\u003caside class=\"quote\" data-post=\"18\" data-topic=\"201480\"\u003e\u003cdiv class=\"title\"\u003e\n\u003cdiv class=\"quote-controls\"\u003e\u003c/div\u003e\n\u003cimg alt=\"\" width=\"20\" height=\"20\" src=\"https://forum.camptocamp.org/user_avatar/forum.camptocamp.org/rabot/40/7020_1.png\" class=\"avatar\"\u003erabot:\u003c/div\u003e\n\u003cblockquote\u003e\u003cp\u003eBalises url avec esperluette\u003c/p\u003e\u003c/blockquote\u003e\u003c/aside\u003e\n\n\u003cp\u003eOk, mais il ne faut surtout pas enlever les esperluettes dans une url, ça casse l'url généralement.\u003c/p\u003e",
+        "post_number": 19,
+        "post_type": 1,
+        "updated_at": "2017-12-04T21:33:28.798Z",
+        "reply_count": 2,
+        "reply_to_post_number": 18,
+        "quote_count": 1,
+        "avg_time": 15,
+        "incoming_link_count": 0,
+        "reads": 88,
+        "score": 28.35,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Frédéric Bunoz",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "rabot",
+          "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png"
+        },
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": true,
+        "admin": true,
+        "staff": true,
+        "user_id": 286,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 4,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2005291,
+        "name": "Charles",
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "created_at": "2017-12-04T21:33:56.510Z",
+        "cooked": "\u003cp\u003eyep, je précise dans le titre du check. Edit j'ai meme desactivé pour le moment.\u003c/p\u003e",
+        "post_number": 20,
+        "post_type": 1,
+        "updated_at": "2017-12-04T21:36:17.243Z",
+        "reply_count": 1,
+        "reply_to_post_number": 19,
+        "quote_count": 0,
+        "avg_time": 15,
+        "incoming_link_count": 0,
+        "reads": 84,
+        "score": 22.55,
+        "yours": true,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Charles",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": true,
+        "can_delete": true,
+        "can_recover": false,
+        "can_wiki": true,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "Bubu",
+          "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png"
+        },
+        "actions_summary": [
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 27899,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": false
+      },
+      {
+        "id": 2005308,
+        "name": "Loïc Perrin",
+        "username": "Loic_P",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/l/ccd318/{size}.png",
+        "created_at": "2017-12-04T21:56:07.980Z",
+        "cooked": "\u003cp\u003eCe qui ressort dans cette liste, c'est les docs que le robot ne peut pas corriger (pour les pbs de balises) et donc qu'il faut corriger à la mano ?\u003c/p\u003e",
+        "post_number": 21,
+        "post_type": 1,
+        "updated_at": "2017-12-04T21:56:07.980Z",
+        "reply_count": 1,
+        "reply_to_post_number": 20,
+        "quote_count": 0,
+        "avg_time": 15,
+        "incoming_link_count": 0,
+        "reads": 83,
+        "score": 22.35,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Loïc Perrin",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "CharlesB",
+          "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png"
+        },
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 1888,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      },
+      {
+        "id": 2005313,
+        "name": "Charles",
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "created_at": "2017-12-04T22:01:13.802Z",
+        "cooked": "\u003cp\u003eIl y a pour l'instant un peu de tout. ca va m'aider aussi a voir des trucs qui peuvent etre migré en auto, mais qui m'ont echappé.\u003c/p\u003e\n\n\u003cp\u003eMais à terme, c'est très exactement cela : orthographe, historique manquant, grammaire, fautes de frappe courante, mauvais usage de syntaxe, voir meme vandalisme avec insulte. Le champ des possible est très très vaste.\u003c/p\u003e",
+        "post_number": 22,
+        "post_type": 1,
+        "updated_at": "2017-12-04T22:03:07.587Z",
+        "reply_count": 0,
+        "reply_to_post_number": 21,
+        "quote_count": 0,
+        "avg_time": 17,
+        "incoming_link_count": 0,
+        "reads": 84,
+        "score": 17.65,
+        "yours": true,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Charles",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": true,
+        "can_delete": true,
+        "can_recover": false,
+        "can_wiki": true,
+        "link_counts": [
+          {
+            "url": "https://forum.camptocamp.org/t/detection-du-vandalisme/182043/37",
+            "internal": true,
+            "reflection": true,
+            "title": "Détection du vandalisme",
+            "clicks": 0
+          }
+        ],
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "Loic_P",
+          "avatar_template": "/letter_avatar_proxy/v2/letter/l/ccd318/{size}.png"
+        },
+        "actions_summary": [
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 27899,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": true,
+        "wiki": false
+      },
+      {
+        "id": 2005335,
+        "name": "Céline Stern-Kiener",
+        "username": "Chti.nain",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/chti.nain/{size}/51_1.png",
+        "created_at": "2017-12-04T22:47:13.711Z",
+        "cooked": "\u003caside class=\"quote\" data-post=\"18\" data-topic=\"201480\"\u003e\u003cdiv class=\"title\"\u003e\n\u003cdiv class=\"quote-controls\"\u003e\u003c/div\u003e\n\u003cimg alt=\"\" width=\"20\" height=\"20\" src=\"https://forum.camptocamp.org/user_avatar/forum.camptocamp.org/rabot/40/7020_1.png\" class=\"avatar\"\u003erabot:\u003c/div\u003e\n\u003cblockquote\u003e\u003cp\u003eroutes Grimsel - Gerstenegg - Azalée Beach : Kristall\u003c/p\u003e\u003c/blockquote\u003e\u003c/aside\u003e\n\n\u003cp\u003eFait... Mais équipeurs non mentionnés dans le topo papier. Je l'ai donc indiqué dans l'historique \u003cimg src=\"https://forum.camptocamp.org/images/emoji/apple/japanese_ogre.png?v=3\" title=\":japanese_ogre:\" class=\"emoji\" alt=\":japanese_ogre:\"\u003e\u003c/p\u003e",
+        "post_number": 23,
+        "post_type": 1,
+        "updated_at": "2017-12-04T22:47:13.711Z",
+        "reply_count": 1,
+        "reply_to_post_number": 18,
+        "quote_count": 1,
+        "avg_time": 16,
+        "incoming_link_count": 0,
+        "reads": 85,
+        "score": 22.8,
+        "yours": false,
+        "topic_id": 201480,
+        "topic_slug": "topoguide-verifications-automatiques",
+        "display_username": "Céline Stern-Kiener",
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_bg_color": null,
+        "primary_group_flair_color": null,
+        "version": 1,
+        "can_edit": false,
+        "can_delete": false,
+        "can_recover": false,
+        "can_wiki": false,
+        "read": true,
+        "user_title": null,
+        "reply_to_user": {
+          "username": "rabot",
+          "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png"
+        },
+        "actions_summary": [
+          {
+            "id": 2,
+            "can_act": true
+          },
+          {
+            "id": 3,
+            "can_act": true
+          },
+          {
+            "id": 4,
+            "can_act": true
+          },
+          {
+            "id": 5,
+            "hidden": true,
+            "can_act": true
+          },
+          {
+            "id": 6,
+            "can_act": true
+          },
+          {
+            "id": 7,
+            "can_act": true
+          },
+          {
+            "id": 8,
+            "can_act": true
+          }
+        ],
+        "moderator": false,
+        "admin": false,
+        "staff": false,
+        "user_id": 130,
+        "hidden": false,
+        "hidden_reason_id": null,
+        "trust_level": 2,
+        "deleted_at": null,
+        "user_deleted": false,
+        "edit_reason": null,
+        "can_view_edit_history": false,
+        "wiki": false
+      }
+    ],
+    "stream": [
+      2003993,
+      2003996,
+      2003999,
+      2004060,
+      2004061,
+      2004064,
+      2004065,
+      2004526,
+      2004529,
+      2004532,
+      2004548,
+      2004551,
+      2004580,
+      2004747,
+      2005289,
+      2005290,
+      2005291,
+      2005308,
+      2005313,
+      2005335,
+      2005400,
+      2005403,
+      2005407,
+      2005431,
+      2005453,
+      2005464,
+      2005480,
+      2005484,
+      2005695,
+      2005707,
+      2005709,
+      2006112,
+      2006116,
+      2006118,
+      2006353,
+      2006634,
+      2006730,
+      2006734,
+      2006735,
+      2006775,
+      2006921,
+      2007208,
+      2007599,
+      2007608,
+      2007611,
+      2007612,
+      2007622,
+      2007629,
+      2007631,
+      2008063,
+      2008067,
+      2008070,
+      2008081,
+      2008152,
+      2008153,
+      2008178,
+      2008201,
+      2008206,
+      2008209,
+      2008213,
+      2008216,
+      2008218,
+      2008220,
+      2008247,
+      2008249,
+      2008256,
+      2008436,
+      2008865,
+      2009738,
+      2010120,
+      2010349,
+      2010771,
+      2011067
+    ]
+  },
+  "timeline_lookup": [
+    [
+      1,
+      18
+    ],
+    [
+      8,
+      17
+    ],
+    [
+      15,
+      16
+    ],
+    [
+      21,
+      15
+    ],
+    [
+      32,
+      14
+    ],
+    [
+      35,
+      13
+    ],
+    [
+      36,
+      12
+    ],
+    [
+      41,
+      11
+    ],
+    [
+      42,
+      10
+    ],
+    [
+      43,
+      9
+    ],
+    [
+      50,
+      8
+    ],
+    [
+      67,
+      7
+    ],
+    [
+      68,
+      6
+    ],
+    [
+      69,
+      4
+    ],
+    [
+      70,
+      3
+    ],
+    [
+      71,
+      2
+    ],
+    [
+      72,
+      1
+    ],
+    [
+      73,
+      0
+    ]
+  ],
+  "id": 201480,
+  "title": "Topoguide : vérifications automatiques",
+  "fancy_title": "Topoguide : vérifications automatiques",
+  "posts_count": 73,
+  "created_at": "2017-12-02T00:22:18.635Z",
+  "views": 2037,
+  "reply_count": 47,
+  "participant_count": 16,
+  "like_count": 11,
+  "last_posted_at": "2017-12-20T07:58:53.788Z",
+  "visible": true,
+  "closed": false,
+  "archived": false,
+  "has_summary": true,
+  "archetype": "regular",
+  "slug": "topoguide-verifications-automatiques",
+  "category_id": 56,
+  "word_count": 33288,
+  "deleted_at": null,
+  "user_id": 56361,
+  "pm_with_non_human_user": false,
+  "draft": null,
+  "draft_key": "topic_201480",
+  "draft_sequence": 98,
+  "posted": true,
+  "unpinned": null,
+  "pinned_globally": false,
+  "pinned": false,
+  "pinned_at": null,
+  "pinned_until": null,
+  "details": {
+    "created_by": {
+      "id": 56361,
+      "username": "rabot",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png"
+    },
+    "last_poster": {
+      "id": 56361,
+      "username": "rabot",
+      "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png"
+    },
+    "participants": [
+      {
+        "id": 27899,
+        "username": "CharlesB",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/charlesb/{size}/739_1.png",
+        "post_count": 24,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 56361,
+        "username": "rabot",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/rabot/{size}/7020_1.png",
+        "post_count": 16,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 286,
+        "username": "Bubu",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/b/779978/{size}.png",
+        "post_count": 10,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 15050,
+        "username": "b_b",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/b_b/{size}/74_1.png",
+        "post_count": 5,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 2806,
+        "username": "Gros",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/gros/{size}/168_1.png",
+        "post_count": 3,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 11544,
+        "username": "Rob.Bonnet",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/r/bbce88/{size}.png",
+        "post_count": 2,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 2639,
+        "username": "Kryst0f",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/kryst0f/{size}/409_1.png",
+        "post_count": 2,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 26740,
+        "username": "J-Marc",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/j/b38774/{size}.png",
+        "post_count": 2,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 33463,
+        "username": "AntoineM",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/antoinem/{size}/33_1.png",
+        "post_count": 2,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 1888,
+        "username": "Loic_P",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/l/ccd318/{size}.png",
+        "post_count": 1,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 26631,
+        "username": "Borut",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/borut/{size}/7088_1.png",
+        "post_count": 1,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 36225,
+        "username": "julien_paris",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/j/3da27b/{size}.png",
+        "post_count": 1,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 1404,
+        "username": "Tintin",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/tintin/{size}/5_1.png",
+        "post_count": 1,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 372,
+        "username": "alexduchablais",
+        "avatar_template": "/letter_avatar_proxy/v2/letter/a/ecb155/{size}.png",
+        "post_count": 1,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 7440,
+        "username": "Miko",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/miko/{size}/4885_1.png",
+        "post_count": 1,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      },
+      {
+        "id": 130,
+        "username": "Chti.nain",
+        "avatar_template": "/user_avatar/forum.camptocamp.org/chti.nain/{size}/51_1.png",
+        "post_count": 1,
+        "primary_group_name": null,
+        "primary_group_flair_url": null,
+        "primary_group_flair_color": null,
+        "primary_group_flair_bg_color": null
+      }
+    ],
+    "links": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Crack_climbing#Widths",
+        "title": "Crack climbing - Wikipedia",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 13,
+        "user_id": 286,
+        "domain": "en.wikipedia.org"
+      },
+      {
+        "url": "https://fr.wikipedia.org/wiki/Utilisateur:Salebot/Config",
+        "title": "Utilisateur:Salebot/Config — Wikipédia",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 13,
+        "user_id": 56361,
+        "domain": "fr.wikipedia.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/xreports/951487/fr",
+        "title": "Glissade 40m sur le glacier de l'Argentière - Belledonne",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 8,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "http://stella.atilf.fr/Dendien/scripts/tlfiv5/visusel.exe?11;s=2640464310;r=1;nat=;sol=0",
+        "title": null,
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 7,
+        "user_id": 2806,
+        "domain": "stella.atilf.fr"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/history/950824/fr",
+        "title": "Nouvelle Voie Normale - History - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 6,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/951937/fr",
+        "title": "Calanque de l'Eissadon : Il faut trouver la voie (Lao Tseu) - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 6,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/950999/fr",
+        "title": "Finale Ligure : Via Il traverso - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 6,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/950824/fr",
+        "title": "Nevado Chachani : Nouvelle Voie Normale - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 6,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/597335/fr",
+        "title": "Roche Bénite : Pas Tatras - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 6,
+        "user_id": 27899,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/diff/54580/fr/1432163/1441954",
+        "title": "Postcriptome - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 6,
+        "user_id": 27899,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/55257/fr",
+        "title": "Ailefroide Centrale : Arête de Coste Rouge (arête N) - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 6,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/950493/fr",
+        "title": "Lacs du Gosaikund : Trek de Karanitar à Gosaikund - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 5,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/54945/fr",
+        "title": "Val de Fier : Lorelei - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 5,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/54873/fr",
+        "title": "Croix de Fer : Pilier SW - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 5,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/580501/fr",
+        "title": "Quié de Sinsat - Pubis - Ce printemps là : Capitaine Flint - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 27899,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/949042/fr",
+        "title": "Quié de Sinsat - Pubis - Ce printemps là : Scène de panique tranquille - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 27899,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/841070/fr",
+        "title": "La Meije - Pyramide Duhamel : Yellow Cop is Watching you - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/articles/793226/fr",
+        "title": "Changer d'approche : idées de sorties sans voiture dans le Parc Naturel Régional du Verdon",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/141484/fr",
+        "title": "Nevado Chachani - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://forum.camptocamp.org/t/54580-fr/77570",
+        "title": "54580_fr",
+        "fancy_title": null,
+        "internal": true,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 286,
+        "domain": "forum.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/history/141484/fr",
+        "title": "Nevado Chachani - History - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/951323/fr",
+        "title": "Pic Saint Loup : Diagonale N et Crête W - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/300459/fr",
+        "title": "Grimsel - Gerstenegg - Azalée Beach : Kristall - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/whatsnew#u=464467",
+        "title": "Latest changes - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/952493/fr",
+        "title": "Lac de Bohinj / Bohinjsko jezero - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/54873/es",
+        "title": "Croix de Fer : pilar sw - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/952497/fr",
+        "title": "Lac de Bled / Blejsko jezero - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 4,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/history/951942/fr",
+        "title": "Via del Pierrot - History - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/articles/947724/fr",
+        "title": "Les voies au-delà du 9b",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 27899,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/history/950999/fr",
+        "title": "Via Il traverso - History - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/950772/fr",
+        "title": "Quié de Sinsat - Pubis - Ce printemps là : Un jour ce Printemps là - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/39499/fr",
+        "title": "Aiguille Centrale d'Arves - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/diff/109678/fr/563110/1734824",
+        "title": "Pont Caffino - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/175342/fr",
+        "title": "Mallos de Riglos - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/articles/435010/fr",
+        "title": "[Gestion c2c] Anonymisation ou suppression de compte",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/949587/fr",
+        "title": "Pointe Anne : Voie Anne : arête sud depuis le col situé au sud de la pointe Anne - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/history/682083/fr",
+        "title": "Llamaremos la via cuando ayamos discutido - History - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/695939/fr",
+        "title": "Umagaeshi - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/580837/fr",
+        "title": "El Turbón - Paroi SW : Turbo Gym - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/diff/55257/fr/1736825/1736826",
+        "title": "Arête de Coste Rouge (arête N) - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/682083/fr",
+        "title": "Atxar de Alano - sommet E : Llamaremos la via cuando ayamos discutido - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/951218/fr",
+        "title": "Pic du Garbié de Brésoul : Depuis la station de Goulier - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/waypoints/951888/fr",
+        "title": "Destourbes - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/950737/fr",
+        "title": "Pic de Caoubère : Couloir E - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/306937/fr/pic-saint-loup-diagonale-n-et-crete-w",
+        "title": "Pic Saint Loup : Diagonale N et crête W - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 26740,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/history/55257/fr",
+        "title": "Arête de Coste Rouge (arête N) - History - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/55373/fr",
+        "title": "Pequeño Alpamayo : Arête SW (voie normale) - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/190805/fr",
+        "title": "Cap Canaille - 14 juillet : Mala Vida - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/952175/fr",
+        "title": "Djebel Caïat : Acheuea Cheuea - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      },
+      {
+        "url": "https://www.camptocamp.org/routes/54994/fr",
+        "title": "Pointe Adolphe Rey : Voie Salluard - Camptocamp.org",
+        "fancy_title": null,
+        "internal": false,
+        "attachment": false,
+        "reflection": false,
+        "clicks": 3,
+        "user_id": 56361,
+        "domain": "www.camptocamp.org"
+      }
+    ],
+    "notification_level": 3,
+    "notifications_reason_id": 2,
+    "can_invite_to": true,
+    "can_create_post": true,
+    "can_reply_as_new_topic": true,
+    "can_flag_topic": true
+  },
+  "highest_post_number": 76,
+  "last_read_post_number": 76,
+  "last_read_post_id": 2011067,
+  "deleted_by": null,
+  "actions_summary": [
+    {
+      "id": 4,
+      "count": 0,
+      "hidden": false,
+      "can_act": true
+    },
+    {
+      "id": 7,
+      "count": 0,
+      "hidden": false,
+      "can_act": true
+    },
+    {
+      "id": 8,
+      "count": 0,
+      "hidden": false,
+      "can_act": true
+    }
+  ],
+  "chunk_size": 20,
+  "bookmarked": true,
+  "tags": [],
+  "featured_link": null,
+  "topic_timer": null,
+  "message_bus_last_id": 368
+}

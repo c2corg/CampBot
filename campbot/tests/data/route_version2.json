@@ -1,0 +1,68 @@
+{
+  "document": {
+    "quality": "medium",
+    "document_id": 293549,
+    "height_diff_access": null,
+    "engagement_rating": "II",
+    "lift_access": null,
+    "type": "r",
+    "elevation_min": 1668,
+    "height_diff_difficulties": null,
+    "rock_free_rating": "5c",
+    "height_diff_up": null,
+    "configuration": null,
+    "equipment_rating": "P2",
+    "rock_types": null,
+    "protected": false,
+    "exposition_rock_rating": null,
+    "height_diff_down": null,
+    "version": 1,
+    "difficulties_height": null,
+    "elevation_max": null,
+    "global_rating": "TD-",
+    "route_types": [
+      "return_same_way"
+    ],
+    "activities": [
+      "mountain_climbing"
+    ],
+    "locales": [
+      {
+        "summary": null,
+        "route_history": null,
+        "version": 2,
+        "external_resources": "http://lultinmomia.blogspot.com/2010/09/cerda-albert-la-dent-de-cabirols.html",
+        "lang": "fr",
+        "gear": null,
+        "description": "##Approche\r\nDu refuge LLuis Estasen suivre le chemin de la Tartera jusqu'\u00e0 d\u00e9passer le premier couloir. Prendre une sente \u00e0 droite dans la bande de for\u00eat qui suit qui se perd dans d'affreux \u00e9boulis o\u00f9 on monte jusqu'au pied de la face.\r\nLa voie d\u00e9bute \u00e0 la jonction du pilier de gauche et de la grande dalle. Elle est commune avec la voie du garde et marqu\u00e9e par un spit qui \u00e9voque Joan Marti.\r\n\r\n##Itin\u00e9raire\r\nL1 : V+ peu \u00e9quip\u00e9 mais assez facile \u00e0 prot\u00e9ger\r\nL2 : traverser \u00e0 droite (IV) puis terminer par une travers\u00e9e A0 sur pitons antiques \u00e0 remplacer\r\nL3 : poursuivre la travers\u00e9e puis monter par un couloir (III, un pas de IV+)\r\nL4 : courte longueur qui rejoint le relais \u00e0 la jonction de la dalle et du pilier.\r\nPossibilit\u00e9 de poursuivre au dessus, escalade en II-III mais rocher peu s\u00fbr (non recommand\u00e9 et d\u00e9conseill\u00e9 s'il y a des cord\u00e9es en dessous)\r\n\r\n##Descente\r\nDescente en rappel tout droit.",
+        "remarks": null,
+        "title": "Dent de Cabirols Inferior - Voie Cerda Albert"
+      }
+    ],
+    "geometry": {
+      "version": 1,
+      "geom_detail": null,
+      "geom": "{\"coordinates\": [190803.9078224805, 5197610.714531071], \"type\": \"Point\"}"
+    },
+    "glacier_gear": "no",
+    "main_waypoint_id": null,
+    "rock_required_rating": "5c",
+    "orientations": [
+      "E"
+    ],
+    "aid_rating": "A0+",
+    "durations": [
+      "1"
+    ],
+    "risk_rating": null
+  },
+  "previous_version_id": 478470,
+  "version": {
+    "user_id": 122824,
+    "written_at": "2011-08-19T20:18:14.858119+00:00",
+    "version_id": 478479,
+    "name": "L. Besson",
+    "comment": "Edit in fr"
+  },
+  "next_version_id": 478867
+}

@@ -1,0 +1,4090 @@
+{
+  "documents": [
+    {
+      "quality": "fine",
+      "height_diff_down": 809,
+      "version": 1,
+      "document_id": 953061,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 560,
+      "type": "r",
+      "height_diff_difficulties": null,
+      "activities": [
+        "hiking"
+      ],
+      "elevation_min": 295,
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T3",
+      "locales": [
+        {
+          "summary": "Randonn\u00e9e sur le GR4, dans le Parc naturel r\u00e9gional du Verdon. Belle \u00e9tape qui passe par un ch\u00e2teau de templiers \u00e0 Gr\u00e9oux les bains, que l'on pourra prendre le temps de visiter si l'on marche assez vite pour enquiller les 27 km dans le reste de la journ\u00e9e !",
+          "version": 1,
+          "title_prefix": "Allemagne en Provence",
+          "lang": "fr",
+          "title": "Allemagne en Provence -> Manosque"
+        }
+      ],
+      "geometry": {
+        "version": 1,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [668902.010933671, 5431649.820011175]}"
+      },
+      "height_diff_up": 714,
+      "orientations": null,
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a",
+          "version": 11,
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Alps de l'Alta Proven\u00e7a"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Alpes de Alta Provenza"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Alpi dell'Alta Provenza"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14362,
+          "type": "a",
+          "version": 2,
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Pr\u00e9alpes de Digne"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14464,
+          "type": "a",
+          "version": 1,
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "height_diff_down": 790,
+      "version": 1,
+      "document_id": 953049,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 773,
+      "type": "r",
+      "height_diff_difficulties": null,
+      "activities": [
+        "hiking"
+      ],
+      "elevation_min": 415,
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T3",
+      "locales": [
+        {
+          "summary": "Une journ\u00e9e plut\u00f4t longue mais sans difficult\u00e9, au milieu des lavandes, au centre du parc naturel r\u00e9gional du Verdon.",
+          "version": 4,
+          "title_prefix": "Moustiers Sainte Marie",
+          "lang": "fr",
+          "title": "Moustiers Saint Marie -> Allemagne en Provence"
+        }
+      ],
+      "geometry": {
+        "version": 4,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [680731.1539838373, 5436632.454979021]}"
+      },
+      "height_diff_up": 580,
+      "orientations": null,
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a",
+          "version": 11,
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Alps de l'Alta Proven\u00e7a"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Alpes de Alta Provenza"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Alpi dell'Alta Provenza"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14362,
+          "type": "a",
+          "version": 2,
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Pr\u00e9alpes de Digne"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14464,
+          "type": "a",
+          "version": 1,
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "height_diff_down": 1500,
+      "version": 1,
+      "document_id": 953046,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 1220,
+      "type": "r",
+      "height_diff_difficulties": null,
+      "activities": [
+        "hiking"
+      ],
+      "elevation_min": 520,
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T3",
+      "locales": [
+        {
+          "summary": "Suite de l'\u00e9tape  [[routes/953039|Rougon -> Refuge de la Maline]] \nApr\u00e8s un d\u00e9but dans les gorges, on prend de la hauteur, avec un parcours sur les cr\u00eates de l'Ourbes. Beau parcours, vari\u00e9, assez long et soutenu. ",
+          "version": 2,
+          "title_prefix": "Chalet de la Maline",
+          "lang": "fr",
+          "title": "Chalet de la Maline -> Moustiers Sainte Marie"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [699425.7596494424, 5433946.950541675]}"
+      },
+      "height_diff_up": 1200,
+      "orientations": null,
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a",
+          "version": 11,
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Alps de l'Alta Proven\u00e7a"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Alpes de Alta Provenza"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Alpi dell'Alta Provenza"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14362,
+          "type": "a",
+          "version": 2,
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Pr\u00e9alpes de Digne"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14464,
+          "type": "a",
+          "version": 1,
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "height_diff_down": 1400,
+      "version": 2,
+      "document_id": 953039,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 950,
+      "type": "r",
+      "elevation_min": 550,
+      "activities": [
+        "hiking"
+      ],
+      "height_diff_difficulties": null,
+      "geometry": {
+        "version": 4,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [709479.3011617092, 5430352.188817642], \"type\": \"Point\"}"
+      },
+      "hiking_rating": "T3",
+      "locales": [
+        {
+          "summary": "Randonn\u00e9e qui fait passer dans les merveilleuses gorges du Verdon, empruntant le sentier Blanc-Martel et ses nombreux tunnels. La journ\u00e9e se passe dans un cadre exceptionnel, au frais en \u00e9t\u00e9, et aboutit avec la vue splendide au refuge de la Maline ! Ne pas avoir peu des gros chiffres de d\u00e9nivel\u00e9s, ce sont les cumul\u00e9s de tout la journ\u00e9e !",
+          "title": "Rougon -> Chalet de la Maline",
+          "version": 3,
+          "lang": "fr",
+          "title_prefix": "Chalet de la Maline"
+        }
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "height_diff_up": 1300,
+      "orientations": null,
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Estat franc\u00e8s",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 4,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 11,
+          "document_id": 14274,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Alps de l'Alta Proven\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Alpes-de-Haute-Provence",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Alpes-de-Haute-Provence",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alpes de Alta Provenza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Alpes-de-Haute-Provence",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Alpes-de-Haute-Provence",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alpi dell'Alta Provenza",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14362,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Pr\u00e9alpes de Digne",
+              "lang": "fr"
+            }
+          ],
+          "available_langs": null,
+          "version": 1,
+          "document_id": 14464,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "draft",
+      "height_diff_down": null,
+      "version": 1,
+      "document_id": 953011,
+      "hiking_mtb_exposition": "E2",
+      "elevation_max": 512,
+      "type": "r",
+      "height_diff_difficulties": null,
+      "activities": [
+        "hiking"
+      ],
+      "elevation_min": null,
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T3",
+      "locales": [
+        {
+          "summary": "Magnifique \"sentier du vertige\", tr\u00e8s accessible par tous, avec de belles appr\u00e9hensions de vide par endroit, et une vari\u00e9t\u00e9 de type de sentier (lapiaz, \u00e9boulis, taillis, rochers), travers\u00e9e d'Est en Ouest sur la cr\u00eate, en passant en final par le tr\u00e8s joli ch\u00e2teau ruin\u00e9 Viviour\u00e8s, et avec un retour soutenu pour rejoindre le sentier de la mont\u00e9e vers le d\u00e9but",
+          "version": 1,
+          "lang": "fr",
+          "title_prefix": "L'Hortus",
+          "title": "Les corniches int\u00e9grales de l'Hortus d'Est en Ouest"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [426888.98516946245, 5433568.234233408], \"type\": \"Point\"}"
+      },
+      "height_diff_up": 300,
+      "orientations": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "version": 11,
+          "document_id": 14274,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "H\u00e9rault"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14332,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "height_diff_down": 1300,
+      "version": 1,
+      "document_id": 952995,
+      "elevation_max": 1904,
+      "labande_global_rating": "AD-",
+      "type": "r",
+      "elevation_min": 600,
+      "activities": [
+        "skitouring"
+      ],
+      "height_diff_difficulties": null,
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [1015325.4832950688, 5957021.356833699], \"type\": \"Point\"}"
+      },
+      "locales": [
+        {
+          "summary": null,
+          "title": "Traversata Filzbach >> Beglingen",
+          "version": 2,
+          "lang": "it",
+          "title_prefix": "Nuenchamm"
+        }
+      ],
+      "available_langs": [
+        "it"
+      ],
+      "height_diff_up": 1200,
+      "ski_exposition": "E1",
+      "orientations": [
+        "NW"
+      ],
+      "ski_rating": "3.1",
+      "protected": false,
+      "labande_ski_rating": "S3",
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 8,
+          "document_id": 14067,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Cant\u00f3 de Glarus",
+              "lang": "ca"
+            },
+            {
+              "version": 3,
+              "title": "Glarus",
+              "lang": "de"
+            },
+            {
+              "version": 2,
+              "title": "Canton of Glarus",
+              "lang": "en"
+            },
+            {
+              "version": 2,
+              "title": "Cant\u00f3n de Glaris",
+              "lang": "es"
+            },
+            {
+              "version": 3,
+              "title": "Glaris",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Canton de Glaris",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Canton Glarona",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 1,
+          "document_id": 14388,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Glarner Alpen",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Glarus Alps",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alpes glaroneses",
+              "lang": "es"
+            },
+            {
+              "version": 3,
+              "title": "Alpes Glaronaises",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alpi Glaronesi",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 7,
+          "document_id": 14426,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "empty",
+      "height_diff_down": 634,
+      "version": 1,
+      "document_id": 952767,
+      "elevation_max": 1784,
+      "type": "r",
+      "height_diff_difficulties": null,
+      "activities": [
+        "snowshoeing"
+      ],
+      "elevation_min": 1150,
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": null,
+          "version": 1,
+          "lang": "fr",
+          "title_prefix": "",
+          "title": "Puy de Cacadogne par la vall\u00e9e de Chaudefour"
+        }
+      ],
+      "geometry": {
+        "version": 1,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [318559.3132599149, 5707026.220332976], \"type\": \"Point\"}"
+      },
+      "height_diff_up": 634,
+      "orientations": [
+        "E"
+      ],
+      "protected": false,
+      "snowshoe_rating": "R3",
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "version": 11,
+          "document_id": 14274,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Puy-de-D\u00f4me"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14304,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "height_diff_down": 1100,
+      "version": 1,
+      "document_id": 952734,
+      "elevation_max": 1535,
+      "labande_global_rating": "PD",
+      "type": "r",
+      "elevation_min": 430,
+      "activities": [
+        "skitouring"
+      ],
+      "height_diff_difficulties": null,
+      "geometry": {
+        "version": 4,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [1005718.8895383358, 5960935.745873561], \"type\": \"Point\"}"
+      },
+      "locales": [
+        {
+          "summary": null,
+          "title": "Per la Oberurnen Tal",
+          "version": 4,
+          "lang": "it",
+          "title_prefix": "Lochegg"
+        }
+      ],
+      "available_langs": [
+        "it"
+      ],
+      "height_diff_up": 1100,
+      "ski_exposition": "E1",
+      "orientations": [
+        "E"
+      ],
+      "ski_rating": "2.2",
+      "protected": false,
+      "labande_ski_rating": "S3",
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 8,
+          "document_id": 14067,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Cant\u00f3 de Glarus",
+              "lang": "ca"
+            },
+            {
+              "version": 3,
+              "title": "Glarus",
+              "lang": "de"
+            },
+            {
+              "version": 2,
+              "title": "Canton of Glarus",
+              "lang": "en"
+            },
+            {
+              "version": 2,
+              "title": "Cant\u00f3n de Glaris",
+              "lang": "es"
+            },
+            {
+              "version": 3,
+              "title": "Glaris",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Canton de Glaris",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Canton Glarona",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 1,
+          "document_id": 14388,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Glarner Alpen",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Glarus Alps",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alpes glaroneses",
+              "lang": "es"
+            },
+            {
+              "version": 3,
+              "title": "Alpes Glaronaises",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alpi Glaronesi",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 7,
+          "document_id": 14426,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "document_id": 952721,
+      "engagement_rating": null,
+      "type": "r",
+      "height_diff_difficulties": 15,
+      "elevation_min": 1480,
+      "height_diff_up": null,
+      "equipment_rating": null,
+      "protected": false,
+      "ice_rating": "3+",
+      "height_diff_down": null,
+      "version": 2,
+      "elevation_max": 1550,
+      "global_rating": null,
+      "activities": [
+        "ice_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": "Cascade facile d'acc\u00e8s avec un d\u00e9nivel\u00e9 minimal depuis le parking (150m D+ environ)",
+          "version": 2,
+          "title_prefix": "Station du Mont-Dore",
+          "lang": "fr",
+          "title": "Puy de Sancy: cascade de l'Ours"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [313253.04709227104, 5707271.620985616]}"
+      },
+      "risk_rating": null,
+      "orientations": [
+        "E"
+      ],
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a",
+          "version": 11,
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Puy-de-D\u00f4me"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14304,
+          "type": "a",
+          "version": 2,
+          "protected": false,
+          "area_type": "admin_limits"
+        }
+      ],
+      "mixed_rating": null
+    },
+    {
+      "quality": "medium",
+      "height_diff_down": 1400,
+      "version": 2,
+      "document_id": 952711,
+      "elevation_max": 1884,
+      "labande_global_rating": "AD",
+      "type": "r",
+      "height_diff_difficulties": null,
+      "activities": [
+        "skitouring"
+      ],
+      "elevation_min": 890,
+      "geometry": {
+        "version": 3,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [798174.107326667, 5871414.4754299605]}"
+      },
+      "locales": [
+        {
+          "summary": null,
+          "version": 2,
+          "title_prefix": "Plan Tissiniva",
+          "lang": "fr",
+          "title": "Par la Vall\u00e9e du Gros Mont, descente N sur Pra Jean et par Haut Cr\u00eat"
+        }
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "height_diff_up": 1400,
+      "ski_exposition": null,
+      "orientations": null,
+      "ski_rating": null,
+      "protected": false,
+      "labande_ski_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Su\u00efssa"
+            },
+            {
+              "version": 2,
+              "lang": "de",
+              "title": "Schweiz"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Switzerland"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Suiza"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Suitza"
+            },
+            {
+              "version": 1,
+              "lang": "fr",
+              "title": "Suisse"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Svizzera"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14067,
+          "type": "a",
+          "version": 8,
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Cant\u00f3 de Friburg"
+            },
+            {
+              "version": 3,
+              "lang": "de",
+              "title": "Freiburg"
+            },
+            {
+              "version": 2,
+              "lang": "en",
+              "title": "Canton of Fribourg"
+            },
+            {
+              "version": 2,
+              "lang": "es",
+              "title": "Cant\u00f3n de Friburgo"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Friburgo"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Canton de Fribourg"
+            },
+            {
+              "version": 2,
+              "lang": "it",
+              "title": "Canton Friburgo"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14380,
+          "type": "a",
+          "version": 1,
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Freiburger und Berner Voralpen"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Pr\u00e9alpes Fribourgeoises - Bernoises"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14431,
+          "type": "a",
+          "version": 2,
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "height_diff_down": null,
+      "version": 3,
+      "document_id": 952654,
+      "hiking_mtb_exposition": "E3",
+      "elevation_max": 658,
+      "type": "r",
+      "height_diff_difficulties": 260,
+      "activities": [
+        "hiking"
+      ],
+      "elevation_min": 246,
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T4",
+      "locales": [
+        {
+          "summary": "A classer encore parmi les \"sentiers du vertige\" du Pic Saint Loup ! \nUne fa\u00e7on tr\u00e8s originale et tr\u00e8s sportive  de s'immerger dans cette vaste face N en c\u00f4toyant les itin\u00e9raires d'escalade, sans les grimper !\nUne boucle  avec une partie sur l'a\u00e9rienne ar\u00eate W",
+          "version": 8,
+          "lang": "fr",
+          "title_prefix": "Pic Saint Loup",
+          "title": "Boucle des \u00e9perons Nord"
+        }
+      ],
+      "geometry": {
+        "version": 8,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [424038.1486699917, 5431996.614372294], \"type\": \"Point\"}"
+      },
+      "height_diff_up": 300,
+      "orientations": [
+        "N"
+      ],
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "version": 11,
+          "document_id": 14274,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "H\u00e9rault"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14332,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        }
+      ]
+    },
+    {
+      "quality": "draft",
+      "height_diff_down": null,
+      "version": 1,
+      "document_id": 952547,
+      "elevation_max": 1491,
+      "type": "r",
+      "elevation_min": 1050,
+      "activities": [
+        "snowshoeing"
+      ],
+      "height_diff_difficulties": null,
+      "geometry": {
+        "version": 1,
+        "has_geom_detail": true,
+        "geom": "{\"coordinates\": [1005900.7247493516, 5789504.827436936], \"type\": \"Point\"}"
+      },
+      "locales": [
+        {
+          "summary": null,
+          "title": "Cioascio - Sasso Grande",
+          "version": 1,
+          "lang": "fr",
+          "title_prefix": "Denti della Vecchia"
+        }
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "height_diff_up": null,
+      "orientations": null,
+      "protected": false,
+      "snowshoe_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 8,
+          "document_id": 14067,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "It\u00e0lia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Italien",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Italy",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Italia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Italia",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Italie",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Italia",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 9,
+          "document_id": 14270,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Ticino",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Tessin",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Ticino",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Tesino",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Ticino",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Tessin",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Ticino",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 3,
+          "document_id": 14385,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "B\u00fcndner Oberland - Adula - Tessin E",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Alpi Lepontine Orientali",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 3,
+          "document_id": 14423,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Prov\u00edncia de Como",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Provinz Como",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Province of Como",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Provincia de Como",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Comoko probintzia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Province de C\u00f4me",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Provincia di Como",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 1,
+          "document_id": 279996,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "document_id": 952518,
+      "labande_global_rating": "F",
+      "type": "r",
+      "elevation_min": 1341,
+      "height_diff_difficulties": null,
+      "height_diff_up": 1100,
+      "ski_exposition": "E1",
+      "ski_rating": "2.2",
+      "protected": false,
+      "height_diff_down": null,
+      "version": 4,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 2464,
+      "activities": [
+        "skitouring",
+        "hiking"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T2",
+      "locales": [
+        {
+          "summary": "Une belle balade qui permet de s'enfoncer tout au fond de la Rouane, avec un final sympathique pour gravir la pyramide sommitale du Piolit",
+          "version": 6,
+          "title_prefix": "Le Piolit",
+          "lang": "fr",
+          "title": "Versant E"
+        }
+      ],
+      "geometry": {
+        "version": 3,
+        "has_geom_detail": true,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [697407.9795515803, 5563030.757570256]}"
+      },
+      "orientations": [
+        "E",
+        "NE"
+      ],
+      "labande_ski_rating": "S2",
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a",
+          "version": 11,
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Alts Alps"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Hautes-Alpes"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Hautes-Alpes"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Altos Alpes"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Alpe Garaiak"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Hautes-Alpes"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Alte Alpi"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14361,
+          "type": "a",
+          "version": 2,
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 32,
+              "lang": "fr",
+              "title": "\u00c9crins"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14403,
+          "type": "a",
+          "version": 21,
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "document_id": 952307,
+      "labande_global_rating": "F+",
+      "type": "r",
+      "elevation_min": 1304,
+      "height_diff_difficulties": null,
+      "height_diff_up": 935,
+      "ski_exposition": "E1",
+      "ski_rating": "2.2",
+      "protected": false,
+      "height_diff_down": 935,
+      "version": 1,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 2239,
+      "activities": [
+        "skitouring",
+        "hiking"
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [897795.4224506934, 5767214.655886376], \"type\": \"Point\"}"
+      },
+      "hiking_rating": "T2",
+      "locales": [
+        {
+          "summary": "da Carcoforo attraversare il paesino e risalire la valle Egua fino all'omonimo colle",
+          "title": "Da Carcoforo",
+          "version": 2,
+          "lang": "it",
+          "title_prefix": "Colle d'Egua"
+        }
+      ],
+      "available_langs": [
+        "it"
+      ],
+      "orientations": [
+        "SW",
+        "S",
+        "W"
+      ],
+      "labande_ski_rating": "S2",
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "It\u00e0lia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Italien",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Italy",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Italia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Italia",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Italie",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Italia",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 9,
+          "document_id": 14270,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Walliser Alpen E - Penninische Alpen E",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Valais E - Pennine Alps E",
+              "lang": "en"
+            },
+            {
+              "version": 3,
+              "title": "Valais E - Alpes Pennines E",
+              "lang": "fr"
+            },
+            {
+              "version": 3,
+              "title": "Alpi Pennine Orientali",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 7,
+          "document_id": 14436,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Prov\u00edncia de Vercelli",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Provinz Vercelli",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Province of Vercelli",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Provincia de Vercelli",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Vercelliko probintzia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Province de Verceil",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Provincia di Vercelli",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 1,
+          "document_id": 280076,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "document_id": 952175,
+      "rock_free_rating": "7a",
+      "engagement_rating": null,
+      "type": "r",
+      "rock_required_rating": "6b",
+      "elevation_min": null,
+      "height_diff_up": null,
+      "equipment_rating": "P2",
+      "protected": false,
+      "elevation_max": null,
+      "height_diff_down": null,
+      "version": 2,
+      "exposition_rock_rating": null,
+      "height_diff_difficulties": 215,
+      "global_rating": "TD+",
+      "activities": [
+        "rock_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": "Grande voie partiellement \u00e9quip\u00e9e sur de l'excellent rocher, except\u00e9 quelques blocs pos\u00e9s. \nSitu\u00e9e au secteur Gaza.",
+          "version": 2,
+          "title_prefix": "Djebel Ca\u00efat",
+          "lang": "fr",
+          "title": "Acheuea Cheuea"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [-581335.5391273939, 4203475.85283823]}"
+      },
+      "risk_rating": null,
+      "orientations": [
+        "SW"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 12,
+              "lang": "fr",
+              "title": "Maroc"
+            },
+            {
+              "version": 3,
+              "lang": "en",
+              "title": "Morocco"
+            },
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Marroc"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Marokko"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Marruecos"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Maroko"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Marocco"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14144,
+          "type": "a",
+          "version": 9,
+          "protected": false,
+          "area_type": "country"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "document_id": 952174,
+      "rock_free_rating": "6c+",
+      "engagement_rating": "II",
+      "type": "r",
+      "rock_required_rating": "6b+",
+      "elevation_min": null,
+      "height_diff_up": null,
+      "equipment_rating": "P3",
+      "protected": false,
+      "elevation_max": null,
+      "height_diff_down": null,
+      "version": 2,
+      "exposition_rock_rating": null,
+      "height_diff_difficulties": 180,
+      "global_rating": "TD+",
+      "activities": [
+        "rock_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": null,
+          "version": 2,
+          "title_prefix": "Djebel Ca\u00efat",
+          "lang": "fr",
+          "title": "Son Talent m'botte"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [-581335.5391273939, 4203475.85283823]}"
+      },
+      "risk_rating": null,
+      "orientations": [
+        "SW"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 12,
+              "lang": "fr",
+              "title": "Maroc"
+            },
+            {
+              "version": 3,
+              "lang": "en",
+              "title": "Morocco"
+            },
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Marroc"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Marokko"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Marruecos"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Maroko"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Marocco"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14144,
+          "type": "a",
+          "version": 9,
+          "protected": false,
+          "area_type": "country"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "document_id": 952170,
+      "rock_free_rating": "7a",
+      "engagement_rating": "I",
+      "type": "r",
+      "rock_required_rating": "6c",
+      "elevation_min": null,
+      "height_diff_up": null,
+      "equipment_rating": "P1",
+      "protected": false,
+      "elevation_max": null,
+      "height_diff_down": null,
+      "version": 2,
+      "exposition_rock_rating": null,
+      "height_diff_difficulties": 160,
+      "global_rating": "ED",
+      "activities": [
+        "rock_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": "Grande voie de 5 longueurs situ\u00e9e au secteur \"Paraguas\".",
+          "version": 2,
+          "title_prefix": "Djebel Ca\u00efat",
+          "lang": "fr",
+          "title": "Sp\u00e9l\u00e9ologie"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [-581335.5391273939, 4203475.85283823]}"
+      },
+      "risk_rating": null,
+      "orientations": [
+        "SW"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 12,
+              "lang": "fr",
+              "title": "Maroc"
+            },
+            {
+              "version": 3,
+              "lang": "en",
+              "title": "Morocco"
+            },
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Marroc"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Marokko"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Marruecos"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Maroko"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Marocco"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14144,
+          "type": "a",
+          "version": 9,
+          "protected": false,
+          "area_type": "country"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "document_id": 952168,
+      "rock_free_rating": "7c",
+      "engagement_rating": "I",
+      "type": "r",
+      "rock_required_rating": null,
+      "elevation_min": null,
+      "height_diff_up": null,
+      "equipment_rating": "P1",
+      "protected": false,
+      "elevation_max": null,
+      "height_diff_down": null,
+      "version": 2,
+      "exposition_rock_rating": null,
+      "height_diff_difficulties": 145,
+      "global_rating": "ED",
+      "activities": [
+        "rock_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": "Grande voie de 5 longueurs situ\u00e9e au secteur \"Paraguas\".",
+          "version": 2,
+          "title_prefix": "Djebel Ca\u00efat",
+          "lang": "fr",
+          "title": "Tsunami"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [-581335.5391273939, 4203475.85283823]}"
+      },
+      "risk_rating": null,
+      "orientations": [
+        "SW",
+        "W"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 12,
+              "lang": "fr",
+              "title": "Maroc"
+            },
+            {
+              "version": 3,
+              "lang": "en",
+              "title": "Morocco"
+            },
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Marroc"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Marokko"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Marruecos"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Maroko"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Marocco"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14144,
+          "type": "a",
+          "version": 9,
+          "protected": false,
+          "area_type": "country"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "document_id": 952167,
+      "rock_free_rating": "7a",
+      "engagement_rating": "I",
+      "type": "r",
+      "rock_required_rating": "6b",
+      "elevation_min": null,
+      "height_diff_up": null,
+      "equipment_rating": "P1",
+      "protected": false,
+      "elevation_max": 960,
+      "height_diff_down": null,
+      "version": 2,
+      "exposition_rock_rating": null,
+      "height_diff_difficulties": 450,
+      "global_rating": "ED-",
+      "activities": [
+        "rock_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": null,
+          "version": 2,
+          "title_prefix": "Djebel Ca\u00efat",
+          "lang": "fr",
+          "title": "Africa"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [-581335.5391273939, 4203475.85283823]}"
+      },
+      "risk_rating": null,
+      "orientations": [
+        "W"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 12,
+              "lang": "fr",
+              "title": "Maroc"
+            },
+            {
+              "version": 3,
+              "lang": "en",
+              "title": "Morocco"
+            },
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Marroc"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Marokko"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Marruecos"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Maroko"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Marocco"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14144,
+          "type": "a",
+          "version": 9,
+          "protected": false,
+          "area_type": "country"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "document_id": 952126,
+      "labande_global_rating": "PD-",
+      "type": "r",
+      "elevation_min": 1020,
+      "height_diff_difficulties": null,
+      "height_diff_up": 480,
+      "ski_exposition": "E1",
+      "ski_rating": "1.3",
+      "protected": false,
+      "height_diff_down": 480,
+      "version": 2,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 1494,
+      "activities": [
+        "snowshoeing",
+        "skitouring",
+        "hiking"
+      ],
+      "geometry": {
+        "version": 1,
+        "has_geom_detail": true,
+        "geom": "{\"coordinates\": [773357.2364191723, 5866919.818312066], \"type\": \"Point\"}"
+      },
+      "hiking_rating": "T2",
+      "locales": [
+        {
+          "summary": null,
+          "title": "Face S depuis Mollie de Crey",
+          "version": 2,
+          "lang": "fr",
+          "title_prefix": "Petit Niremont"
+        }
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "labande_ski_rating": "S2",
+      "orientations": [
+        "S"
+      ],
+      "snowshoe_rating": "R2",
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 8,
+          "document_id": 14067,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Cant\u00f3 de Friburg",
+              "lang": "ca"
+            },
+            {
+              "version": 3,
+              "title": "Freiburg",
+              "lang": "de"
+            },
+            {
+              "version": 2,
+              "title": "Canton of Fribourg",
+              "lang": "en"
+            },
+            {
+              "version": 2,
+              "title": "Cant\u00f3n de Friburgo",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Friburgo",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Canton de Fribourg",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Canton Friburgo",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 1,
+          "document_id": 14380,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Freiburger und Berner Voralpen",
+              "lang": "de"
+            },
+            {
+              "version": 2,
+              "title": "Pr\u00e9alpes Fribourgeoises - Bernoises",
+              "lang": "fr"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14431,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "height_diff_down": 2000,
+      "version": 2,
+      "document_id": 952064,
+      "elevation_max": 2633,
+      "labande_global_rating": "PD",
+      "type": "r",
+      "elevation_min": 620,
+      "activities": [
+        "skitouring",
+        "snowshoeing"
+      ],
+      "height_diff_difficulties": null,
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [1021491.4698901083, 5837053.674124427], \"type\": \"Point\"}"
+      },
+      "locales": [
+        {
+          "summary": "Soazza - Alp de Bec Sot - Pass de Buffalora - cresta N - vetta",
+          "title": "da Soazza",
+          "version": 1,
+          "lang": "it",
+          "title_prefix": "Cima de Nomnom"
+        }
+      ],
+      "available_langs": [
+        "it"
+      ],
+      "height_diff_up": 2000,
+      "snowshoe_rating": null,
+      "ski_exposition": "E1",
+      "orientations": [
+        "NE",
+        "N"
+      ],
+      "ski_rating": "2.2",
+      "protected": false,
+      "labande_ski_rating": "S2",
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 8,
+          "document_id": 14067,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Grisons",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Graub\u00fcnden",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Graub\u00fcnden",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Grisones",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Grisonia",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Grisons",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Grigioni",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 4,
+          "document_id": 14372,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "B\u00fcndner Oberland - Adula - Tessin E",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Alpi Lepontine Orientali",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 3,
+          "document_id": 14423,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "document_id": 951942,
+      "rock_free_rating": "6a+",
+      "engagement_rating": "I",
+      "type": "r",
+      "rock_required_rating": "5c",
+      "elevation_min": null,
+      "height_diff_up": null,
+      "equipment_rating": "P1",
+      "protected": false,
+      "elevation_max": 1450,
+      "height_diff_down": null,
+      "version": 3,
+      "exposition_rock_rating": "E1",
+      "height_diff_difficulties": 200,
+      "global_rating": "TD-",
+      "activities": [
+        "rock_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": "Superbe voie en ar\u00eates toute neuve (2017) en super rocher dans un niveau abordable tr\u00e8s bien \u00e9quip\u00e9e.\nPour l'instant la voie ne d\u00e9marre pas du bas, on atteint le d\u00e9part par une vire, mais le bas devrait \u00eatre bient\u00f4t \u00e9quip\u00e9.",
+          "version": 5,
+          "title_prefix": "Seranon - Le Potager",
+          "lang": "fr",
+          "title": "Via del Pierrot"
+        }
+      ],
+      "geometry": {
+        "version": 5,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [745628.0794070085, 5431304.143900175]}"
+      },
+      "risk_rating": "X1",
+      "orientations": [
+        "S"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a",
+          "version": 11,
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Alps Mar\u00edtims"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Alpes-maritimes"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Alpes-maritimes"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Alpes-Mar\u00edtimos"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Itsas Alpeak"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Alpes-maritimes"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Alpi Marittime"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14360,
+          "type": "a",
+          "version": 2,
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "Pelat - Pr\u00e9alpes de Castellane"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14465,
+          "type": "a",
+          "version": 1,
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "document_id": 951937,
+      "rock_free_rating": "5b+",
+      "engagement_rating": "I",
+      "type": "r",
+      "rock_required_rating": "5b",
+      "elevation_min": 5,
+      "height_diff_up": 175,
+      "equipment_rating": "P4+",
+      "protected": false,
+      "elevation_max": 180,
+      "height_diff_down": null,
+      "version": 6,
+      "exposition_rock_rating": "E2",
+      "height_diff_difficulties": 160,
+      "global_rating": "D-",
+      "activities": [
+        "rock_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": "Itin\u00e9raire de haute vol\u00e9e et qui devrait conna\u00eetre une fr\u00e9quentation importante dans les prochaines ann\u00e9es. Attention donc aux chutes de pierres et \u00e0 l'encombrement aux relais m\u00eame si ceux-ci sont tout confort. Tout y est : approche d\u00e9bonnaire, itin\u00e9raire long mais peu engag\u00e9, difficult\u00e9s homog\u00e8nes, rocher excellent, ambiance... Un must des Calanques !",
+          "version": 7,
+          "title_prefix": "Calanque de l'Eissadon",
+          "lang": "fr",
+          "title": "Il faut trouver la voie (Lao Tseu)"
+        }
+      ],
+      "geometry": {
+        "version": 10,
+        "has_geom_detail": false,
+        "geom": "{\"type\": \"Point\", \"coordinates\": [611336.9211326163, 5343057.0450415835]}"
+      },
+      "risk_rating": "X1",
+      "orientations": [
+        "E"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a",
+          "version": 11,
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 5,
+              "lang": "fr",
+              "title": "Bouches-du-Rh\u00f4ne"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14353,
+          "type": "a",
+          "version": 3,
+          "protected": true,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Proven\u00e7a"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Provence"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Provence"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Provenza"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Proventza"
+            },
+            {
+              "version": 3,
+              "lang": "fr",
+              "title": "Provence"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Provenza"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 14463,
+          "type": "a",
+          "version": 9,
+          "protected": false,
+          "area_type": "range"
+        },
+        {
+          "locales": [
+            {
+              "version": 8,
+              "lang": "fr",
+              "title": "Calanques"
+            }
+          ],
+          "available_langs": null,
+          "document_id": 820370,
+          "type": "a",
+          "version": 1,
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "height_diff_down": null,
+      "version": 2,
+      "document_id": 951889,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 1547,
+      "type": "r",
+      "elevation_min": 720,
+      "activities": [
+        "hiking"
+      ],
+      "height_diff_difficulties": null,
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T2",
+      "locales": [
+        {
+          "summary": "La mont\u00e9e vers le sommet de Destourbes est progressive et offre une succession de panoramas sur la retenue de Chaudanne.",
+          "version": 1,
+          "title_prefix": "Destourbes",
+          "lang": "fr",
+          "title": "Sommet par le sentier N"
+        }
+      ],
+      "geometry": {
+        "version": 2,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [727652.0967142199, 5437997.640264928], \"type\": \"Point\"}"
+      },
+      "height_diff_up": 819,
+      "orientations": null,
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "type": "a",
+          "version": 11,
+          "document_id": 14274,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Alps de l'Alta Proven\u00e7a"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Alpes de Alta Provenza"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Alpi dell'Alta Provenza"
+            }
+          ],
+          "type": "a",
+          "version": 2,
+          "document_id": 14362,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "Pelat - Pr\u00e9alpes de Castellane"
+            }
+          ],
+          "type": "a",
+          "version": 1,
+          "document_id": 14465,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "height_diff_down": null,
+      "version": 2,
+      "document_id": 951882,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 868,
+      "type": "r",
+      "elevation_min": 720,
+      "activities": [
+        "hiking"
+      ],
+      "height_diff_difficulties": null,
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T2",
+      "locales": [
+        {
+          "summary": "balade rapide partant directement du centre-ville, elle est particuli\u00e8rement pris\u00e9e par les locaux et les touristes. Il s'agit de la mont\u00e9e au Roc de Castellane par le Chemin du Roc. C'est \u00e9galement le chemin de croix de la Chapelle Notre-Dame du Roc. Mais ce chemin est aussi un calvaire, beaucoup de personnes montent et descendent en m\u00eame temps, il est raide et rocailleux, l'ombre y est rare.\n\nOn peut rallonger cet aller-retour classique \u00e0 un Grand Tour du Roc, en \u00e9vitant une partie le Chemin du Roc, en faisant le tour entier du Roc et en passant apr\u00e8s au pied du Serre pour une vue retour sur le Roc que peu de gens connaissent. Comme c'est encore un peu court, on peut rajouter un passage dans le Jardin du Parc et descendre ensuite dans les ruelles sombres de la vieille-ville.",
+          "version": 2,
+          "title_prefix": "Roc de Castellane",
+          "lang": "fr",
+          "title": "Grand Tour du Roc de Castellane"
+        }
+      ],
+      "geometry": {
+        "version": 3,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [725509.3078359403, 5441756.1685632635], \"type\": \"Point\"}"
+      },
+      "height_diff_up": 250,
+      "orientations": null,
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "type": "a",
+          "version": 11,
+          "document_id": 14274,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Alps de l'Alta Proven\u00e7a"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Alpes de Alta Provenza"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Alpi dell'Alta Provenza"
+            }
+          ],
+          "type": "a",
+          "version": 2,
+          "document_id": 14362,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Pr\u00e9alpes de Digne"
+            }
+          ],
+          "type": "a",
+          "version": 1,
+          "document_id": 14464,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "height_diff_down": null,
+      "version": 2,
+      "document_id": 951879,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 1613,
+      "type": "r",
+      "elevation_min": 900,
+      "activities": [
+        "hiking"
+      ],
+      "height_diff_difficulties": null,
+      "available_langs": [
+        "fr"
+      ],
+      "hiking_rating": "T3",
+      "locales": [
+        {
+          "summary": "Le Mont Chalvet (1613m) est un site de renomm\u00e9e internationale pour la pratique du vol libre, vous apercevrez certainement quelques parapentistes dans le ciel de Saint-Andr\u00e9-les-Alpes. Sur cette randonn\u00e9e, vous aurez peut \u00eatre la chance d'entendre le t\u00e9tras lyre, de d\u00e9couvrir le trou de Chalvet, la Voie Imp\u00e9riale, le train des Pignes et de nombreux points de vue sur le village et le lac de Castillon.",
+          "version": 4,
+          "title_prefix": "",
+          "lang": "fr",
+          "title": "Le sommet de Chalvet"
+        }
+      ],
+      "geometry": {
+        "version": 4,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [722009.311725909, 5461349.587497695], \"type\": \"Point\"}"
+      },
+      "height_diff_up": 825,
+      "orientations": null,
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "type": "a",
+          "version": 11,
+          "document_id": 14274,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Alps de l'Alta Proven\u00e7a"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Alpes de Alta Provenza"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Alpes-de-Haute-Provence"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Alpi dell'Alta Provenza"
+            }
+          ],
+          "type": "a",
+          "version": 2,
+          "document_id": 14362,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Pr\u00e9alpes de Digne"
+            }
+          ],
+          "type": "a",
+          "version": 1,
+          "document_id": 14464,
+          "protected": false,
+          "available_langs": null,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "document_id": 951877,
+      "rock_free_rating": "4b",
+      "engagement_rating": "II",
+      "type": "r",
+      "rock_required_rating": "4b",
+      "elevation_min": 1700,
+      "height_diff_up": 750,
+      "equipment_rating": "P2",
+      "protected": false,
+      "exposition_rock_rating": null,
+      "height_diff_down": null,
+      "version": 2,
+      "elevation_max": 2400,
+      "height_diff_difficulties": 150,
+      "global_rating": "AD",
+      "activities": [
+        "rock_climbing"
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "locales": [
+        {
+          "summary": null,
+          "version": 1,
+          "lang": "fr",
+          "title_prefix": "Les Grands Moulins",
+          "title": "Papier, Caillou, Ciseaux"
+        }
+      ],
+      "geometry": {
+        "version": 1,
+        "has_geom_detail": true,
+        "geom": "{\"coordinates\": [688502.555262918, 5686025.33868975], \"type\": \"Point\"}"
+      },
+      "risk_rating": null,
+      "orientations": [
+        "SE",
+        "E"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "lang": "ca",
+              "title": "Estat franc\u00e8s"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Frankreich"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Francia"
+            },
+            {
+              "version": 2,
+              "lang": "eu",
+              "title": "France"
+            },
+            {
+              "version": 4,
+              "lang": "fr",
+              "title": "France"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Francia"
+            }
+          ],
+          "available_langs": null,
+          "version": 11,
+          "document_id": 14274,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "lang": "ca",
+              "title": "Savoia"
+            },
+            {
+              "version": 1,
+              "lang": "de",
+              "title": "Savoie"
+            },
+            {
+              "version": 1,
+              "lang": "en",
+              "title": "Savoie"
+            },
+            {
+              "version": 1,
+              "lang": "es",
+              "title": "Saboya"
+            },
+            {
+              "version": 1,
+              "lang": "eu",
+              "title": "Savoia"
+            },
+            {
+              "version": 2,
+              "lang": "fr",
+              "title": "Savoie"
+            },
+            {
+              "version": 1,
+              "lang": "it",
+              "title": "Savoia"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14295,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 8,
+              "lang": "fr",
+              "title": "Belledonne"
+            }
+          ],
+          "available_langs": null,
+          "version": 3,
+          "document_id": 14398,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "medium",
+      "document_id": 951875,
+      "rock_free_rating": "5c",
+      "engagement_rating": "II",
+      "type": "r",
+      "rock_required_rating": null,
+      "elevation_min": 1768,
+      "height_diff_up": 1750,
+      "equipment_rating": null,
+      "protected": false,
+      "exposition_rock_rating": null,
+      "height_diff_down": null,
+      "version": 5,
+      "elevation_max": 3514,
+      "height_diff_difficulties": 450,
+      "global_rating": "D",
+      "activities": [
+        "mountain_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "has_geom_detail": true,
+        "geom": "{\"coordinates\": [707004.729224266, 5636311.66003145], \"type\": \"Point\"}"
+      },
+      "locales": [
+        {
+          "summary": null,
+          "title": "Face S",
+          "version": 4,
+          "lang": "fr",
+          "title_prefix": "Aiguille M\u00e9ridionale d'Arves"
+        }
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "risk_rating": null,
+      "orientations": [
+        "SW",
+        "S",
+        "SE"
+      ],
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Estat franc\u00e8s",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 4,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 11,
+          "document_id": 14274,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14295,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Alts Alps",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Hautes-Alpes",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Hautes-Alpes",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Altos Alpes",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Alpe Garaiak",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Hautes-Alpes",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alte Alpi",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14361,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 8,
+              "title": "Grandes Rousses - Arves",
+              "lang": "fr"
+            }
+          ],
+          "available_langs": null,
+          "version": 4,
+          "document_id": 14407,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "document_id": 951711,
+      "rock_free_rating": null,
+      "engagement_rating": null,
+      "type": "r",
+      "rock_required_rating": null,
+      "elevation_min": null,
+      "height_diff_up": null,
+      "equipment_rating": null,
+      "protected": false,
+      "exposition_rock_rating": null,
+      "height_diff_down": null,
+      "version": 2,
+      "elevation_max": 100,
+      "height_diff_difficulties": null,
+      "global_rating": null,
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 4,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [603513.0533611932, 5343463.894398122], \"type\": \"Point\"}"
+      },
+      "locales": [
+        {
+          "summary": "Petite voie facile \u00e0 la dalle du Conglu\u00e9 en 2 longueurs.",
+          "title": "Le Principe du Plaisir",
+          "version": 4,
+          "lang": "fr",
+          "title_prefix": "Calanques - Sormiou - Le Conglu\u00e9"
+        }
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "risk_rating": null,
+      "orientations": null,
+      "aid_rating": null,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 1,
+              "title": "Proven\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Provence",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Provence",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Provenza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Proventza",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Provence",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Provenza",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 9,
+          "document_id": 14463,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        },
+        {
+          "locales": [
+            {
+              "version": 8,
+              "title": "Calanques",
+              "lang": "fr"
+            }
+          ],
+          "available_langs": null,
+          "version": 1,
+          "document_id": 820370,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    },
+    {
+      "quality": "fine",
+      "height_diff_down": 200,
+      "version": 1,
+      "document_id": 951661,
+      "hiking_mtb_exposition": null,
+      "elevation_max": 370,
+      "type": "r",
+      "elevation_min": 170,
+      "activities": [
+        "hiking"
+      ],
+      "height_diff_difficulties": null,
+      "geometry": {
+        "version": 1,
+        "has_geom_detail": false,
+        "geom": "{\"coordinates\": [300470.897881425, 5294625.6195091335], \"type\": \"Point\"}"
+      },
+      "hiking_rating": null,
+      "locales": [
+        {
+          "summary": "La grotte se situe au pied d'une barre rocheuse qui entrecoupe le talweg situ\u00e9 au S de la Sarrat Redoun.\nElle est indiqu\u00e9e sur IGN, en rive droite du ruisseau.",
+          "title": "acc\u00e8s pedestre",
+          "version": 1,
+          "lang": "fr",
+          "title_prefix": "Grotte d'Ander"
+        }
+      ],
+      "available_langs": [
+        "fr"
+      ],
+      "height_diff_up": 200,
+      "orientations": [
+        "E"
+      ],
+      "protected": false,
+      "areas": [
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Estat franc\u00e8s",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 4,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            }
+          ],
+          "available_langs": null,
+          "version": 11,
+          "document_id": 14274,
+          "type": "a",
+          "protected": false,
+          "area_type": "country"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Aude",
+              "lang": "fr"
+            }
+          ],
+          "available_langs": null,
+          "version": 2,
+          "document_id": 14355,
+          "type": "a",
+          "protected": false,
+          "area_type": "admin_limits"
+        },
+        {
+          "locales": [
+            {
+              "version": 2,
+              "title": "Corberes",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Corbi\u00e8res",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Corbi\u00e8res",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "Corbi\u00e8res",
+              "lang": "fr"
+            }
+          ],
+          "available_langs": null,
+          "version": 3,
+          "document_id": 14415,
+          "type": "a",
+          "protected": false,
+          "area_type": "range"
+        }
+      ]
+    }
+  ],
+  "total": 40141
+}

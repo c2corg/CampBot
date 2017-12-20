@@ -1,0 +1,187 @@
+{
+  "users": {
+    "total": 378,
+    "documents": [
+      {
+        "document_id": 286726,
+        "type": "u",
+        "activities": [
+          "snow_ice_mixed",
+          "mountain_climbing",
+          "rock_climbing"
+        ],
+        "locales": [
+          {
+            "version": 23,
+            "lang": "fr"
+          }
+        ],
+        "version": 5,
+        "forum_username": "CharlesB",
+        "categories": [
+          "amateur"
+        ],
+        "areas": [
+          {
+            "document_id": 14274,
+            "area_type": "country",
+            "type": "a",
+            "locales": [
+              {
+                "title": "France",
+                "version": 4,
+                "lang": "fr"
+              }
+            ],
+            "available_langs": null,
+            "protected": false,
+            "version": 11
+          },
+          {
+            "document_id": 14294,
+            "area_type": "admin_limits",
+            "type": "a",
+            "locales": [
+              {
+                "title": "Paris",
+                "version": 2,
+                "lang": "fr"
+              }
+            ],
+            "available_langs": null,
+            "protected": false,
+            "version": 8
+          }
+        ],
+        "available_langs": [
+          "fr",
+          "en"
+        ],
+        "name": "Charles",
+        "protected": false
+      },
+      {
+        "type": "u",
+        "document_id": 3199,
+        "activities": null,
+        "locales": [
+          {
+            "version": 1,
+            "lang": "fr"
+          }
+        ],
+        "forum_username": "grimpeur8b",
+        "protected": false,
+        "name": "charles loury",
+        "areas": [],
+        "available_langs": [
+          "fr"
+        ],
+        "categories": null,
+        "version": 1
+      },
+      {
+        "type": "u",
+        "document_id": 352145,
+        "activities": null,
+        "locales": [
+          {
+            "version": 1,
+            "lang": "fr"
+          }
+        ],
+        "forum_username": "charlescarayon",
+        "protected": false,
+        "name": "charlescarayon",
+        "areas": [],
+        "available_langs": [
+          "fr"
+        ],
+        "categories": null,
+        "version": 1
+      },
+      {
+        "type": "u",
+        "document_id": 361302,
+        "activities": null,
+        "locales": [
+          {
+            "version": 1,
+            "lang": "fr"
+          }
+        ],
+        "forum_username": "charlesdet",
+        "protected": false,
+        "name": "charlesdet",
+        "areas": [],
+        "available_langs": [
+          "fr"
+        ],
+        "categories": null,
+        "version": 1
+      },
+      {
+        "type": "u",
+        "document_id": 836993,
+        "activities": null,
+        "locales": [
+          {
+            "version": 1,
+            "lang": "en"
+          }
+        ],
+        "forum_username": "Alpineflowers",
+        "protected": false,
+        "name": "Charles",
+        "areas": [],
+        "available_langs": [
+          "en"
+        ],
+        "categories": [
+          "amateur"
+        ],
+        "version": 1
+      },
+      {
+        "type": "u",
+        "document_id": 211305,
+        "activities": null,
+        "locales": [
+          {
+            "version": 1,
+            "lang": "fr"
+          }
+        ],
+        "forum_username": "charles_dagand",
+        "protected": false,
+        "name": "charles dagand",
+        "areas": [],
+        "available_langs": [
+          "fr"
+        ],
+        "categories": null,
+        "version": 1
+      },
+      {
+        "type": "u",
+        "document_id": 748251,
+        "activities": null,
+        "locales": [
+          {
+            "version": 1,
+            "lang": "fr"
+          }
+        ],
+        "forum_username": "charles7442",
+        "protected": false,
+        "name": "charles7442",
+        "areas": [],
+        "available_langs": [
+          "fr"
+        ],
+        "categories": null,
+        "version": 1
+      }
+    ]
+  }
+}

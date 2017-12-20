@@ -1,0 +1,664 @@
+{
+  "quality": "draft",
+  "locales": [
+    {
+      "summary": null,
+      "version": 1,
+      "lang": "fr",
+      "topic_id": null,
+      "description": null,
+      "title": "Pedraforca - Dent dels Cabirols"
+    }
+  ],
+  "version": 1,
+  "document_id": 952999,
+  "associations": {
+    "images": [],
+    "all_routes": {
+      "documents": [
+        {
+          "quality": "medium",
+          "document_id": 293549,
+          "rock_free_rating": "5c",
+          "engagement_rating": "II",
+          "type": "r",
+          "rock_required_rating": "5c",
+          "elevation_min": 1668,
+          "height_diff_up": null,
+          "equipment_rating": "P2",
+          "protected": false,
+          "exposition_rock_rating": null,
+          "height_diff_down": null,
+          "version": 3,
+          "elevation_max": null,
+          "height_diff_difficulties": null,
+          "global_rating": "TD-",
+          "activities": [
+            "rock_climbing"
+          ],
+          "geometry": {
+            "version": 4,
+            "has_geom_detail": false,
+            "geom": "{\"coordinates\": [191248.92604017473, 5197576.832845771], \"type\": \"Point\"}"
+          },
+          "locales": [
+            {
+              "summary": null,
+              "title": "V\u00eda Cerd\u00e0 Albert",
+              "version": 6,
+              "lang": "es",
+              "title_prefix": "Pedraforca - Dent dels Cabirols"
+            },
+            {
+              "summary": null,
+              "title": "Voie Cerd\u00e0 Albert",
+              "version": 8,
+              "lang": "fr",
+              "title_prefix": "Pedraforca - Dent dels Cabirols"
+            }
+          ],
+          "available_langs": [
+            "es",
+            "fr"
+          ],
+          "risk_rating": null,
+          "orientations": [
+            "E"
+          ],
+          "aid_rating": "A0+",
+          "areas": [
+            {
+              "locales": [
+                {
+                  "version": 3,
+                  "title": "Estat espanyol",
+                  "lang": "ca"
+                },
+                {
+                  "version": 1,
+                  "title": "Spanien",
+                  "lang": "de"
+                },
+                {
+                  "version": 1,
+                  "title": "Spain",
+                  "lang": "en"
+                },
+                {
+                  "version": 1,
+                  "title": "Espa\u00f1a",
+                  "lang": "es"
+                },
+                {
+                  "version": 1,
+                  "title": "Espainia",
+                  "lang": "eu"
+                },
+                {
+                  "version": 4,
+                  "title": "Espagne",
+                  "lang": "fr"
+                },
+                {
+                  "version": 1,
+                  "title": "Spagna",
+                  "lang": "it"
+                }
+              ],
+              "available_langs": null,
+              "version": 11,
+              "document_id": 14267,
+              "type": "a",
+              "protected": false,
+              "area_type": "country"
+            },
+            {
+              "locales": [
+                {
+                  "version": 1,
+                  "title": "Prov\u00edncia de Barcelona",
+                  "lang": "ca"
+                },
+                {
+                  "version": 1,
+                  "title": "Provinz Barcelona",
+                  "lang": "de"
+                },
+                {
+                  "version": 1,
+                  "title": "Province of Barcelona",
+                  "lang": "en"
+                },
+                {
+                  "version": 1,
+                  "title": "Provincia de Barcelona",
+                  "lang": "es"
+                },
+                {
+                  "version": 1,
+                  "title": "Bartzelonako probintzia",
+                  "lang": "eu"
+                },
+                {
+                  "version": 1,
+                  "title": "Province de Barcelone",
+                  "lang": "fr"
+                },
+                {
+                  "version": 2,
+                  "title": "Provincia di Barcelona",
+                  "lang": "it"
+                }
+              ],
+              "available_langs": null,
+              "version": 1,
+              "document_id": 279930,
+              "type": "a",
+              "protected": false,
+              "area_type": "admin_limits"
+            },
+            {
+              "locales": [
+                {
+                  "version": 10,
+                  "title": "Serres catalanes",
+                  "lang": "fr"
+                },
+                {
+                  "version": 2,
+                  "title": "Serralades catalanes",
+                  "lang": "ca"
+                },
+                {
+                  "version": 2,
+                  "title": "Catalan ranges",
+                  "lang": "en"
+                },
+                {
+                  "version": 1,
+                  "title": "Sierras catalanes",
+                  "lang": "es"
+                }
+              ],
+              "available_langs": null,
+              "version": 1,
+              "document_id": 294791,
+              "type": "a",
+              "protected": false,
+              "area_type": "range"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    "books": [],
+    "xreports": [],
+    "waypoints": [
+      {
+        "locales": [
+          {
+            "summary": null,
+            "version": 8,
+            "title": "Pedraforca",
+            "lang": "fr"
+          },
+          {
+            "summary": null,
+            "version": 1,
+            "title": "Pedraforca",
+            "lang": "ca"
+          },
+          {
+            "summary": null,
+            "version": 1,
+            "title": "Pedraforca",
+            "lang": "es"
+          }
+        ],
+        "quality": "medium",
+        "version": 3,
+        "document_id": 43055,
+        "elevation": 2506,
+        "waypoint_type": "summit",
+        "type": "w",
+        "areas": [
+          {
+            "locales": [
+              {
+                "version": 3,
+                "title": "Estat espanyol",
+                "lang": "ca"
+              },
+              {
+                "version": 1,
+                "title": "Spanien",
+                "lang": "de"
+              },
+              {
+                "version": 1,
+                "title": "Spain",
+                "lang": "en"
+              },
+              {
+                "version": 1,
+                "title": "Espa\u00f1a",
+                "lang": "es"
+              },
+              {
+                "version": 1,
+                "title": "Espainia",
+                "lang": "eu"
+              },
+              {
+                "version": 4,
+                "title": "Espagne",
+                "lang": "fr"
+              },
+              {
+                "version": 1,
+                "title": "Spagna",
+                "lang": "it"
+              }
+            ],
+            "available_langs": null,
+            "version": 11,
+            "document_id": 14267,
+            "type": "a",
+            "protected": false,
+            "area_type": "country"
+          },
+          {
+            "locales": [
+              {
+                "version": 1,
+                "title": "Prov\u00edncia de Barcelona",
+                "lang": "ca"
+              },
+              {
+                "version": 1,
+                "title": "Provinz Barcelona",
+                "lang": "de"
+              },
+              {
+                "version": 1,
+                "title": "Province of Barcelona",
+                "lang": "en"
+              },
+              {
+                "version": 1,
+                "title": "Provincia de Barcelona",
+                "lang": "es"
+              },
+              {
+                "version": 1,
+                "title": "Bartzelonako probintzia",
+                "lang": "eu"
+              },
+              {
+                "version": 1,
+                "title": "Province de Barcelone",
+                "lang": "fr"
+              },
+              {
+                "version": 2,
+                "title": "Provincia di Barcelona",
+                "lang": "it"
+              }
+            ],
+            "available_langs": null,
+            "version": 1,
+            "document_id": 279930,
+            "type": "a",
+            "protected": false,
+            "area_type": "admin_limits"
+          },
+          {
+            "locales": [
+              {
+                "version": 10,
+                "title": "Serres catalanes",
+                "lang": "fr"
+              },
+              {
+                "version": 2,
+                "title": "Serralades catalanes",
+                "lang": "ca"
+              },
+              {
+                "version": 2,
+                "title": "Catalan ranges",
+                "lang": "en"
+              },
+              {
+                "version": 1,
+                "title": "Sierras catalanes",
+                "lang": "es"
+              }
+            ],
+            "available_langs": null,
+            "version": 1,
+            "document_id": 294791,
+            "type": "a",
+            "protected": false,
+            "area_type": "range"
+          }
+        ],
+        "geometry": {
+          "version": 3,
+          "geom": "{\"coordinates\": [189580.2097666882, 5196981.6625003945], \"type\": \"Point\"}"
+        },
+        "available_langs": [
+          "fr",
+          "ca",
+          "es"
+        ],
+        "protected": false
+      }
+    ],
+    "waypoint_children": [],
+    "recent_outings": {
+      "documents": [
+        {
+          "quality": "medium",
+          "version": 2,
+          "document_id": 293550,
+          "img_count": 0,
+          "elevation_max": null,
+          "engagement_rating": "II",
+          "type": "o",
+          "global_rating": "TD-",
+          "activities": [
+            "mountain_climbing"
+          ],
+          "height_diff_difficulties": null,
+          "geometry": {
+            "version": 1,
+            "has_geom_detail": false,
+            "geom": "{\"type\": \"Point\", \"coordinates\": [190803.9078224805, 5197610.714531071]}"
+          },
+          "available_langs": [
+            "fr"
+          ],
+          "locales": [
+            {
+              "summary": null,
+              "version": 2,
+              "title": "Pedraforca\u00a0: Dent de Cabirols Inferior - Voie Cerda Albert",
+              "lang": "fr"
+            }
+          ],
+          "author": {
+            "name": "Olivier Dumas",
+            "user_id": 12797
+          },
+          "date_start": "2011-08-15",
+          "height_diff_up": null,
+          "date_end": "2011-08-15",
+          "condition_rating": "excellent",
+          "protected": false,
+          "areas": [
+            {
+              "locales": [
+                {
+                  "version": 3,
+                  "title": "Estat espanyol",
+                  "lang": "ca"
+                },
+                {
+                  "version": 1,
+                  "title": "Spanien",
+                  "lang": "de"
+                },
+                {
+                  "version": 1,
+                  "title": "Spain",
+                  "lang": "en"
+                },
+                {
+                  "version": 1,
+                  "title": "Espa\u00f1a",
+                  "lang": "es"
+                },
+                {
+                  "version": 1,
+                  "title": "Espainia",
+                  "lang": "eu"
+                },
+                {
+                  "version": 4,
+                  "title": "Espagne",
+                  "lang": "fr"
+                },
+                {
+                  "version": 1,
+                  "title": "Spagna",
+                  "lang": "it"
+                }
+              ],
+              "available_langs": null,
+              "document_id": 14267,
+              "type": "a",
+              "area_type": "country",
+              "version": 11,
+              "protected": false
+            },
+            {
+              "locales": [
+                {
+                  "version": 1,
+                  "title": "Prov\u00edncia de Barcelona",
+                  "lang": "ca"
+                },
+                {
+                  "version": 1,
+                  "title": "Provinz Barcelona",
+                  "lang": "de"
+                },
+                {
+                  "version": 1,
+                  "title": "Province of Barcelona",
+                  "lang": "en"
+                },
+                {
+                  "version": 1,
+                  "title": "Provincia de Barcelona",
+                  "lang": "es"
+                },
+                {
+                  "version": 1,
+                  "title": "Bartzelonako probintzia",
+                  "lang": "eu"
+                },
+                {
+                  "version": 1,
+                  "title": "Province de Barcelone",
+                  "lang": "fr"
+                },
+                {
+                  "version": 2,
+                  "title": "Provincia di Barcelona",
+                  "lang": "it"
+                }
+              ],
+              "available_langs": null,
+              "document_id": 279930,
+              "type": "a",
+              "area_type": "admin_limits",
+              "version": 1,
+              "protected": false
+            },
+            {
+              "locales": [
+                {
+                  "version": 10,
+                  "title": "Serres catalanes",
+                  "lang": "fr"
+                },
+                {
+                  "version": 2,
+                  "title": "Serralades catalanes",
+                  "lang": "ca"
+                },
+                {
+                  "version": 2,
+                  "title": "Catalan ranges",
+                  "lang": "en"
+                },
+                {
+                  "version": 1,
+                  "title": "Sierras catalanes",
+                  "lang": "es"
+                }
+              ],
+              "available_langs": null,
+              "document_id": 294791,
+              "type": "a",
+              "area_type": "range",
+              "version": 1,
+              "protected": false
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    "articles": []
+  },
+  "type": "w",
+  "elevation": 2105,
+  "available_langs": [
+    "fr"
+  ],
+  "prominence": null,
+  "maps_info": null,
+  "geometry": {
+    "version": 1,
+    "geom": "{\"coordinates\": [190915.26441977083, 5196880.0174445], \"type\": \"Point\"}"
+  },
+  "waypoint_type": "summit",
+  "maps": [],
+  "protected": false,
+  "areas": [
+    {
+      "locales": [
+        {
+          "version": 3,
+          "title": "Estat espanyol",
+          "lang": "ca"
+        },
+        {
+          "version": 1,
+          "title": "Spanien",
+          "lang": "de"
+        },
+        {
+          "version": 1,
+          "title": "Spain",
+          "lang": "en"
+        },
+        {
+          "version": 1,
+          "title": "Espa\u00f1a",
+          "lang": "es"
+        },
+        {
+          "version": 1,
+          "title": "Espainia",
+          "lang": "eu"
+        },
+        {
+          "version": 4,
+          "title": "Espagne",
+          "lang": "fr"
+        },
+        {
+          "version": 1,
+          "title": "Spagna",
+          "lang": "it"
+        }
+      ],
+      "available_langs": null,
+      "version": 11,
+      "document_id": 14267,
+      "type": "a",
+      "protected": false,
+      "area_type": "country"
+    },
+    {
+      "locales": [
+        {
+          "version": 1,
+          "title": "Prov\u00edncia de Barcelona",
+          "lang": "ca"
+        },
+        {
+          "version": 1,
+          "title": "Provinz Barcelona",
+          "lang": "de"
+        },
+        {
+          "version": 1,
+          "title": "Province of Barcelona",
+          "lang": "en"
+        },
+        {
+          "version": 1,
+          "title": "Provincia de Barcelona",
+          "lang": "es"
+        },
+        {
+          "version": 1,
+          "title": "Bartzelonako probintzia",
+          "lang": "eu"
+        },
+        {
+          "version": 1,
+          "title": "Province de Barcelone",
+          "lang": "fr"
+        },
+        {
+          "version": 2,
+          "title": "Provincia di Barcelona",
+          "lang": "it"
+        }
+      ],
+      "available_langs": null,
+      "version": 1,
+      "document_id": 279930,
+      "type": "a",
+      "protected": false,
+      "area_type": "admin_limits"
+    },
+    {
+      "locales": [
+        {
+          "version": 10,
+          "title": "Serres catalanes",
+          "lang": "fr"
+        },
+        {
+          "version": 2,
+          "title": "Serralades catalanes",
+          "lang": "ca"
+        },
+        {
+          "version": 2,
+          "title": "Catalan ranges",
+          "lang": "en"
+        },
+        {
+          "version": 1,
+          "title": "Sierras catalanes",
+          "lang": "es"
+        }
+      ],
+      "available_langs": null,
+      "version": 1,
+      "document_id": 294791,
+      "type": "a",
+      "protected": false,
+      "area_type": "range"
+    }
+  ]
+}
