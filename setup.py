@@ -33,7 +33,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'campbot = campbot.__main__:main',
+            'campbot = campbot.__main__:main_entry_point',
         ],
     },
 

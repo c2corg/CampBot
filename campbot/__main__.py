@@ -30,10 +30,8 @@ import os
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 
-args = docopt(__doc__)
 
-
-def get_campbot():
+def get_campbot(args):
     from campbot import CampBot
 
     proxies = {}
@@ -49,44 +47,42 @@ def get_campbot():
     return bot
 
 
-def main():
+def main_entry_point():
+    main(docopt(__doc__))
+
+
+def main(args):
     if args["check_voters"]:
-        get_campbot().check_voters(url=args["<message_url>"])
+        get_campbot(args).check_voters(url=args["<message_url>"])
 
     elif args["check_recent_changes"]:
-        get_campbot().check_recent_changes(check_message_url=args["<message_url>"],
-                                           lang=args["--lang"].strip())
+        get_campbot(args).check_recent_changes(check_message_url=args["<message_url>"],
+                                               lang=args["--lang"].strip())
 
     elif args["remove_bbcode"]:
-        from campbot.utils import get_ids_from_file
         from campbot.processors import BBCodeRemover
 
-        ids = get_ids_from_file(args["<ids_file>"])
-        get_campbot().fix_markdown(BBCodeRemover(),
-                                   ask_before_saving=not args["--batch"], **ids)
+        get_campbot(args).fix_markdown(BBCodeRemover(), filename=args["<ids_file>"],
+                                       ask_before_saving=not args["--batch"])
 
     elif args["clean_color_u"]:
-        from campbot.utils import get_ids_from_file
         from campbot.processors import ColorAndUnderlineRemover
 
-        ids = get_ids_from_file(args["<ids_file>"])
-        get_campbot().fix_markdown(ColorAndUnderlineRemover(),
-                                   ask_before_saving=not args["--batch"], **ids)
-
+        get_campbot(args).fix_markdown(ColorAndUnderlineRemover(), filename=args["<ids_file>"],
+                                       ask_before_saving=not args["--batch"])
 
     elif args["remove_bbcode2"]:
-        from campbot.utils import get_ids_from_file
         from campbot.processors import BBCodeRemover2
 
-        ids = get_ids_from_file(args["<ids_file>"])
-        get_campbot().fix_markdown(BBCodeRemover2(), ask_before_saving=not args["--batch"], **ids)
+        get_campbot(args).fix_markdown(BBCodeRemover2(), filename=args["<ids_file>"],
+                                       ask_before_saving=not args["--batch"])
 
     elif args["contributions"]:
-        get_campbot().export_contributions(starts=args["--starts"], ends=args["--ends"], filename=args["--out"])
+        get_campbot(args).export_contributions(starts=args["--starts"], ends=args["--ends"], filename=args["--out"])
 
     elif args["outings"]:
-        get_campbot().export_outings(args["<filters>"], args["--out"])
+        get_campbot(args).export_outings(args["<filters>"], args["--out"])
 
 
 if __name__ == "__main__":
-    main()
+    main_entry_point()

@@ -62,6 +62,14 @@ messages = {
 }
 
 
+@pytest.yield_fixture()
+def ids_files():
+    with io.open("ids_test.txt", "w") as f:
+        f.write("293549|r")
+
+    yield "ids_test.txt"
+
+
 @pytest.fixture()
 def fix_requests():
     from requests import Session
@@ -91,16 +99,16 @@ def fix_requests():
 
 
 def test_check_voters(fix_requests):
-    from campbot import CampBot
+    from campbot.__main__ import main
 
-    CampBot().check_voters(url=MESSAGE_URL, allowed_groups=["Association"])
+    main(get_main_args("check_voters"))
 
 
 def test_exports(fix_requests):
-    from campbot import CampBot
+    from campbot.__main__ import main
 
-    CampBot().export_outings(filters="u=286726")
-    CampBot().export_contributions(ends="2999-12-31")
+    main(get_main_args("contributions"))
+    main(get_main_args("outings"))
 
 
 def test_forum(fix_requests):
@@ -120,7 +128,7 @@ def test_wiki(fix_requests):
         break
 
     CampBot().wiki.get_wiki_object_version(None, "", "", None)
-    CampBot().wiki.get_wiki_object(id=293549, document_type="r")
+    CampBot().wiki.get_wiki_object(item_id=293549, document_type="r")
     CampBot().wiki.get_route(route_id=293549)
     CampBot().wiki.get_contributions(oldest_date="2017-12-12", newest_date="2017-12-13")
 
@@ -144,26 +152,48 @@ def test_login(fix_requests):
 
 
 def test_recent_changes(fix_requests):
-    from campbot import CampBot
+    from campbot.__main__ import main
 
-    CampBot().check_recent_changes(
-        check_message_url=MESSAGE_URL, lang="fr")
-
-
-def test_fix_bbcode(fix_requests):
-    from campbot import CampBot, BBCodeRemover, LtagCleaner
-    from campbot.processors import BBCodeRemover2, ColorAndUnderlineRemover
-
-    CampBot().fix_markdown(BBCodeRemover2(), False, [293549])
-    CampBot().fix_markdown(BBCodeRemover(), False, [293549])
-    CampBot().fix_markdown(LtagCleaner(), False, [293549])
-    CampBot().fix_markdown(ColorAndUnderlineRemover(), False, [293549])
+    main(get_main_args("check_recent_changes"))
 
 
-def test_utils():
-    from campbot import utils
+def test_fix_bbcode(fix_requests, ids_files):
+    from campbot.__main__ import main
 
-    with io.open("ids_test.txt", "w") as f:
-        f.write("123|r")
+    from campbot import CampBot, LtagCleaner
 
-    utils.get_ids_from_file("ids_test.txt")
+    main(get_main_args("remove_bbcode", {"<ids_file>": ids_files}))
+    main(get_main_args("remove_bbcode2", {"<ids_file>": ids_files}))
+    main(get_main_args("clean_color_u", {"<ids_file>": ids_files}))
+
+    CampBot().fix_markdown(LtagCleaner(), ids_files, False)
+
+
+def get_main_args(action, others=None):
+    # noinspection PyDictCreation
+    result = {
+        "remove_bbcode": False,
+        "remove_bbcode2": False,
+        "clean_color_u": False,
+        "check_recent_changes": False,
+        "check_voters": False,
+        "contributions": False,
+        "outings": False,
+        "--delay": 0.01,
+        "--login": "x",
+        "--password": "y",
+        "--lang": "fr",
+        "--batch": True,
+        "<message_url>": MESSAGE_URL,
+        "<filters>": "u=286726",
+        "--ends": "2999-12-31",
+        "--starts": "2017-06-01",
+        "--out": "",
+    }
+
+    if others:
+        result.update(others)
+
+    result[action] = True
+
+    return result

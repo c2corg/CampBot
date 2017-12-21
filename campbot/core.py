@@ -17,6 +17,7 @@ from . import objects
 
 try:
     # py2
+    # noinspection PyShadowingBuiltins
     input = raw_input
 except NameError:
     # py3
@@ -106,22 +107,22 @@ class WikiBot(BaseBot):
     def ui_url(self):
         return self.api_url.replace("api", "www")
 
-    def get_wiki_object_version(self, id, document_type, lang, version_id):
+    def get_wiki_object_version(self, item_id, document_type, lang, version_id):
         if not version_id:
             return None
 
         constructor = objects.get_constructor(document_type)
 
         url = "/{}/{}/{}/{}"
-        data = self.get(url.format(constructor.url_path, id, lang, version_id))
+        data = self.get(url.format(constructor.url_path, item_id, lang, version_id))
 
         return objects.Version(self.campbot, data)
 
-    def get_wiki_object(self, id, constructor=None, document_type=None):
+    def get_wiki_object(self, item_id, constructor=None, document_type=None):
         if not constructor:
             constructor = objects.get_constructor(document_type)
 
-        return constructor(self.campbot, self.get("/{}/{}".format(constructor.url_path, id)))
+        return constructor(self.campbot, self.get("/{}/{}".format(constructor.url_path, item_id)))
 
     def get_route(self, route_id):
         return self.get_wiki_object(route_id, constructor=objects.Route)
@@ -290,62 +291,58 @@ class CampBot(object):
 
             print()
 
-    def fix_markdown(self, processor, ask_before_saving=True,
-                     route_ids=None, waypoint_ids=None, area_ids=None,
-                     user_ids=None, image_ids=None, outing_ids=None,
-                     xreport_ids=None, article_ids=None, book_ids=None):
+    def fix_markdown(self, processor, filename, ask_before_saving=True):
 
         logging.info("Fix markdown with {} processor".format(processor))
         logging.info("Ask before saving : {}".format(ask_before_saving))
         logging.info("Delay between each request : {}".format(self.wiki.min_delay))
 
-        lists = [
-            (route_ids, objects.Route),
-            (waypoint_ids, objects.Waypoint),
-            (article_ids, objects.Article),
-            (image_ids, objects.Image),
-            (book_ids, objects.Book),
-            (area_ids, objects.Area)
-        ]
+        ids = {}
+        with open(filename) as f:
+            for line in f:
+                line = line.replace(" ", "").replace("\n", "")
+                item_id, item_type = line.split("|")
+                constructor = objects.get_constructor(item_type)
+                item_id = int(item_id)
 
-        if self.moderator:
-            lists += [(outing_ids, objects.Outing),
-                      (user_ids, objects.WikiUser),
-                      (xreport_ids, objects.Xreport)]
+                if item_id not in ids and (self.moderator or constructor not in (objects.Outing,
+                                                                                 objects.WikiUser,
+                                                                                 objects.Xreport)):
+                    ids[item_id] = constructor
+        i = 0
+        for item_id, constructor in ids.items():
+            i += 1
 
-        for ids, constructor in lists:
-            if ids and len(ids) != 0:
-                for id, i in zip(ids, range(len(ids))):
-                    item = self.wiki.get_wiki_object(id, constructor=constructor)
+            item = self.wiki.get_wiki_object(item_id, constructor=constructor)
 
-                    url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, id)
-                    progress = "{}/{}".format(i + 1, len(ids))
+            url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, item_id)
+            progress = "{}/{}".format(i + 1, len(ids))
 
-                    if "redirects_to" in item:
-                        print(progress, "{} is a redirection".format(url))
+            if "redirects_to" in item:
+                print(progress, "{} is a redirection".format(url))
 
-                    elif processor.ready_for_production and \
-                            not self.moderator and \
-                            (item.protected or item.is_personal()):
-                        print(progress, "{} is protected".format(url))
+            elif processor.ready_for_production and \
+                    not self.moderator and \
+                    (item.protected or item.is_personal()):
+                print(progress, "{} is protected".format(url))
 
-                    elif not item.is_valid():
-                        print(progress, "{} : {}".format(url, item.get_invalidity_reason()))
+            elif not item.is_valid():
+                print(progress, "{} : {}".format(url, item.get_invalidity_reason()))
 
-                    elif item.fix_markdown(processor):
-                        if not processor.ready_for_production:
-                            print(progress, "{} is impacted".format(url))
+            elif item.fix_markdown(processor):
+                if not processor.ready_for_production:
+                    print(progress, "{} is impacted".format(url))
 
-                        elif not ask_before_saving or input("Save {} y/[n]?".format(url)) == "y":
-                            print(progress, "Saving {}".format(url))
-                            try:
-                                item.save(processor.comment)
-                            except HTTPError as e:
-                                print("Error while saving", url, e, file=sys.stderr)
+                elif not ask_before_saving or input("Save {} y/[n]?".format(url)) == "y":
+                    print(progress, "Saving {}".format(url))
+                    try:
+                        item.save(processor.comment)
+                    except HTTPError as e:
+                        print("Error while saving", url, e, file=sys.stderr)
 
-                            print()
-                    else:
-                        print(progress, "Nothing found on {}".format(url))
+                    print()
+            else:
+                print(progress, "Nothing found on {}".format(url))
 
     def export_outings(self, filters, filename=None):
 
@@ -392,11 +389,11 @@ class CampBot(object):
         tests = checkers.get_fixed_tests(lang)
         tests += checkers.get_re_tests(self.forum.get_post(url=check_message_url), lang)
 
-        messages = []
-
-        messages.append("[Explications]({})\n".format(check_message_url))
-        messages.append("[details=Signification des icônes]\n<table>")
-        messages.append("<tr><th>Test</th><th>A relire</th><th>Corrigé</th></tr>")
+        messages = [
+            "[Explications]({})\n".format(check_message_url),
+            "[details=Signification des icônes]\n<table>",
+            "<tr><th>Test</th><th>A relire</th><th>Corrigé</th></tr>",
+        ]
 
         for test in tests:
             messages.append("<tr>")
