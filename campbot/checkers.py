@@ -138,10 +138,16 @@ class MainWaypointTest(object):
         if contrib.document.type != "r":
             return True, True
 
-        old_is_ok = old_version.document.main_waypoint_id is not None if old_version else True
-        new_is_ok = new_version.document.main_waypoint_id is not None
+        def test(version):
+            if not version:
+                return True
 
-        return old_is_ok, new_is_ok
+            if "redirects_to" in version.document:
+                return True
+
+            return version.document.main_waypoint_id is not None
+
+        return test(old_version), test(new_version)
 
 
 class RouteTypeTest(object):
@@ -153,7 +159,13 @@ class RouteTypeTest(object):
 
     def __call__(self, contrib, old_version, new_version):
         def test(version):
-            if not version or version.document.type != "r" or "rock_climbing" not in version.document.activities:
+            if not version:
+                return True
+
+            if "redirects_to" in version.document:
+                return True
+
+            if version.document.type != "r" or "rock_climbing" not in version.document.activities:
                 return True
 
             climbing_outdoor_type = version.document.climbing_outdoor_type

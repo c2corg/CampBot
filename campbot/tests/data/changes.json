@@ -3,6 +3,25 @@
   "feed": [
     {
       "version_id": 1738922,
+      "written_at": "2017-12-21T21:49:41.363647+00:00",
+      "user": {
+        "user_id": 286726,
+        "name": "CharlesB",
+        "username": "charles b",
+        "lang": "fr"
+      },
+      "comment": "",
+      "lang": "fr",
+      "document": {
+        "document_id": 293549,
+        "type": "r",
+        "title": "Escalades \u00e0 Presles",
+        "version": 4,
+        "quality": "medium"
+      }
+    },
+    {
+      "version_id": 123,
       "written_at": "2017-12-20T21:49:41.363647+00:00",
       "user": {
         "user_id": 567073,
@@ -13,7 +32,7 @@
       "comment": "",
       "lang": "fr",
       "document": {
-        "document_id": 293549,
+        "document_id": 123,
         "type": "r",
         "title": "Escalades \u00e0 Presles",
         "version": 4,

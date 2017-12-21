@@ -114,6 +114,9 @@ class WikiObject(BotObject):
         return locale.get_title() if locale else ""
 
     def get_locale(self, lang):
+        if "locales" not in self:
+            return None
+
         for locale in self.locales:
             if locale.lang == lang:
                 return locale

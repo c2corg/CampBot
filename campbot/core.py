@@ -386,6 +386,14 @@ class CampBot(object):
 
     def check_recent_changes(self, check_message_url, lang):
 
+        def get_version_length(version, lang):
+            if not version:
+                return 0
+
+            locale = version.document.get_locale(lang)
+
+            return locale.get_length() if locale else 0
+
         tests = checkers.get_fixed_tests(lang)
         tests += checkers.get_re_tests(self.forum.get_post(url=check_message_url), lang)
 
@@ -443,8 +451,8 @@ class CampBot(object):
                     elif not old_is_ok and new_is_ok:
                         emojis.append(test.success_marker)
 
-                delta = new.document.get_locale(contrib.lang).get_length()
-                delta -= old.document.get_locale(contrib.lang).get_length() if old else 0
+                delta = get_version_length(new, contrib.lang)
+                delta -= get_version_length(old, contrib.lang)
 
                 if delta < 0:
                     delta = "<del>{:+d}</del>".format(delta)

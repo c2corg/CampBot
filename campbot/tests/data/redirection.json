@@ -1,0 +1,11 @@
+{
+  "document": {
+    "redirects_to": 123,
+    "document_id": 124,
+    "type": "r"
+  },
+  "previous_version_id": 122,
+  "version":{
+    "version_id":123
+  }
+}

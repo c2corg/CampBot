@@ -42,6 +42,9 @@ messages = {
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/478470'): get_message("route_version2"),
     ('GET', 'https://api.camptocamp.org/routes/293549'): get_message("route"),
 
+    ('GET', 'https://api.camptocamp.org/routes/123/fr/123'): get_message("redirection"),
+    ('GET', 'https://api.camptocamp.org/routes/123/fr/122'): get_message("redirection"),
+
     ('GET', 'https://api.camptocamp.org/waypoints/952999'): get_message("waypoint"),
     ('GET', 'https://api.camptocamp.org/search?q=CharlesB&t=u&limit=50'): get_message("search_user"),
     ('GET', 'https://api.camptocamp.org/search?q=grimpeur8b&t=u&limit=50'): get_message("search_user"),
