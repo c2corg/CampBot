@@ -27,7 +27,6 @@ from __future__ import unicode_literals, print_function
 from docopt import docopt
 import logging
 import os
-import io
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 
@@ -80,51 +79,14 @@ def main():
         from campbot.processors import BBCodeRemover2
 
         ids = get_ids_from_file(args["<ids_file>"])
-        get_campbot().fix_markdown(BBCodeRemover2(),
-                                   ask_before_saving=not args["--batch"], **ids)
+        get_campbot().fix_markdown(BBCodeRemover2(), ask_before_saving=not args["--batch"], **ids)
 
     elif args["contributions"]:
-
-        message = ("{timestamp};{type};{document_id};{version_id};{document_version};"
-                   "{title};{quality};{user};{lang}\n")
-
-        with io.open(args["--out"] or "contributions.csv", "w", encoding="utf-8") as f:
-
-            def write(**kwargs):
-                f.write(message.format(**kwargs))
-
-            write(timestamp="timestamp", type="type",
-                  document_id="document_id", version_id="version_id", document_version="document_version",
-                  title="title", quality="quality", user="username", lang="lang")
-
-            for c in get_campbot().wiki.get_contributions(oldest_date=args["--starts"], newest_date=args["--ends"]):
-                write(timestamp=c.written_at,
-                      type=c.document.url_path, document_id=c.document.document_id,
-                      version_id=c.version_id, document_version=c.document.version,
-                      title=c.document.title.replace(";", ","), quality=c.document.quality,
-                      user=c.user.username, lang=c.lang)
+        get_campbot().export_contributions(starts=args["--starts"], ends=args["--ends"], filename=args["--out"])
 
     elif args["outings"]:
-        from campbot.objects import Outing
-
-        headers = ["date_start", "date_end", "title", "equipement_rating",
-                   "global_rating", "height_diff_up", "rock_free_rating",
-                   "condition_rating", "elevation_max", "img_count", "quality", "activities"]
-
-        message = ";".join(["{" + h + "}" for h in headers]) + "\n"
-
-        filters = {k: v for k, v in (v.split("=") for v in args["<filters>"].split("&"))}
-
-        with io.open(args["--out"] or "outings.csv", "w", encoding="utf-8") as f:
-            f.write(message.format(**{h: h for h in headers}))
-            for doc in get_campbot().wiki.get_documents(Outing, filters):
-                data = {h: doc.get(h, "") for h in headers}
-
-                data["title"] = doc.get_title("fr").replace(";", ",")
-                data["activities"] = ",".join(data["activities"])
-
-                f.write(message.format(**data))
+        get_campbot().export_outings(args["<filters>"], args["--out"])
 
 
-if __name__ == "-__main__":
+if __name__ == "__main__":
     main()

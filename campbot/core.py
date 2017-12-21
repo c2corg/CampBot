@@ -2,6 +2,7 @@
 
 from __future__ import print_function, unicode_literals, division
 
+import io
 import requests
 from datetime import datetime, timedelta
 from dateutil import parser
@@ -181,15 +182,17 @@ class WikiBot(BaseBot):
         for doc in self.get_documents_raw(objects.Route.url_path):
             yield doc["document_id"]
 
-    def get_documents(self, constructor):
-        for doc in self.get_documents_raw(constructor.url_path):
+    def get_documents(self, constructor, filters=None):
+        for doc in self.get_documents_raw(constructor.url_path, filters):
             yield constructor(self.campbot, doc)
 
-    def get_documents_raw(self, url_path):
-        offset = 0
+    def get_documents_raw(self, url_path, filters=None):
+        filters = filters or {}
+        filters["offset"] = 0
 
         while True:
-            data = self.get("/{}?offset={}".format(url_path, offset))
+            filters_url = "&".join(["{}={}".format(k, v) for k, v in filters.items()])
+            data = self.get("/{}?{}".format(url_path, filters_url))
 
             if len(data["documents"]) == 0:
                 raise StopIteration
@@ -197,7 +200,7 @@ class WikiBot(BaseBot):
             for doc in data["documents"]:
                 yield doc
 
-            offset += 30
+            filters["offset"] += 30
 
 
 class ForumBot(BaseBot):
@@ -343,6 +346,46 @@ class CampBot(object):
                             print()
                     else:
                         print(progress, "Nothing found on {}".format(url))
+
+    def export_outings(self, filters, filename=None):
+
+        headers = ["date_start", "date_end", "title", "equipement_rating",
+                   "global_rating", "height_diff_up", "rock_free_rating",
+                   "condition_rating", "elevation_max", "img_count", "quality", "activities"]
+
+        message = ";".join(["{" + h + "}" for h in headers]) + "\n"
+
+        filters = {k: v for k, v in (v.split("=") for v in filters.split("&"))}
+
+        with io.open(filename or "outings.csv", "w", encoding="utf-8") as f:
+            f.write(message.format(**{h: h for h in headers}))
+            for doc in self.wiki.get_documents(objects.Outing, filters):
+                data = {h: doc.get(h, "") for h in headers}
+
+                data["title"] = doc.get_title("fr").replace(";", ",")
+                data["activities"] = ",".join(data["activities"])
+
+                f.write(message.format(**data))
+
+    def export_contributions(self, starts=None, ends=None, filename=None):
+
+        message = ("{timestamp};{type};{document_id};{version_id};{document_version};"
+                   "{title};{quality};{user};{lang}\n")
+
+        with io.open(filename or "contributions.csv", "w", encoding="utf-8") as f:
+            def write(**kwargs):
+                f.write(message.format(**kwargs))
+
+            write(timestamp="timestamp", type="type",
+                  document_id="document_id", version_id="version_id", document_version="document_version",
+                  title="title", quality="quality", user="username", lang="lang")
+
+            for c in self.wiki.get_contributions(oldest_date=starts, newest_date=ends):
+                write(timestamp=c.written_at,
+                      type=c.document.url_path, document_id=c.document.document_id,
+                      version_id=c.version_id, document_version=c.document.version,
+                      title=c.document.title.replace(";", ","), quality=c.document.quality,
+                      user=c.user.username, lang=c.lang)
 
     def check_recent_changes(self, check_message_url, lang):
 

@@ -23,17 +23,26 @@ messages = {
     ('POST', 'https://forum.camptocamp.org/posts'): {},
     ('PUT', 'https://api.camptocamp.org/profiles/286726'): {},
     ('PUT', 'https://api.camptocamp.org/routes/293549'): {},
+
+    ('GET', 'https://api.camptocamp.org/outings?offset=0&u=286726'): get_message("outings"),
+    ('GET', 'https://api.camptocamp.org/outings?u=286726&offset=0'): get_message("outings"),
+    ('GET', 'https://api.camptocamp.org/outings?offset=30&u=286726'): {"documents": []},
+    ('GET', 'https://api.camptocamp.org/outings?u=286726&offset=30'): {"documents": []},
+    ('GET', 'https://api.camptocamp.org/routes?offset=0'): get_message("routes"),
+
     ("GET", "https://api.camptocamp.org/documents/changes?limit=50"): get_message("changes"),
+
     ('GET', 'https://forum.camptocamp.org/t/201480.json'): get_message("topic"),
     ('GET', 'https://forum.camptocamp.org/posts/2003993.json'): get_message("post"),
+
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/1738922'): get_message("route_version"),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/1738528'): get_message("route_version"),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/880880'): get_message("route_version2"),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/978249'): get_message("route_version2"),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/478470'): get_message("route_version2"),
     ('GET', 'https://api.camptocamp.org/routes/293549'): get_message("route"),
+
     ('GET', 'https://api.camptocamp.org/waypoints/952999'): get_message("waypoint"),
-    ('GET', 'https://api.camptocamp.org/routes?offset=0'): get_message("routes"),
     ('GET', 'https://api.camptocamp.org/search?q=CharlesB&t=u&limit=50'): get_message("search_user"),
     ('GET', 'https://api.camptocamp.org/search?q=grimpeur8b&t=u&limit=50'): get_message("search_user"),
     ('GET', 'https://api.camptocamp.org/search?q=unknown&t=u&limit=50'): get_message("search_user"),
@@ -85,6 +94,13 @@ def test_check_voters(fix_requests):
     from campbot import CampBot
 
     CampBot().check_voters(url=MESSAGE_URL, allowed_groups=["Association"])
+
+
+def test_exports(fix_requests):
+    from campbot import CampBot
+
+    CampBot().export_outings(filters="u=286726")
+    CampBot().export_contributions(ends="2999-12-31")
 
 
 def test_forum(fix_requests):
@@ -142,3 +158,12 @@ def test_fix_bbcode(fix_requests):
     CampBot().fix_markdown(BBCodeRemover(), False, [293549])
     CampBot().fix_markdown(LtagCleaner(), False, [293549])
     CampBot().fix_markdown(ColorAndUnderlineRemover(), False, [293549])
+
+
+def test_utils():
+    from campbot import utils
+
+    with io.open("ids_test.txt", "w") as f:
+        f.write("123|r")
+
+    utils.get_ids_from_file("ids_test.txt")
