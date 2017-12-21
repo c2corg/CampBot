@@ -25,7 +25,7 @@ class MarkdownProcessor(object):
         self.do_tests()
 
     def do_tests(self):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def __call__(self, markdown, field, locale, wiki_object):
         result = self.modify(markdown)

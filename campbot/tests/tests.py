@@ -142,6 +142,7 @@ def test_wiki(fix_requests):
     assert CampBot().wiki.get_user(forum_name="unknown") is None
 
     user = CampBot().wiki.get_user(forum_name="CharlesB")
+    user.is_personal()
     contrib = user.get_last_contribution()
     contrib.get_full_document()
     contrib.user.get_wiki_user()
