@@ -123,7 +123,7 @@ class WikiObject(BotObject):
 
     def get_locale_fields(self):
         return ("description", "gear", "remarks", "route_history",
-                "summary", "access", "access_period")
+                "summary", "access", "access_period", "title")
 
     def search(self, patterns, lang):
 
