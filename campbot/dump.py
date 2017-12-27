@@ -168,20 +168,21 @@ if __name__ == "__main__":
 
     # post parser release
     url_amp_pattern = r"\[url[\]\=][^\n \]\[]*?\&"  # 950
-    html_pattern = r"\[(sub|sub|s|p|q|acr|hr)\]"  # 150
+    html_pattern = r"\[(sub|sub|s|p|q|acr)\]"  # 150
+    hr_pattern = r"\[hr\]"
     center_pattern = r"\[/?(center|right|left)\]"  # 65
     quote_pattern = r"\[/?quote\]"  # 75
+    anchors_pattern = r"\{#\w+\}"  # 28
 
     # to fix
     broken_links_pattern = r"\[\[(http|www|\d)"  # 541
     emoji_pattern = r"\[picto"  # 77
-    forum_links_pattern = r"#t\d+"  # 74
+    forum_links_pattern = r"#t\d+"  # 1
     col_pattern = r"\[/?col\]"  # 42
-    anchors_pattern = r"\{#\w+\}"  # 28
     double_dot_pattern = r"(\n|^)L#.*::"  # 4 (j'y crois pas)
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
 
     with open("ids.txt", "w") as f:
-        for k in dump.search(wrong_pipe_pattern):
+        for k in dump.search(forum_links_pattern):
             print(k)
             f.write("{}|{}\n".format(*k))

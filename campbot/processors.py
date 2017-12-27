@@ -99,6 +99,10 @@ class BBCodeRemover(MarkdownProcessor):
 
     _tests = [
         {
+            "source": "*[Voir la discussion sur le forum.](#t158106)*",
+            "expected": "*[Voir la discussion sur le forum.](https://www.camptocamp.org/forums/viewtopic.php?id=158106)*",
+        },
+        {
             "source": "L#~ | coucou",
             "expected": "L#~ coucou",
         },
@@ -335,7 +339,10 @@ class BBCodeRemover(MarkdownProcessor):
                       flags=re.IGNORECASE),
 
             Converter(pattern=r"(\n|^)L#\~ *\|+ *",
-                      repl=r"\1L#~ ")
+                      repl=r"\1L#~ "),
+
+            Converter(pattern=r"\(#t(\d+)\)",
+                      repl=r"(https://www.camptocamp.org/forums/viewtopic.php?id=\1)"),
 
         ]
 
