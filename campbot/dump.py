@@ -103,7 +103,7 @@ class Dump(object):
 
     def complete(self):
 
-        bot = CampBot()
+        bot = CampBot(min_delay=0.1)
 
         still_done = []
         highest_version_id = self.get_highest_version_id()
@@ -173,12 +173,15 @@ if __name__ == "__main__":
     quote_pattern = r"\[/?quote\]"  # 75
 
     # to fix
-    broken_links_pattern = r"\[\[[a-z\\]*\d"  # 303
+    broken_links_pattern = r"\[\[(http|www|\d)"  # 541
     emoji_pattern = r"\[picto"  # 77
+    forum_links_pattern = r"#t\d+"  # 74
     col_pattern = r"\[/?col\]"  # 42
-    anchors_pattern = r"#+.*\{#"  # ??
+    anchors_pattern = r"\{#\w+\}"  # 28
+    double_dot_pattern = r"(\n|^)L#.*::"  # 4 (j'y crois pas)
+    wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
 
     with open("ids.txt", "w") as f:
-        for k in dump.search(emoji_pattern):
+        for k in dump.search(wrong_pipe_pattern):
             print(k)
             f.write("{}|{}\n".format(*k))

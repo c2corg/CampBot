@@ -99,6 +99,22 @@ class BBCodeRemover(MarkdownProcessor):
 
     _tests = [
         {
+            "source": "L#~ | coucou",
+            "expected": "L#~ coucou",
+        },
+        {
+            "source": "L# | gne\nL#~|coucou",
+            "expected": "L# | gne\nL#~ coucou",
+        },
+        {
+            "source": "L#~|   coucou\nL# | ~",
+            "expected": "L#~ coucou\nL# | ~",
+        },
+        {
+            "source": "L#~ |||| A",
+            "expected": "L#~ A",
+        },
+        {
             "source": "un texte en [b]gras [/b]et un en [i]italique[/i] [i][/i] ",
             "expected": "un texte en **gras** et un en *italique*  ",
         },
@@ -317,6 +333,9 @@ class BBCodeRemover(MarkdownProcessor):
             Converter(pattern=r'\[email\=(.*?)\](.*?)\[\/email\]',
                       repl=r"[\2](mailto:\1)",
                       flags=re.IGNORECASE),
+
+            Converter(pattern=r"(\n|^)L#\~ *\|+ *",
+                      repl=r"\1L#~ ")
 
         ]
 
