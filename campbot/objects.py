@@ -79,7 +79,7 @@ class Locale(BotObject):
 
     def get_locale_fields(self):
         return ("description", "gear", "remarks", "route_history",
-                "summary", "access", "access_period")
+                "summary", "access", "access_period", "title", "external_resources")
 
     def get_length(self):
         result = 0
@@ -121,15 +121,11 @@ class WikiObject(BotObject):
             if locale.lang == lang:
                 return locale
 
-    def get_locale_fields(self):
-        return ("description", "gear", "remarks", "route_history",
-                "summary", "access", "access_period", "title")
-
     def search(self, patterns, lang):
 
         locale = self.get_locale(lang)
 
-        for field in self.get_locale_fields():
+        for field in locale.get_locale_fields():
             if field in locale and locale[field]:
                 for pattern in patterns:
                     if re.search(pattern, locale[field]):
@@ -139,7 +135,7 @@ class WikiObject(BotObject):
     def fix_markdown(self, corrector):
         updated = False
         for locale in self.locales:
-            for field in self.get_locale_fields():
+            for field in locale.get_locale_fields():
                 if field in locale and locale[field]:
                     new_value = corrector(locale[field], field, locale, self)
                     updated = updated or (new_value != locale[field])
