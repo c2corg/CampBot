@@ -164,6 +164,7 @@ class WikiBot(BaseBot):
         newest_date = newest_date.replace(tzinfo=pytz.UTC)
 
         d = self.get("/documents/changes?limit=50" + user_filter)
+
         while True:
             for item in d["feed"]:
                 written_at = parser.parse(item["written_at"])
@@ -180,7 +181,16 @@ class WikiBot(BaseBot):
             d = self.get("/documents/changes?limit=50&token=" + pagination_token + user_filter)
 
     def get_route_ids(self):
-        for doc in self.get_documents_raw(objects.Route.url_path):
+        return self.get_document_ids(objects.Route)
+
+    def get_xreport_ids(self):
+        return self.get_document_ids(objects.Xreport)
+
+    def get_document_ids(self, constructor=None, document_type=None, filters=None):
+        if not constructor:
+            constructor = objects.get_constructor(document_type=document_type)
+
+        for doc in self.get_documents_raw(constructor.url_path, filters=filters):
             yield doc["document_id"]
 
     def get_documents(self, constructor, filters=None):
