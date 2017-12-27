@@ -103,7 +103,7 @@ class Dump(object):
 
     def complete(self):
 
-        bot = CampBot(min_delay=0.01)
+        bot = CampBot()
 
         still_done = []
         highest_version_id = self.get_highest_version_id()
@@ -155,6 +155,8 @@ class Dump(object):
 if __name__ == "__main__":
     dump = Dump()
     #    print(dump.get_all_ids())
-   # dump.complete()
-    for k in dump.search(r"\[/?[bi]\]"):
-        print(k)
+    # dump.complete()
+    with open("ids.txt", "w") as f:
+        for k in dump.search(r"\[/?[bi]\]"):
+            print(k)
+            f.write("{}|{}\n".format(*k))

@@ -20,12 +20,26 @@ class MarkdownProcessor(object):
     modifiers = []
     ready_for_production = False
     comment = NotImplemented
+    _tests = None
 
     def __init__(self):
+        self.init_modifiers()
         self.do_tests()
 
-    def do_tests(self):
+    def init_modifiers(self):
         raise NotImplementedError()
+
+    def do_tests(self):
+        def do_test(source, expected):
+            result = self.modify(source)
+            if result != expected:
+                print("Source   ", repr(source))
+                print("Expected ", repr(expected))
+                print("Result   ", repr(result))
+                raise Exception("TEST FAILED")
+
+        for test in self._tests:
+            do_test(**test)
 
     def __call__(self, markdown, field, locale, wiki_object):
         result = self.modify(markdown)
@@ -171,20 +185,7 @@ class BBCodeRemover(MarkdownProcessor):
         }
     ]
 
-    def do_tests(self):
-        def do_test(source, expected):
-            result = self.modify(source)
-            if result != expected:
-                print("Source   ", repr(source))
-                print("Expected ", repr(expected))
-                print("Result   ", repr(result))
-                print()
-
-        for test in self._tests:
-            do_test(**test)
-
-    def __init__(self):
-        super(BBCodeRemover, self).__init__()
+    def init_modifiers(self):
         def get_typo_cleaner(bbcode_tag, markdown_tag):
             converters = [
 
