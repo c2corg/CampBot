@@ -154,9 +154,31 @@ class Dump(object):
 
 if __name__ == "__main__":
     dump = Dump()
-    #    print(dump.get_all_ids())
-    # dump.complete()
+    dump.complete()
+
+    # pre parser release
+    bi_pattern = r"\[[bicBIC]\]"  # 54
+    color_u_pattern = r"\[/?(color|u|U)\]"  # 7
+    mail_pattern = r"\[email[\]\=]"  # 2
+    url_pattern = r"\[url[\]\=][^\n \&\]\[]*?[\]\[]"  # 2
+    c2c_title_pattern = r"#+c "  # 0
+    comment_pattern = r"\[\/\*\]"  # 0
+    old_tags_pattern = r"\[(imp|warn|abs|abstract|list)\]"  # 0
+    code_pattern = r"\[(c|code)\]"  # 0
+
+    # post parser release
+    url_amp_pattern = r"\[url[\]\=][^\n \]\[]*?\&"  # 950
+    html_pattern = r"\[(sub|sub|s|p|q|acr|hr)\]"  # 150
+    center_pattern = r"\[/?(center|right|left)\]"  # 65
+    quote_pattern = r"\[/?quote\]"  # 75
+
+    # to fix
+    broken_links_pattern = r"\[\[[a-z\\]*\d"  # 303
+    emoji_pattern = r"\[picto"  # 77
+    col_pattern = r"\[/?col\]"  # 42
+    anchors_pattern = r"#+.*\{#"  # ??
+
     with open("ids.txt", "w") as f:
-        for k in dump.search(r"\[/?[bi]\]"):
+        for k in dump.search(emoji_pattern):
             print(k)
             f.write("{}|{}\n".format(*k))
