@@ -241,6 +241,36 @@ class BBCodeRemover(MarkdownProcessor):
                             r'([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
                     repl=markdown_tag + r"\1\n\2\n\3" + markdown_tag,
                     flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[' + bbcode_tag + r'\]' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
+                    repl=markdown_tag + r"\1\n\2\n\3" + markdown_tag,
+                    flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[' + bbcode_tag + r'\]' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
+                    repl=markdown_tag + r"\1\n\2\n\3" + markdown_tag,
+                    flags=re.IGNORECASE),
+
+                Converter(
+                    pattern=r'\[' + bbcode_tag + r'\]' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\r?\n' +
+                            r'([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
+                    repl=markdown_tag + r"\1\n\2\n\3" + markdown_tag,
+                    flags=re.IGNORECASE),
             ]
 
             def result(markdown):
@@ -465,20 +495,7 @@ class ColorAndUnderlineRemover(MarkdownProcessor):
         },
     ]
 
-    def do_tests(self):
-        def do_test(source, expected):
-            result = self.modify(source)
-            if result != expected:
-                print("source   ", repr(source))
-                print("expected ", repr(expected))
-                print("result   ", repr(result))
-                print()
-
-        for test in self._tests:
-            do_test(**test)
-
-    def __init__(self):
-        super(ColorAndUnderlineRemover, self).__init__()
+    def init_modifiers(self):
         self.modifiers = []
         self.modifiers.append(
             Converter(pattern=r'\[/?(color|u)(=#?[a-zA-Z0-9]{3,10})?\]',

@@ -79,7 +79,8 @@ class Locale(BotObject):
 
     def get_locale_fields(self):
         return ("description", "gear", "remarks", "route_history",
-                "summary", "access", "access_period", "title", "external_resources")
+                "summary", "access", "access_period", "title",
+                "external_resources", "other_comments")
 
     def get_length(self):
         result = 0
