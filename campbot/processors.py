@@ -2,6 +2,7 @@ from __future__ import print_function, unicode_literals, division
 
 import difflib
 import re
+from .dump import get_document_types
 
 __all__ = ['MarkdownProcessor', 'BBCodeRemover', 'LtagCleaner', 'BBCodeRemover2']
 
@@ -207,6 +208,19 @@ class BBCodeRemover(MarkdownProcessor):
 
     def init_modifiers(self):
         def get_typo_cleaner(bbcode_tag, markdown_tag):
+
+            def invalid_killer(markdown):
+                opener = len(markdown.split("[" + bbcode_tag + "]"))
+                closer = len(markdown.split("[/" + bbcode_tag + "]"))
+
+                if opener == 1 and closer > 1:
+                    markdown = markdown.replace("[/" + bbcode_tag + "]", "")
+
+                if opener > 1 and closer == 1:
+                    markdown = markdown.replace("[" + bbcode_tag + "]", "")
+
+                return markdown
+
             converters = [
 
                 Converter(
@@ -291,6 +305,8 @@ class BBCodeRemover(MarkdownProcessor):
                             r'([^\n\r\*\`]+?)\[/' + bbcode_tag + '\]',
                     repl=markdown_tag + r"\1\n\2\n\3" + markdown_tag,
                     flags=re.IGNORECASE),
+
+                #   invalid_killer,
             ]
 
             def result(markdown):
@@ -527,3 +543,41 @@ class ColorAndUnderlineRemover(MarkdownProcessor):
             Converter(pattern=r'\[/?(color|u)(=#?[a-zA-Z0-9]{3,10})?\]',
                       repl=r"",
                       flags=re.IGNORECASE), )
+
+
+class InternalLinkCorrector(MarkdownProcessor):
+    ready_for_production = True
+    comment = "Fix internal wiki link"
+
+    _tests = [
+        {
+            "source": "[[786432|patate]]",
+            "expected": "[[routes/786432|patate]]"
+        }
+    ]
+
+    def __init__(self):
+        self.types = get_document_types()
+        super().__init__()
+
+    def init_modifiers(self):
+        self.modifiers = [self.fixer]
+
+    def fixer(self, markdown):
+        def repl(m):
+            doc_id = int(m.group(1))
+            if doc_id not in self.types:
+                return "[[" + str(doc_id) + "|"
+
+            tp = {
+                "r": "routes",
+                "i": "images",
+                "a": "areas",
+                "w": "waypoints",
+                "b": "books",
+                "c": "articles",
+            }[self.types[doc_id]]
+
+            return "[[" + tp + "/" + str(doc_id) + "|"
+
+        return re.sub(r'\[\[(\d+)\|', repl, markdown)

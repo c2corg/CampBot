@@ -152,15 +152,19 @@ class Dump(object):
         return result
 
 
+def get_document_types():
+    return {id: type for id, type in Dump().get_all_ids()}
+
+
 if __name__ == "__main__":
     dump = Dump()
     dump.complete()
 
     # pre parser release
-    bi_pattern = r"\[[bicBIC]\]"  # 54
+    bi_pattern = r"\[/?[bicBIC] *\]"  # 28
     color_u_pattern = r"\[/?(color|u|U)\]"  # 7
     mail_pattern = r"\[email[\]\=]"  # 2
-    url_pattern = r"\[url[\]\=][^\n \&\]\[]*?[\]\[]"  # 2
+    url_pattern = r"\[url[\]\=][^\n \&\]\[]*?[\]\[]"  # 1
     c2c_title_pattern = r"#+c "  # 0
     comment_pattern = r"\[\/\*\]"  # 0
     old_tags_pattern = r"\[(imp|warn|abs|abstract|list)\]"  # 0
@@ -169,20 +173,21 @@ if __name__ == "__main__":
     # post parser release
     url_amp_pattern = r"\[url[\]\=][^\n \]\[]*?\&"  # 950
     html_pattern = r"\[(sub|sub|s|p|q|acr)\]"  # 150
-    hr_pattern = r"\[hr\]"
+    hr_pattern = r"\[hr\]"  # 0
     center_pattern = r"\[/?(center|right|left)\]"  # 65
     quote_pattern = r"\[/?quote\]"  # 75
     anchors_pattern = r"\{#\w+\}"  # 28
 
     # to fix
-    broken_links_pattern = r"\[\[(http|www|\d)"  # 541
+    broken_int_links_pattern = r"\[\[\d+\|"  # 293
+    broken_ext_links_pattern = r"\[\[(http|www)"  # 241
     emoji_pattern = r"\[picto"  # 77
-    forum_links_pattern = r"#t\d+"  # 1
     col_pattern = r"\[/?col\]"  # 42
     double_dot_pattern = r"(\n|^)L#.*::"  # 4 (j'y crois pas)
+    forum_links_pattern = r"#t\d+"  # 1
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
 
     with open("ids.txt", "w") as f:
-        for k in dump.search(forum_links_pattern):
+        for k in dump.search(broken_int_links_pattern):
             print(k)
             f.write("{}|{}\n".format(*k))
