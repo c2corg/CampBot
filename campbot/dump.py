@@ -179,10 +179,10 @@ if __name__ == "__main__":
     anchors_pattern = r"\{#\w+\}"  # 28
 
     # to fix
-    broken_int_links_pattern = r"\[\[\d+\|"  # 293
     broken_ext_links_pattern = r"\[\[(http|www)"  # 241
     emoji_pattern = r"\[picto"  # 77
     col_pattern = r"\[/?col\]"  # 42
+    broken_int_links_pattern = r"\[\[\d+\|"  # 23
     double_dot_pattern = r"(\n|^)L#.*::"  # 4 (j'y crois pas)
     forum_links_pattern = r"#t\d+"  # 1
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
