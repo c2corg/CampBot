@@ -553,7 +553,28 @@ class InternalLinkCorrector(MarkdownProcessor):
         {
             "source": "[[786432|patate]]",
             "expected": "[[routes/786432|patate]]"
-        }
+        },
+        {
+            "source": "[[/routes/786432|patate]]",
+            "expected": "[[routes/786432|patate]]"
+        },
+        {
+            "source": "[[http://www.camptocamp.org/articles/106859/fr|cotation de randonnée pédestre]]",
+            "expected": "[[articles/106859/fr|cotation de randonnée pédestre]]"
+        },
+        {
+            "source": "[[http://www.camptocamp.org/routes/173371/it/via-bartesaghi-iii-torrione|Via Bartesaghi]] ",
+            "expected": "[[routes/173371/it/via-bartesaghi-iii-torrione|Via Bartesaghi]] "
+        },
+        {
+            "source": "[[http://www.camptocamp.org/images/19796/fr/|photo]]",
+            "expected": "[[images/19796/fr/|photo]]"
+        },
+        {
+            "source": "[[http://www.camptocamp.org/routes/186949/fr/presles-approches-descentes-presles#secteur-fhara-kiri|Voir approches & descentes]]. ",
+            "expected": "[[routes/186949/fr/presles-approches-descentes-presles#secteur-fhara-kiri|Voir approches & descentes]]. "
+        },
+
     ]
 
     def __init__(self):
@@ -561,9 +582,9 @@ class InternalLinkCorrector(MarkdownProcessor):
         super().__init__()
 
     def init_modifiers(self):
-        self.modifiers = [self.fixer]
+        self.modifiers = [self.fixer_no_type, self.fixer_false_internal, self.fixer_slash_internal]
 
-    def fixer(self, markdown):
+    def fixer_no_type(self, markdown):
         def repl(m):
             doc_id = int(m.group(1))
             if doc_id not in self.types:
@@ -581,3 +602,35 @@ class InternalLinkCorrector(MarkdownProcessor):
             return "[[" + tp + "/" + str(doc_id) + "|"
 
         return re.sub(r'\[\[(\d+)\|', repl, markdown)
+
+    def fixer_false_internal(self, markdown):
+        def repl(m):
+            tp = m.group(1)
+            doc_id = m.group(2)
+            after = m.group(3)
+
+            tp = "waypoints" if tp in ("summits", "sites", "huts", "parkings") else tp
+            tp = "profiles" if tp in ("users",) else tp
+
+            return "[[" + tp + "/" + doc_id + after + "|"
+
+        return re.sub(
+            r'\[\[https?://www.camptocamp.org/(parkings|users|books|articles|routes|waypoints|images|summits|sites|huts|outings)/(\d+)([\w\-/#]*)\|',
+            repl,
+            markdown)
+
+    def fixer_slash_internal(self, markdown):
+        def repl(m):
+            tp = m.group(1)
+            doc_id = m.group(2)
+            after = m.group(3)
+
+            tp = "waypoints" if tp in ("summits", "sites", "huts", "parkings") else tp
+            tp = "profiles" if tp in ("users",) else tp
+
+            return "[[" + tp + "/" + doc_id + after + "|"
+
+        return re.sub(
+            r'\[\[/(parkings|users|books|articles|routes|waypoints|images|summits|sites|huts|outings)/(\d+)([\w\-/#]*)\|',
+            repl,
+            markdown)
