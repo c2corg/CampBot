@@ -109,7 +109,12 @@ class BBCodeRemoverPostRelease(MarkdownProcessor):
         {
             "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
             "expected": "[google](http://www.google.com?a=b&c=d)",
+        },
+        {
+            "source": "url=http://www.google.com?a=b&c=d]google[/url]",
+            "expected": "[google](http://www.google.com?a=b&c=d)",
         }
+
     ]
 
     def init_modifiers(self):
@@ -134,15 +139,31 @@ class BBCodeRemoverPostRelease(MarkdownProcessor):
                       repl=r"<p></p>",
                       flags=re.IGNORECASE),
 
+            Converter(pattern=r'\nurl=',
+                      repl=r"\n[url=",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\nurl]',
+                      repl=r"\n[url]",
+                      flags=re.IGNORECASE),
+
             Converter(pattern=r'\[ *url *= *\]',
                       repl=r"[url]",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[url\](http.*?)\[/url\]',
+            Converter(pattern=r'\[ *url *= *',
+                      repl=r"[url=",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[\\url\]',
+                      repl=r"[/url]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[url\] *(http.*?)\[/url\]',
                       repl=r"\1 ",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[url\](www.*?)\[/url\]',
+            Converter(pattern=r'\[url\] *(www.*?)\[/url\]',
                       repl=r"http://\1 ",
                       flags=re.IGNORECASE),
 

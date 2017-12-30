@@ -173,7 +173,7 @@ if __name__ == "__main__":
     old_tags_pattern = r"\[/?(imp|warn|abs|abstract|list)\]"  # 0
 
     # post parser release
-    url_amp_pattern = r"\[ */? *url"  # 1009
+    url_amp_pattern = r"\[ */? *url"  # 1000
     html_pattern = r"\[/?(sub|sup|s|p|q|acr)\]"  # 494
     center_pattern = r"\[/?(center|right|left)\]"  # 65
     quote_pattern = r"\[/?(quote|q)\]"  # 75
