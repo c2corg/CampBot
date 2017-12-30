@@ -6,7 +6,7 @@ Usage:
   campbot check_recent_changes <message_url> --lang=<lang> --login=<login> --password=<password> [--delay=<seconds>]
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
-  campbot remove_bbcode2 <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot remove_bbcode_post_release <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_internal_links <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_markdown <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot contributions [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
@@ -84,10 +84,10 @@ def main(args):
         get_campbot(args).fix_markdown(ColorAndUnderlineRemover(), filename=args["<ids_file>"],
                                        ask_before_saving=not args["--batch"])
 
-    elif args["remove_bbcode2"]:
-        from campbot.processors import BBCodeRemover2
+    elif args["remove_bbcode_post_release"]:
+        from campbot.processors import BBCodeRemoverPostRelease
 
-        get_campbot(args).fix_markdown(BBCodeRemover2(), filename=args["<ids_file>"],
+        get_campbot(args).fix_markdown(BBCodeRemoverPostRelease(), filename=args["<ids_file>"],
                                        ask_before_saving=not args["--batch"])
 
     elif args["contributions"]:

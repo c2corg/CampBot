@@ -166,14 +166,14 @@ if __name__ == "__main__":
     bi_pattern = r"\[/?[biBI] *\]"  # 28
     color_u_pattern = r"\[/?(color|u|U) *(\]|=)"  # 7
     mail_pattern = r"\[/?email"  # 1
-    url_pattern = r"\[url[\]\=][^\n \&\]\[]*?[\]\[]"  # 1
+    url_pattern = r"\[ *url *[\]\=] *[^\n \&\]\[]*?[\]\[]"  # 1
     code_pattern = r"\[/?(c|code)\]"  # 1
     c2c_title_pattern = r"#+c "  # 0
     comment_pattern = r"\[\/\*\]"  # 0
     old_tags_pattern = r"\[/?(imp|warn|abs|abstract|list)\]"  # 0
 
     # post parser release
-    url_amp_pattern = r"\[/?url[\]\=][^\n \]\[]*?\&"  # 950
+    url_amp_pattern = r"\[ */? *url"  # 1009
     html_pattern = r"\[/?(sub|sup|s|p|q|acr)\]"  # 494
     center_pattern = r"\[/?(center|right|left)\]"  # 65
     quote_pattern = r"\[/?(quote|q)\]"  # 75
@@ -189,9 +189,9 @@ if __name__ == "__main__":
     broken_ext_links_pattern = r"\[\[(http|www)"  # 3
     forum_links_pattern = r"#t\d+"  # 1
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
-    empty_link_label = r"\[ *\]\([^\n ]+\)"  # 0
+    empty_link_label = r"\[ *\]\("  # 0
 
     with open("ids.txt", "w") as f:
-        for doc_id, typ in dump.search(empty_link_label):
+        for doc_id, typ in dump.search(url_pattern):
             print("* https://www.camptocamp.org/{}/{}".format(get_constructor(typ).url_path, doc_id))
             f.write("{}|{}\n".format(doc_id, typ))

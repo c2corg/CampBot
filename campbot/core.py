@@ -341,7 +341,8 @@ class CampBot(object):
 
             elif item.fix_markdown(processor):
                 if not processor.ready_for_production:
-                    print(progress, "{} is impacted".format(url))
+                    # print(progress, "{} is impacted".format(url))
+                    pass
 
                 elif not ask_before_saving or input("Save {} y/[n]?".format(url)) == "y":
                     print(progress, "Saving {}".format(url))
@@ -423,7 +424,8 @@ class CampBot(object):
         messages.append("</table>\n[/details]\n\n----\n\n")
 
         items = OrderedDict()
-        for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1.2)):
+        for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1.3)):
+            print(contrib.written_at, "get contrib")
             if contrib.lang == lang and contrib.document.type not in ("i", "o"):
                 if contrib.document["document_id"] not in items:
                     items[contrib.document["document_id"]] = []
@@ -440,6 +442,7 @@ class CampBot(object):
                 ))
 
             for contrib in contribs:
+                print(contrib.written_at, "get doc")
                 new = self.wiki.get_wiki_object_version(contrib.document.document_id,
                                                         contrib.document.type,
                                                         contrib.lang,

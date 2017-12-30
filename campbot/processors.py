@@ -45,12 +45,13 @@ class MarkdownProcessor(object):
     def __call__(self, markdown, field, locale, wiki_object):
         result = self.modify(markdown)
 
-        d = difflib.Differ()
-        diff = d.compare(markdown.replace("\r", "").split("\n"),
-                         result.replace("\r", "").split("\n"))
-        for dd in diff:
-            if dd[0] != " ":
-                print(dd)
+        if self.ready_for_production:
+            d = difflib.Differ()
+            diff = d.compare(markdown.replace("\r", "").split("\n"),
+                             result.replace("\r", "").split("\n"))
+            for dd in diff:
+                if dd[0] != " ":
+                    print(dd)
 
         return result
 
@@ -64,12 +65,56 @@ class MarkdownProcessor(object):
         return result
 
 
-class BBCodeRemover2(MarkdownProcessor):
-    def __init__(self):
-        super(BBCodeRemover2, self).__init__()
+class BBCodeRemoverPostRelease(MarkdownProcessor):
+    ready_for_production = False
+    comment = "Remove BBCode"
 
+    _tests = [
+        {
+            "source": "x[hr]",
+            "expected": "x\n----\n",
+        },
+        {
+            "source": "[sub]xx[/sub]",
+            "expected": "<sub>xx</sub>",
+        },
+        {
+            "source": "[url=]http://www.zone-di-tranquillita.ch/[/url]",
+            "expected": "http://www.zone-di-tranquillita.ch/ "
+        },
+        {
+            "source": "[url]http://www.google.com?a=1&b=2[/url]",
+            "expected": "http://www.google.com?a=1&b=2 "
+        },
+        {
+            "source": "[url]http://www.google.com?a=1&b=2[/url] x [url]www.google2.com[/url]",
+            "expected": "http://www.google.com?a=1&b=2  x http://www.google2.com "
+        },
+        {
+            "source": "[url=http://www.google.com?a=1&b=2]google[/url]",
+            "expected": "[google](http://www.google.com?a=1&b=2)",
+        },
+        {
+            "source": "[url=http://www.google.com]google[/url] et [url=http://www.google2.com]google2[/url]",
+            "expected": "[google](http://www.google.com) et [google2](http://www.google2.com)"
+        },
+        {
+            "source": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]",
+            "expected": "http://www.google.com?a=b&c=d  and [pas touche](http://www.google.com?a=b!c)"
+        },
+        {
+            "source": "[url]pas.touche.fr[/url]",
+            "expected": "[url]pas.touche.fr[/url]"
+        },
+        {
+            "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
+            "expected": "[google](http://www.google.com?a=b&c=d)",
+        }
+    ]
+
+    def init_modifiers(self):
         self.modifiers = [
-            Converter(pattern=r'\n?\[hr\]\n?',
+            Converter(pattern=r'\n?\[hr/?\]\n?',
                       repl=r"\n----\n",
                       flags=re.IGNORECASE),
 
@@ -85,13 +130,26 @@ class BBCodeRemover2(MarkdownProcessor):
                       repl=r"<\1s>",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[p]',
+            Converter(pattern=r'\[p\]',
                       repl=r"<p></p>",
                       flags=re.IGNORECASE),
-        ]
 
-    def do_tests(self):
-        pass
+            Converter(pattern=r'\[ *url *= *\]',
+                      repl=r"[url]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[url\](http.*?)\[/url\]',
+                      repl=r"\1 ",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[url\](www.*?)\[/url\]',
+                      repl=r"http://\1 ",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[url\=(.*?)\](.*?)\[\/url\]',
+                      repl=r"[\2](\1)",
+                      flags=re.IGNORECASE),
+        ]
 
 
 class BBCodeRemover(MarkdownProcessor):
@@ -155,7 +213,6 @@ class BBCodeRemover(MarkdownProcessor):
             "source": "###C bien",
             "expected": "###C bien",
         },
-
         {
             "source": "[url=]http://www.zone-di-tranquillita.ch/[/url]",
             "expected": "http://www.zone-di-tranquillita.ch/ "
@@ -222,6 +279,16 @@ class BBCodeRemover(MarkdownProcessor):
                 return markdown
 
             converters = [
+
+                Converter(pattern=r"\[ *url *\]",
+                          repl=r"[url]",
+                          flags=re.IGNORECASE
+                          ),
+
+                Converter(pattern=r"\[ *url *= *",
+                          repl=r"[url=",
+                          flags=re.IGNORECASE
+                          ),
 
                 Converter(
                     pattern=r'\[' + bbcode_tag + r'\]\[/' + bbcode_tag + '\]',
@@ -513,8 +580,7 @@ class LtagCleaner(MarkdownProcessor):
             result = []
 
             for line in lines:
-                if (line.startswith("L#") or line.startswith("R#")) and line[
-                    2] != "~":
+                if (line.startswith("L#") or line.startswith("R#")) and line[2] != "~":
                     line = leading_converter(line)
                     line = no_leading_converter(line)
                     line = multiple_converter(line)
