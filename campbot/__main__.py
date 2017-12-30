@@ -8,6 +8,7 @@ Usage:
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot remove_bbcode2 <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_internal_links <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot clean_markdown <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot contributions [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot outings <filters> [--out=<filename>] [--delay=<seconds>]
 
@@ -64,6 +65,12 @@ def main(args):
         from campbot.processors import InternalLinkCorrector
 
         get_campbot(args).fix_markdown(InternalLinkCorrector(), filename=args["<ids_file>"],
+                                       ask_before_saving=not args["--batch"])
+
+    elif args["clean_markdown"]:
+        from campbot.processors import MarkdownCleaner
+
+        get_campbot(args).fix_markdown(MarkdownCleaner(), filename=args["<ids_file>"],
                                        ask_before_saving=not args["--batch"])
     elif args["remove_bbcode"]:
         from campbot.processors import BBCodeRemover

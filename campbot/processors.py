@@ -545,6 +545,38 @@ class ColorAndUnderlineRemover(MarkdownProcessor):
                       flags=re.IGNORECASE), )
 
 
+class MarkdownCleaner(MarkdownProcessor):
+    ready_for_production = True
+    comment = "Clean markdown"
+
+    _tests = [
+        {
+            "source": "[](http://link)x",
+            "expected": "http://link x",
+        },
+        {
+            "source": "cou[](http://link)x",
+            "expected": "cou http://link x",
+        }
+    ]
+
+    def init_modifiers(self):
+        self.modifiers = [
+            Converter(pattern=r"\n\[ *\]\((http[^\n ]+)\) *",
+                      repl=r"\n\1 "),
+            Converter(pattern=r"^\[ *\]\((http[^\n ]+)\) *",
+                      repl=r"\1 "),
+            Converter(pattern=r" *\[ *\]\((http[^\n ]+)\) *",
+                      repl=r" \1 "),
+            Converter(pattern=r"\n\[ *\]\(([^\n ]+)\) *",
+                      repl=r"\nhttp://\1 "),
+            Converter(pattern=r"^\[ *\]\(([^\n ]+)\) *",
+                      repl=r"http://\1 "),
+            Converter(pattern=r" *\[ *\]\(([^\n ]+)\) *",
+                      repl=r" http://\1 "),
+        ]
+
+
 class InternalLinkCorrector(MarkdownProcessor):
     ready_for_production = True
     comment = "Fix internal wiki link"

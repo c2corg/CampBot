@@ -164,7 +164,7 @@ if __name__ == "__main__":
 
     # pre parser release
     bi_pattern = r"\[/?[biBI] *\]"  # 28
-    color_u_pattern = r"\[/?(color|u|U) *(\]|=)"  # 8
+    color_u_pattern = r"\[/?(color|u|U) *(\]|=)"  # 7
     mail_pattern = r"\[/?email"  # 1
     url_pattern = r"\[url[\]\=][^\n \&\]\[]*?[\]\[]"  # 1
     code_pattern = r"\[/?(c|code)\]"  # 1
@@ -181,16 +181,17 @@ if __name__ == "__main__":
     html_ok_pattern = r"\[/?(hr|hr)\]"  # 0
 
     # to fix
+    double_dot_pattern = r"\:\:+"  # 513
     emoji_pattern = r"\[picto"  # 77
     col_pattern = r"\[/?col\]"  # 42
-    broken_int_links_pattern = r"\[\[\d+\|"  # 6
+    broken_int_links_pattern = r"\[\[\d+\|"  # 2
     slash_in_links_pattern = r"\[\[/\w+/\d+"  # 3
-    double_dot_pattern = r"(\n|^)L#.*::"  # 4 (j'y crois pas)
     broken_ext_links_pattern = r"\[\[(http|www)"  # 3
     forum_links_pattern = r"#t\d+"  # 1
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
+    empty_link_label = r"\[ *\]\([^\n ]+\)"  # 0
 
     with open("ids.txt", "w") as f:
-        for doc_id, typ in dump.search(broken_int_links_pattern):
+        for doc_id, typ in dump.search(empty_link_label):
             print("* https://www.camptocamp.org/{}/{}".format(get_constructor(typ).url_path, doc_id))
             f.write("{}|{}\n".format(doc_id, typ))
