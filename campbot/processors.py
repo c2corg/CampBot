@@ -113,7 +113,23 @@ class BBCodeRemoverPostRelease(MarkdownProcessor):
         {
             "source": "url=http://www.google.com?a=b&c=d]google[/url]",
             "expected": "[google](http://www.google.com?a=b&c=d)",
-        }
+        },
+        {
+            "source": "[acr=1 goujon et 3 lunules]1g..3l[/acr]",
+            "expected": '<abbr title="1 goujon et 3 lunules">1g..3l</abbr>',
+        },
+        {
+            "source": "[acr=1 goujon et 3 lunules]1g..3l[/acr]",
+            "expected": '<abbr title="1 goujon et 3 lunules">1g..3l</abbr>',
+        },
+        {
+            "source": "[center]coucou[/center]",
+            "expected": "<center>coucou</center>",
+        },
+        {
+            "source": "{#coucou}",
+            "expected": '<span id="coucou"></span>',
+        },
 
     ]
 
@@ -169,6 +185,18 @@ class BBCodeRemoverPostRelease(MarkdownProcessor):
 
             Converter(pattern=r'\[url\=(.*?)\](.*?)\[\/url\]',
                       repl=r"[\2](\1)",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[acr=([\w \.]+)\]([\w \.]+)\[/acr\]',
+                      repl=r'<abbr title="\1">\2</abbr>',
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)center]',
+                      repl=r"<\1center>",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\{#(\w+)\}',
+                      repl=r'<span id="\1"></span>',
                       flags=re.IGNORECASE),
         ]
 
@@ -720,7 +748,7 @@ class InternalLinkCorrector(MarkdownProcessor):
 
             return "[[" + tp + "/" + str(doc_id) + "|"
 
-        return re.sub(r'\[\[(\d+)\|', repl, markdown)
+        return re.sub(r'\[\[ */? *(\d+)\|', repl, markdown)
 
     def fixer_false_internal(self, markdown):
         def repl(m):

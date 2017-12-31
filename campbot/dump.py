@@ -173,18 +173,19 @@ if __name__ == "__main__":
     old_tags_pattern = r"\[/?(imp|warn|abs|abstract|list)\]"  # 0
 
     # post parser release
-    url_amp_pattern = r"\[ */? *url"  # 1000
-    html_pattern = r"\[/?(sub|sup|s|p|q|acr)\]"  # 494
-    center_pattern = r"\[/?(center|right|left)\]"  # 65
+    url_amp_pattern = r"\[ */? *url"  # 1000 PR ok
+    html_pattern = r"\[/?(sub|sup|s|p|q|acr)\]"  # 494 PR ok
+    center_pattern = r"\[/?center\]"  # 59 PR ok
     quote_pattern = r"\[/?(quote|q)\]"  # 75
-    anchors_pattern = r"\{#\w+\}"  # 28
+    anchors_pattern = r"\{#\w+\}"  # 28 PR ok gaffe aux ids
+    right_left_pattern = r"\[/?(right|left)\]"  # 0
     html_ok_pattern = r"\[/?(hr|hr)\]"  # 0
 
     # to fix
     double_dot_pattern = r"\:\:+"  # 513
     emoji_pattern = r"\[picto"  # 77
-    col_pattern = r"\[/?col\]"  # 42
-    broken_int_links_pattern = r"\[\[\d+\|"  # 2
+    col_pattern = r"\[ */? *col"  # 48
+    broken_int_links_pattern = r"\[\[/? */? *\d+\|"  # 4
     slash_in_links_pattern = r"\[\[/\w+/\d+"  # 3
     broken_ext_links_pattern = r"\[\[(http|www)"  # 3
     forum_links_pattern = r"#t\d+"  # 1
@@ -192,6 +193,6 @@ if __name__ == "__main__":
     empty_link_label = r"\[ *\]\("  # 0
 
     with open("ids.txt", "w") as f:
-        for doc_id, typ in dump.search(url_pattern):
+        for doc_id, typ in dump.search(broken_int_links_pattern):
             print("* https://www.camptocamp.org/{}/{}".format(get_constructor(typ).url_path, doc_id))
             f.write("{}|{}\n".format(doc_id, typ))
