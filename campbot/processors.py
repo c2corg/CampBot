@@ -762,7 +762,7 @@ class InternalLinkCorrector(MarkdownProcessor):
             return "[[" + tp + "/" + doc_id + after + "|"
 
         return re.sub(
-            r'\[\[https?://www.camptocamp.org/(parkings|users|books|articles|routes|waypoints|images|summits|sites|huts|outings)/(\d+)([\w\-/#]*)\|',
+            r'\[\[ *https?://www.camptocamp.org/(parkings|users|books|articles|routes|waypoints|images|summits|sites|huts|outings)/(\d+)([\w\-/#]*)\|',
             repl,
             markdown)
 
@@ -778,6 +778,6 @@ class InternalLinkCorrector(MarkdownProcessor):
             return "[[" + tp + "/" + doc_id + after + "|"
 
         return re.sub(
-            r'\[\[/(parkings|users|books|articles|routes|waypoints|images|summits|sites|huts|outings)/(\d+)([\w\-/#]*)\|',
+            r'\[\[ */(parkings|users|books|articles|routes|waypoints|images|summits|sites|huts|outings)/(\d+)([\w\-/#]*)\|',
             repl,
             markdown)

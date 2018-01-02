@@ -1,80 +1,69 @@
-import psycopg2
+import sqlite3
+import os
+import re
+
 from campbot import CampBot
 
 
 class Dump(object):
-    def __init__(self, **kwargs):
+    def __init__(self):
         super(Dump, self).__init__()
 
-        connection_string = "dbname='{dbname}' user='{user}' host='{host}' port={port} password='{password}'"
+        self._conn = sqlite3.connect(r"camptocamp.db")
 
-        kwargs["dbname"] = kwargs.get("dbname", 'c2c')
-        kwargs["user"] = kwargs.get("user", 'charles')
-        kwargs["host"] = kwargs.get("host", 'localhost')
-        kwargs["port"] = kwargs.get("port", 5432)
-        kwargs["password"] = kwargs.get("password", 'charles')
+        self._conn.execute("CREATE TABLE IF NOT EXISTS document ("
+                           " document_id INT PRIMARY KEY,"
+                           " type CHAR(1),"
+                           " version_id INT NOT NULL"
+                           ");")
 
-        self._conn = psycopg2.connect(connection_string.format(**kwargs))
+        self._conn.execute("CREATE TABLE IF NOT EXISTS locale ("
+                           " document_id INT,"
+                           " lang CHAR(2),"
+                           " field VARCHAR,"
+                           " value TEXT"
+                           ");")
+
+        def regexp(y, x, search=re.search):
+            return 1 if search(y, str(x)) else 0
+
+        self._conn.create_function('regexp', 2, regexp)
         self._cur = None
 
-    def start_database(self):
-        self._execute("DROP TABLE document")
+    def insert(self, contrib):
+        cur = self._conn.cursor()
 
-        sql = """CREATE TABLE document(
-              document_id int,
-              version_id int,
-              type char(1),
-              locales text,
-              PRIMARY KEY(document_id)
-              );"""
+        doc = contrib.get_full_document()
 
-        self._execute(sql)
-
-    def _execute(self, *args):
-        self._cur = self._conn.cursor()
-        self._cur.execute(*args)
-
-        self._conn.commit()
-        self._cur.close()
-        self._cur = None
-
-    def insert(self, document, version_id=0):
-        def join_locale(locale):
-            locale.pop("version", None)
-            locale.pop("topic_id", None)
-            locale.pop("lang", None)
-
-            values = [str(v) for v in locale.values() if v]
-            return "\n\n".join(values)
-
-        if "document_id" not in document or document.document_id == 2:
+        if "type" not in doc:
             return
 
-        if "type" not in document:
-            print(document)
+        cur.execute("DELETE FROM document WHERE document_id=?", (contrib.document.document_id,))
+        cur.execute("DELETE FROM locale WHERE document_id=?", (contrib.document.document_id,))
 
-        locales = "\n\n".join([join_locale(locale) for locale in document.locales]) if "locales" in document else ""
+        cur.execute("INSERT INTO document"
+                    "(document_id, type, version_id)"
+                    "VALUES (?,?,?)",
+                    (contrib.document.document_id, doc.type, contrib.version_id))
 
-        if self.select(document.document_id):
-            sql = "UPDATE document SET version_id=%s, type=%s, locales=%s WHERE document_id=%s"
-            args = (version_id,
-                    document.type,
-                    locales,
-                    document.document_id,
-                    )
-        else:
+        for locale in doc.get("locales", []):
 
-            sql = """INSERT INTO document (document_id, version_id, type, locales) VALUES(%s, %s, %s, %s)"""
-            args = (document.document_id,
-                    version_id,
-                    document.type,
-                    locales
-                    )
+            lang = locale.pop("lang")
+            locale.pop("version", None)
+            locale.pop("topic_id", None)
 
-        self._execute(sql, args)
+            for field in locale:
+                value = locale[field]
+                if isinstance(value, str) and len(value.strip()) != 0:
+                    cur.execute("INSERT INTO locale"
+                                "(document_id,lang,field,value)"
+                                "VALUES (?,?,?,?)",
+                                (doc.document_id, lang, field, value))
+
+        self._conn.commit()
 
     def select(self, document_id):
-        sql = "SELECT * FROM document WHERE document_id=%s;"
+        sql = "SELECT * FROM document WHERE document_id=?;"
 
         self._cur = self._conn.cursor()
         self._cur.execute(sql, (document_id,))
@@ -103,7 +92,7 @@ class Dump(object):
 
     def complete(self):
 
-        bot = CampBot(min_delay=0.1)
+        bot = CampBot(min_delay=0.01)
 
         still_done = []
         highest_version_id = self.get_highest_version_id()
@@ -115,26 +104,20 @@ class Dump(object):
             key = (contrib.document.document_id, contrib.document.type)
             if key not in still_done:
                 still_done.append(key)
-                self.insert(contrib.get_full_document(), contrib.version_id)
+                self.insert(contrib)
                 print(contrib.written_at, key, contrib.version_id, "inserted")
             else:
                 print(contrib.written_at, key, contrib.version_id, "still done")
 
     def search(self, pattern):
-        pattern = "%{}%".format(pattern)
+        sql = ("SELECT document.document_id, document.type, locale.lang, locale.field "
+               "FROM locale "
+               "LEFT JOIN document ON document.document_id=locale.document_id "
+               "WHERE locale.value REGEXP ?")
 
-        sql = "SELECT document_id, type FROM document WHERE locales SIMILAR TO %s"
-
-        self._cur = self._conn.cursor()
-        self._cur.execute(sql, (pattern,))
-
-        result = self._cur.fetchall()
-
-        self._conn.commit()
-        self._cur.close()
-        self._cur = None
-
-        return result
+        c = self._conn.cursor()
+        c.execute(sql, (pattern,))
+        return c.fetchall()
 
     def get_all_ids(self):
 
@@ -153,15 +136,64 @@ class Dump(object):
 
 
 def get_document_types():
-    return {id: type for id, type in Dump().get_all_ids()}
+    return {doc_id: typ for doc_id, typ in Dump().get_all_ids()}
 
 
-if __name__ == "__main__":
+def transfer():
+    def insert_document(did, typ, version_id, locales):
+        cur.execute("INSERT INTO document"
+                    "(document_id,type,version_id)"
+                    "VALUES (?,?,?)",
+                    (did, typ, version_id))
+
+        cur.execute("INSERT INTO locale"
+                    "(document_id,lang,field,value)"
+                    "VALUES (?,?,?,?)",
+                    (did, "  ", "blob", locales))
+
+    os.remove("camptocamp.db")
+    conn = sqlite3.connect(r"camptocamp.db")
+
+    conn.execute("CREATE TABLE IF NOT EXISTS document ("
+                 " document_id INT PRIMARY KEY,"
+                 " type CHAR(1),"
+                 " version_id INT NOT NULL"
+                 ");")
+
+    conn.execute("CREATE TABLE IF NOT EXISTS locale ("
+                 " document_id INT,"
+                 " lang CHAR(2),"
+                 " field VARCHAR,"
+                 " value TEXT"
+                 ");")
+
+    cur = conn.cursor()
+
+    for did, version, typ, blob in Dump().all():
+        print(did, typ, version)
+        insert_document(did, typ, version, blob)
+
+    conn.commit()
+
+
+def _search(pattern):
     from campbot.objects import get_constructor
 
     dump = Dump()
     dump.complete()
 
+    with open("ids.txt", "w") as f:
+        for doc_id, typ, lang, field in dump.search(pattern):
+            if lang.strip():
+                print("* https://www.camptocamp.org/{}/{}/{} {}".format(get_constructor(typ).url_path, doc_id,
+                                                                        lang, field))
+            else:
+                print("* https://www.camptocamp.org/{}/{} {}".format(get_constructor(typ).url_path, doc_id, field))
+
+            f.write("{}|{}\n".format(doc_id, typ))
+
+
+if __name__ == "__main__":
     # pre parser release
     bi_pattern = r"\[/?[biBI] *\]"  # 28
     color_u_pattern = r"\[/?(color|u|U) *(\]|=)"  # 7
@@ -186,13 +218,10 @@ if __name__ == "__main__":
     emoji_pattern = r"\[picto"  # 77
     col_pattern = r"\[ */? *col"  # 48
     broken_int_links_pattern = r"\[\[/? */? *\d+\|"  # 4
-    slash_in_links_pattern = r"\[\[/\w+/\d+"  # 3
-    broken_ext_links_pattern = r"\[\[(http|www)"  # 3
+    slash_in_links_pattern = r"\[\[ */\w+/\d+"  # 3
+    broken_ext_links_pattern = r"\[\[ *(http|www)"  # 4
     forum_links_pattern = r"#t\d+"  # 1
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
     empty_link_label = r"\[ *\]\("  # 0
 
-    with open("ids.txt", "w") as f:
-        for doc_id, typ in dump.search(broken_int_links_pattern):
-            print("* https://www.camptocamp.org/{}/{}".format(get_constructor(typ).url_path, doc_id))
-            f.write("{}|{}\n".format(doc_id, typ))
+    _search(broken_ext_links_pattern)
