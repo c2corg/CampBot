@@ -139,43 +139,6 @@ def get_document_types():
     return {doc_id: typ for doc_id, typ in Dump().get_all_ids()}
 
 
-def transfer():
-    def insert_document(did, typ, version_id, locales):
-        cur.execute("INSERT INTO document"
-                    "(document_id,type,version_id)"
-                    "VALUES (?,?,?)",
-                    (did, typ, version_id))
-
-        cur.execute("INSERT INTO locale"
-                    "(document_id,lang,field,value)"
-                    "VALUES (?,?,?,?)",
-                    (did, "  ", "blob", locales))
-
-    os.remove("camptocamp.db")
-    conn = sqlite3.connect(r"camptocamp.db")
-
-    conn.execute("CREATE TABLE IF NOT EXISTS document ("
-                 " document_id INT PRIMARY KEY,"
-                 " type CHAR(1),"
-                 " version_id INT NOT NULL"
-                 ");")
-
-    conn.execute("CREATE TABLE IF NOT EXISTS locale ("
-                 " document_id INT,"
-                 " lang CHAR(2),"
-                 " field VARCHAR,"
-                 " value TEXT"
-                 ");")
-
-    cur = conn.cursor()
-
-    for did, version, typ, blob in Dump().all():
-        print(did, typ, version)
-        insert_document(did, typ, version, blob)
-
-    conn.commit()
-
-
 def _search(pattern):
     from campbot.objects import get_constructor
 
