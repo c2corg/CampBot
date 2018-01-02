@@ -98,3 +98,4 @@ ENV/
 .idea/
 /bbcode_ids.txt
 /README.txt
+/camptocamp.db
