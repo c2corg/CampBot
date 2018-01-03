@@ -1,5 +1,4 @@
 import sqlite3
-import os
 import re
 
 from campbot import CampBot
@@ -30,21 +29,23 @@ class Dump(object):
         self._conn.create_function('regexp', 2, regexp)
         self._cur = None
 
-    def insert(self, contrib):
+    def insert(self, doc=None, version_id=0, contrib=None):
         cur = self._conn.cursor()
 
-        doc = contrib.get_full_document()
+        if not doc:
+            doc = contrib.get_full_document()
+            version_id = contrib.version_id
 
         if "type" not in doc:
             return
 
-        cur.execute("DELETE FROM document WHERE document_id=?", (contrib.document.document_id,))
-        cur.execute("DELETE FROM locale WHERE document_id=?", (contrib.document.document_id,))
+        cur.execute("DELETE FROM document WHERE document_id=?", (doc.document_id,))
+        cur.execute("DELETE FROM locale WHERE document_id=?", (doc.document_id,))
 
         cur.execute("INSERT INTO document"
                     "(document_id, type, version_id)"
                     "VALUES (?,?,?)",
-                    (contrib.document.document_id, doc.type, contrib.version_id))
+                    (doc.document_id, doc.type, version_id))
 
         for locale in doc.get("locales", []):
 
@@ -104,7 +105,7 @@ class Dump(object):
             key = (contrib.document.document_id, contrib.document.type)
             if key not in still_done:
                 still_done.append(key)
-                self.insert(contrib)
+                self.insert(contrib=contrib)
                 print(contrib.written_at, key, contrib.version_id, "inserted")
             else:
                 print(contrib.written_at, key, contrib.version_id, "still done")
@@ -187,4 +188,4 @@ if __name__ == "__main__":
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
     empty_link_label = r"\[ *\]\("  # 0
 
-    _search(broken_ext_links_pattern)
+    _search(bi_pattern)
