@@ -151,10 +151,6 @@ class BBCodeRemoverPostRelease(MarkdownProcessor):
                       repl=r"<\1s>",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[p\]',
-                      repl=r"<p></p>",
-                      flags=re.IGNORECASE),
-
             Converter(pattern=r'\nurl=',
                       repl=r"\n[url=",
                       flags=re.IGNORECASE),

@@ -170,7 +170,7 @@ if __name__ == "__main__":
 
     # post parser release
     url_amp_pattern = r"\[ */? *url"  # 1000 PR ok
-    html_pattern = r"\[/?(sub|sup|s|p|q|acr)\]"  # 494 PR ok
+    html_pattern = r"\[/?(sub|sup|s|q|acr)\]"  # 494 PR ok
     center_pattern = r"\[/?center\]"  # 59 PR ok
     quote_pattern = r"\[/?(quote|q)\]"  # 75
     anchors_pattern = r"\{#\w+\}"  # 28 PR ok gaffe aux ids
@@ -188,4 +188,4 @@ if __name__ == "__main__":
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
     empty_link_label = r"\[ *\]\("  # 0
 
-    _search(bi_pattern)
+    _search(mail_pattern)
