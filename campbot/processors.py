@@ -561,8 +561,7 @@ class LtagCleaner(MarkdownProcessor):
                 expected = test["result"].format(postfix, postfix)
                 do_test(source, expected)
 
-    def __init__(self):
-        super(LtagCleaner, self).__init__()
+    def init_modifiers(self):
         self.modifiers = []
 
         newline_converters = [
@@ -668,6 +667,10 @@ class MarkdownCleaner(MarkdownProcessor):
         {
             "source": "cou[](http://link)x",
             "expected": "cou http://link x",
+        },
+        {
+            "source": "x[img",
+            "expected": "x\n[img",
         }
     ]
 
@@ -685,6 +688,9 @@ class MarkdownCleaner(MarkdownProcessor):
                       repl=r"http://\1 "),
             Converter(pattern=r" *\[ *\]\(([^\n ]+)\) *",
                       repl=r" http://\1 "),
+
+            Converter(pattern=r"([^\n])\[img",
+                      repl=r"\1\n[img"),
         ]
 
 

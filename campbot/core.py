@@ -26,6 +26,10 @@ except NameError:
 __all__ = ['CampBot', 'WikiBot', 'ForumBot', 'BaseBot']
 
 
+def today():
+    return datetime.today()
+
+
 class UserInterrupt(BaseException):
     pass
 
@@ -148,7 +152,7 @@ class WikiBot(BaseBot):
 
     def get_contributions(self, **kwargs):
 
-        oldest_date = kwargs.get("oldest_date", None) or datetime.today() + timedelta(days=-1)
+        oldest_date = kwargs.get("oldest_date", None) or today() + timedelta(days=-1)
         newest_date = kwargs.get("newest_date", None) or datetime.now()
 
         if isinstance(oldest_date, basestring):
@@ -282,7 +286,7 @@ class CampBot(object):
 
         allowed_members = {u.username: u for u in allowed_members}
 
-        oldest_date = datetime.today() - timedelta(days=180)
+        oldest_date = today() - timedelta(days=180)
 
         post = self.forum.get_post(url=url)
         for poll_name in post.polls:

@@ -188,4 +188,16 @@ if __name__ == "__main__":
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
     empty_link_label = r"\[ *\]\("  # 0
 
-    _search(mail_pattern)
+    img_not_first_pattern = r"[^\n\]`]\[img"
+
+    da_fuck = r"[^\n]\[p]"
+
+    video_youtube = r"\[video\]https?:\/\/(?:www\.)?youtube\.com"
+    video_youtube_short = r"\[video\]https?:\/\/(?:www\.)?youtu\.be"
+    daily_video = r"\[video\]https?://(?:www\.)?dailymotion\.com"
+    daily_short = r"\[video\]https?://(?:www\.)?dai\.ly"
+    vimeo_short = "\[video\]https?://(?:www\.)?vimeo\.com"
+
+    video_pattern = r"youtube"
+
+    _search(da_fuck)

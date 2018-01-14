@@ -76,9 +76,12 @@ def ids_files():
 @pytest.fixture()
 def fix_requests():
     from requests import Session
-    from campbot.core import BaseBot
+    from campbot import core
+    import datetime
 
-    class Response():
+    core.today = lambda: datetime.datetime(year=2017, month=12, day=21)
+
+    class Response(object):
         def __init__(self, method, url, **kwargs):
             self.status = 200
             self.headers = {'Content-type': 'application/json'}
@@ -96,7 +99,7 @@ def fix_requests():
     def request(self, method, url, **kwargs):
         return Response(method, url, **kwargs)
 
-    BaseBot.min_delay = 0.001
+    core.BaseBot.min_delay = 0.001
 
     Session.request = request
 
@@ -179,7 +182,10 @@ def get_main_args(action, others=None):
         "remove_bbcode": False,
         "remove_bbcode2": False,
         "clean_color_u": False,
+        "clean_internal_links": False,
         "check_recent_changes": False,
+        "clean_markdown": False,
+        "remove_bbcode_post_release": False,
         "check_voters": False,
         "contributions": False,
         "outings": False,
