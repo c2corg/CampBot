@@ -41,6 +41,7 @@ messages = {
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/978249'): get_message("route_version2"),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/478470'): get_message("route_version2"),
     ('GET', 'https://api.camptocamp.org/routes/293549'): get_message("route"),
+    ('GET', 'https://api.camptocamp.org/routes/123'): get_message("route"),
 
     ('GET', 'https://api.camptocamp.org/routes/123/fr/123'): get_message("redirection"),
     ('GET', 'https://api.camptocamp.org/routes/123/fr/122'): get_message("redirection"),
@@ -71,6 +72,13 @@ def ids_files():
         f.write("293549|r")
 
     yield "ids_test.txt"
+
+
+@pytest.fixture()
+def fix_dump():
+    from campbot import dump
+
+    dump._default_db_name = "test.db"
 
 
 @pytest.fixture()
@@ -164,6 +172,25 @@ def test_recent_changes(fix_requests):
     main(get_main_args("check_recent_changes"))
 
 
+def test_dump(fix_requests, fix_dump):
+    from campbot.dump import Dump, get_document_types, _search
+    from campbot import CampBot
+
+    get_document_types()
+
+    dump = Dump()
+
+    dump.insert(CampBot().wiki.get_route(123), 1687340)
+    dump.complete()
+    dump.select(123)
+    dump.search("r")
+    dump.get_all_ids()
+
+    _search("r")
+
+    os.remove("test.db")
+
+
 def test_fix_bbcode(fix_requests, ids_files):
     from campbot.__main__ import main
 
@@ -207,3 +234,9 @@ def get_main_args(action, others=None):
     result[action] = True
 
     return result
+
+
+def test_processors():
+    from campbot.processors import InternalLinkCorrector
+
+    InternalLinkCorrector()("[[123|coucou]]")

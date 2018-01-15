@@ -3,12 +3,14 @@ import re
 
 from campbot import CampBot
 
+_default_db_name = "camptocamp.db"
+
 
 class Dump(object):
-    def __init__(self):
+    def __init__(self, db_name=None):
         super(Dump, self).__init__()
 
-        self._conn = sqlite3.connect(r"camptocamp.db")
+        self._conn = sqlite3.connect(db_name or _default_db_name)
 
         self._conn.execute("CREATE TABLE IF NOT EXISTS document ("
                            " document_id INT PRIMARY KEY,"
@@ -89,7 +91,7 @@ class Dump(object):
         self._cur.close()
         self._cur = None
 
-        return result[0]
+        return result[0] if result else 0
 
     def complete(self):
 
