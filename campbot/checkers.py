@@ -135,7 +135,7 @@ class MainWaypointTest(object):
         self.success_marker = emoji("https://www.openstreetmap.org/assets/marker-green.png", self.name + " corrigé")
 
     def __call__(self, contrib, old_version, new_version):
-        if contrib.document.type != "r":
+        if new_version.document.type != "r":
             return True, True
 
         def test(version):

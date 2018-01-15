@@ -74,11 +74,16 @@ def ids_files():
     yield "ids_test.txt"
 
 
-@pytest.fixture()
+@pytest.yield_fixture()
 def fix_dump():
     from campbot import dump
 
+    _default_db_name = dump._default_db_name
     dump._default_db_name = "test.db"
+
+    yield
+
+    dump._default_db_name = _default_db_name
 
 
 @pytest.fixture()
@@ -237,6 +242,28 @@ def get_main_args(action, others=None):
 
 
 def test_processors():
-    from campbot.processors import InternalLinkCorrector
+    from campbot.processors import InternalLinkCorrector, MarkdownCleaner, BBCodeRemoverPostRelease
 
-    InternalLinkCorrector()("[[123|coucou]]")
+    InternalLinkCorrector()("[[123|coucou]]", "", "", None)
+    MarkdownCleaner()("[[123|coucou]]", "", "", None)
+    BBCodeRemoverPostRelease()("[[123|coucou]]", "", "", None)
+
+
+def test_checkers(fix_requests):
+    from campbot.checkers import LengthTest, ReTest, HistoryTest, MainWaypointTest, RouteTypeTest
+    from campbot import CampBot
+    from campbot.objects import Contribution
+
+    bot = CampBot()
+
+    route = bot.wiki.get_route(123)
+    contrib = Contribution(bot, {"document": route, "user": {}})
+
+    LengthTest("fr")(None, contrib, contrib)
+    HistoryTest("fr")(None, contrib, contrib)
+    MainWaypointTest()(None, contrib, contrib)
+    RouteTypeTest()(None, contrib, contrib)
+
+    t = ReTest("x","fr")
+    t.patterns.append("e")
+    t(None, contrib, contrib)
