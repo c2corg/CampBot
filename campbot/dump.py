@@ -164,18 +164,17 @@ if __name__ == "__main__":
     bi_pattern = r"\[/?[biBI] *\]"  # 28
     color_u_pattern = r"\[/?(color|u|U) *(\]|=)"  # 7
     mail_pattern = r"\[/?email"  # 1
-    url_pattern = r"\[ *url *[\]\=] *[^\n \&\]\[]*?[\]\[]"  # 1
     code_pattern = r"\[/?(c|code)\]"  # 1
     c2c_title_pattern = r"#+c "  # 0
     comment_pattern = r"\[\/\*\]"  # 0
     old_tags_pattern = r"\[/?(imp|warn|abs|abstract|list)\]"  # 0
 
     # post parser release
-    url_amp_pattern = r"\[ */? *url"  # 1000 PR ok
-    html_pattern = r"\[/?(sub|sup|s|q|acr)\]"  # 494 PR ok
-    center_pattern = r"\[/?center\]"  # 59 PR ok
+    url_pattern = r"\[ */? *url"  # 18 PR ok
+    html_pattern = r"\[/?(sub|sup|s|q|acr)\]"  # 1 PR ok
+    center_pattern = r"\[/?center\]"  # 0 PR ok
     quote_pattern = r"\[/?(quote|q)\]"  # 75
-    anchors_pattern = r"\{#\w+\}"  # 28 PR ok gaffe aux ids
+    anchors_pattern = r"\{#"  # 2 PR ok gaffe aux ids
     right_left_pattern = r"\[/?(right|left)\]"  # 0
     html_ok_pattern = r"\[/?(hr|hr)\]"  # 0
 
@@ -202,4 +201,4 @@ if __name__ == "__main__":
 
     video_pattern = r"youtube"
 
-    _search(da_fuck)
+    _search(url_pattern)

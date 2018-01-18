@@ -65,138 +65,6 @@ class MarkdownProcessor(object):
         return result
 
 
-class BBCodeRemoverPostRelease(MarkdownProcessor):
-    ready_for_production = False
-    comment = "Remove BBCode"
-
-    _tests = [
-        {
-            "source": "x[hr]",
-            "expected": "x\n----\n",
-        },
-        {
-            "source": "[sub]xx[/sub]",
-            "expected": "<sub>xx</sub>",
-        },
-        {
-            "source": "[url=]http://www.zone-di-tranquillita.ch/[/url]",
-            "expected": "http://www.zone-di-tranquillita.ch/ "
-        },
-        {
-            "source": "[url]http://www.google.com?a=1&b=2[/url]",
-            "expected": "http://www.google.com?a=1&b=2 "
-        },
-        {
-            "source": "[url]http://www.google.com?a=1&b=2[/url] x [url]www.google2.com[/url]",
-            "expected": "http://www.google.com?a=1&b=2  x http://www.google2.com "
-        },
-        {
-            "source": "[url=http://www.google.com?a=1&b=2]google[/url]",
-            "expected": "[google](http://www.google.com?a=1&b=2)",
-        },
-        {
-            "source": "[url=http://www.google.com]google[/url] et [url=http://www.google2.com]google2[/url]",
-            "expected": "[google](http://www.google.com) et [google2](http://www.google2.com)"
-        },
-        {
-            "source": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]",
-            "expected": "http://www.google.com?a=b&c=d  and [pas touche](http://www.google.com?a=b!c)"
-        },
-        {
-            "source": "[url]pas.touche.fr[/url]",
-            "expected": "[url]pas.touche.fr[/url]"
-        },
-        {
-            "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
-            "expected": "[google](http://www.google.com?a=b&c=d)",
-        },
-        {
-            "source": "url=http://www.google.com?a=b&c=d]google[/url]",
-            "expected": "[google](http://www.google.com?a=b&c=d)",
-        },
-        {
-            "source": "[acr=1 goujon et 3 lunules]1g..3l[/acr]",
-            "expected": '<abbr title="1 goujon et 3 lunules">1g..3l</abbr>',
-        },
-        {
-            "source": "[acr=1 goujon et 3 lunules]1g..3l[/acr]",
-            "expected": '<abbr title="1 goujon et 3 lunules">1g..3l</abbr>',
-        },
-        {
-            "source": "[center]coucou[/center]",
-            "expected": "<center>coucou</center>",
-        },
-        {
-            "source": "{#coucou}",
-            "expected": '<span id="coucou"></span>',
-        },
-
-    ]
-
-    def init_modifiers(self):
-        self.modifiers = [
-            Converter(pattern=r'\n?\[hr/?\]\n?',
-                      repl=r"\n----\n",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[(/?)sub\]',
-                      repl=r"<\1sub>",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[(/?)sup\]',
-                      repl=r"<\1sup>",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[(/?)s\]',
-                      repl=r"<\1s>",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\nurl=',
-                      repl=r"\n[url=",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\nurl]',
-                      repl=r"\n[url]",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[ *url *= *\]',
-                      repl=r"[url]",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[ *url *= *',
-                      repl=r"[url=",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[\\url\]',
-                      repl=r"[/url]",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[url\] *(http.*?)\[/url\]',
-                      repl=r"\1 ",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[url\] *(www.*?)\[/url\]',
-                      repl=r"http://\1 ",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[url\=(.*?)\](.*?)\[\/url\]',
-                      repl=r"[\2](\1)",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[acr=([\w \.]+)\]([\w \.]+)\[/acr\]',
-                      repl=r'<abbr title="\1">\2</abbr>',
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\[(/?)center]',
-                      repl=r"<\1center>",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\{#(\w+)\}',
-                      repl=r'<span id="\1"></span>',
-                      flags=re.IGNORECASE),
-        ]
-
-
 class BBCodeRemover(MarkdownProcessor):
     ready_for_production = True
     comment = "Replace BBcode by Markdown"
@@ -205,6 +73,22 @@ class BBCodeRemover(MarkdownProcessor):
         {
             "source": "*[Voir la discussion sur le forum.](#t158106)*",
             "expected": "*[Voir la discussion sur le forum.](https://www.camptocamp.org/forums/viewtopic.php?id=158106)*",
+        },
+        {
+            "source": "x[hr]",
+            "expected": "x\n----\n",
+        },
+        {
+            "source": "{#coucou}",
+            "expected": '<span id="coucou"></span>',
+        },
+        {
+            "source": "[center]coucou[/center]",
+            "expected": "<center>coucou</center>",
+        },
+        {
+            "source": "[acr=1 goujon et 2-3 lunules]1g..3l[/acr]",
+            "expected": '<abbr title="1 goujon et 2-3 lunules">1g..3l</abbr>',
         },
         {
             "source": "L#~ | coucou",
@@ -232,7 +116,7 @@ class BBCodeRemover(MarkdownProcessor):
         },
         {
             "source": "[center][b]outside![/b][/center]",
-            "expected": "**[center]outside![/center]**",
+            "expected": "**<center>outside!</center>**",
         },
         {
             "source": "[url=http:google.fr][i]outside![/i][/url]",
@@ -280,23 +164,23 @@ class BBCodeRemover(MarkdownProcessor):
         },
         {
             "source": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]",
-            "expected": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]"
+            "expected": "http://www.google.com?a=b&c=d  and [pas touche](http://www.google.com?a=b!c)"
         },
         {
             "source": "[url]http://www.google.com?a=b;d[/url] et [url]pas.touche.fr[/url]",
-            "expected": "[url]http://www.google.com?a=b;d[/url] et [url]pas.touche.fr[/url]"
+            "expected": "http://www.google.com?a=b;d  et [url]pas.touche.fr[/url]"
         },
         {
             "source": "[url]http://www.google.com?a=b&c=d[/url] x [url]http://www.google2.com?a=b&c=d[/url]",
-            "expected": "[url]http://www.google.com?a=b&c=d[/url] x [url]http://www.google2.com?a=b&c=d[/url]"
+            "expected": "http://www.google.com?a=b&c=d  x http://www.google2.com?a=b&c=d "
         },
         {
             "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
-            "expected": "[url=http://www.google.com?a=b&c=d]google[/url]",
+            "expected": "[google](http://www.google.com?a=b&c=d)",
         },
         {
             "source": "[url=http://www.google.com?a=b&c=d]go[/url] et [url=http://www.google2.com?a=b&c=d]o[/url]",
-            "expected": "[url=http://www.google.com?a=b&c=d]go[/url] et [url=http://www.google2.com?a=b&c=d]o[/url]"
+            "expected": "[go](http://www.google.com?a=b&c=d) et [o](http://www.google2.com?a=b&c=d)"
         },
         {
             "source": "[email]dev@camptocamp.org[/email]",
@@ -305,7 +189,55 @@ class BBCodeRemover(MarkdownProcessor):
         {
             "source": "[email=dev@camptocamp.org]email[/email]",
             "expected": "[email](mailto:dev@camptocamp.org)"
-        }
+        },
+        {
+            "source": "[url=]http://www.zone-di-tranquillita.ch/[/url]",
+            "expected": "http://www.zone-di-tranquillita.ch/ "
+        },
+        {
+            "source": "[url]http://www.google.com?a=1&b=2[/url]",
+            "expected": "http://www.google.com?a=1&b=2 "
+        },
+        {
+            "source": "[url]http://www.google.com?a=1&b=2[/url] x [url]www.google2.com[/url]",
+            "expected": "http://www.google.com?a=1&b=2  x www.google2.com "
+        },
+        {
+            "source": "[url=http://www.google.com?a=1&b=2]google[/url]",
+            "expected": "[google](http://www.google.com?a=1&b=2)",
+        },
+        {
+            "source": "[url=http://www.google.com]google[/url] et [url=http://www.google2.com]google2[/url]",
+            "expected": "[google](http://www.google.com) et [google2](http://www.google2.com)"
+        },
+        {
+            "source": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]",
+            "expected": "http://www.google.com?a=b&c=d  and [pas touche](http://www.google.com?a=b!c)"
+        },
+        {
+            "source": "[url]pas.touche.fr[/url]",
+            "expected": "[url]pas.touche.fr[/url]"
+        },
+        {
+            "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
+            "expected": "[google](http://www.google.com?a=b&c=d)",
+        },
+        {
+            "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
+            "expected": "[google](http://www.google.com?a=b&c=d)",
+        },
+        {
+            "source": "[sub]xx[/sub]",
+            "expected": "<sub>xx</sub>",
+        },
+        {
+            "source": "[sup]xx[/sup]",
+            "expected": "<sup>xx</sup>",
+        },
+        {
+            "source": "[s]xx[/s]",
+            "expected": "<s>xx</s>",
+        },
     ]
 
     def init_modifiers(self):
@@ -448,13 +380,35 @@ class BBCodeRemover(MarkdownProcessor):
             Converter(pattern=r'(^|\n)(#+)c +',
                       repl=r"\1\2 "),
 
-            Converter(pattern=r'\[url=?\](http|www)([^\n\&\;\!]*?)\[/url\]',
-                      # r'\[url\](.*?)\[/url\]' for all urls
+            Converter(pattern=r'\nurl=',
+                      repl=r"\n[url=",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\nurl]',
+                      repl=r"\n[url]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[ *url *= *\]',
+                      repl=r"[url]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[ *url *= *',
+                      repl=r"[url=",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[\\url\]',
+                      repl=r"[/url]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[url=?\] *(http|www)(.*?)\[/url\]',
                       repl=r"\1\2 ",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[url\=([^\n\&\;\!]*?)\](.*?)\[\/url\]',
-                      # r'\[url\=(.*?)\](.*?)\[\/url\]' for all urls
+            Converter(pattern=r'\[url\=(.*?)\]\[\/url\]',
+                      repl=r" \1 ",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[url\=(.*?)\](.*?)\[\/url\]',
                       repl=r"[\2](\1)",
                       flags=re.IGNORECASE),
 
@@ -472,6 +426,33 @@ class BBCodeRemover(MarkdownProcessor):
             Converter(pattern=r"\(#t(\d+)\)",
                       repl=r"(https://www.camptocamp.org/forums/viewtopic.php?id=\1)"),
 
+            Converter(pattern=r'\[(/?)sub\]',
+                      repl=r"<\1sub>",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)sup\]',
+                      repl=r"<\1sup>",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)s\]',
+                      repl=r"<\1s>",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[acr=([\w \.-]+)\]([\w \.]+)\[/acr\]',
+                      repl=r'<abbr title="\1">\2</abbr>',
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[(/?)center]',
+                      repl=r"<\1center>",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\{#([\w-]+)\}',
+                      repl=r'<span id="\1"></span>',
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n?\[hr/?\]\n?',
+                      repl=r"\n----\n",
+                      flags=re.IGNORECASE),
         ]
 
 
