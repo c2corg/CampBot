@@ -25,6 +25,14 @@ class Dump(object):
                            " value TEXT"
                            ");")
 
+        self._conn.execute("CREATE TABLE IF NOT EXISTS contribution ("
+                           " version_id INTEGER PRIMARY KEY DESC,"
+                           " document_id INTEGER,"
+                           " user_id INTEGER,"
+                           " type CHAR(1),"
+                           " written_at CHAR(32)"
+                           ") WITHOUT ROWID;")
+
         def regexp(y, x, search=re.search):
             return 1 if search(y, str(x)) else 0
 
@@ -79,8 +87,8 @@ class Dump(object):
 
         return result
 
-    def get_highest_version_id(self):
-        sql = "SELECT version_id from document ORDER BY version_id DESC LIMIT 1"
+    def get_highest_version_id(self, table="document"):
+        sql = "SELECT version_id from {} ORDER BY version_id DESC LIMIT 1".format(table)
 
         self._cur = self._conn.cursor()
         self._cur.execute(sql)
@@ -92,6 +100,39 @@ class Dump(object):
         self._cur = None
 
         return result[0] if result else 0
+
+    def complete_contributions(self):
+        bot = CampBot(min_delay=0.01)
+
+        highest_version_id = self.get_highest_version_id("contribution")
+
+        i = 1000
+        cur = self._conn.cursor()
+
+        for contrib in bot.wiki.get_contributions(oldest_date="1990-12-25"):
+            if highest_version_id >= contrib.version_id:
+                break
+
+            print(contrib.written_at, contrib.version_id, contrib.user.username)
+
+            if i == 0:
+                self._conn.commit()
+                cur = self._conn.cursor()
+                i = 1000
+
+            i -= 1
+
+            doc = contrib.document
+            try:
+                cur.execute("INSERT INTO contribution"
+                            "(document_id, type, version_id, user_id, written_at)"
+                            "VALUES (?,?,?,?,?)",
+                            (doc.document_id, doc.type, contrib.version_id, contrib.user.user_id,
+                             contrib.written_at))
+            except sqlite3.IntegrityError:
+                pass
+
+        self._conn.commit()
 
     def complete(self):
 
@@ -137,6 +178,21 @@ class Dump(object):
 
         return result
 
+    def get_all_version_ids(self):
+
+        sql = "SELECT version_id FROM contribution"
+
+        self._cur = self._conn.cursor()
+        self._cur.execute(sql)
+
+        result = self._cur.fetchall()
+
+        self._conn.commit()
+        self._cur.close()
+        self._cur = None
+
+        return [r[0] for r in result]
+
 
 def get_document_types():
     return {doc_id: typ for doc_id, typ in Dump().get_all_ids()}
@@ -161,30 +217,29 @@ def _search(pattern):
 
 if __name__ == "__main__":
     # pre parser release
-    bi_pattern = r"\[/?[biBI] *\]"  # 28
+    bi_pattern = r"\[/?[biBI] *\]"  # 26
+    url_pattern = r"\[ */? *url"  # 18
     color_u_pattern = r"\[/?(color|u|U) *(\]|=)"  # 7
-    mail_pattern = r"\[/?email"  # 1
-    code_pattern = r"\[/?(c|code)\]"  # 1
+    mail_pattern = r"\[/?email"  # 0
+    code_pattern = r"\[/?(c|code)\]"  # 0
     c2c_title_pattern = r"#+c "  # 0
     comment_pattern = r"\[\/\*\]"  # 0
     old_tags_pattern = r"\[/?(imp|warn|abs|abstract|list)\]"  # 0
-
-    # post parser release
-    url_pattern = r"\[ */? *url"  # 18 PR ok
-    html_pattern = r"\[/?(sub|sup|s|q|acr)\]"  # 1 PR ok
-    center_pattern = r"\[/?center\]"  # 0 PR ok
-    quote_pattern = r"\[/?(quote|q)\]"  # 75
-    anchors_pattern = r"\{#"  # 2 PR ok gaffe aux ids
+    html_pattern = r"\[/?(sub|sup|s|q|acr)\]"  # 0
+    center_pattern = r"\[/?center\]"  # 0
+    quote_pattern = r"\[/?(quote|q)\]"  # 0
+    anchors_pattern = r"\{#"  # 1 ???
     right_left_pattern = r"\[/?(right|left)\]"  # 0
     html_ok_pattern = r"\[/?(hr|hr)\]"  # 0
+    toc_pattern = r"\[toc[^\]]"
 
     # to fix
-    double_dot_pattern = r"\:\:+"  # 513
     emoji_pattern = r"\[picto"  # 77
     col_pattern = r"\[ */? *col"  # 48
-    broken_int_links_pattern = r"\[\[/? */? *\d+\|"  # 4
-    slash_in_links_pattern = r"\[\[ */\w+/\d+"  # 3
-    broken_ext_links_pattern = r"\[\[ *(http|www)"  # 4
+    double_dot_pattern = r"\:\:+"  # 4 (faux positifs)
+    slash_in_links_pattern = r"\[\[ */\w+/\d+"  # 0
+    broken_ext_links_pattern = r"\[\[ *(http|www)"  # 0
+    broken_int_links_pattern = r"\[\[/? */? *\d+\|"  # 0
     forum_links_pattern = r"#t\d+"  # 1
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
     empty_link_label = r"\[ *\]\("  # 0
@@ -201,4 +256,5 @@ if __name__ == "__main__":
 
     video_pattern = r"youtube"
 
-    _search(url_pattern)
+    #    _search(forum_links_pattern)
+    Dump().complete_contributions()
