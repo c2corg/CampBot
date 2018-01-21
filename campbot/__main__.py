@@ -6,6 +6,7 @@ Usage:
   campbot check_recent_changes <message_url> --lang=<lang> --login=<login> --password=<password> [--delay=<seconds>]
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot clean_ltag <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_internal_links <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_markdown <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot contributions [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
@@ -82,6 +83,13 @@ def main(args):
 
         get_campbot(args).fix_markdown(ColorAndUnderlineRemover(), filename=args["<ids_file>"],
                                        ask_before_saving=not args["--batch"])
+
+    elif args["clean_ltag"]:
+        from campbot.processors import LtagCleaner
+
+        get_campbot(args).fix_markdown(LtagCleaner(), filename=args["<ids_file>"],
+                                       ask_before_saving=not args["--batch"])
+
 
     elif args["contributions"]:
         get_campbot(args).export_contributions(starts=args["--starts"], ends=args["--ends"], filename=args["--out"])

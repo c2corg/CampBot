@@ -400,6 +400,10 @@ class BBCodeRemover(MarkdownProcessor):
                       repl=r"[/url]",
                       flags=re.IGNORECASE),
 
+            Converter(pattern=r'\[urlhttp',
+                      repl=r"[url]http",
+                      flags=re.IGNORECASE),
+
             Converter(pattern=r'\[url=?\] *(http|www)(.*?)\[/url\]',
                       repl=r"\1\2 ",
                       flags=re.IGNORECASE),
@@ -453,11 +457,15 @@ class BBCodeRemover(MarkdownProcessor):
             Converter(pattern=r'\n?\[hr/?\]\n?',
                       repl=r"\n----\n",
                       flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[toc 2\]',
+                      repl=r"[toc]",
+                      flags=re.IGNORECASE),
         ]
 
 
 class LtagCleaner(MarkdownProcessor):
-    ready_for_production = False
+    ready_for_production = True
     comment = "Simplify L# syntax"
 
     _tests = [
