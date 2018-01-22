@@ -198,11 +198,14 @@ def get_document_types():
     return {doc_id: typ for doc_id, typ in Dump().get_all_ids()}
 
 
-def _search(pattern):
+def _search(pattern, update_if_blob=False):
     from campbot.objects import get_constructor
+    from campbot import CampBot
 
+    bot = CampBot()
     dump = Dump()
     dump.complete()
+    dump.complete_contributions()
 
     with open("ids.txt", "w") as f:
         for doc_id, typ, lang, field in dump.search(pattern):
@@ -213,6 +216,9 @@ def _search(pattern):
                 print("* https://www.camptocamp.org/{}/{} {}".format(get_constructor(typ).url_path, doc_id, field))
 
             f.write("{}|{}\n".format(doc_id, typ))
+
+            if update_if_blob and field == "blob":
+                dump.insert(bot.wiki.get_wiki_object(doc_id, document_type=typ))
 
 
 if __name__ == "__main__":
@@ -256,5 +262,6 @@ if __name__ == "__main__":
 
     video_pattern = r"youtube"
 
-    #    _search(forum_links_pattern)
-    Dump().complete_contributions()
+    wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
+
+    _search(col_pattern)
