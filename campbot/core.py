@@ -261,6 +261,24 @@ class ForumBot(BaseBot):
         topic = self.get_topic(url=url)
         return topic["details"]["participants"]
 
+    def unhide_posts(self, username):
+        offset = 0
+
+        url = "/user_actions.json?offset={}&username={}&filter=5"
+
+        while True:
+            d = self.get(url.format(offset, username))
+
+            if len(d["user_actions"]) == 0:
+                break
+
+            for action in d["user_actions"]:
+                if action["hidden"]:
+                    print("unhide", action["topic_id"], action["post_id"])
+                    self.put("/posts/{}/unhide".format(action["post_id"]), None)
+
+            offset += 30
+
 
 class CampBot(object):
     def __init__(self, proxies=None, min_delay=None):
