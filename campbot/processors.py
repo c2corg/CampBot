@@ -75,6 +75,10 @@ class BBCodeRemover(MarkdownProcessor):
             "expected": "*[Voir la discussion sur le forum.](https://www.camptocamp.org/forums/viewtopic.php?id=158106)*",
         },
         {
+            "source": "[col][col 50 left]",
+            "expected": "",
+        },
+        {
             "source": "x[hr]",
             "expected": "x\n----\n",
         },
@@ -460,6 +464,10 @@ class BBCodeRemover(MarkdownProcessor):
 
             Converter(pattern=r'\[toc 2\]',
                       repl=r"[toc]",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[/? *col *\d* *(left|right)? *\d* *\]',
+                      repl=r"",
                       flags=re.IGNORECASE),
         ]
 

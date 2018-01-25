@@ -33,6 +33,15 @@ class Dump(object):
                            " written_at CHAR(32)"
                            ") WITHOUT ROWID;")
 
+        self._conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS IX_document_document_id "
+                           " ON document(document_id);")
+
+        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_locale_document_id "
+                           " ON locale(document_id);")
+
+        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_contribution_document_id "
+                           " ON contribution(document_id);")
+
         def regexp(y, x, search=re.search):
             return 1 if search(y, str(x)) else 0
 
@@ -202,7 +211,7 @@ def _search(pattern, update_if_blob=False):
     from campbot.objects import get_constructor
     from campbot import CampBot
 
-    bot = CampBot()
+    bot = CampBot(min_delay=0.1)
     dump = Dump()
     dump.complete()
     dump.complete_contributions()
@@ -218,7 +227,10 @@ def _search(pattern, update_if_blob=False):
             f.write("{}|{}\n".format(doc_id, typ))
 
             if update_if_blob and field == "blob":
-                dump.insert(bot.wiki.get_wiki_object(doc_id, document_type=typ))
+                try:
+                    dump.insert(bot.wiki.get_wiki_object(doc_id, document_type=typ))
+                except:
+                    pass
 
 
 if __name__ == "__main__":
@@ -241,7 +253,7 @@ if __name__ == "__main__":
 
     # to fix
     emoji_pattern = r"\[picto"  # 77
-    col_pattern = r"\[ */? *col"  # 48
+    col_pattern = r"\[ */? *col +\d* *(left|right)? *\d* *\]"  # 0
     double_dot_pattern = r"\:\:+"  # 4 (faux positifs)
     slash_in_links_pattern = r"\[\[ */\w+/\d+"  # 0
     broken_ext_links_pattern = r"\[\[ *(http|www)"  # 0
@@ -264,4 +276,4 @@ if __name__ == "__main__":
 
     wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
 
-    _search(col_pattern)
+    _search(col_pattern, True)
