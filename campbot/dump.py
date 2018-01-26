@@ -3,7 +3,37 @@ import re
 
 from campbot import CampBot
 
+from copy import deepcopy
+from dateutil.parser import parse as parse_datetime
+
 _default_db_name = "camptocamp.db"
+
+
+def prepare_for_insertion(doc):
+    result = deepcopy(doc)
+
+    result["creator"] = result.pop("creator", {}).get("user_id", None)
+    if isinstance(result.get("author", None), dict):
+        result["author"] = (result.pop("author", {}) or {}).get("user_id", None)
+
+    if "date_time" in result and result["date_time"] is not None:
+        result["date_time"] = int(parse_datetime(result["date_time"]).timestamp())
+
+    result.pop("available_langs", None)
+
+    result["associations"] = result["associations"] or {}
+    result["associations"].pop("recent_outings", None)
+    result["associations"].pop("all_routes", None)
+    result["associations"]["maps"] = result.pop("maps", [])
+    result["associations"]["areas"] = result.pop("areas", [])
+    associations = []
+    for items in result["associations"].values():
+        for item in items:
+            associations.append(item["document_id"])
+
+    result["associations"] = associations
+
+    return result
 
 
 class Dump(object):
@@ -13,10 +43,14 @@ class Dump(object):
         self._conn = sqlite3.connect(db_name or _default_db_name)
 
         self._conn.execute("CREATE TABLE IF NOT EXISTS document ("
-                           " document_id INT PRIMARY KEY,"
+                           " document_id INTEGER PRIMARY KEY,"
                            " type CHAR(1),"
-                           " version_id INT NOT NULL"
-                           ");")
+                           " version_id INTEGER NOT NULL,"
+                           " filename TEXT,"
+                           " geometry_geom TEXT,"
+                           " geometry_geom_detail TEXT,"
+                           " geometry_version INTEGER"
+                           ") WITHOUT ROWID;")
 
         self._conn.execute("CREATE TABLE IF NOT EXISTS locale ("
                            " document_id INT,"
@@ -33,6 +67,29 @@ class Dump(object):
                            " written_at CHAR(32)"
                            ") WITHOUT ROWID;")
 
+        self._conn.execute("CREATE TABLE IF NOT EXISTS string_property ("
+                           " document_id INTEGER,"
+                           " field INTEGER,"
+                           " value INTEGER"
+                           ");")
+
+        self._conn.execute("CREATE TABLE IF NOT EXISTS integer_property ("
+                           " document_id INTEGER,"
+                           " field INTEGER,"
+                           " value INTEGER"
+                           ");")
+
+        self._conn.execute("CREATE TABLE IF NOT EXISTS real_property ("
+                           " document_id INTEGER,"
+                           " field INTEGER,"
+                           " value REAL"
+                           ");")
+
+        self._conn.execute("CREATE TABLE IF NOT EXISTS string ("
+                           " string_id INTEGER PRIMARY KEY,"
+                           " value TEXT"
+                           ");")
+
         self._conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS IX_document_document_id "
                            " ON document(document_id);")
 
@@ -42,71 +99,151 @@ class Dump(object):
         self._conn.execute("CREATE INDEX IF NOT EXISTS IX_contribution_document_id "
                            " ON contribution(document_id);")
 
+        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_real_property_document_id "
+                           " ON real_property(document_id);")
+
+        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_integer_property_document_id "
+                           " ON integer_property(document_id);")
+
+        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_string_property_document_id "
+                           " ON string_property(document_id);")
+
         def regexp(y, x, search=re.search):
             return 1 if search(y, str(x)) else 0
 
         self._conn.create_function('regexp', 2, regexp)
-        self._cur = None
 
-    def insert(self, doc=None, version_id=0, contrib=None):
-        cur = self._conn.cursor()
+        self.string_ids = {}
 
-        if not doc:
-            doc = contrib.get_full_document()
+        for row in self._conn.execute("SELECT string_id, value FROM string"):
+            self.string_ids[row[1]] = row[0]
+
+    def get_string_id(self, string, cur):
+        if string not in self.string_ids:
+            cur.execute("INSERT INTO string(value) VALUES (?)", (string,))
+            self.string_ids[string] = cur.lastrowid
+
+        return self.string_ids[string]
+
+    def _insert_prop(self, doc, key, value, cur):
+
+        if value is None:
+            return
+
+        if isinstance(value, list):
+            for sub_value in value:
+                self._insert_prop(doc, key, sub_value, cur)
+
+        elif isinstance(value, dict):
+            for sub_key in value:
+                self._insert_prop(doc, key + "." + sub_key, value[sub_key], cur)
+
+        else:
+            key_id = self.get_string_id(key, cur)
+
+            if isinstance(value, (bool, int)):
+                cur.execute("INSERT INTO integer_property"
+                            "(document_id,field,value)"
+                            "VALUES (?,?,?)",
+                            (doc.document_id, key_id, value))
+
+            elif isinstance(value, float):
+                cur.execute("INSERT INTO real_property"
+                            "(document_id,field,value)"
+                            "VALUES (?,?,?)",
+                            (doc.document_id, key_id, value))
+
+            elif isinstance(value, str):
+                string_id = self.get_string_id(value, cur)
+
+                cur.execute("INSERT INTO string_property"
+                            "(document_id,field,value)"
+                            "VALUES (?,?,?)",
+                            (doc.document_id, key_id, string_id))
+            else:
+                raise NotImplementedError(key, value)
+
+    def insert(self, cur, base_doc=None, version_id=0, contrib=None):
+
+        if not base_doc:
+            base_doc = contrib.get_full_document()
             version_id = contrib.version_id
 
-        if "type" not in doc:
+        if "type" not in base_doc:
             return
+
+        doc = prepare_for_insertion(base_doc)
 
         cur.execute("DELETE FROM document WHERE document_id=?", (doc.document_id,))
         cur.execute("DELETE FROM locale WHERE document_id=?", (doc.document_id,))
+        cur.execute("DELETE FROM string_property WHERE document_id=?", (doc.document_id,))
+        cur.execute("DELETE FROM integer_property WHERE document_id=?", (doc.document_id,))
+        cur.execute("DELETE FROM real_property WHERE document_id=?", (doc.document_id,))
+
+        geometry = doc.pop("geometry", None) or {}
+
+        props = (
+            doc.document_id,
+            doc.type,
+            version_id,
+            geometry.pop("version", None),
+            geometry.pop("geom_detail", None),
+            geometry.pop("geom", None),
+            doc.pop("filename", None),
+        )
+
+        assert len(geometry) == 0
 
         cur.execute("INSERT INTO document"
-                    "(document_id, type, version_id)"
-                    "VALUES (?,?,?)",
-                    (doc.document_id, doc.type, version_id))
+                    "(document_id, type, version_id,"
+                    "geometry_version,geometry_geom_detail,geometry_geom,"
+                    "filename)"
+                    "VALUES (?,?,?,?,?,?,?)",
+                    props)
 
-        for locale in doc.get("locales", []):
+        for key in doc:
+            value = doc[key]
 
-            lang = locale.pop("lang")
-            locale.pop("version", None)
-            locale.pop("topic_id", None)
+            if key == "locales":
+                for locale in value:
 
-            for field in locale:
-                value = locale[field]
-                if isinstance(value, str) and len(value.strip()) != 0:
-                    cur.execute("INSERT INTO locale"
-                                "(document_id,lang,field,value)"
-                                "VALUES (?,?,?,?)",
-                                (doc.document_id, lang, field, value))
+                    lang = locale.pop("lang")
 
-        self._conn.commit()
+                    for field in locale:
+                        value = locale[field]
+                        if isinstance(value, str) and len(value.strip()) != 0 and field not in (
+                                "version", "topic_id"):
+                            field_id = self.get_string_id(field, cur)
+                            cur.execute("INSERT INTO locale"
+                                        "(document_id,lang,field,value)"
+                                        "VALUES (?,?,?,?)",
+                                        (doc.document_id, lang, field_id, value))
+            else:
+                self._insert_prop(doc, key, value, cur)
 
     def select(self, document_id):
         sql = "SELECT * FROM document WHERE document_id=?;"
 
-        self._cur = self._conn.cursor()
-        self._cur.execute(sql, (document_id,))
+        cur = self._conn.cursor()
+        cur.execute(sql, (document_id,))
 
-        result = self._cur.fetchone()
+        result = cur.fetchone()
 
         self._conn.commit()
-        self._cur.close()
-        self._cur = None
+        cur.close()
 
         return result
 
     def get_highest_version_id(self, table="document"):
         sql = "SELECT version_id from {} ORDER BY version_id DESC LIMIT 1".format(table)
 
-        self._cur = self._conn.cursor()
-        self._cur.execute(sql)
+        cur = self._conn.cursor()
+        cur.execute(sql)
 
-        result = self._cur.fetchone()
+        result = cur.fetchone()
 
         self._conn.commit()
-        self._cur.close()
-        self._cur = None
+        cur.close()
 
         return result[0] if result else 0
 
@@ -115,28 +252,25 @@ class Dump(object):
 
         highest_version_id = self.get_highest_version_id("contribution")
 
-        i = 1000
-        cur = self._conn.cursor()
+        cur = None
 
-        for contrib in bot.wiki.get_contributions(oldest_date="1990-12-25"):
+        for i, contrib in enumerate(bot.wiki.get_contributions(oldest_date="1990-12-25")):
             if highest_version_id >= contrib.version_id:
                 break
 
             print(contrib.written_at, contrib.version_id, contrib.user.username)
 
-            if i == 0:
+            if i % 1000 == 0:
                 self._conn.commit()
                 cur = self._conn.cursor()
-                i = 1000
-
-            i -= 1
 
             doc = contrib.document
             try:
                 cur.execute("INSERT INTO contribution"
                             "(document_id, type, version_id, user_id, written_at)"
                             "VALUES (?,?,?,?,?)",
-                            (doc.document_id, doc.type, contrib.version_id, contrib.user.user_id,
+                            (doc.document_id, doc.type, contrib.version_id,
+                             contrib.user.user_id,
                              contrib.written_at))
             except sqlite3.IntegrityError:
                 pass
@@ -150,17 +284,23 @@ class Dump(object):
         still_done = []
         highest_version_id = self.get_highest_version_id()
 
-        for contrib in bot.wiki.get_contributions(oldest_date="1990-12-25"):
-            if highest_version_id >= contrib.version_id:
+        cur = None
+
+        for i, contrib in enumerate(bot.wiki.get_contributions(oldest_date="1990-12-25")):
+            if highest_version_id >= contrib.version_id and i > 1000:
                 break
+
+            if i % 1000 == 0:
+                self._conn.commit()
+                cur = self._conn.cursor()
 
             key = (contrib.document.document_id, contrib.document.type)
             if key not in still_done:
                 still_done.append(key)
-                self.insert(contrib=contrib)
-                print(contrib.written_at, key, contrib.version_id, "inserted")
-            else:
-                print(contrib.written_at, key, contrib.version_id, "still done")
+                self.insert(cur=cur, contrib=contrib)
+                print(i, contrib.written_at, key, "inserted")
+
+        self._conn.commit()
 
     def search(self, pattern):
         sql = ("SELECT document.document_id, document.type, locale.lang, locale.field "
@@ -176,14 +316,13 @@ class Dump(object):
 
         sql = "SELECT document_id, type FROM document"
 
-        self._cur = self._conn.cursor()
-        self._cur.execute(sql)
+        cur = self._conn.cursor()
+        cur.execute(sql)
 
-        result = self._cur.fetchall()
+        result = cur.fetchall()
 
         self._conn.commit()
-        self._cur.close()
-        self._cur = None
+        cur.close()
 
         return result
 
@@ -191,27 +330,45 @@ class Dump(object):
 
         sql = "SELECT version_id FROM contribution"
 
-        self._cur = self._conn.cursor()
-        self._cur.execute(sql)
+        cur = self._conn.cursor()
+        cur.execute(sql)
 
-        result = self._cur.fetchall()
+        result = cur.fetchall()
 
         self._conn.commit()
-        self._cur.close()
-        self._cur = None
+        cur.close()
 
         return [r[0] for r in result]
+
+    def re_update(self):
+        from campbot import CampBot
+        c = self._conn.execute("SELECT document.document_id, document.type FROM document "
+                               "LEFT OUTER JOIN string_property "
+                               "    ON string_property.document_id = document.document_id "
+                               "WHERE field IS NULL")
+
+        result = c.fetchall()
+
+        bot = CampBot(min_delay=0.01)
+        cur = None
+
+        for i, (document_id, typ) in enumerate(result):
+            if i % 1000 == 0:
+                self._conn.commit()
+                cur = self._conn.cursor()
+
+            doc = bot.wiki.get_wiki_object(item_id=document_id, document_type=typ)
+            self.insert(cur,doc)
+            print("{}/{}".format(i, len(result)), document_id, typ)
 
 
 def get_document_types():
     return {doc_id: typ for doc_id, typ in Dump().get_all_ids()}
 
 
-def _search(pattern, update_if_blob=False):
+def _search(pattern):
     from campbot.objects import get_constructor
-    from campbot import CampBot
 
-    bot = CampBot(min_delay=0.1)
     dump = Dump()
     dump.complete()
     dump.complete_contributions()
@@ -225,12 +382,6 @@ def _search(pattern, update_if_blob=False):
                 print("* https://www.camptocamp.org/{}/{} {}".format(get_constructor(typ).url_path, doc_id, field))
 
             f.write("{}|{}\n".format(doc_id, typ))
-
-            if update_if_blob and field == "blob":
-                try:
-                    dump.insert(bot.wiki.get_wiki_object(doc_id, document_type=typ))
-                except:
-                    pass
 
 
 if __name__ == "__main__":
@@ -276,4 +427,5 @@ if __name__ == "__main__":
 
     wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
 
-    _search(col_pattern, True)
+    # _search(col_pattern)
+    Dump().re_update()

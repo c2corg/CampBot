@@ -27,6 +27,9 @@ class BotObject(dict):
         self.__setattr__ = self.__setitem__
 
     def __getattr__(self, item):
+        if item.startswith("_"):
+            raise AttributeError
+
         return self[item]
 
     def _convert_list(self, name, constructor):
