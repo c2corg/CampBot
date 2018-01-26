@@ -44,7 +44,6 @@ class BaseBot(object):
         self.proxies = proxies
         self._next_request_datetime = datetime.now()
         self.min_delay = timedelta(seconds=float(min_delay or 1))
-        self._cache = {}
 
     @property
     def headers(self):
@@ -61,22 +60,19 @@ class BaseBot(object):
     def get(self, url, **kwargs):
         key = (url, str(kwargs))
 
-        if key not in self._cache:
-            self._wait()
-            logging.debug("GET %s", url)
+        self._wait()
+        logging.debug("GET %s", url)
 
-            res = self._session.get(self.api_url + url,
-                                    proxies=self.proxies,
-                                    params=kwargs)
+        res = self._session.get(self.api_url + url,
+                                proxies=self.proxies,
+                                params=kwargs)
 
-            res.raise_for_status()
+        res.raise_for_status()
 
-            if res.headers['Content-type'].startswith('application/json'):
-                self._cache[key] = res.json()
-            else:
-                self._cache[key] = res.content
-
-        return self._cache[key]
+        if res.headers['Content-type'].startswith('application/json'):
+            return res.json()
+        else:
+            return res.content
 
     def post(self, url, data):
         self._wait()
