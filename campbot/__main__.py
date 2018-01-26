@@ -11,7 +11,7 @@ Usage:
   campbot clean_markdown <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot contributions [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot outings <filters> [--out=<filename>] [--delay=<seconds>]
-  campbot unhide_posts <username> --login=<login> --password=<password> [--delay=<seconds>]
+  campbot unhide_posts <usernames> --login=<login> --password=<password> [--delay=<seconds>]
 
 
 Options:
@@ -98,7 +98,7 @@ def main(args):
         get_campbot(args).export_outings(args["<filters>"], args["--out"])
 
     elif args["unhide_posts"]:
-        get_campbot(args).forum.unhide_posts(username=args["<username>"])
+        get_campbot(args).forum.unhide_posts(usernames=args["<usernames>"])
 
 
 if __name__ == "__main__":
