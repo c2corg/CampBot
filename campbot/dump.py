@@ -5,6 +5,7 @@ from campbot import CampBot
 
 from copy import deepcopy
 from dateutil.parser import parse as parse_datetime
+from time import time
 
 _default_db_name = "camptocamp.db"
 
@@ -252,17 +253,13 @@ class Dump(object):
 
         highest_version_id = self.get_highest_version_id("contribution")
 
-        cur = None
+        cur = self._conn.cursor()
 
         for i, contrib in enumerate(bot.wiki.get_contributions(oldest_date="1990-12-25")):
             if highest_version_id >= contrib.version_id:
                 break
 
             print(contrib.written_at, contrib.version_id, contrib.user.username)
-
-            if i % 1000 == 0:
-                self._conn.commit()
-                cur = self._conn.cursor()
 
             doc = contrib.document
             try:
@@ -284,20 +281,18 @@ class Dump(object):
         still_done = []
         highest_version_id = self.get_highest_version_id()
 
-        cur = None
+        cur = self._conn.cursor()
 
-        for i, contrib in enumerate(bot.wiki.get_contributions(oldest_date="1990-12-25")):
-            if highest_version_id >= contrib.version_id and i > 1000:
+        for i, contrib in enumerate(bot.wiki.get_contributions(oldest_date="2018-01-24")):
+            if highest_version_id >= contrib.version_id:
                 break
-
-            if i % 1000 == 0:
-                self._conn.commit()
-                cur = self._conn.cursor()
 
             key = (contrib.document.document_id, contrib.document.type)
             if key not in still_done:
                 still_done.append(key)
-                self.insert(cur=cur, contrib=contrib)
+                doc = contrib.get_full_document()
+
+                self.insert(cur=cur, contrib=contrib, version_id=contrib.version_id, base_doc=doc)
                 print(i, contrib.written_at, key, "inserted")
 
         self._conn.commit()
@@ -330,13 +325,8 @@ class Dump(object):
 
         sql = "SELECT version_id FROM contribution"
 
-        cur = self._conn.cursor()
-        cur.execute(sql)
-
+        cur = self._conn.execute(sql)
         result = cur.fetchall()
-
-        self._conn.commit()
-        cur.close()
 
         return [r[0] for r in result]
 
@@ -353,14 +343,22 @@ class Dump(object):
         cur = None
 
         for i, (document_id, typ) in enumerate(result):
-            if i % 1000 == 0:
+            if i % 50 == 0:
                 self._conn.commit()
                 cur = self._conn.cursor()
 
-            doc = bot.wiki.get_wiki_object(item_id=document_id, document_type=typ)
-            self.insert(cur,doc)
-            print("{}/{}".format(i, len(result)), document_id, typ)
+            t = time()
+            try:
+                doc = bot.wiki.get_wiki_object(item_id=document_id, document_type=typ)
+                get_time = int((time() - t) * 1000)
+            except Exception as e:
+                print(e)
+            else:
+                t = time()
+                self.insert(cur=cur, base_doc=doc)
+                print("{}/{}".format(i, len(result)), document_id, typ, get_time, int((time() - t) * 1000))
 
+        self._conn.commit()
 
 def get_document_types():
     return {doc_id: typ for doc_id, typ in Dump().get_all_ids()}
@@ -427,5 +425,4 @@ if __name__ == "__main__":
 
     wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
 
-    # _search(col_pattern)
-    Dump().re_update()
+    _search(col_pattern)
