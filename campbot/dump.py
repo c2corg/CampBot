@@ -2,6 +2,7 @@ import sqlite3
 import re
 
 from campbot import CampBot
+from requests.exceptions import HTTPError
 
 from copy import deepcopy
 from dateutil.parser import parse as parse_datetime
@@ -164,23 +165,26 @@ class Dump(object):
             else:
                 raise NotImplementedError(key, value)
 
+    def delete(self, document_id, cur):
+
+        cur.execute("DELETE FROM document WHERE document_id=?", (document_id,))
+        cur.execute("DELETE FROM locale WHERE document_id=?", (document_id,))
+        cur.execute("DELETE FROM string_property WHERE document_id=?", (document_id,))
+        cur.execute("DELETE FROM integer_property WHERE document_id=?", (document_id,))
+        cur.execute("DELETE FROM real_property WHERE document_id=?", (document_id,))
+
     def insert(self, cur, base_doc=None, version_id=0, contrib=None):
 
         if not base_doc:
             base_doc = contrib.get_full_document()
             version_id = contrib.version_id
 
-        if "type" not in base_doc:
+        self.delete(base_doc.document_id, cur)
+
+        if "redirects_to" in base_doc:
             return
 
         doc = prepare_for_insertion(base_doc)
-
-        cur.execute("DELETE FROM document WHERE document_id=?", (doc.document_id,))
-        cur.execute("DELETE FROM locale WHERE document_id=?", (doc.document_id,))
-        cur.execute("DELETE FROM string_property WHERE document_id=?", (doc.document_id,))
-        cur.execute("DELETE FROM integer_property WHERE document_id=?", (doc.document_id,))
-        cur.execute("DELETE FROM real_property WHERE document_id=?", (doc.document_id,))
-
         geometry = doc.pop("geometry", None) or {}
 
         props = (
@@ -332,10 +336,14 @@ class Dump(object):
 
     def re_update(self):
         from campbot import CampBot
-        c = self._conn.execute("SELECT document.document_id, document.type FROM document "
-                               "LEFT OUTER JOIN string_property "
-                               "    ON string_property.document_id = document.document_id "
-                               "WHERE field IS NULL")
+        # c = self._conn.execute("SELECT document.document_id, document.type FROM document "
+        #                        "LEFT OUTER JOIN string_property "
+        #                        "    ON string_property.document_id = document.document_id "
+        #                        "WHERE field IS NULL")
+
+        c = self._conn.execute("SELECT locale.document_id, document.type FROM locale "
+                               "LEFT JOIN document on document.document_id=locale.document_id "
+                               "WHERE field='blob'")
 
         result = c.fetchall()
 
@@ -351,14 +359,20 @@ class Dump(object):
             try:
                 doc = bot.wiki.get_wiki_object(item_id=document_id, document_type=typ)
                 get_time = int((time() - t) * 1000)
-            except Exception as e:
-                print(e)
+                doc["document_id"] = document_id  # for redirects...
+            except HTTPError as e:
+                if e.response.status_code == 404:
+                    print(document_id, "is deleted")
+                    self.delete(document_id, cur)
+                else:
+                    raise
             else:
                 t = time()
                 self.insert(cur=cur, base_doc=doc)
                 print("{}/{}".format(i, len(result)), document_id, typ, get_time, int((time() - t) * 1000))
 
         self._conn.commit()
+
 
 def get_document_types():
     return {doc_id: typ for doc_id, typ in Dump().get_all_ids()}
@@ -425,4 +439,5 @@ if __name__ == "__main__":
 
     wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
 
-    _search(col_pattern)
+    #    _search(col_pattern)
+    Dump().re_update()
