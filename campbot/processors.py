@@ -83,8 +83,8 @@ class BBCodeRemover(MarkdownProcessor):
             "expected": "x\n----\n",
         },
         {
-            "source": "{#coucou}",
-            "expected": '<span id="coucou"></span>',
+            "expected": "{#coucou}",
+            "source": '<span id="coucou"></span>',
         },
         {
             "source": "[center]coucou[/center]",
@@ -454,8 +454,8 @@ class BBCodeRemover(MarkdownProcessor):
                       repl=r"<\1center>",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\{#([\w-]+)\}',
-                      repl=r'<span id="\1"></span>',
+            Converter(pattern=r'<span id="([\w-]+)"></span>',
+                      repl=r'{#\1}',
                       flags=re.IGNORECASE),
 
             Converter(pattern=r'\n?\[hr/?\]\n?',
@@ -469,6 +469,40 @@ class BBCodeRemover(MarkdownProcessor):
             Converter(pattern=r'\[/? *col *\d* *(left|right)? *\d* *\]',
                       repl=r"",
                       flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto activity_1 /\]',
+                      repl=r":skitouring:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto activity_6 /\]',
+                      repl=r":hiking:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto activity_2 /\]',
+                      repl=r":snow_ice_mixed:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto activity_3 /\]',
+                      repl=r":mountain_climbing:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto activity_4 /\]',
+                      repl=r":rock_climbing:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto activity_5 /\]',
+                      repl=r":ice_climbing:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto activity_7 /\]',
+                      repl=r":snowshoeing:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto activity_8 /\]',
+                      repl=r":paragliding:",
+                      flags=re.IGNORECASE),
+
+
         ]
 
 

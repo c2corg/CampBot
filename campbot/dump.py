@@ -179,7 +179,7 @@ class Dump(object):
             base_doc = contrib.get_full_document()
             version_id = contrib.version_id
 
-        self.delete(base_doc.document_id, cur)
+        self.delete(contrib.document.document_id, cur)
 
         if "redirects_to" in base_doc:
             return
@@ -217,7 +217,7 @@ class Dump(object):
                     for field in locale:
                         value = locale[field]
                         if isinstance(value, str) and len(value.strip()) != 0 and field not in (
-                                "version", "topic_id"):
+                            "version", "topic_id"):
                             field_id = self.get_string_id(field, cur)
                             cur.execute("INSERT INTO locale"
                                         "(document_id,lang,field,value)"
@@ -302,9 +302,10 @@ class Dump(object):
         self._conn.commit()
 
     def search(self, pattern):
-        sql = ("SELECT document.document_id, document.type, locale.lang, locale.field "
+        sql = ("SELECT document.document_id, document.type, locale.lang, string.value, locale.value "
                "FROM locale "
                "LEFT JOIN document ON document.document_id=locale.document_id "
+               "LEFT JOIN string ON string.string_id=locale.field "
                "WHERE locale.value REGEXP ?")
 
         c = self._conn.cursor()
@@ -386,7 +387,7 @@ def _search(pattern):
     dump.complete_contributions()
 
     with open("ids.txt", "w") as f:
-        for doc_id, typ, lang, field in dump.search(pattern):
+        for doc_id, typ, lang, field, _ in dump.search(pattern):
             if lang.strip():
                 print("* https://www.camptocamp.org/{}/{}/{} {}".format(get_constructor(typ).url_path, doc_id,
                                                                         lang, field))
@@ -394,6 +395,93 @@ def _search(pattern):
                 print("* https://www.camptocamp.org/{}/{} {}".format(get_constructor(typ).url_path, doc_id, field))
 
             f.write("{}|{}\n".format(doc_id, typ))
+
+
+def _build_ltag_pattern():
+    """
+    Build the big ugly fat regexp for L# numbering
+    It's fully based on named patterns : (P?<pattern_name>pattern)
+    and decomposed part by part
+    """
+    p = "(?P<{}>{})".format
+
+    # small patterns used more than once
+    raw_label = r"[a-zA-Z'’`\"/][a-zA-Z0-9'’`\"/]*"
+    raw_offset = r"[+\-]?\d*"
+
+    # let's build multi pitch pattern, like L#-+3 or L#12-+4ter
+    first_label = p("first_label", "_")
+    last_label = p("last_label", raw_label)
+    first_offset = p("first_offset", raw_offset)
+    last_offset = p("last_offset", raw_offset)
+    first_pitch = p("first_pitch", first_offset + first_label + "?")
+    last_pitch = p("last_pitch", last_offset + last_label + "?")
+    multi_pitch = p("multi_pitch", first_pitch + "?-" + last_pitch)
+
+    # mono pitch
+    mono_pitch_label = p("mono_pitch_label", raw_label + "|_")
+    mono_pitch_value = p("mono_pitch_value", "\+?\d*")
+    mono_pitch = p("mono_pitch", mono_pitch_value + mono_pitch_label + "?")
+
+    local_ref = p("local_ref", r"!")
+
+    pitch = "(" + multi_pitch + "|" + mono_pitch + ")"
+    numbering = p("numbering", pitch + local_ref + "?")
+
+    text_in_the_middle = p("text_in_the_middle", "~")
+    header = p("header", "=")
+
+    typ = p("type", "[LR]")
+
+    modifier = "(" + header + "|" + text_in_the_middle + "|" + numbering + ")"
+
+    ltag = p("ltag", typ + "#" + modifier)
+
+    return ltag
+
+
+def get_ltag_patterns():
+    dump = Dump()
+
+    p = re.compile(r"[LR]#(~|=|[^ |\n\r,;.:()<>\[\]]*)")
+    tester = re.compile(_build_ltag_pattern())
+
+    patterns = {}
+
+    def repl(match):
+        patterns[match.group(0)] = patterns.get(match.group(0), 0) + 1
+        return ""
+
+    for doc_id, typ, lang, field, value in dump.search("[LR]#"):
+        p.sub(repl, value)
+
+    unvalid_patterns = [
+        'L#\t',
+        'L#2\xa0',
+        'L#\xa0',
+        'L#¬',
+        'R#**',
+        'L#**',
+        'R#-1*',
+
+        'L#Cox_in_Hell',
+        "L#'-+1",
+        "L#2'+L3'",
+        'L#_-2-+2',
+        "L#1'-+1",
+        "L#4'-5'",
+        'L#-1_',
+        "L#2'-+1",
+        'L#6"-8',
+        'R#-1_',
+        "L#'-+2",
+    ]
+
+    for pa in patterns:
+        test = tester.sub("", pa)
+
+        if len(test) != 0 and pa not in unvalid_patterns:
+            print(repr(pa), ",", patterns[pa], "[" + test + "]")
 
 
 if __name__ == "__main__":
@@ -439,5 +527,9 @@ if __name__ == "__main__":
 
     wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
 
-    #    _search(col_pattern)
-    Dump().re_update()
+    latg_ = ""
+
+    # get_ltag_patterns()
+    _search(emoji_pattern)
+
+# Dump().re_update()
