@@ -397,29 +397,31 @@ def _search(pattern):
             f.write("{}|{}\n".format(doc_id, typ))
 
 
-def _build_ltag_pattern():
+def get_pattern():
     """
     Build the big ugly fat regexp for L# numbering
     It's fully based on named patterns : (P?<pattern_name>pattern)
-    and decomposed part by part
+    and decomposed part by part.
+
+    Please have a look on
+    https://forum.camptocamp.org/t/question-l/207148/69
     """
     p = "(?P<{}>{})".format
 
     # small patterns used more than once
-    raw_label = r"[a-zA-Z'’`\"/][a-zA-Z0-9'’`\"/]*"
+    raw_label = r"[a-zA-Z'\"][a-zA-Z'\"\d_]*|_"
     raw_offset = r"[+\-]?\d*"
 
     # let's build multi pitch pattern, like L#-+3 or L#12-+4ter
-    first_label = p("first_label", "_")
-    last_label = p("last_label", raw_label)
+    multi_pitch_label = p("multi_pitch_label", raw_label)
     first_offset = p("first_offset", raw_offset)
     last_offset = p("last_offset", raw_offset)
-    first_pitch = p("first_pitch", first_offset + first_label + "?")
-    last_pitch = p("last_pitch", last_offset + last_label + "?")
+    first_pitch = p("first_pitch", first_offset + multi_pitch_label + "?")
+    last_pitch = p("last_pitch", last_offset)
     multi_pitch = p("multi_pitch", first_pitch + "?-" + last_pitch)
 
     # mono pitch
-    mono_pitch_label = p("mono_pitch_label", raw_label + "|_")
+    mono_pitch_label = p("mono_pitch_label", raw_label)
     mono_pitch_value = p("mono_pitch_value", "\+?\d*")
     mono_pitch = p("mono_pitch", mono_pitch_value + mono_pitch_label + "?")
 
@@ -433,55 +435,46 @@ def _build_ltag_pattern():
 
     typ = p("type", "[LR]")
 
-    modifier = "(" + header + "|" + text_in_the_middle + "|" + numbering + ")"
+    text = "(" + header + "|" + text_in_the_middle + "|" + numbering + ")"
 
-    ltag = p("ltag", typ + "#" + modifier)
-
-    return ltag
+    return p("ltag", typ + "#" + text)
 
 
 def get_ltag_patterns():
+    unvalid_patterns = [
+        "L#27.1",
+        "L#03.1",
+        "L#09.1",
+        "L#20.1",
+        "L#19.1",
+        "L#59.1",
+        "L#05.1",
+        "L#22.1",
+        "L#23.1",
+        "L#97.1",
+        "L#19.2",
+        "L#15.1",
+    ]
+
     dump = Dump()
+    dump.complete()
+    dump.complete_contributions()
 
-    p = re.compile(r"[LR]#(~|=|[^ |\n\r,;.:()<>\[\]]*)")
-    tester = re.compile(_build_ltag_pattern())
-
-    patterns = {}
+    p = re.compile(r"(^|\n)[LR]#[^\s\n|~]*")
+    tester = re.compile(get_pattern())
 
     def repl(match):
-        patterns[match.group(0)] = patterns.get(match.group(0), 0) + 1
+        pattern = match.group(0).strip(" \n")
+
+        test = tester.sub("", pattern)
+
+        if len(test) != 0 and pattern not in unvalid_patterns:
+            print(repr(pattern), ",", typ, doc_id, lang)
+
         return ""
 
     for doc_id, typ, lang, field, value in dump.search("[LR]#"):
         p.sub(repl, value)
-
-    unvalid_patterns = [
-        'L#\t',
-        'L#2\xa0',
-        'L#\xa0',
-        'L#¬',
-        'R#**',
-        'L#**',
-        'R#-1*',
-
-        'L#Cox_in_Hell',
-        "L#'-+1",
-        "L#2'+L3'",
-        'L#_-2-+2',
-        "L#1'-+1",
-        "L#4'-5'",
-        'L#-1_',
-        "L#2'-+1",
-        'L#6"-8',
-        'R#-1_',
-        "L#'-+2",
-    ]
-
-    for pa in patterns:
-        test = tester.sub("", pa)
-
-        if len(test) != 0 and pa not in unvalid_patterns:
-            print(repr(pa), ",", patterns[pa], "[" + test + "]")
 
 
 if __name__ == "__main__":
@@ -497,13 +490,13 @@ if __name__ == "__main__":
     html_pattern = r"\[/?(sub|sup|s|q|acr)\]"  # 0
     center_pattern = r"\[/?center\]"  # 0
     quote_pattern = r"\[/?(quote|q)\]"  # 0
-    anchors_pattern = r"\{#"  # 1 ???
+    anchors_pattern = r"\\{#[\w-]\}[^\n]"  # 1 ???
     right_left_pattern = r"\[/?(right|left)\]"  # 0
     html_ok_pattern = r"\[/?(hr|hr)\]"  # 0
-    toc_pattern = r"\[toc[^\]]"
+    toc_pattern = r"\[[tT][oO][cC][^\]]"  # 0
 
     # to fix
-    emoji_pattern = r"\[picto"  # 77
+    emoji_pattern = r"\[picto"  # 27
     col_pattern = r"\[ */? *col +\d* *(left|right)? *\d* *\]"  # 0
     double_dot_pattern = r"\:\:+"  # 4 (faux positifs)
     slash_in_links_pattern = r"\[\[ */\w+/\d+"  # 0
@@ -528,8 +521,9 @@ if __name__ == "__main__":
     wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
 
     latg_ = ""
+    important_pattern = "\[(important|warning)"
 
+    _search(important_pattern)
     # get_ltag_patterns()
-    _search(emoji_pattern)
 
 # Dump().re_update()

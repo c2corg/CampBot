@@ -462,7 +462,7 @@ class BBCodeRemover(MarkdownProcessor):
                       repl=r"\n----\n",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[toc 2\]',
+            Converter(pattern=r'\[[tT]oc ?([\d])?( right| left)?\]',
                       repl=r"[toc]",
                       flags=re.IGNORECASE),
 
@@ -470,39 +470,121 @@ class BBCodeRemover(MarkdownProcessor):
                       repl=r"",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_1 /\]',
+            Converter(pattern=r'\[picto activity_1 */\]',
                       repl=r":skitouring:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_6 /\]',
+            Converter(pattern=r'\[picto activity_6 */\]',
                       repl=r":hiking:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_2 /\]',
+            Converter(pattern=r'\[picto activity_2 */\]',
                       repl=r":snow_ice_mixed:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_3 /\]',
+            Converter(pattern=r'\[picto activity_3 */\]',
                       repl=r":mountain_climbing:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_4 /\]',
+            Converter(pattern=r'\[picto activity_4 */\]',
                       repl=r":rock_climbing:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_5 /\]',
+            Converter(pattern=r'\[picto activity_5 */\]',
                       repl=r":ice_climbing:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_7 /\]',
+            Converter(pattern=r'\[picto activity_7 */\]',
                       repl=r":snowshoeing:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_8 /\]',
+            Converter(pattern=r'\[picto activity_8 */\]',
                       repl=r":paragliding:",
                       flags=re.IGNORECASE),
 
+            Converter(pattern=r'\[picto picto_books */\]',
+                      repl=r":book:",
+                      flags=re.IGNORECASE),
 
+            Converter(pattern=r'\[picto picto_maps */\]',
+                      repl=r":map:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto action_report */\]',
+                      repl=r"",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto picto_summits */\]',
+                      repl=r":summit:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto picto_huts */\]',
+                      repl=r":hut:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto picto_products */\]',
+                      repl=r":local_product:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto picto_parkings */\]',
+                      repl=r":parking:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto picto_routes */\]',
+                      repl=r":motorway:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\[picto picto_users */\]',
+                      repl=r":mens:",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)[ \n]*\[/importante?\]\n*',
+                      repl="\n\n!!! \\1\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                      repl="\n\n!!! \\1\n!!! \\2\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n!!! \\6\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)[ \n]*\[/warning\]\n*',
+                      repl="\n\n!!!! \\1\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
+                      repl="\n\n!!!! \\1\n!!!! \\2\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
+                      repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
+                      repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n!!!! \\4\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
+                      repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n!!!! \\4\n!!!! \\5\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
+                      repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n!!!! \\4\n!!!! \\5\n!!!! \\6\n\n",
+                      flags=re.IGNORECASE),
         ]
 
 
