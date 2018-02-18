@@ -165,7 +165,12 @@ class Dump(object):
             else:
                 raise NotImplementedError(key, value)
 
-    def delete(self, document_id, cur):
+    def delete(self, document_id):
+        cur = self._conn.cursor()
+        self._delete(document_id, cur)
+        self._conn.commit()
+
+    def _delete(self, document_id, cur):
 
         cur.execute("DELETE FROM document WHERE document_id=?", (document_id,))
         cur.execute("DELETE FROM locale WHERE document_id=?", (document_id,))
@@ -179,7 +184,7 @@ class Dump(object):
             base_doc = contrib.get_full_document()
             version_id = contrib.version_id
 
-        self.delete(contrib.document.document_id, cur)
+        self._delete(contrib.document.document_id, cur)
 
         if "redirects_to" in base_doc:
             return
@@ -364,7 +369,7 @@ class Dump(object):
             except HTTPError as e:
                 if e.response.status_code == 404:
                     print(document_id, "is deleted")
-                    self.delete(document_id, cur)
+                    self._delete(document_id, cur)
                 else:
                     raise
             else:
@@ -490,7 +495,7 @@ if __name__ == "__main__":
     html_pattern = r"\[/?(sub|sup|s|q|acr)\]"  # 0
     center_pattern = r"\[/?center\]"  # 0
     quote_pattern = r"\[/?(quote|q)\]"  # 0
-    anchors_pattern = r"\\{#[\w-]\}[^\n]"  # 1 ???
+    anchors_pattern = r"\\{#[\w-]\}[^\n]"  # 0
     right_left_pattern = r"\[/?(right|left)\]"  # 0
     html_ok_pattern = r"\[/?(hr|hr)\]"  # 0
     toc_pattern = r"\[[tT][oO][cC][^\]]"  # 0
@@ -505,6 +510,7 @@ if __name__ == "__main__":
     forum_links_pattern = r"#t\d+"  # 1
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
     empty_link_label = r"\[ *\]\("  # 0
+    important_pattern = "\[ *(important|warning)"  # 0
 
     img_not_first_pattern = r"[^\n\]`]\[img"
 
@@ -521,9 +527,8 @@ if __name__ == "__main__":
     wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
 
     latg_ = ""
-    important_pattern = "\[(important|warning)"
 
-    _search(important_pattern)
+    _search(anchors_pattern)
     # get_ltag_patterns()
 
 # Dump().re_update()

@@ -538,28 +538,32 @@ class BBCodeRemover(MarkdownProcessor):
                       repl=r":mens:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)[ \n]*\[/importante?\]\n*',
+            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)[ \n]*\[/importante?\]\n*',
                       repl="\n\n!!! \\1\n\n",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
                       repl="\n\n!!! \\1\n!!! \\2\n\n",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
                       repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n\n",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
                       repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n\n",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
                       repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n\n",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
                       repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n!!! \\6\n\n",
+                      flags=re.IGNORECASE),
+
+            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n!!! \\6\n!!! \\7\n\n",
                       flags=re.IGNORECASE),
 
             Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)[ \n]*\[/warning\]\n*',
