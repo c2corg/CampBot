@@ -501,7 +501,7 @@ if __name__ == "__main__":
     toc_pattern = r"\[[tT][oO][cC][^\]]"  # 0
 
     # to fix
-    emoji_pattern = r"\[picto"  # 27
+    emoji_pattern = r"\[picto"  # 26
     col_pattern = r"\[ */? *col +\d* *(left|right)? *\d* *\]"  # 0
     double_dot_pattern = r"\:\:+"  # 4 (faux positifs)
     slash_in_links_pattern = r"\[\[ */\w+/\d+"  # 0
@@ -527,8 +527,13 @@ if __name__ == "__main__":
     wrong_ltag_pattern = r"(\n|^)[LR]\d+ *[,\|\:]"
 
     latg_ = ""
+    latg_2 = "\n\nL#~"
 
-    _search(anchors_pattern)
+    leading_lf = "^\n"
+
+    wrong_minute_abbr = "\d+ *mn"
+
+    _search(emoji_pattern)
     # get_ltag_patterns()
 
 # Dump().re_update()

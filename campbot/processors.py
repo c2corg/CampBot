@@ -788,6 +788,10 @@ class MarkdownCleaner(MarkdownProcessor):
         {
             "source": "x[img",
             "expected": "x\n[img",
+        },
+        {
+            "source": "\n\nx\n\nx\n\n",
+            "expected": "x\n\nx",
         }
     ]
 
