@@ -322,7 +322,7 @@ class CampBot(object):
             return last_contribs[voter.username]
 
         post = self.forum.get_post(url=url)
-        for poll_name in post.polls:
+        for poll_name in sorted(post.polls):
             print("\n*", poll_name)
             for option in post.polls[poll_name].options:
                 result = 0
