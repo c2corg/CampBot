@@ -470,35 +470,35 @@ class BBCodeRemover(MarkdownProcessor):
                       repl=r"",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_1 */\]',
+            Converter(pattern=r'(\[picto activity_1 */\]|\[img=picto/skitouring.png /\])',
                       repl=r":skitouring:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_6 */\]',
+            Converter(pattern=r'(\[picto activity_6 */\]|\[img=picto/hiking.png /\])',
                       repl=r":hiking:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_2 */\]',
+            Converter(pattern=r'(\[picto activity_2 */\]|\[img=picto/snow_ice_mixed.png /\])',
                       repl=r":snow_ice_mixed:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_3 */\]',
+            Converter(pattern=r'(\[picto activity_3 */\]|\[img=picto/mountain_climbing.png /\])',
                       repl=r":mountain_climbing:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_4 */\]',
+            Converter(pattern=r'(\[picto activity_4 */\]|\[img=picto/rock_climbing.png /\])',
                       repl=r":rock_climbing:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_5 */\]',
+            Converter(pattern=r'(\[picto activity_5 */\]|\[img=picto/ice_climbing.png /\])',
                       repl=r":ice_climbing:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_7 */\]',
+            Converter(pattern=r'(\[picto activity_7 */\]|\[img=picto/snowshoeing.png /\])',
                       repl=r":snowshoeing:",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\[picto activity_8 */\]',
+            Converter(pattern=r'(\[picto activity_8 */\]|\[img=picto/paragliding.png /\])',
                       repl=r":paragliding:",
                       flags=re.IGNORECASE),
 

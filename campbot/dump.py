@@ -502,6 +502,7 @@ if __name__ == "__main__":
 
     # to fix
     emoji_pattern = r"\[picto"  # 26
+    emoji_pattern2 = r"\[img=picto"
     col_pattern = r"\[ */? *col +\d* *(left|right)? *\d* *\]"  # 0
     double_dot_pattern = r"\:\:+"  # 4 (faux positifs)
     slash_in_links_pattern = r"\[\[ */\w+/\d+"  # 0
@@ -533,7 +534,7 @@ if __name__ == "__main__":
 
     wrong_minute_abbr = "\d+ *mn"
 
-    _search(emoji_pattern)
+    _search(emoji_pattern2)
     # get_ltag_patterns()
 
 # Dump().re_update()
