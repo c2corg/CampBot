@@ -56,12 +56,11 @@ class MarkdownProcessor(object):
         return result
 
     def modify(self, markdown):
-        result = "\n" + markdown
+        result = markdown
 
         for modifier in self.modifiers:
             result = modifier(result)
 
-        result = result[1:]
         return result
 
 
@@ -790,8 +789,12 @@ class MarkdownCleaner(MarkdownProcessor):
             "expected": "x\n[img",
         },
         {
-            "source": "\n\nx\n\nx\n\n",
-            "expected": "x\n\nx",
+            "source": "\n\nx\n\nx\nx\n\n\nx\n\n",
+            "expected": "x\n\nx\nx\n\nx",
+        },
+        {
+            "source": "#a\n##  b\n# c",
+            "expected": "# a\n## b\n# c",
         }
     ]
 
@@ -812,6 +815,18 @@ class MarkdownCleaner(MarkdownProcessor):
 
             Converter(pattern=r"([^\n])\[img",
                       repl=r"\1\n[img"),
+
+            Converter(pattern=r"\n{3,}",
+                      repl=r"\n\n"),
+
+            Converter(pattern=r"^\n*",
+                      repl=r""),
+
+            Converter(pattern=r"\n*$",
+                      repl=r""),
+
+            Converter(pattern=r"(^|\n)(#+) *",
+                      repl=r"\1\2 "),
         ]
 
 

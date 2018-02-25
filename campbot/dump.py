@@ -531,10 +531,11 @@ if __name__ == "__main__":
     latg_2 = "\n\nL#~"
 
     leading_lf = "^\n"
+    too_many_lf = "\n\n\n"
 
     wrong_minute_abbr = "\d+ *mn"
 
-    _search(emoji_pattern2)
+    _search(too_many_lf)
     # get_ltag_patterns()
 
 # Dump().re_update()
