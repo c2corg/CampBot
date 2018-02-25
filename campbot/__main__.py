@@ -56,7 +56,7 @@ def main_entry_point():
 
 def main(args):
     if args["check_voters"]:
-        get_campbot(args).check_voters(url=args["<message_url>"])
+        get_campbot(args).check_voters(url=args["<message_url>"], allowed_groups=("Association",))
 
     elif args["check_recent_changes"]:
         get_campbot(args).check_recent_changes(check_message_url=args["<message_url>"],

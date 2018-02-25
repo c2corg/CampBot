@@ -144,7 +144,7 @@ class WikiBot(BaseBot):
             if item[prop] == name:
                 return self.get_user(user_id=item["document_id"])
 
-        return None
+        raise Exception("Can't find user {}".format(wiki_name or forum_name))
 
     def get_contributions(self, **kwargs):
 
@@ -305,24 +305,41 @@ class CampBot(object):
 
         allowed_members = {u.username: u for u in allowed_members}
 
-        oldest_date = today() - timedelta(days=180)
+        oldest_date = today() - timedelta(days=36500)
+        newest_date = datetime(year=2018, month=2, day=18)
+
+        last_contribs = {}
+        ignored_voters = []
+
+        def get_last_contrib(voter):
+            if voter.username not in last_contribs:
+                contributor = voter.get_wiki_user()
+
+                last_contribs[voter.username] = contributor.get_last_contribution(
+                    oldest_date=oldest_date,
+                    newest_date=newest_date)
+
+            return last_contribs[voter.username]
 
         post = self.forum.get_post(url=url)
         for poll_name in post.polls:
+            print("\n*", poll_name)
             for option in post.polls[poll_name].options:
-                print(poll_name, option.html, "has", option.votes, "voters : ")
+                result = 0
                 for voter in option.get_voters(post.id, poll_name):
                     if voter.username in allowed_members:
-                        print("    ", voter.username, "is allowed")
+                        result += 1
                     else:
-                        contributor = voter.get_wiki_user()
-                        last_contribution = contributor.get_last_contribution(oldest_date=oldest_date)
-                        if not last_contribution:
-                            print("    ", voter.username, "has no contribution")
+                        if get_last_contrib(voter) is None:
+                            ignored_voters.append(voter.username)
                         else:
-                            print("    ", voter.username, last_contribution["written_at"])
+                            result += 1
 
-            print()
+                print("  * {} : {} votes".format(option.html, result))
+
+        if len(ignored_voters) != 0:
+            ignored_voters = ["@{}".format(v) for v in ignored_voters]
+            print("\n**Ignored votes** : {}".format(", ".join(set(ignored_voters))))
 
     def fix_markdown(self, processor, filename, ask_before_saving=True):
 
@@ -355,8 +372,8 @@ class CampBot(object):
                 print(progress, "{} is a redirection".format(url))
 
             elif processor.ready_for_production and \
-                    not self.moderator and \
-                    (item.protected or item.is_personal()):
+                not self.moderator and \
+                (item.protected or item.is_personal()):
                 print(progress, "{} is protected".format(url))
 
             elif not item.is_valid():
