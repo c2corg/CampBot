@@ -6,4 +6,4 @@ where type!='i'
 group by user_id, year
 order by contribs DESC)
 
-where contribs > 12
+where contribs > 1

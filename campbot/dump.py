@@ -306,6 +306,12 @@ class Dump(object):
 
         self._conn.commit()
 
+    def sql_file(self, filename):
+        with open(filename) as f:
+            sql = " ".join(f.readlines())
+
+        return self._conn.execute(sql)
+
     def search(self, pattern):
         sql = ("SELECT document.document_id, document.type, locale.lang, string.value, locale.value "
                "FROM locale "
@@ -537,5 +543,8 @@ if __name__ == "__main__":
 
     _search(too_many_lf)
     # get_ltag_patterns()
+
+    # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):
+    #     print(*d)
 
 # Dump().re_update()

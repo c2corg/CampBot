@@ -215,6 +215,11 @@ class WikiBot(BaseBot):
 
 
 class ForumBot(BaseBot):
+    def get_last_message_timestamp(self, url, username):
+        topic_id, _ = self._get_post_ids(url)
+        data = self.get("/t/{}.json?username_filters={}".format(topic_id, username))
+        return parser.parse(data["last_posted_at"])
+
     def post_message(self, message, url):
         topic_id, _ = self._get_post_ids(url)
         self.post("/posts", {"topic_id": topic_id, "raw": message})
@@ -463,8 +468,13 @@ class CampBot(object):
 
         messages.append("</table>\n[/details]\n\n----\n\n")
 
+        oldest_date = self.forum.get_last_message_timestamp(
+            check_message_url,
+            "rabot"
+        )
+
         items = OrderedDict()
-        for contrib in self.wiki.get_contributions(oldest_date=datetime.now() - timedelta(days=1.3)):
+        for contrib in self.wiki.get_contributions(oldest_date=oldest_date):
             print(contrib.written_at, "get contrib")
             if contrib.lang == lang and contrib.document.type not in ("i", "o"):
                 if contrib.document["document_id"] not in items:
