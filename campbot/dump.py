@@ -547,7 +547,7 @@ if __name__ == "__main__":
 
     wrong_minute_abbr = "\d+ *mn"
 
-    nospace = r"\b\d+\w+\b"
+    nospace = r"(^|[| \n\(])\d+(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])"
 
     _search(nospace, "fr")
     # get_ltag_patterns()

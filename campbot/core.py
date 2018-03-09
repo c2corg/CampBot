@@ -411,7 +411,7 @@ class CampBot(object):
             elif not item.is_valid():
                 print(progress, "{} : {}".format(url, item.get_invalidity_reason()))
 
-            elif item.fix_markdown(processor):
+            elif processor(item):
                 if not processor.ready_for_production:
                     # print(progress, "{} is impacted".format(url))
                     pass

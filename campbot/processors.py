@@ -22,6 +22,7 @@ class MarkdownProcessor(object):
     ready_for_production = False
     comment = NotImplemented
     _tests = None
+    langs = None
 
     def __init__(self):
         self.init_modifiers()
@@ -42,8 +43,21 @@ class MarkdownProcessor(object):
         for test in self._tests:
             do_test(**test)
 
-    def __call__(self, markdown, field, locale, wiki_object):
-        result = self.modify(markdown)
+    def __call__(self, wiki_object):
+        updated = False
+        for locale in wiki_object.locales:
+            if self.langs is None or locale.lang in self.langs:
+                for field in locale.get_locale_fields():
+                    if field in locale and locale[field]:
+                        markdown = locale[field]
+                        new_value = self.modify(markdown)
+                        self.print_diff(markdown, new_value)
+                        updated = updated or (new_value != markdown)
+                        locale[field] = new_value
+
+        return updated
+
+    def print_diff(self, markdown, result):
 
         if self.ready_for_production:
             d = difflib.Differ()
@@ -52,8 +66,6 @@ class MarkdownProcessor(object):
             for dd in diff:
                 if dd[0] != " ":
                     print(dd)
-
-        return result
 
     def modify(self, markdown):
         result = markdown
@@ -545,25 +557,30 @@ class BBCodeRemover(MarkdownProcessor):
                       repl="\n\n!!! \\1\n!!! \\2\n\n",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
-                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n\n",
-                      flags=re.IGNORECASE),
+            Converter(
+                pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n\n",
+                flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
-                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n\n",
-                      flags=re.IGNORECASE),
+            Converter(
+                pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n\n",
+                flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
-                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n\n",
-                      flags=re.IGNORECASE),
+            Converter(
+                pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n\n",
+                flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
-                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n!!! \\6\n\n",
-                      flags=re.IGNORECASE),
+            Converter(
+                pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n!!! \\6\n\n",
+                flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
-                      repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n!!! \\6\n!!! \\7\n\n",
-                      flags=re.IGNORECASE),
+            Converter(
+                pattern=r'\n*\[importante?(?: col_50)?\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/importante?\]\n*',
+                repl="\n\n!!! \\1\n!!! \\2\n!!! \\3\n!!! \\4\n!!! \\5\n!!! \\6\n!!! \\7\n\n",
+                flags=re.IGNORECASE),
 
             Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)[ \n]*\[/warning\]\n*',
                       repl="\n\n!!!! \\1\n\n",
@@ -581,13 +598,15 @@ class BBCodeRemover(MarkdownProcessor):
                       repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n!!!! \\4\n\n",
                       flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
-                      repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n!!!! \\4\n!!!! \\5\n\n",
-                      flags=re.IGNORECASE),
+            Converter(
+                pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
+                repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n!!!! \\4\n!!!! \\5\n\n",
+                flags=re.IGNORECASE),
 
-            Converter(pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
-                      repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n!!!! \\4\n!!!! \\5\n!!!! \\6\n\n",
-                      flags=re.IGNORECASE),
+            Converter(
+                pattern=r'\n*\[warning\][ \n]*([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)\n+([^\n]+)[ \n]*\[/warning\]\n*',
+                repl="\n\n!!!! \\1\n!!!! \\2\n!!!! \\3\n!!!! \\4\n!!!! \\5\n!!!! \\6\n\n",
+                flags=re.IGNORECASE),
         ]
 
 
@@ -919,3 +938,38 @@ class InternalLinkCorrector(MarkdownProcessor):
             r'\[\[ */(parkings|users|books|articles|routes|waypoints|images|summits|sites|huts|outings)/(\d+)([\w\-/#]*)\|',
             repl,
             markdown)
+
+
+class FrenchOrthographicCorrector(MarkdownProcessor):
+    langs = ["fr"]
+    comment = "Orthographe"
+    ready_for_production = True
+
+    _tests = [
+        {"source": "",
+         "expected": ""},
+        {"source": "6h, 2min! 4mn? 5m et 6km",
+         "expected": "6 h, 2 min! 4 mn? 5 m et 6 km"},
+        {"source": "L# | 30m |",
+         "expected": "L# | 30 m |"},
+        {"source": "L# |30m |",
+         "expected": "L# |30 m |"},
+        {"source": "L# | 30m|",
+         "expected": "L# | 30 m|"},
+        {"source": "6h\n",
+         "expected": "6 h\n"},
+        {"source": "\n6h\n",
+         "expected": "\n6 h\n"},
+        {"source": "\n6h",
+         "expected": "\n6 h"},
+        {"source": "L#6h",
+         "expected": "L#6h"},
+        {"source": " 6A ",
+         "expected": " 6A "},
+    ]
+
+    def init_modifiers(self):
+        self.modifiers = [
+            Converter(r"(^|[| \n\(])(\d+)(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])",
+                      r"\1\2 \3\4")
+        ]

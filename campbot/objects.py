@@ -136,17 +136,6 @@ class WikiObject(BotObject):
                         return True
         return False
 
-    def fix_markdown(self, corrector):
-        updated = False
-        for locale in self.locales:
-            for field in locale.get_locale_fields():
-                if field in locale and locale[field]:
-                    new_value = corrector(locale[field], field, locale, self)
-                    updated = updated or (new_value != locale[field])
-                    locale[field] = new_value
-
-        return updated
-
     def save(self, message):
         payload = {"document": self, "message": message}
         return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id), payload)
@@ -229,7 +218,7 @@ class Waypoint(WikiObject):
             return "custodianship is missing"
 
         if self.elevation is None and self.waypoint_type not in (
-                "climbing_indoor",):
+            "climbing_indoor",):
             return "elevation is missing"
 
         return None

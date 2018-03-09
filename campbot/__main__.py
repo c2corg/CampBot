@@ -4,6 +4,7 @@ CampBot, Python bot framework for camptocamp.org
 Usage:
   campbot check_voters <message_url> --login=<login> --password=<password> [--delay=<seconds>]
   campbot check_recent_changes <message_url> --lang=<lang> --login=<login> --password=<password> [--delay=<seconds>]
+  campbot spell_correct <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_ltag <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
@@ -77,6 +78,11 @@ def main(args):
         from campbot.processors import BBCodeRemover
 
         get_campbot(args).fix_markdown(BBCodeRemover(), filename=args["<ids_file>"],
+                                       ask_before_saving=not args["--batch"])
+    elif args["spell_correct"]:
+        from campbot.processors import FrenchOrthographicCorrector
+
+        get_campbot(args).fix_markdown(FrenchOrthographicCorrector(), filename=args["<ids_file>"],
                                        ask_before_saving=not args["--batch"])
 
     elif args["clean_color_u"]:
