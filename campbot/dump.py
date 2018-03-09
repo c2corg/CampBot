@@ -312,15 +312,21 @@ class Dump(object):
 
         return self._conn.execute(sql)
 
-    def search(self, pattern):
+    def search(self, pattern, lang=None):
         sql = ("SELECT document.document_id, document.type, locale.lang, string.value, locale.value "
                "FROM locale "
                "LEFT JOIN document ON document.document_id=locale.document_id "
                "LEFT JOIN string ON string.string_id=locale.field "
                "WHERE locale.value REGEXP ?")
 
+        if lang is not None:
+            sql += " AND locale.lang=?"
+            args = (pattern, lang)
+        else:
+            args = (pattern,)
+
         c = self._conn.cursor()
-        c.execute(sql, (pattern,))
+        c.execute(sql, args)
         return c.fetchall()
 
     def get_all_ids(self):
@@ -390,7 +396,7 @@ def get_document_types():
     return {doc_id: typ for doc_id, typ in Dump().get_all_ids()}
 
 
-def _search(pattern):
+def _search(pattern, lang=None):
     from campbot.objects import get_constructor
 
     dump = Dump()
@@ -398,7 +404,7 @@ def _search(pattern):
     dump.complete_contributions()
 
     with open("ids.txt", "w") as f:
-        for doc_id, typ, lang, field, _ in dump.search(pattern):
+        for doc_id, typ, lang, field, _ in dump.search(pattern, lang):
             if lang.strip():
                 print("* https://www.camptocamp.org/{}/{}/{} {}".format(get_constructor(typ).url_path, doc_id,
                                                                         lang, field))
@@ -541,7 +547,9 @@ if __name__ == "__main__":
 
     wrong_minute_abbr = "\d+ *mn"
 
-    _search(too_many_lf)
+    nospace = r"\b\d+\w+\b"
+
+    _search(nospace, "fr")
     # get_ltag_patterns()
 
     # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):

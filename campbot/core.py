@@ -326,21 +326,48 @@ class CampBot(object):
 
             return last_contribs[voter.username]
 
+        polls = {}
+        options = {}
+
         post = self.forum.get_post(url=url)
-        for poll_name in sorted(post.polls):
-            print("\n*", poll_name)
+
+        for poll_name in post.polls:
+            polls[poll_name] = {}
             for option in post.polls[poll_name].options:
                 result = 0
                 for voter in option.get_voters(post.id, poll_name):
                     if voter.username in allowed_members:
                         result += 1
                     else:
-                        if get_last_contrib(voter) is None:
+                        if False and get_last_contrib(voter) is None:
                             ignored_voters.append(voter.username)
                         else:
                             result += 1
 
-                print("  * {} : {} votes".format(option.html, result))
+                polls[poll_name][option.html] = result
+                options[option.html] = 0
+
+        sort_option = next(iter(options))
+
+        print("<table><tr><th>Vote</th>")
+        for option in options:
+            print("<th>{}</th>".format(option))
+
+        print("<th>Total</th></tr>")
+
+        for poll_name, values in sorted(polls.items(),
+                                        key=lambda item: item[1][sort_option],
+                                        reverse=True):
+            print("<tr><th>{}</th>".format(poll_name))
+            total = 0
+            for option in options:
+                value = values.get(option, 0)
+                print("<td>{}</td>".format(value))
+                total += value
+
+            print("<th>{}</th></tr>".format(total))
+
+        print("</table>\n")
 
         if len(ignored_voters) != 0:
             ignored_voters = ["@{}".format(v) for v in ignored_voters]
