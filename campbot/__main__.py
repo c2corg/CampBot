@@ -60,8 +60,11 @@ def main(args):
         get_campbot(args).check_voters(url=args["<message_url>"], allowed_groups=("Association",))
 
     elif args["check_recent_changes"]:
+        from campbot.processors import FrenchOrthographicCorrector
+
         get_campbot(args).check_recent_changes(check_message_url=args["<message_url>"],
-                                               lang=args["--lang"].strip())
+                                               lang=args["--lang"].strip(),
+                                               processors=(FrenchOrthographicCorrector(),))
 
     elif args["clean_internal_links"]:
         from campbot.processors import InternalLinkCorrector

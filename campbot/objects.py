@@ -61,6 +61,11 @@ class Version(BotObject):
             self.version["version_id"]
         )
 
+    def get_locale_length(self, lang):
+        locale = self.document.get_locale(lang)
+
+        return locale.get_length() if locale else 0
+
 
 class Contribution(BotObject):
     def __init__(self, campbot, data):

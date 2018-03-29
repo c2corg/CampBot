@@ -395,12 +395,18 @@ class CampBot(object):
         for item_id, constructor in ids.items():
             i += 1
 
-            item = self.wiki.get_wiki_object(item_id, constructor=constructor)
-
             url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, item_id)
             progress = "{}/{}".format(i + 1, len(ids))
 
-            if "redirects_to" in item:
+            try:
+                item = self.wiki.get_wiki_object(item_id, constructor=constructor)
+            except:
+                item = None
+
+            if not item:
+                print(progress, "{} can't be found".format(url))
+
+            elif "redirects_to" in item:
                 print(progress, "{} is a redirection".format(url))
 
             elif processor.ready_for_production and \
@@ -467,15 +473,50 @@ class CampBot(object):
                       title=c.document.title.replace(";", ","), quality=c.document.quality,
                       user=c.user.username, lang=c.lang)
 
-    def check_recent_changes(self, check_message_url, lang):
+    def get_modified_documents(self, lang, oldest_date=None, excluded_users=()):
+        result = OrderedDict()
+        for contrib in self.wiki.get_contributions(oldest_date=oldest_date):
+            if contrib.lang == lang and \
+                    contrib.document.type not in ("i", "o", "x") and \
+                    contrib.user.name not in excluded_users:
 
-        def get_version_length(version, lang):
-            if not version:
-                return 0
+                key = (contrib.document["document_id"], contrib.document.type)
+                if key not in result:
+                    result[key] = []
 
-            locale = version.document.get_locale(lang)
+                result[key].append(contrib)
 
-            return locale.get_length() if locale else 0
+        return result
+
+    def fix_recent_changes(self, oldest_date, lang, processors):
+
+        print("Fix recent changes")
+        for document_id, document_type in self.get_modified_documents(lang, oldest_date, ("rabot", "robot.topoguide")):
+            document = self.wiki.get_wiki_object(document_id, document_type=document_type)
+
+            messages = []
+            must_save = False
+
+            for processor in processors:
+                if processor(document):
+                    messages.append(processor.comment)
+                    must_save = True
+
+            if must_save:
+                comment = ", ".join(messages)
+                print("Auto correct {} : {}".format(document.get_url(), comment))
+                document.save(comment)
+
+        print("Fix recent changes finished")
+
+    def check_recent_changes(self, check_message_url, lang, processors):
+
+        oldest_date = self.forum.get_last_message_timestamp(
+            check_message_url,
+            "rabot"
+        )
+
+        self.fix_recent_changes(oldest_date, lang, processors)
 
         tests = checkers.get_fixed_tests(lang)
         tests += checkers.get_re_tests(self.forum.get_post(url=check_message_url), lang)
@@ -495,28 +536,14 @@ class CampBot(object):
 
         messages.append("</table>\n[/details]\n\n----\n\n")
 
-        oldest_date = self.forum.get_last_message_timestamp(
-            check_message_url,
-            "rabot"
-        )
-
-        items = OrderedDict()
-        for contrib in self.wiki.get_contributions(oldest_date=oldest_date):
-            print(contrib.written_at, "get contrib")
-            if contrib.lang == lang and contrib.document.type not in ("i", "o"):
-                if contrib.document["document_id"] not in items:
-                    items[contrib.document["document_id"]] = []
-
-                items[contrib.document["document_id"]].append(contrib)
+        items = self.get_modified_documents(lang=lang, oldest_date=oldest_date)
 
         for contribs in items.values():
             need_report = False
             report = []
 
             if len(contribs) != 1:
-                report.append("* {} modifications ".format(
-                    len(contribs),
-                ))
+                report.append("* {} modifications ".format(len(contribs), ))
 
             for contrib in contribs:
                 print(contrib.written_at, "get doc")
@@ -541,8 +568,8 @@ class CampBot(object):
                     elif not old_is_ok and new_is_ok:
                         emojis.append(test.success_marker)
 
-                delta = get_version_length(new, contrib.lang)
-                delta -= get_version_length(old, contrib.lang)
+                delta = new.get_locale_length(contrib.lang) if new else 0
+                delta -= old.get_locale_length(contrib.lang) if old else 0
 
                 if delta < 0:
                     delta = "<del>{:+d}</del>".format(delta)
