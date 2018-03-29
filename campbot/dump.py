@@ -317,7 +317,7 @@ class Dump(object):
                "FROM locale "
                "LEFT JOIN document ON document.document_id=locale.document_id "
                "LEFT JOIN string ON string.string_id=locale.field "
-               "WHERE locale.value REGEXP ?")
+               "WHERE locale.value REGEXP ? AND string.value!='title' AND string.value!='title_prefix'")
 
         if lang is not None:
             sql += " AND locale.lang=?"
