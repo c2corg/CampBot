@@ -948,6 +948,8 @@ class FrenchOrthographicCorrector(MarkdownProcessor):
     _tests = [
         {"source": "",
          "expected": ""},
+        {"source": "prendre une corde 10-15m ou 2x50m ou 2X50m",
+         "expected": "prendre une corde 10-15 m ou 2x50 m ou 2X50 m"},
         {"source": "6h, 2min! 4mn? 5m et 6km",
          "expected": "6 h, 2 min! 4 mn? 5 m et 6 km"},
         {"source": "L# | 30m |",
@@ -971,5 +973,8 @@ class FrenchOrthographicCorrector(MarkdownProcessor):
     def init_modifiers(self):
         self.modifiers = [
             Converter(r"(^|[| \n\(])(\d+)(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])",
-                      r"\1\2 \3\4")
+                      r"\1\2 \3\4"),
+
+            Converter(r"(^|[| \n\(])(\d+)([\-xX])(\d+)(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])",
+                      r"\1\2\3\4 \5\6")
         ]
