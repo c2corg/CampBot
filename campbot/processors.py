@@ -45,7 +45,7 @@ class MarkdownProcessor(object):
 
     def __call__(self, wiki_object):
         updated = False
-        for locale in wiki_object.locales:
+        for locale in wiki_object.get("locales", []):
             if self.langs is None or locale.lang in self.langs:
                 for field in locale.get_locale_fields():
                     if field in locale and locale[field]:
