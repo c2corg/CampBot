@@ -549,7 +549,9 @@ if __name__ == "__main__":
 
     nospace = r"(^|[| \n\(])(\d+[-xX])?\d+(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])"
 
-    _search(nospace, "fr")
+    cross = "2X50 ?m"
+    _search(cross, "fr")
+
     # get_ltag_patterns()
 
     # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):
