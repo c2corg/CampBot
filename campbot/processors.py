@@ -968,7 +968,7 @@ class FrenchOrthographicCorrector(MarkdownProcessor):
          "expected": "L#6h"},
         {"source": " 6A ",
          "expected": " 6A "},
-        {"source": "2*50 m, 2x50 m, 2X50 m",
+        {"source": "2*50m, 2x50 m, 2X50 m",
          "expected": "2×50 m, 2×50 m, 2×50 m"},
     ]
 
@@ -980,6 +980,6 @@ class FrenchOrthographicCorrector(MarkdownProcessor):
             Converter(r"(^|[| \n\(])(\d+)([\-xX])(\d+)(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])",
                       r"\1\2\3\4 \5\6"),
 
-            Converter(r"(\b\d)([*xX])(\d+ m\b)",
-                      r"\1×\3")
+            Converter(r"(\b\d)([*xX])(\d+) ?(m\b)",
+                      r"\1×\3 \4")
         ]
