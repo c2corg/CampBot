@@ -317,7 +317,8 @@ class Dump(object):
                "FROM locale "
                "LEFT JOIN document ON document.document_id=locale.document_id "
                "LEFT JOIN string ON string.string_id=locale.field "
-               "WHERE locale.value REGEXP ? AND string.value!='title' AND string.value!='title_prefix'")
+               "WHERE locale.value REGEXP ? "
+               "AND string.value!='title' AND string.value!='title_prefix'")
 
         if lang is not None:
             sql += " AND locale.lang=?"
@@ -551,12 +552,18 @@ if __name__ == "__main__":
 
     cross = r"\d[X*x]\d\d ?m\b"
 
-    ltag = "L#[^\n ]*!"
-    ltag2 = "L#_"
-    _search(ltag)
+    acronym = r"\[acronym"
+
+    ltag1 = "[LR]#[^\n ]*!"  # ok
+    ltag2 = "[LR]#[^\n |]*_"  # ok
+    ltag3 = "[LR]#[a-zA-Z'\"]"  # ok
+    ltag4 = r"[LR]#\+[a-zA-Z'\"]"  # ok
+    ltag5 = r"[LR]#\+\d+[a-zA-Z'\"]"  # ok
+    ltag6 = r"[LR]#[\-+]"  # ok
+
+    _search(ltag1)
 
     # get_ltag_patterns()
 
     # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):
     #     print(*d)
-

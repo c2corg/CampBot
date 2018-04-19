@@ -461,6 +461,10 @@ class BBCodeRemover(MarkdownProcessor):
                       repl=r'<abbr title="\1">\2</abbr>',
                       flags=re.IGNORECASE),
 
+            Converter(pattern=r'\[acronym=([\w \.-]+)\]([\w \.]+)\[/acronym\]',
+                      repl=r'<abbr title="\1">\2</abbr>',
+                      flags=re.IGNORECASE),
+
             Converter(pattern=r'\[(/?)center]',
                       repl=r"<\1center>",
                       flags=re.IGNORECASE),

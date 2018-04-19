@@ -502,7 +502,7 @@ class CampBot(object):
                     messages.append(processor.comment)
                     must_save = True
 
-            if must_save:
+            if must_save and not document.protected:
                 comment = ", ".join(messages)
                 print("Auto correct {} : {}".format(document.get_url(), comment))
                 document.save(comment)

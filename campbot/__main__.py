@@ -8,6 +8,7 @@ Usage:
   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_color_u <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_ltag <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot migrate_ltag <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_internal_links <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot clean_markdown <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot contributions [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
@@ -98,6 +99,12 @@ def main(args):
         from campbot.processors import LtagCleaner
 
         get_campbot(args).fix_markdown(LtagCleaner(), filename=args["<ids_file>"],
+                                       ask_before_saving=not args["--batch"])
+
+    elif args["migrate_ltag"]:
+        from campbot.ltagmigrator import LtagMigrator
+
+        get_campbot(args).fix_markdown(LtagMigrator(), filename=args["<ids_file>"],
                                        ask_before_saving=not args["--batch"])
 
     elif args["contributions"]:
