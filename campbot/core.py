@@ -505,7 +505,10 @@ class CampBot(object):
             if must_save and not document.protected:
                 comment = ", ".join(messages)
                 print("Auto correct {} : {}".format(document.get_url(), comment))
-                document.save(comment)
+                try:
+                    document.save(comment)
+                except:
+                    pass
 
         print("Fix recent changes finished")
 

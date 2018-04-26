@@ -120,6 +120,29 @@ class Dump(object):
         for row in self._conn.execute("SELECT string_id, value FROM string"):
             self.string_ids[row[1]] = row[0]
 
+    def ltag_test(self):
+        from campbot.format import parse_code
+
+        def result(_, markdown):
+            try:
+                parse_code(markdown)
+                return 0
+            except:
+                return 1
+
+        self._conn.create_function('REGEXP', 2, result)
+
+        sql = ("SELECT document.document_id, document.type, locale.lang, string.value, locale.value "
+               "FROM locale "
+               "LEFT JOIN document ON document.document_id=locale.document_id "
+               "LEFT JOIN string ON string.string_id=locale.field "
+               "WHERE locale.value REGEXP ? "
+               "AND string.value!='title' AND string.value!='title_prefix'")
+
+        c = self._conn.cursor()
+        c.execute(sql, ("L#",))
+        return c.fetchall()
+
     def get_string_id(self, string, cur):
         if string not in self.string_ids:
             cur.execute("INSERT INTO string(value) VALUES (?)", (string,))
@@ -415,6 +438,24 @@ def _search(pattern, lang=None):
             f.write("{}|{}\n".format(doc_id, typ))
 
 
+def _ltagtest():
+    from campbot.objects import get_constructor
+
+    dump = Dump()
+    dump.complete()
+    dump.complete_contributions()
+
+    with open("ids.txt", "w") as f:
+        for doc_id, typ, lang, field, _ in dump.ltag_test():
+            if lang.strip():
+                print("* https://www.camptocamp.org/{}/{}/{} {}".format(get_constructor(typ).url_path, doc_id,
+                                                                        lang, field))
+            else:
+                print("* https://www.camptocamp.org/{}/{} {}".format(get_constructor(typ).url_path, doc_id, field))
+
+            f.write("{}|{}\n".format(doc_id, typ))
+
+
 def get_pattern():
     """
     Build the big ugly fat regexp for L# numbering
@@ -561,7 +602,10 @@ if __name__ == "__main__":
     ltag5 = r"[LR]#\+\d+[a-zA-Z'\"]"  # ok
     ltag6 = r"[LR]#[\-+]"  # ok
 
-    _search(ltag1)
+    v5_link = r"/routes/list"
+
+    _search(v5_link)
+    # _ltagtest()
 
     # get_ltag_patterns()
 
