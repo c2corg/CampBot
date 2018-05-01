@@ -336,10 +336,13 @@ class Dump(object):
         return self._conn.execute(sql)
 
     def search(self, pattern, lang=None):
-        sql = ("SELECT document.document_id, document.type, locale.lang, string.value, locale.value "
+        sql = ("SELECT document.document_id, document.type, locale.lang, string.value, title.value, locale.value "
                "FROM locale "
                "LEFT JOIN document ON document.document_id=locale.document_id "
                "LEFT JOIN string ON string.string_id=locale.field "
+               "LEFT JOIN locale as title ON document.document_id=title.document_id "
+               "   AND title.lang=locale.lang "
+               "   AND title.field=29 "
                "WHERE locale.value REGEXP ? "
                "AND string.value!='title' AND string.value!='title_prefix'")
 
@@ -428,12 +431,9 @@ def _search(pattern, lang=None):
     dump.complete_contributions()
 
     with open("ids.txt", "w") as f:
-        for doc_id, typ, lang, field, _ in dump.search(pattern, lang):
-            if lang.strip():
-                print("* https://www.camptocamp.org/{}/{}/{} {}".format(get_constructor(typ).url_path, doc_id,
-                                                                        lang, field))
-            else:
-                print("* https://www.camptocamp.org/{}/{} {}".format(get_constructor(typ).url_path, doc_id, field))
+        for doc_id, typ, lang, field, title, _ in dump.search(pattern, lang):
+            print("* [{}](https://www.camptocamp.org/{}/{}/{})".format(title, get_constructor(typ).url_path, doc_id,
+                                                                       lang))
 
             f.write("{}|{}\n".format(doc_id, typ))
 
@@ -602,7 +602,7 @@ if __name__ == "__main__":
     ltag5 = r"[LR]#\+\d+[a-zA-Z'\"]"  # ok
     ltag6 = r"[LR]#[\-+]"  # ok
 
-    v5_link = r"/routes/list"
+    v5_link = r"/\w+/list/"
 
     _search(v5_link)
     # _ltagtest()
