@@ -490,6 +490,8 @@ class CampBot(object):
 
     def fix_recent_changes(self, oldest_date, lang, processors):
 
+        excluded_ids = [996571, ]
+
         print("Fix recent changes")
         for document_id, document_type in self.get_modified_documents(lang, oldest_date, ("rabot", "robot.topoguide")):
             document = self.wiki.get_wiki_object(document_id, document_type=document_type)
@@ -502,7 +504,7 @@ class CampBot(object):
                     messages.append(processor.comment)
                     must_save = True
 
-            if must_save and not document.protected:
+            if must_save and not document.protected and document_id not in excluded_ids:
                 comment = ", ".join(messages)
                 print("Auto correct {} : {}".format(document.get_url(), comment))
                 try:
