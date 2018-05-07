@@ -48,7 +48,7 @@ class MarkdownProcessor(object):
         for locale in wiki_object.get("locales", []):
             if self.langs is None or locale.lang in self.langs:
                 for field in locale.get_locale_fields():
-                    if field in locale and locale[field]:
+                    if field in locale and locale[field] and field != "title":
                         markdown = locale[field]
                         new_value = self.modify(markdown)
                         self.print_diff(markdown, new_value)
@@ -987,3 +987,48 @@ class FrenchOrthographicCorrector(MarkdownProcessor):
             Converter(r"(\b\d)([*xX])(\d+) ?(m\b)",
                       r"\1×\3 \4")
         ]
+
+
+class AutomaticReplacements(MarkdownProcessor):
+    ready_for_production = True
+    _tests = []
+
+    def __init__(self, lang, comment, replacements):
+        self.replacements = replacements
+        super().__init__()
+        self.langs = [lang, ]
+        self.comment = comment
+
+    def init_modifiers(self):
+        self.modifiers = []
+
+        for old, new in self.replacements:
+            self.modifiers.append(
+                Converter(
+                    r"\b" + old.strip() + r"\b",
+                    new.strip()
+                )
+            )
+
+
+def get_automatic_replacments(bot):
+    article = bot.wiki.get_article(996571)
+    result = []
+
+    for locale in article.locales:
+        lang = locale.lang
+        configuration = locale.description
+        test = None
+        for line in configuration.split("\n"):
+            if line.startswith("#"):
+                test = {"lang": lang, "comment": line.lstrip("# "), "replacements": []}
+                result.append(test)
+
+            elif line.startswith("    ") and test:
+                pattern = line[4:]
+                if len(pattern.strip()) != 0:
+                    test["replacements"].append(line[4:].split(">>"))
+
+    result = [AutomaticReplacements(**args) for args in result if len(args["replacements"]) != 0]
+
+    return result

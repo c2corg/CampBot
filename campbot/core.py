@@ -124,6 +124,9 @@ class WikiBot(BaseBot):
 
         return constructor(self.campbot, self.get("/{}/{}".format(constructor.url_path, item_id)))
 
+    def get_article(self, article_id):
+        return self.get_wiki_object(article_id, constructor=objects.Article)
+
     def get_route(self, route_id):
         return self.get_wiki_object(route_id, constructor=objects.Route)
 
@@ -496,21 +499,23 @@ class CampBot(object):
         for document_id, document_type in self.get_modified_documents(lang, oldest_date, ("rabot", "robot.topoguide")):
             document = self.wiki.get_wiki_object(document_id, document_type=document_type)
 
-            messages = []
-            must_save = False
+            if document_id not in excluded_ids and not document.protected:
 
-            for processor in processors:
-                if processor(document):
-                    messages.append(processor.comment)
-                    must_save = True
+                messages = []
+                must_save = False
 
-            if must_save and not document.protected and document_id not in excluded_ids:
-                comment = ", ".join(messages)
-                print("Auto correct {} : {}".format(document.get_url(), comment))
-                try:
-                    document.save(comment)
-                except:
-                    pass
+                for processor in processors:
+                    if processor(document):
+                        messages.append(processor.comment)
+                        must_save = True
+
+                if must_save:
+                    comment = ", ".join(messages)
+                    print("Auto correct {} : {}".format(document.get_url(), comment))
+                    try:
+                        document.save(comment)
+                    except:
+                        pass
 
         print("Fix recent changes finished")
 
