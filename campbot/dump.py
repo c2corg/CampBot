@@ -120,29 +120,6 @@ class Dump(object):
         for row in self._conn.execute("SELECT string_id, value FROM string"):
             self.string_ids[row[1]] = row[0]
 
-    def ltag_test(self):
-        from campbot.format import parse_code
-
-        def result(_, markdown):
-            try:
-                parse_code(markdown)
-                return 0
-            except:
-                return 1
-
-        self._conn.create_function('REGEXP', 2, result)
-
-        sql = ("SELECT document.document_id, document.type, locale.lang, string.value, locale.value "
-               "FROM locale "
-               "LEFT JOIN document ON document.document_id=locale.document_id "
-               "LEFT JOIN string ON string.string_id=locale.field "
-               "WHERE locale.value REGEXP ? "
-               "AND string.value!='title' AND string.value!='title_prefix'")
-
-        c = self._conn.cursor()
-        c.execute(sql, ("L#",))
-        return c.fetchall()
-
     def get_string_id(self, string, cur):
         if string not in self.string_ids:
             cur.execute("INSERT INTO string(value) VALUES (?)", (string,))
@@ -438,104 +415,6 @@ def _search(pattern, lang=None):
             f.write("{}|{}\n".format(doc_id, typ))
 
 
-def _ltagtest():
-    from campbot.objects import get_constructor
-
-    dump = Dump()
-    dump.complete()
-    dump.complete_contributions()
-
-    with open("ids.txt", "w") as f:
-        for doc_id, typ, lang, field, _ in dump.ltag_test():
-            if lang.strip():
-                print("* https://www.camptocamp.org/{}/{}/{} {}".format(get_constructor(typ).url_path, doc_id,
-                                                                        lang, field))
-            else:
-                print("* https://www.camptocamp.org/{}/{} {}".format(get_constructor(typ).url_path, doc_id, field))
-
-            f.write("{}|{}\n".format(doc_id, typ))
-
-
-def get_pattern():
-    """
-    Build the big ugly fat regexp for L# numbering
-    It's fully based on named patterns : (P?<pattern_name>pattern)
-    and decomposed part by part.
-
-    Please have a look on
-    https://forum.camptocamp.org/t/question-l/207148/69
-    """
-    p = "(?P<{}>{})".format
-
-    # small patterns used more than once
-    raw_label = r"[a-zA-Z'\"][a-zA-Z'\"\d_]*|_"
-    raw_offset = r"[+\-]?\d*"
-
-    # let's build multi pitch pattern, like L#-+3 or L#12-+4ter
-    multi_pitch_label = p("multi_pitch_label", raw_label)
-    first_offset = p("first_offset", raw_offset)
-    last_offset = p("last_offset", raw_offset)
-    first_pitch = p("first_pitch", first_offset + multi_pitch_label + "?")
-    last_pitch = p("last_pitch", last_offset)
-    multi_pitch = p("multi_pitch", first_pitch + "?-" + last_pitch)
-
-    # mono pitch
-    mono_pitch_label = p("mono_pitch_label", raw_label)
-    mono_pitch_value = p("mono_pitch_value", "\+?\d*")
-    mono_pitch = p("mono_pitch", mono_pitch_value + mono_pitch_label + "?")
-
-    local_ref = p("local_ref", r"!")
-
-    pitch = "(" + multi_pitch + "|" + mono_pitch + ")"
-    numbering = p("numbering", pitch + local_ref + "?")
-
-    text_in_the_middle = p("text_in_the_middle", "~")
-    header = p("header", "=")
-
-    typ = p("type", "[LR]")
-
-    text = "(" + header + "|" + text_in_the_middle + "|" + numbering + ")"
-
-    return p("ltag", typ + "#" + text)
-
-
-def get_ltag_patterns():
-    unvalid_patterns = [
-        "L#27.1",
-        "L#03.1",
-        "L#09.1",
-        "L#20.1",
-        "L#19.1",
-        "L#59.1",
-        "L#05.1",
-        "L#22.1",
-        "L#23.1",
-        "L#97.1",
-        "L#19.2",
-        "L#15.1",
-    ]
-
-    dump = Dump()
-    dump.complete()
-    dump.complete_contributions()
-
-    p = re.compile(r"(^|\n)[LR]#[^\s\n|~]*")
-    tester = re.compile(get_pattern())
-
-    def repl(match):
-        pattern = match.group(0).strip(" \n")
-
-        test = tester.sub("", pattern)
-
-        if len(test) != 0 and pattern not in unvalid_patterns:
-            print(repr(pattern), ",", typ, doc_id, lang)
-
-        return ""
-
-    for doc_id, typ, lang, field, value in dump.search("[LR]#"):
-        p.sub(repl, value)
-
-
 if __name__ == "__main__":
     # pre parser release
     bi_pattern = r"\[/?[biBI] *\]"  # 26
@@ -605,9 +484,6 @@ if __name__ == "__main__":
     v5_link = r"/\w+/list/"
 
     _search(v5_link)
-    # _ltagtest()
-
-    # get_ltag_patterns()
 
     # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):
     #     print(*d)
