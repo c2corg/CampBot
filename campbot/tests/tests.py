@@ -17,10 +17,12 @@ def get_message(filename):
 
 messages = {
     ("GET", "https://forum.camptocamp.org/session/csrf"): {"csrf": "csrf"},
+
     ("GET", "https://api.camptocamp.org/documents/changes?limit=50&u=271988"): {"feed": []},
+    ("GET", "https://api.camptocamp.org/documents/changes?limit=50&token=1687339"): {"feed": []},
+
     ("POST", "https://api.camptocamp.org/users/login"): {"token": "", "redirect_internal": "/sso", "roles": []},
-    ('GET', 'https://forum.camptocamp.org/sso'): {},
-    ('POST', 'https://forum.camptocamp.org/posts'): {},
+
     ('PUT', 'https://api.camptocamp.org/profiles/286726'): {},
     ('PUT', 'https://api.camptocamp.org/routes/293549'): {},
 
@@ -29,9 +31,13 @@ messages = {
     ('GET', 'https://api.camptocamp.org/outings?offset=30&u=286726'): {"documents": []},
     ('GET', 'https://api.camptocamp.org/outings?u=286726&offset=30'): {"documents": []},
     ('GET', 'https://api.camptocamp.org/routes?offset=0'): get_message("routes"),
+    ('GET', 'https://api.camptocamp.org/xreports?offset=0'): get_message("routes"),
 
     ("GET", "https://api.camptocamp.org/documents/changes?limit=50"): get_message("changes"),
 
+    ('GET', 'https://forum.camptocamp.org/sso'): {},
+    ('POST', 'https://forum.camptocamp.org/posts'): {},
+    ('GET', 'https://forum.camptocamp.org/t/201480.json?username_filters=rabot'): {"last_posted_at": "2020/01/01"},
     ('GET', 'https://forum.camptocamp.org/t/201480.json'): get_message("topic"),
     ('GET', 'https://forum.camptocamp.org/posts/2003993.json'): get_message("post"),
 
@@ -45,6 +51,8 @@ messages = {
 
     ('GET', 'https://api.camptocamp.org/routes/123/fr/123'): get_message("redirection"),
     ('GET', 'https://api.camptocamp.org/routes/123/fr/122'): get_message("redirection"),
+
+    ('GET', 'https://api.camptocamp.org/articles/996571'): get_message("conf_replacements"),
 
     ('GET', 'https://api.camptocamp.org/waypoints/952999'): get_message("waypoint"),
     ('GET', 'https://api.camptocamp.org/search?q=CharlesB&t=u&limit=50'): get_message("search_user"),
@@ -140,14 +148,30 @@ def test_forum(fix_requests):
 def test_wiki(fix_requests):
     from campbot import CampBot, objects
 
+    for _ in CampBot().wiki.get_document_ids(document_type="r"):
+        break
+
     for _ in CampBot().wiki.get_route_ids():
+        break
+
+    for _ in CampBot().wiki.get_xreport_ids():
         break
 
     for _ in CampBot().wiki.get_documents(objects.Route):
         break
 
+    assert CampBot().wiki.ui_url == "https://www.camptocamp.org"
+
+    version = CampBot().wiki.get_wiki_object_version(293549, "r", "fr", 1738922)
+    assert version.get_diff_url("fr") is not None
+    assert version.get_locale_length("fr") != 0
+
     CampBot().wiki.get_wiki_object_version(None, "", "", None)
-    CampBot().wiki.get_wiki_object(item_id=293549, document_type="r")
+
+    route = CampBot().wiki.get_wiki_object(item_id=293549, document_type="r")
+    assert route.get_url() == "https://www.camptocamp.org/routes/293549"
+    assert route.get_history_url("fr") == "https://www.camptocamp.org/routes/history/293549/fr"
+
     CampBot().wiki.get_route(route_id=293549)
     CampBot().wiki.get_contributions(oldest_date="2017-12-12", newest_date="2017-12-13")
 
@@ -155,7 +179,8 @@ def test_wiki(fix_requests):
 
     waypoint.get_invalidity_reason()
 
-    assert CampBot().wiki.get_user(forum_name="unknown") is None
+    with pytest.raises(Exception):
+        CampBot().wiki.get_user(forum_name="unknown")
 
     user = CampBot().wiki.get_user(forum_name="CharlesB")
     user.is_personal()
@@ -183,9 +208,14 @@ def test_dump(fix_requests, fix_dump):
 
     get_document_types()
 
-    dump = Dump()
+    route = CampBot().wiki.get_route(123)
 
-    dump.insert(CampBot().wiki.get_route(123), 1687340)
+    class Contrib():
+        document = route
+
+    dump = Dump()
+    dump.insert(dump._conn.cursor(), route, 1687340, Contrib)
+    dump._conn.commit()
     dump.complete()
     dump.select(123)
     dump.search("r")
@@ -220,6 +250,9 @@ def get_main_args(action, others=None):
         "remove_bbcode_post_release": False,
         "check_voters": False,
         "contributions": False,
+        "spell_correct": False,
+        "clean_ltag": False,
+        "migrate_ltag": False,
         "outings": False,
         "--delay": 0.01,
         "--login": "x",
@@ -242,11 +275,11 @@ def get_main_args(action, others=None):
 
 
 def test_processors():
-    from campbot.processors import InternalLinkCorrector, MarkdownCleaner, BBCodeRemoverPostRelease
+    from campbot.processors import InternalLinkCorrector, MarkdownCleaner, LtagMigrator
 
-    InternalLinkCorrector()("[[123|coucou]]", "", "", None)
-    MarkdownCleaner()("[[123|coucou]]", "", "", None)
-    BBCodeRemoverPostRelease()("[[123|coucou]]", "", "", None)
+    InternalLinkCorrector().modify("[[123|coucou]]")
+    MarkdownCleaner().modify("[[123|coucou]]")
+    LtagMigrator().modify("L# ")
 
 
 def test_checkers(fix_requests):
@@ -264,6 +297,6 @@ def test_checkers(fix_requests):
     MainWaypointTest()(None, contrib, contrib)
     RouteTypeTest()(None, contrib, contrib)
 
-    t = ReTest("x","fr")
+    t = ReTest("x", "fr")
     t.patterns.append("e")
     t(None, contrib, contrib)
