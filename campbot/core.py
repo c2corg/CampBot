@@ -189,6 +189,9 @@ class WikiBot(BaseBot):
     def get_xreport_ids(self):
         return self.get_document_ids(objects.Xreport)
 
+    def get_routes(self, filters):
+        return self.get_documents(objects.Route, filters)
+
     def get_document_ids(self, constructor=None, document_type=None, filters=None):
         if not constructor:
             constructor = objects.get_constructor(document_type=document_type)
@@ -198,7 +201,7 @@ class WikiBot(BaseBot):
 
     def get_documents(self, constructor, filters=None):
         for doc in self.get_documents_raw(constructor.url_path, filters):
-            yield constructor(self.campbot, doc)
+            yield self.get_wiki_object(doc["document_id"], constructor)
 
     def get_documents_raw(self, url_path, filters=None):
         filters = filters or {}
