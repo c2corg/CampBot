@@ -1,4 +1,5 @@
 from .core import MarkdownProcessor, Converter
+import re
 
 
 class MarkdownCleaner(MarkdownProcessor):
@@ -107,13 +108,27 @@ class FrenchOrthographicCorrector(MarkdownProcessor):
 
 class AutomaticReplacements(MarkdownProcessor):
     ready_for_production = True
-    _tests = []
+    _tests = [{"source": "",
+               "expected": ""},
+              {"source": "deja deja.deja",
+               "expected": "déjà déjà.déjà"},
+              {"source": "http://deja.com/deja/x-deja-x deja",
+               "expected": "http://deja.com/deja/x-deja-x déjà"},
+              {"source": "http://deja.com/deja/x-deja-x\ndeja",
+               "expected": "http://deja.com/deja/x-deja-x\ndéjà"},
+              ]
+
+    URL_RE = re.compile(r"https?://[^ )\n]*")
+
+    # URL_RE = re.compile(r"http")
 
     def __init__(self, lang, comment, replacements):
-        self.replacements = replacements
+        self.replacements = [("deja", "déjà")]
         super().__init__()
+        self.replacements = replacements
         self.langs = [lang, ]
         self.comment = comment
+        self.placeholders = None
 
     def init_modifiers(self):
         self.modifiers = []
@@ -125,6 +140,26 @@ class AutomaticReplacements(MarkdownProcessor):
                     new.strip()
                 )
             )
+
+    def _get_placeholder(self, match):
+        url = match.group(0)
+
+        if url not in self.placeholders:
+            self.placeholders[url] = "http://markdown_placeholder.com/{}".format(len(self.placeholders))
+
+        return self.placeholders[url]
+
+    def modify(self, markdown):
+        self.placeholders = {}
+
+        result = self.URL_RE.sub(self._get_placeholder, markdown)
+
+        result = super().modify(result)
+
+        for url, placeholder in self.placeholders.items():
+            result = result.replace(placeholder, url)
+
+        return result
 
 
 def get_automatic_replacments(bot):
