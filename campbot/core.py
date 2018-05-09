@@ -207,6 +207,8 @@ class WikiBot(BaseBot):
         filters = filters or {}
         filters["offset"] = 0
 
+        filters = {k: ",".join(v) if isinstance(v, (list, set, tuple)) else v for k, v in filters.items()}
+
         while True:
             filters_url = "&".join(["{}={}".format(k, v) for k, v in filters.items()])
             data = self.get("/{}?{}".format(url_path, filters_url))
@@ -479,7 +481,7 @@ class CampBot(object):
         for document_id, document_type in self.get_modified_documents(lang, oldest_date, ("rabot", "robot.topoguide")):
             document = self.wiki.get_wiki_object(document_id, document_type=document_type)
 
-            if document_id not in excluded_ids and not document.protected:
+            if document_id not in excluded_ids and not document.get("protected", False):
 
                 messages = []
                 must_save = False
