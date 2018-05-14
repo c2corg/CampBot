@@ -26,11 +26,18 @@ class BotObject(dict):
         # we must define __setattr__ after _campbot, otherwise it will be stored in dict
         self.__setattr__ = self.__setitem__
 
+    # make instance.key equivalent to instance["key"]
     def __getattr__(self, item):
         if item.startswith("_"):
             raise AttributeError
 
         return self[item]
+
+    def __setattr__(self, key, value):
+        if key in self:
+            self[key] = value
+        else:
+            super().__setattr__(key, value)
 
     def _convert_list(self, name, constructor):
         if name in self:

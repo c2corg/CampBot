@@ -43,7 +43,7 @@ class BaseBot(object):
         self._session = requests.Session()
         self.proxies = proxies
         self._next_request_datetime = datetime.now()
-        self.min_delay = timedelta(seconds=float(min_delay or 1))
+        self.min_delay = timedelta(seconds=float(min_delay or 5))
 
     @property
     def headers(self):
@@ -207,7 +207,7 @@ class WikiBot(BaseBot):
         filters = filters or {}
         filters["offset"] = 0
 
-        filters = {k: ",".join(v) if isinstance(v, (list, set, tuple)) else v for k, v in filters.items()}
+        filters = {k: ",".join(map(str, v)) if isinstance(v, (list, set, tuple)) else v for k, v in filters.items()}
 
         while True:
             filters_url = "&".join(["{}={}".format(k, v) for k, v in filters.items()])
