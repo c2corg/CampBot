@@ -60,12 +60,11 @@ def main(args):
         get_campbot(args).check_voters(url=args["<message_url>"], allowed_groups=("Association",))
 
     elif args["check_recent_changes"]:
-        from campbot.processors import FrenchOrthographicCorrector, get_automatic_replacments
+        from campbot.processors import get_automatic_replacments
 
         bot = get_campbot(args)
 
         processors = get_automatic_replacments(bot)
-        processors.append(FrenchOrthographicCorrector())
 
         bot.check_recent_changes(check_message_url=args["<message_url>"],
                                  lang=args["--lang"].strip(),
@@ -106,7 +105,7 @@ def main(args):
                                        ask_before_saving=not args["--batch"])
 
     elif args["migrate_ltag"]:
-        from campbot.ltagmigrator import LtagMigrator
+        from campbot.processors import LtagMigrator
 
         get_campbot(args).fix_markdown(LtagMigrator(), filename=args["<ids_file>"],
                                        ask_before_saving=not args["--batch"])
