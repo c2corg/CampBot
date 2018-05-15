@@ -1,4 +1,3 @@
-import difflib
 import re
 
 
@@ -46,21 +45,10 @@ class MarkdownProcessor(object):
                     if field in locale and locale[field] and field != "title":
                         markdown = locale[field]
                         new_value = self.modify(markdown)
-                        self.print_diff(markdown, new_value)
                         updated = updated or (new_value != markdown)
                         locale[field] = new_value
 
         return updated
-
-    def print_diff(self, markdown, result):
-
-        if self.ready_for_production:
-            d = difflib.Differ()
-            diff = d.compare(markdown.replace("\r", "").split("\n"),
-                             result.replace("\r", "").split("\n"))
-            for dd in diff:
-                if dd[0] != " ":
-                    print(dd)
 
     def modify(self, markdown):
         result = markdown

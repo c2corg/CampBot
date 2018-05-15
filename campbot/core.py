@@ -43,7 +43,7 @@ class BaseBot(object):
         self._session = requests.Session()
         self.proxies = proxies
         self._next_request_datetime = datetime.now()
-        self.min_delay = timedelta(seconds=float(min_delay or 5))
+        self.min_delay = timedelta(seconds=float(min_delay or 3))
 
     @property
     def headers(self):
@@ -407,10 +407,9 @@ class CampBot(object):
                     # print(progress, "{} is impacted".format(url))
                     pass
 
-                elif not ask_before_saving or input("Save {} y/[n]?".format(url)) == "y":
-                    print(progress, "Saving {}".format(url))
+                else:
                     try:
-                        item.save(processor.comment)
+                        item.save(processor.comment, ask_before_saving=ask_before_saving)
                     except HTTPError as e:
                         print("Error while saving", url, e, file=sys.stderr)
 
@@ -493,9 +492,8 @@ class CampBot(object):
 
                 if must_save:
                     comment = ", ".join(messages)
-                    print("Auto correct {} : {}".format(document.get_url(), comment))
                     try:
-                        document.save(comment)
+                        document.save(comment, ask_before_saving=False)
                     except:
                         pass
 

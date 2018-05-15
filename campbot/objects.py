@@ -3,6 +3,7 @@
 from __future__ import print_function, unicode_literals, division
 
 import re
+from .differ import get_diff_report
 
 
 def get_constructor(document_type):
@@ -107,6 +108,7 @@ class WikiObject(BotObject):
     def __init__(self, campbot, data):
         super(WikiObject, self).__init__(campbot, data)
         self._convert_list("locales", Locale)
+        self._data = data
 
     def get_url(self, lang=None):
         return "{}/{}/{}{}".format(self._campbot.wiki.ui_url,
@@ -143,7 +145,21 @@ class WikiObject(BotObject):
                         return True
         return False
 
-    def save(self, message):
+    def print_diff(self):
+        report = get_diff_report(self._data, self)
+
+        for l in report:
+            print(l)
+
+    def save(self, message, ask_before_saving=True):
+        self.print_diff()
+
+        if ask_before_saving:
+            if input("Save {} : {}, y/[n] ?\n".format(self.get_url(), message)) != "y":
+                return None
+        else:
+            print("Saving {} : {}".format(self.get_url(), message))
+
         payload = {"document": self, "message": message}
         return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id), payload)
 

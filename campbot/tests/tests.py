@@ -187,7 +187,7 @@ def test_wiki(fix_requests):
     contrib = user.get_last_contribution()
     contrib.get_full_document()
     contrib.user.get_wiki_user()
-    user.save("test")
+    user.save("test", ask_before_saving=False)
 
 
 def test_login(fix_requests):
