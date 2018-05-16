@@ -133,6 +133,9 @@ class WikiBot(BaseBot):
     def get_waypoint(self, waypoint_id):
         return self.get_wiki_object(waypoint_id, constructor=objects.Waypoint)
 
+    def get_profile(self, profile_id):
+        return self.get_wiki_object(profile_id, constructor=objects.WikiUser)
+
     def get_user(self, user_id=None, wiki_name=None, forum_name=None):
         if user_id:
             return objects.WikiUser(self.campbot, self.get("/profiles/{}".format(user_id)))
