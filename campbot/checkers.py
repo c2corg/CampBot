@@ -104,8 +104,8 @@ def check_recent_changes(bot, ask_before_saving):
     for m in messages:
         print(m)
 
-    # if len(messages) != 0:
-    #     bot.forum.post_message("\n".join(messages), check_message_url)
+    if len(messages) != 0:
+        bot.forum.post_message("\n".join(messages), check_message_url)
 
 
 def emoji(src, text):
