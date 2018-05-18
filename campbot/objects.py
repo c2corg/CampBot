@@ -34,6 +34,12 @@ class BotObject(dict):
 
         return self[item]
 
+    def __setattr__(self, key, value):
+        if key in self:
+            self[key] = value
+        else:
+            super().__setattr__(key, value)
+
     def _convert_list(self, name, constructor):
         if name in self:
             self[name] = [constructor(self._campbot, data) for data in self[name]]
