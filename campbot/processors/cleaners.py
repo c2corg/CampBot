@@ -8,18 +8,6 @@ class MarkdownCleaner(MarkdownProcessor):
 
     _tests = [
         {
-            "source": "[](http://link)x",
-            "expected": "http://link x",
-        },
-        {
-            "source": "cou[](http://link)x",
-            "expected": "cou http://link x",
-        },
-        {
-            "source": "x[img",
-            "expected": "x\n[img",
-        },
-        {
             "source": "\n\nx\n\nx\nx\n\n\nx\n\n",
             "expected": "x\n\nx\nx\n\nx",
         },
@@ -31,22 +19,6 @@ class MarkdownCleaner(MarkdownProcessor):
 
     def init_modifiers(self):
         self.modifiers = [
-            Converter(pattern=r"\n\[ *\]\((http[^\n ]+)\) *",
-                      repl=r"\n\1 "),
-            Converter(pattern=r"^\[ *\]\((http[^\n ]+)\) *",
-                      repl=r"\1 "),
-            Converter(pattern=r" *\[ *\]\((http[^\n ]+)\) *",
-                      repl=r" \1 "),
-            Converter(pattern=r"\n\[ *\]\(([^\n ]+)\) *",
-                      repl=r"\nhttp://\1 "),
-            Converter(pattern=r"^\[ *\]\(([^\n ]+)\) *",
-                      repl=r"http://\1 "),
-            Converter(pattern=r" *\[ *\]\(([^\n ]+)\) *",
-                      repl=r" http://\1 "),
-
-            Converter(pattern=r"([^\n])\[img",
-                      repl=r"\1\n[img"),
-
             Converter(pattern=r"\n{3,}",
                       repl=r"\n\n"),
 
