@@ -25,22 +25,6 @@ Optional arguments :
 * `--out=data.csv` : out file name, default value is `contributions.csv`
 
 
-### Migrate BBCodes
-
-```batch
-   campbot remove_bbcode <ids_file> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
-```
-
-* *ids_files :* path to a file thtat contains document's ids to migrate. Format is : 
-```
-id1 | w
-id2 | r
-```
-
-* *batch :* do not ask confirmation before saving a document. Use very carefully
-* *delay :* delay in second between each request. Defaut is 1 seconds.
-
-
 ### Check recent changes
 Check that last day modifications pass these tests : 
   
@@ -49,7 +33,7 @@ Check that last day modifications pass these tests :
 * And all patterns present in the first message of topic where report should be posted
 
 ```batch
-campbot check_recent_changes <message_url> --langs=<langs> --login=<login> --password=<password> [--delay=<seconds>]
+campbot check_rc --login=<login> --password=<password> [--delay=<seconds>]
 ```
   
   

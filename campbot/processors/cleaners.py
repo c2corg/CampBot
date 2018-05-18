@@ -158,5 +158,6 @@ def get_automatic_replacments(bot):
 
     result.append(SpaceBetweenNumberAndUnit())
     result.append(MultiplicationSign())
+    result.append(MarkdownCleaner())
 
     return result
