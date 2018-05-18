@@ -2,6 +2,111 @@
 
 from __future__ import unicode_literals, print_function, division
 
+from dateutil import parser
+
+
+def check_recent_changes(bot, ask_before_saving):
+    check_message_url = "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480"
+    lang = "fr"
+
+    oldest_date = bot.forum.get_last_message_timestamp(
+        check_message_url,
+        "rabot"
+    )
+
+    bot.fix_recent_changes(oldest_date, lang, ask_before_saving)
+
+    tests = get_fixed_tests(lang)
+    tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
+
+    messages = [
+        "[Explications]({})\n".format(check_message_url),
+        "[details=Signification des icônes]\n<table>",
+        "<tr><th>Test</th><th>A relire</th><th>Corrigé</th></tr>",
+    ]
+
+    for test in tests:
+        messages.append("<tr>")
+        messages.append("<th>{}</th>".format(test.name))
+        messages.append("<td>{}</td>".format(test.fail_marker))
+        messages.append("<td>{}</td>".format(test.success_marker))
+        messages.append("</tr>")
+
+    messages.append("</table>\n[/details]\n\n----\n\n")
+
+    items = bot.get_modified_documents(lang=lang, oldest_date=oldest_date)
+
+    for contribs in items.values():
+        need_report = False
+        report = []
+
+        if len(contribs) != 1:
+            report.append("* {} modifications ".format(len(contribs), ))
+
+        for contrib in contribs:
+            print(contrib.written_at, "get doc")
+            new = bot.wiki.get_wiki_object_version(contrib.document.document_id,
+                                                   contrib.document.type,
+                                                   contrib.lang,
+                                                   contrib.version_id)
+
+            old = bot.wiki.get_wiki_object_version(contrib.document.document_id,
+                                                   contrib.document.type,
+                                                   contrib.lang,
+                                                   new.previous_version_id)
+
+            emojis = []
+
+            for test in tests:
+                old_is_ok, new_is_ok = test(contrib, old, new)
+
+                if old_is_ok and not new_is_ok:
+                    emojis.append(test.fail_marker)
+                    need_report = True
+                elif not old_is_ok and new_is_ok:
+                    emojis.append(test.success_marker)
+
+            delta = new.get_locale_length(contrib.lang) if new else 0
+            delta -= old.get_locale_length(contrib.lang) if old else 0
+
+            if delta < 0:
+                delta = "<del>{:+d}</del>".format(delta)
+            elif delta > 0:
+                delta = "<ins>{:+d}</ins>".format(delta)
+            else:
+                delta = "**=**"
+
+            title = new.document.get_title(lang)
+
+            report.append(
+                "{prefix}* {timestamp} {emojis} [{doc_title}]({doc_url}) "
+                "([{diff_title}]({diff_url}) | [hist]({hist_url})) "
+                "**·** ({delta}) **·** [{username}]({user_contrib_url})"
+                " →‎ *{comment}*".format(
+                    prefix="" if len(contribs) == 1 else "  ",
+                    timestamp=parser.parse(contrib.written_at).strftime("%H:%M"),
+                    emojis="".join(emojis),
+                    doc_title=title if len(title) else "*Vide*",
+                    doc_url=new.document.get_url(lang),
+                    diff_title="diff" if new.previous_version_id else "**new**",
+                    diff_url=new.get_diff_url(lang),
+                    hist_url=new.document.get_history_url(contrib.lang),
+                    delta=delta,
+                    username=contrib.user.name,
+                    user_contrib_url=contrib.user.get_contributions_url(),
+                    comment=contrib.comment if len(contrib.comment) else "&nbsp;"
+                )
+            )
+
+        if need_report:
+            messages += report
+
+    for m in messages:
+        print(m)
+
+    # if len(messages) != 0:
+    #     bot.forum.post_message("\n".join(messages), check_message_url)
+
 
 def emoji(src, text):
     return '<img src="{}" class="emoji" title="{}" alt="{}">'.format(src, text, text)

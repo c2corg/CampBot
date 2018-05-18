@@ -1,5 +1,4 @@
 from .core import MarkdownProcessor, Converter
-from ..dump import get_document_types
 import re
 
 
@@ -593,6 +592,8 @@ class InternalLinkCorrector(MarkdownProcessor):
     ]
 
     def __init__(self):
+        from ..dump import get_document_types
+
         self.types = get_document_types()
         super().__init__()
 

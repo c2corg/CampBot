@@ -16,7 +16,7 @@ class MarkdownProcessor(object):
     ready_for_production = False
     comment = NotImplemented
     _tests = None
-    langs = None
+    lang = None
 
     def __init__(self):
         self.init_modifiers()
@@ -40,7 +40,7 @@ class MarkdownProcessor(object):
     def __call__(self, wiki_object):
         updated = False
         for locale in wiki_object.get("locales", []):
-            if self.langs is None or locale.lang in self.langs:
+            if self.lang is None or locale.lang == self.lang:
                 for field in locale.get_locale_fields():
                     if field in locale and locale[field] and field != "title":
                         markdown = locale[field]

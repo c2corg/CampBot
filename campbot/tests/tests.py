@@ -28,8 +28,10 @@ messages = {
 
     ('GET', 'https://api.camptocamp.org/outings?offset=0&u=286726'): get_message("outings"),
     ('GET', 'https://api.camptocamp.org/outings?u=286726&offset=0'): get_message("outings"),
+
     ('GET', 'https://api.camptocamp.org/outings?offset=30&u=286726'): {"documents": []},
     ('GET', 'https://api.camptocamp.org/outings?u=286726&offset=30'): {"documents": []},
+
     ('GET', 'https://api.camptocamp.org/routes?offset=0'): get_message("routes"),
     ('GET', 'https://api.camptocamp.org/xreports?offset=0'): get_message("routes"),
 
@@ -43,11 +45,15 @@ messages = {
 
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/1738922'): get_message("route_version"),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/1738528'): get_message("route_version"),
+
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/880880'): get_message("route_version2"),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/978249'): get_message("route_version2"),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/478470'): get_message("route_version2"),
+
     ('GET', 'https://api.camptocamp.org/routes/293549'): get_message("route"),
     ('GET', 'https://api.camptocamp.org/routes/123'): get_message("route"),
+    ('GET', 'https://api.camptocamp.org/routes/123'): get_message("route"),
+    ('GET', 'https://api.camptocamp.org/routes/953061'): get_message("route"),
 
     ('GET', 'https://api.camptocamp.org/routes/123/fr/123'): get_message("redirection"),
     ('GET', 'https://api.camptocamp.org/routes/123/fr/122'): get_message("redirection"),
@@ -58,6 +64,10 @@ messages = {
     ('GET', 'https://api.camptocamp.org/search?q=CharlesB&t=u&limit=50'): get_message("search_user"),
     ('GET', 'https://api.camptocamp.org/search?q=grimpeur8b&t=u&limit=50'): get_message("search_user"),
     ('GET', 'https://api.camptocamp.org/search?q=unknown&t=u&limit=50'): get_message("search_user"),
+
+    ('GET', 'https://api.camptocamp.org/outings/946946'): get_message("outing"),
+    ('GET', 'https://api.camptocamp.org/outings/946945'): get_message("outing"),
+
     ('GET', 'https://api.camptocamp.org/profiles/286726'): get_message("user"),
     ('GET', 'https://api.camptocamp.org/profiles/3199'): get_message("user"),
     ('GET', 'https://api.camptocamp.org/profiles/271988'): get_message("user"),
@@ -157,7 +167,7 @@ def test_wiki(fix_requests):
     for _ in CampBot().wiki.get_xreport_ids():
         break
 
-    for _ in CampBot().wiki.get_documents(objects.Route):
+    for _ in CampBot().wiki.get_documents(constructor=objects.Route):
         break
 
     assert CampBot().wiki.ui_url == "https://www.camptocamp.org"
@@ -229,7 +239,8 @@ def test_dump(fix_requests, fix_dump):
 def test_fix_bbcode(fix_requests, ids_files):
     from campbot.__main__ import main
 
-    from campbot import CampBot, LtagCleaner
+    from campbot import CampBot
+    from campbot.processors import LtagCleaner
 
     main(get_main_args("remove_bbcode", {"<ids_file>": ids_files}))
     main(get_main_args("remove_bbcode2", {"<ids_file>": ids_files}))
@@ -241,18 +252,9 @@ def test_fix_bbcode(fix_requests, ids_files):
 def get_main_args(action, others=None):
     # noinspection PyDictCreation
     result = {
-        "remove_bbcode": False,
-        "remove_bbcode2": False,
-        "clean_color_u": False,
-        "clean_internal_links": False,
-        "check_recent_changes": False,
-        "clean_markdown": False,
-        "remove_bbcode_post_release": False,
+        "check_rc": False,
         "check_voters": False,
         "contributions": False,
-        "spell_correct": False,
-        "clean_ltag": False,
-        "migrate_ltag": False,
         "outings": False,
         "--delay": 0.01,
         "--login": "x",

@@ -61,7 +61,29 @@ class MarkdownCleaner(MarkdownProcessor):
         ]
 
 
-class MultiplicationSign(MarkdownProcessor):
+class OrthogrpahicProcessor(MarkdownProcessor):
+    def modify(self, markdown):
+        placeholders = {}
+
+        def _get_placeholder(match):
+            url = match.group(0)
+
+            if url not in placeholders:
+                placeholders[url] = "http://{}.markdown_placeholder.com".format(len(placeholders))
+
+            return placeholders[url]
+
+        result = re.sub(r"https?://[^ )\n]*", _get_placeholder, markdown)
+
+        result = super().modify(result)
+
+        for url, placeholder in placeholders.items():
+            result = result.replace(placeholder, url)
+
+        return result
+
+
+class MultiplicationSign(OrthogrpahicProcessor):
     comment = "Multiplication sign"
     ready_for_production = True
 
@@ -79,8 +101,8 @@ class MultiplicationSign(MarkdownProcessor):
         ]
 
 
-class SpaceBetweenNumberAndUnit(MarkdownProcessor):
-    langs = ["fr"]
+class SpaceBetweenNumberAndUnit(OrthogrpahicProcessor):
+    lang = "fr"
     comment = "Espace entre chiffre et unité"
     ready_for_production = True
 
@@ -119,16 +141,14 @@ class SpaceBetweenNumberAndUnit(MarkdownProcessor):
         ]
 
 
-class AutomaticReplacements(MarkdownProcessor):
+class AutomaticReplacements(OrthogrpahicProcessor):
     ready_for_production = True
     _tests = []
-
-    URL_RE = re.compile(r"https?://[^ )\n]*")
 
     def __init__(self, lang, comment, replacements):
         self.replacements = replacements
         super().__init__()
-        self.langs = [lang, ]
+        self.lang = lang
         self.comment = comment
         self.placeholders = None
 
@@ -142,26 +162,6 @@ class AutomaticReplacements(MarkdownProcessor):
                     new.strip()
                 )
             )
-
-    def _get_placeholder(self, match):
-        url = match.group(0)
-
-        if url not in self.placeholders:
-            self.placeholders[url] = "http://{}.markdown_placeholder.com".format(len(self.placeholders))
-
-        return self.placeholders[url]
-
-    def modify(self, markdown):
-        self.placeholders = {}
-
-        result = self.URL_RE.sub(self._get_placeholder, markdown)
-
-        result = super().modify(result)
-
-        for url, placeholder in self.placeholders.items():
-            result = result.replace(placeholder, url)
-
-        return result
 
 
 def get_automatic_replacments(bot):

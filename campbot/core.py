@@ -12,8 +12,8 @@ import logging
 import time
 from requests.exceptions import HTTPError
 import sys
-from . import checkers
 from . import objects
+from campbot.processors import get_automatic_replacments
 
 try:
     # py2
@@ -118,7 +118,7 @@ class WikiBot(BaseBot):
 
         return objects.Version(self.campbot, data)
 
-    def get_wiki_object(self, item_id, constructor=None, document_type=None):
+    def get_wiki_object(self, item_id, document_type=None, constructor=None):
         if not constructor:
             constructor = objects.get_constructor(document_type)
 
@@ -135,6 +135,68 @@ class WikiBot(BaseBot):
 
     def get_profile(self, profile_id):
         return self.get_wiki_object(profile_id, constructor=objects.WikiUser)
+
+    def get_area(self, area_id):
+        return self.get_wiki_object(area_id, constructor=objects.Area)
+
+    def get_image(self, image_id):
+        return self.get_wiki_object(image_id, constructor=objects.Image)
+
+    def get_book(self, book_id):
+        return self.get_wiki_object(book_id, constructor=objects.Book)
+
+    def get_map(self, map_id):
+        return self.get_wiki_object(map_id, constructor=objects.Map)
+
+    def get_xreport(self, xreport_id):
+        return self.get_wiki_object(xreport_id, constructor=objects.Xreport)
+
+    def get_route_ids(self, filters=None):
+        return self.get_document_ids(filters=filters, constructor=objects.Route)
+
+    def get_xreport_ids(self, filters=None):
+        return self.get_document_ids(filters=filters, constructor=objects.Xreport)
+
+    def get_document_ids(self, filters=None, document_type=None, constructor=None):
+        if not constructor:
+            constructor = objects.get_constructor(document_type=document_type)
+
+        for doc in self.get_documents_raw(constructor.url_path, filters=filters):
+            yield doc["document_id"]
+
+    def get_routes(self, filters):
+        return self.get_documents(constructor=objects.Route, filters=filters)
+
+    def get_waypoints(self, filters):
+        return self.get_documents(constructor=objects.Waypoint, filters=filters)
+
+    def get_outings(self, filters):
+        return self.get_documents(constructor=objects.Outing, filters=filters)
+
+    def get_documents(self, filters=None, document_type=None, constructor=None):
+        if not constructor:
+            constructor = objects.get_constructor(document_type=document_type)
+
+        for doc in self.get_documents_raw(constructor.url_path, filters):
+            yield self.get_wiki_object(doc["document_id"], constructor=constructor)
+
+    def get_documents_raw(self, url_path, filters=None):
+        filters = filters or {}
+        filters["offset"] = 0
+
+        filters = {k: ",".join(map(str, v)) if isinstance(v, (list, set, tuple)) else v for k, v in filters.items()}
+
+        while True:
+            filters_url = "&".join(["{}={}".format(k, v) for k, v in filters.items()])
+            data = self.get("/{}?{}".format(url_path, filters_url))
+
+            if len(data["documents"]) == 0:
+                raise StopIteration
+
+            for doc in data["documents"]:
+                yield doc
+
+            filters["offset"] += 30
 
     def get_user(self, user_id=None, wiki_name=None, forum_name=None):
         if user_id:
@@ -185,44 +247,6 @@ class WikiBot(BaseBot):
 
             pagination_token = d["pagination_token"]
             d = self.get("/documents/changes?limit=50&token=" + pagination_token + user_filter)
-
-    def get_route_ids(self):
-        return self.get_document_ids(objects.Route)
-
-    def get_xreport_ids(self):
-        return self.get_document_ids(objects.Xreport)
-
-    def get_routes(self, filters):
-        return self.get_documents(objects.Route, filters)
-
-    def get_document_ids(self, constructor=None, document_type=None, filters=None):
-        if not constructor:
-            constructor = objects.get_constructor(document_type=document_type)
-
-        for doc in self.get_documents_raw(constructor.url_path, filters=filters):
-            yield doc["document_id"]
-
-    def get_documents(self, constructor, filters=None):
-        for doc in self.get_documents_raw(constructor.url_path, filters):
-            yield self.get_wiki_object(doc["document_id"], constructor)
-
-    def get_documents_raw(self, url_path, filters=None):
-        filters = filters or {}
-        filters["offset"] = 0
-
-        filters = {k: ",".join(map(str, v)) if isinstance(v, (list, set, tuple)) else v for k, v in filters.items()}
-
-        while True:
-            filters_url = "&".join(["{}={}".format(k, v) for k, v in filters.items()])
-            data = self.get("/{}?{}".format(url_path, filters_url))
-
-            if len(data["documents"]) == 0:
-                raise StopIteration
-
-            for doc in data["documents"]:
-                yield doc
-
-            filters["offset"] += 30
 
 
 class ForumBot(BaseBot):
@@ -432,7 +456,7 @@ class CampBot(object):
 
         with io.open(filename or "outings.csv", "w", encoding="utf-8") as f:
             f.write(message.format(**{h: h for h in headers}))
-            for doc in self.wiki.get_documents(objects.Outing, filters):
+            for doc in self.wiki.get_outings(filters):
                 data = {h: doc.get(h, "") for h in headers}
 
                 data["title"] = doc.get_title("fr").replace(";", ",")
@@ -475,9 +499,10 @@ class CampBot(object):
 
         return result
 
-    def fix_recent_changes(self, oldest_date, lang, processors):
+    def fix_recent_changes(self, oldest_date, lang, ask_before_saving):
 
         excluded_ids = [996571, ]
+        processors = get_automatic_replacments(self)
 
         print("Fix recent changes")
         for document_id, document_type in self.get_modified_documents(lang, oldest_date, ("rabot", "robot.topoguide")):
@@ -496,108 +521,8 @@ class CampBot(object):
                 if must_save:
                     comment = ", ".join(messages)
                     try:
-                        document.save(comment, ask_before_saving=False)
+                        document.save(comment, ask_before_saving=ask_before_saving)
                     except:
                         pass
 
         print("Fix recent changes finished")
-
-    def check_recent_changes(self, check_message_url, lang, processors):
-
-        oldest_date = self.forum.get_last_message_timestamp(
-            check_message_url,
-            "rabot"
-        )
-
-        self.fix_recent_changes(oldest_date, lang, processors)
-
-        tests = checkers.get_fixed_tests(lang)
-        tests += checkers.get_re_tests(self.forum.get_post(url=check_message_url), lang)
-
-        messages = [
-            "[Explications]({})\n".format(check_message_url),
-            "[details=Signification des icônes]\n<table>",
-            "<tr><th>Test</th><th>A relire</th><th>Corrigé</th></tr>",
-        ]
-
-        for test in tests:
-            messages.append("<tr>")
-            messages.append("<th>{}</th>".format(test.name))
-            messages.append("<td>{}</td>".format(test.fail_marker))
-            messages.append("<td>{}</td>".format(test.success_marker))
-            messages.append("</tr>")
-
-        messages.append("</table>\n[/details]\n\n----\n\n")
-
-        items = self.get_modified_documents(lang=lang, oldest_date=oldest_date)
-
-        for contribs in items.values():
-            need_report = False
-            report = []
-
-            if len(contribs) != 1:
-                report.append("* {} modifications ".format(len(contribs), ))
-
-            for contrib in contribs:
-                print(contrib.written_at, "get doc")
-                new = self.wiki.get_wiki_object_version(contrib.document.document_id,
-                                                        contrib.document.type,
-                                                        contrib.lang,
-                                                        contrib.version_id)
-
-                old = self.wiki.get_wiki_object_version(contrib.document.document_id,
-                                                        contrib.document.type,
-                                                        contrib.lang,
-                                                        new.previous_version_id)
-
-                emojis = []
-
-                for test in tests:
-                    old_is_ok, new_is_ok = test(contrib, old, new)
-
-                    if old_is_ok and not new_is_ok:
-                        emojis.append(test.fail_marker)
-                        need_report = True
-                    elif not old_is_ok and new_is_ok:
-                        emojis.append(test.success_marker)
-
-                delta = new.get_locale_length(contrib.lang) if new else 0
-                delta -= old.get_locale_length(contrib.lang) if old else 0
-
-                if delta < 0:
-                    delta = "<del>{:+d}</del>".format(delta)
-                elif delta > 0:
-                    delta = "<ins>{:+d}</ins>".format(delta)
-                else:
-                    delta = "**=**"
-
-                title = new.document.get_title(lang)
-
-                report.append(
-                    "{prefix}* {timestamp} {emojis} [{doc_title}]({doc_url}) "
-                    "([{diff_title}]({diff_url}) | [hist]({hist_url})) "
-                    "**·** ({delta}) **·** [{username}]({user_contrib_url})"
-                    " →‎ *{comment}*".format(
-                        prefix="" if len(contribs) == 1 else "  ",
-                        timestamp=parser.parse(contrib.written_at).strftime("%H:%M"),
-                        emojis="".join(emojis),
-                        doc_title=title if len(title) else "*Vide*",
-                        doc_url=new.document.get_url(lang),
-                        diff_title="diff" if new.previous_version_id else "**new**",
-                        diff_url=new.get_diff_url(lang),
-                        hist_url=new.document.get_history_url(contrib.lang),
-                        delta=delta,
-                        username=contrib.user.name,
-                        user_contrib_url=contrib.user.get_contributions_url(),
-                        comment=contrib.comment if len(contrib.comment) else "&nbsp;"
-                    )
-                )
-
-            if need_report:
-                messages += report
-
-        for m in messages:
-            print(m)
-
-        if len(messages) != 0:
-            self.forum.post_message("\n".join(messages), check_message_url)
