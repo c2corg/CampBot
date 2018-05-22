@@ -55,6 +55,52 @@ class OrthographicProcessor(MarkdownProcessor):
         return result
 
 
+class UpperFix(OrthographicProcessor):
+    comment = "Upper case first letter"
+    ready_for_production = True
+
+    _tests = [{
+        "source": "## abc\n#ab\n#\n##A",
+        "expected": "## Abc\n#Ab\n#\n##A",
+    }, {
+        "source": "|aa\nL# | aa | Aa [[routes/132|aa]] | \n a \n|a\na\n\naa",
+        "expected": "|aa\nL# | Aa | Aa [[routes/132|aa]] | \n a \n|A\na\n\naa",
+    }]
+
+    def init_modifiers(self):
+        def upper(match):
+            return match.group(0).upper()
+
+        def ltag_converter(markdown):
+            result = []
+
+            cell_pattern = re.compile(r'(\| *[a-z])(?![^|]*\]\])')
+
+            is_ltag = False
+
+            for line in markdown.split("\n"):
+
+                if len(line) == 0:
+                    is_ltag = False
+
+                if line.startswith("L#") or line.startswith("R#"):
+                    is_ltag = True
+
+                if is_ltag:
+                    result.append(cell_pattern.sub(upper, line))
+
+                else:
+                    result.append(line)
+
+            return "\n".join(result)
+
+        self.modifiers = [
+            Converter(r"(^|\n)#+ *[a-z]",
+                      upper),
+            ltag_converter,
+        ]
+
+
 class MultiplicationSign(OrthographicProcessor):
     comment = "Multiplication sign"
     ready_for_production = True
@@ -158,6 +204,6 @@ def get_automatic_replacments(bot):
 
     result.append(SpaceBetweenNumberAndUnit())
     result.append(MultiplicationSign())
-    result.append(MarkdownCleaner())
+    result.append(UpperFix())
 
     return result
