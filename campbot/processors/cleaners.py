@@ -33,7 +33,7 @@ class MarkdownCleaner(MarkdownProcessor):
         ]
 
 
-class OrthogrpahicProcessor(MarkdownProcessor):
+class OrthographicProcessor(MarkdownProcessor):
     def modify(self, markdown):
         placeholders = {}
 
@@ -55,7 +55,7 @@ class OrthogrpahicProcessor(MarkdownProcessor):
         return result
 
 
-class MultiplicationSign(OrthogrpahicProcessor):
+class MultiplicationSign(OrthographicProcessor):
     comment = "Multiplication sign"
     ready_for_production = True
 
@@ -73,7 +73,7 @@ class MultiplicationSign(OrthogrpahicProcessor):
         ]
 
 
-class SpaceBetweenNumberAndUnit(OrthogrpahicProcessor):
+class SpaceBetweenNumberAndUnit(OrthographicProcessor):
     lang = "fr"
     comment = "Espace entre chiffre et unité"
     ready_for_production = True
@@ -113,7 +113,7 @@ class SpaceBetweenNumberAndUnit(OrthogrpahicProcessor):
         ]
 
 
-class AutomaticReplacements(OrthogrpahicProcessor):
+class AutomaticReplacements(OrthographicProcessor):
     ready_for_production = True
     _tests = []
 
