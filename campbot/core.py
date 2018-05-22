@@ -299,12 +299,20 @@ class ForumBot(BaseBot):
 
 
 class CampBot(object):
-    def __init__(self, proxies=None, min_delay=None):
-        self.wiki = WikiBot(self, "https://api.camptocamp.org", proxies=proxies, min_delay=min_delay)
-        self.forum = ForumBot(self, "https://forum.camptocamp.org", proxies=proxies, min_delay=min_delay)
+    def __init__(self, proxies=None, min_delay=None, use_demo=False):
+
+        domain = "camptocamp" if not use_demo else "demov6.camptocamp"
+
+        self.wiki = WikiBot(self, "https://api.{}.org".format(domain),
+                            proxies=proxies, min_delay=min_delay)
+
+        self.forum = ForumBot(self, "https://forum.{}.org".format(domain),
+                              proxies=proxies, min_delay=min_delay)
+
         self.moderator = False
+
         self.forum.headers['X-Requested-With'] = "XMLHttpRequest"
-        self.forum.headers['Host'] = "forum.camptocamp.org"
+        self.forum.headers['Host'] = "forum.{}.org".format(domain)
 
     def login(self, login, password):
         res = self.wiki.post("/users/login", {"username": login, "password": password, "discourse": True})
@@ -385,66 +393,48 @@ class CampBot(object):
             ignored_voters = ["@{}".format(v) for v in ignored_voters]
             print("\n**Ignored votes** : {}".format(", ".join(set(ignored_voters))))
 
-    def fix_markdown(self, processor, filename, ask_before_saving=True):
+    def clean(self, url, ask_before_saving=True):
+        constructor, filters = _parse_filter(url)
+        processors = get_automatic_replacments(self)
+        documents = self.wiki.get_documents(filters, constructor=constructor)
 
-        logging.info("Fix markdown with {} processor".format(processor))
-        logging.info("Ask before saving : {}".format(ask_before_saving))
-        logging.info("Delay between each request : {}".format(self.wiki.min_delay))
+        self._process_documents(documents, processors, ask_before_saving)
 
-        ids = {}
-        with open(filename) as f:
-            for line in f:
-                line = line.replace(" ", "").replace("\n", "")
-                item_id, item_type = line.split("|")
-                constructor = objects.get_constructor(item_type)
-                item_id = int(item_id)
+    def _process_documents(self, documents, processors, ask_before_saving=True):
 
-                if item_id not in ids and (self.moderator or constructor not in (objects.Outing,
-                                                                                 objects.WikiUser,
-                                                                                 objects.Xreport)):
-                    ids[item_id] = constructor
-        i = 0
-        for item_id, constructor in ids.items():
-            i += 1
+        for document in documents:
 
-            url = "https://www.camptocamp.org/{}/{}".format(constructor.url_path, item_id)
-            progress = "{}/{}".format(i + 1, len(ids))
+            if document.get("protected", False) and not self.moderator:
+                print("{} is a protected".format(document.get_url()))
 
-            try:
-                item = self.wiki.get_wiki_object(item_id, constructor=constructor)
-            except:
-                item = None
+            elif "redirects_to" in document:
+                pass  # document id is not available...
 
-            if not item:
-                print(progress, "{} can't be found".format(url))
+            elif not document.is_valid():
+                print("{} : {}".format(document.get_url(), document.get_invalidity_reason()))
 
-            elif "redirects_to" in item:
-                print(progress, "{} is a redirection".format(url))
-
-            elif processor.ready_for_production and \
-                not self.moderator and \
-                (item.protected or item.is_personal()):
-                print(progress, "{} is protected".format(url))
-
-            elif not item.is_valid():
-                print(progress, "{} : {}".format(url, item.get_invalidity_reason()))
-
-            elif processor(item):
-                if not processor.ready_for_production:
-                    # print(progress, "{} is impacted".format(url))
-                    pass
-
-                else:
-                    try:
-                        item.save(processor.comment, ask_before_saving=ask_before_saving)
-                    except HTTPError as e:
-                        print("Error while saving", url, e, file=sys.stderr)
-
-                    print()
             else:
-                print(progress, "Nothing found on {}".format(url))
+                messages = []
+                must_save = False
 
-    def export_outings(self, filters, filename=None):
+                for processor in processors:
+                    if processor.ready_for_production:
+                        if processor(document):
+                            messages.append(processor.comment)
+                            must_save = True
+
+                if must_save:
+                    comment = ", ".join(messages)
+                    try:
+                        document.save(comment, ask_before_saving=ask_before_saving)
+                    except Exception as e:
+                        print("Error while saving {} :\n{}".format(document.get_url(), e))
+
+    def export(self, url, filename=None):
+
+        constructor, filters = _parse_filter(url)
+
+        assert constructor is objects.Outing
 
         headers = ["date_start", "date_end", "title", "equipement_rating",
                    "global_rating", "height_diff_up", "rock_free_rating",
@@ -452,11 +442,10 @@ class CampBot(object):
 
         message = ";".join(["{" + h + "}" for h in headers]) + "\n"
 
-        filters = {k: v for k, v in (v.split("=") for v in filters.split("&"))}
-
-        with io.open(filename or "outings.csv", "w", encoding="utf-8") as f:
+        with io.open(filename or constructor.url_path + ".csv", "w", encoding="utf-8") as f:
             f.write(message.format(**{h: h for h in headers}))
-            for doc in self.wiki.get_outings(filters):
+            for raw in self.wiki.get_documents_raw(constructor.url_path, filters):
+                doc = constructor(self, raw)
                 data = {h: doc.get(h, "") for h in headers}
 
                 data["title"] = doc.get_title("fr").replace(";", ",")
@@ -502,27 +491,47 @@ class CampBot(object):
     def fix_recent_changes(self, oldest_date, lang, ask_before_saving):
 
         excluded_ids = [996571, ]
+
         processors = get_automatic_replacments(self)
 
+        def get_documents():
+
+            for document_id, document_type in self.get_modified_documents(lang, oldest_date,
+                                                                          ("rabot", "robot.topoguide")):
+
+                document = self.wiki.get_wiki_object(document_id, document_type=document_type)
+
+                if document_id not in excluded_ids:
+                    yield document
+
         print("Fix recent changes")
-        for document_id, document_type in self.get_modified_documents(lang, oldest_date, ("rabot", "robot.topoguide")):
-            document = self.wiki.get_wiki_object(document_id, document_type=document_type)
-
-            if document_id not in excluded_ids and not document.get("protected", False):
-
-                messages = []
-                must_save = False
-
-                for processor in processors:
-                    if processor(document):
-                        messages.append(processor.comment)
-                        must_save = True
-
-                if must_save:
-                    comment = ", ".join(messages)
-                    try:
-                        document.save(comment, ask_before_saving=ask_before_saving)
-                    except:
-                        pass
-
+        self._process_documents(get_documents(), processors, ask_before_saving)
         print("Fix recent changes finished")
+
+
+def _parse_filter(url):
+    url = url.replace("https://www.camptocamp.org/", "")
+
+    document_type, filters = url.split("#", 1)
+    filters = {k: v for k, v in (v.split("=") for v in filters.split("&"))}
+
+    for key in filters:
+        if key == "bbox":
+            filters[key] = filters[key].replace("%252C", "%2C")
+        elif key in ("act", "rock_type"):
+            filters[key] = filters[key].replace("%252C", ",")
+
+    constructor = {
+        "profiles": objects.WikiUser,
+        "area": objects.Area,
+        "waypoints": objects.Waypoint,
+        "outings": objects.Outing,
+        "images": objects.Image,
+        "map": objects.Map,
+        "xreports": objects.Xreport,
+        "articles": objects.Article,
+        "books": objects.Book,
+        "routes": objects.Route
+    }[document_type]
+
+    return constructor, filters
