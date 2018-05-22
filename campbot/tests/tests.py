@@ -145,7 +145,7 @@ def test_exports(fix_requests):
     from campbot.__main__ import main
 
     main(get_main_args("contributions"))
-    main(get_main_args("outings"))
+    main(get_main_args("export"))
 
 
 def test_forum(fix_requests):
@@ -236,17 +236,12 @@ def test_dump(fix_requests, fix_dump):
     os.remove("test.db")
 
 
-def test_fix_bbcode(fix_requests, ids_files):
-    from campbot.__main__ import main
+def test_fix_bbcode(fix_requests):
 
     from campbot import CampBot
-    from campbot.processors import LtagCleaner
+    from campbot.processors import LtagCleaner, BBCodeRemover, ColorAndUnderlineRemover
 
-    main(get_main_args("remove_bbcode", {"<ids_file>": ids_files}))
-    main(get_main_args("remove_bbcode2", {"<ids_file>": ids_files}))
-    main(get_main_args("clean_color_u", {"<ids_file>": ids_files}))
-
-    CampBot().fix_markdown(LtagCleaner(), ids_files, False)
+    CampBot()._process_documents([], [LtagCleaner(), BBCodeRemover(), ColorAndUnderlineRemover()], False)
 
 
 def get_main_args(action, others=None):
@@ -254,15 +249,15 @@ def get_main_args(action, others=None):
     result = {
         "check_rc": False,
         "check_voters": False,
-        "contributions": False,
-        "outings": False,
+        "contribs": False,
+        "export": False,
+        "clean": False,
         "--delay": 0.01,
         "--login": "x",
         "--password": "y",
         "--lang": "fr",
         "--batch": True,
-        "<message_url>": MESSAGE_URL,
-        "<filters>": "u=286726",
+        "<url>": "outings#u=286726",
         "--ends": "2999-12-31",
         "--starts": "2017-06-01",
         "--out": "",
