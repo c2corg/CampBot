@@ -15,17 +15,17 @@ Bot framework for camptocamp.org
 This command will load all contributions made in the last 24 hours
 
 ```batch
-    campbot contributions
+    campbot contribs
 ```
 
 Optional arguments : 
 
 * `-starts=2017-12-07` : will export all contributions after this date (included)
-* `-starts=2017-12-07` : will export all contributions before this date (excluded)
+* `-ends=2017-12-07` : will export all contributions before this date (excluded)
 * `--out=data.csv` : out file name, default value is `contributions.csv`
 
 
-### Check recent changes
+### Check and fix recent changes
 Check that last day modifications pass these tests : 
   
 * History is filled
@@ -37,15 +37,15 @@ campbot check_rc --login=<login> --password=<password> [--delay=<seconds>]
 ```
   
   
-### Check poll voters
+### Export data
 
-Check that voters in a poll forum has at least one contribution during last 180 days
+Export to a csv file all documents given by camptocamp URL
 
 ```batch
-campbot check_voters <message_url> --login=<login> --password=<password>
+campbot export <url>
 ```
 
-<message_url> is the url of the massage that contains the poll you need to check
+<url> is a camptocamp url, like https://www.camptocamp.org/routes#a=523281
 
 
 
