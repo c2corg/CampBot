@@ -497,7 +497,7 @@ class CampBot(object):
         def get_documents():
 
             for document_id, document_type in self.get_modified_documents(lang, oldest_date,
-                                                                          ("rabot", "robot.topoguide")):
+                                                                          ("rabot", "robot.topoguide", "botopo")):
 
                 document = self.wiki.get_wiki_object(document_id, document_type=document_type)
 
