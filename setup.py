@@ -7,7 +7,7 @@ setup(
     author="Charles de Beauchesne",
     author_email="charles.de.beauchesne@gmail.com",
     description="Package for automatic edition of camptocamp.org",
-    long_description=open('README.md').read(),
+    long_description=open('README.txt').read(),
 
     install_requires=[
         "docopt==0.6.2",
