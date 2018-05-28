@@ -2,8 +2,8 @@
 CampBot, Python bot framework for camptocamp.org
 
 Usage:
-  campbot check_rc [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
-  campbot clean <url> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
+  campbot check_rc --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot clean <url> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot export <url> [--out=<filename>] [--delay=<seconds>]
 
