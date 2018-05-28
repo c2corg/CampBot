@@ -37,15 +37,22 @@ class OrthographicProcessor(MarkdownProcessor):
     def modify(self, markdown):
         placeholders = {}
 
-        def _get_placeholder(match):
-            url = match.group(0)
+        def protect(pattern, ph, markdown):
 
-            if url not in placeholders:
-                placeholders[url] = "http://{}.markdown_placeholder.com".format(len(placeholders))
+            def repl(match):
+                markdown = match.group(0)
 
-            return placeholders[url]
+                if markdown not in placeholders:
+                    placeholders[markdown] = ph.format(len(placeholders))
 
-        result = re.sub(r"https?://[^ )\n]*", _get_placeholder, markdown)
+                return placeholders[markdown]
+
+            return re.sub(pattern, repl, markdown)
+
+        result = markdown
+
+        result = protect(r"https?://[^ )\n>]*", "http://{}.markdown_placeholder.com", result)
+        result = protect(r"\[\[[a-z]+/\d+/[/a-z\-#]+\|", "[[md_ph/666/{}|", result)
 
         result = super().modify(result)
 
