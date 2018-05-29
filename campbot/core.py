@@ -431,27 +431,31 @@ class CampBot(object):
                         print("Error while saving {} :\n{}".format(document.get_url(), e))
 
     def export(self, url, filename=None):
-
         constructor, filters = _parse_filter(url)
 
-        assert constructor is objects.Outing
+        headers = ["document_id", "title", "url", "activities", "available_langs"]
 
-        headers = ["date_start", "date_end", "title", "equipement_rating",
-                   "global_rating", "height_diff_up", "rock_free_rating",
-                   "condition_rating", "elevation_max", "img_count", "quality", "activities"]
+        data = []
+        for raw in self.wiki.get_documents_raw(constructor.url_path, filters):
+            for key in raw:
+                if key not in headers and isinstance(raw[key], (str, bool, int, float)):
+                    headers.append(key)
+
+            item = {h: raw.get(h, "") or "" for h in headers}
+            doc = constructor(self, raw)
+            item["title"] = doc.get_title("fr").replace(";", ",")
+            item["url"] = doc.get_url()
+            item["activities"] = ",".join(sorted(item["activities"] or []))
+            item["available_langs"] = ",".join(sorted(item["available_langs"] or []))
+
+            data.append(item)
 
         message = ";".join(["{" + h + "}" for h in headers]) + "\n"
 
         with io.open(filename or constructor.url_path + ".csv", "w", encoding="utf-8") as f:
             f.write(message.format(**{h: h for h in headers}))
-            for raw in self.wiki.get_documents_raw(constructor.url_path, filters):
-                doc = constructor(self, raw)
-                data = {h: doc.get(h, "") for h in headers}
-
-                data["title"] = doc.get_title("fr").replace(";", ",")
-                data["activities"] = ",".join(data["activities"])
-
-                f.write(message.format(**data))
+            for item in data:
+                f.write(message.format(**{h: item.get(h, "") for h in headers}))
 
     def export_contributions(self, starts=None, ends=None, filename=None):
 
@@ -512,8 +516,14 @@ class CampBot(object):
 def _parse_filter(url):
     url = url.replace("https://www.camptocamp.org/", "")
 
-    document_type, filters = url.split("#", 1)
-    filters = {k: v for k, v in (v.split("=") for v in filters.split("&"))}
+    if "#" in url:
+        document_type, filters = url.split("#", 1)
+        if len(filters) != 0:
+            filters = {k: v for k, v in (v.split("=") for v in filters.split("&"))}
+        else:
+            filters = {}
+    else:
+        document_type, filters = url, {}
 
     for key in filters:
         if key == "bbox":
@@ -523,11 +533,11 @@ def _parse_filter(url):
 
     constructor = {
         "profiles": objects.WikiUser,
-        "area": objects.Area,
+        "areas": objects.Area,
         "waypoints": objects.Waypoint,
         "outings": objects.Outing,
         "images": objects.Image,
-        "map": objects.Map,
+        "maps": objects.Map,
         "xreports": objects.Xreport,
         "articles": objects.Article,
         "books": objects.Book,
