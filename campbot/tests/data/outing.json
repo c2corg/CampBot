@@ -1,0 +1,485 @@
+{
+  "rock_free_rating": "5c",
+  "associations": {
+    "users": [
+      {
+        "areas": [
+          {
+            "protected": false,
+            "type": "a",
+            "available_langs": null,
+            "version": 11,
+            "locales": [
+              {
+                "title": "Fran\u00e7a",
+                "lang": "ca",
+                "version": 3
+              },
+              {
+                "title": "Frankreich",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "France",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Francia",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "France",
+                "lang": "eu",
+                "version": 2
+              },
+              {
+                "title": "France",
+                "lang": "fr",
+                "version": 4
+              },
+              {
+                "title": "Francia",
+                "lang": "it",
+                "version": 1
+              }
+            ],
+            "document_id": 14274,
+            "area_type": "country"
+          },
+          {
+            "protected": false,
+            "type": "a",
+            "available_langs": null,
+            "version": 8,
+            "locales": [
+              {
+                "title": "Par\u00eds",
+                "lang": "ca",
+                "version": 1
+              },
+              {
+                "title": "Paris",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "Paris",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Par\u00eds",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "Paris",
+                "lang": "eu",
+                "version": 1
+              },
+              {
+                "title": "Paris",
+                "lang": "fr",
+                "version": 2
+              },
+              {
+                "title": "Parigi",
+                "lang": "it",
+                "version": 1
+              }
+            ],
+            "document_id": 14294,
+            "area_type": "admin_limits"
+          }
+        ],
+        "type": "u",
+        "available_langs": [
+          "fr",
+          "en"
+        ],
+        "version": 6,
+        "name": "Charles",
+        "locales": [
+          {
+            "lang": "fr",
+            "version": 33
+          },
+          {
+            "lang": "en",
+            "version": 1
+          }
+        ],
+        "activities": [
+          "snow_ice_mixed",
+          "mountain_climbing",
+          "rock_climbing",
+          "skitouring",
+          "ice_climbing",
+          "slacklining"
+        ],
+        "categories": [
+          "amateur"
+        ],
+        "protected": false,
+        "document_id": 286726,
+        "forum_username": "CharlesB"
+      }
+    ],
+    "xreports": [],
+    "articles": [],
+    "routes": [
+      {
+        "rock_free_rating": "5c",
+        "engagement_rating": "II",
+        "orientations": [
+          "SW"
+        ],
+        "rock_required_rating": "5b",
+        "document_id": 185930,
+        "equipment_rating": "P1",
+        "risk_rating": null,
+        "quality": "fine",
+        "elevation_max": 50,
+        "type": "r",
+        "geometry": {
+          "has_geom_detail": false,
+          "geom": "{\"type\": \"Point\", \"coordinates\": [605729.0348046693, 5343970.128967229]}",
+          "version": 14
+        },
+        "elevation_min": 2,
+        "exposition_rock_rating": "E1",
+        "activities": [
+          "rock_climbing"
+        ],
+        "version": 8,
+        "height_diff_up": 48,
+        "height_diff_difficulties": 100,
+        "global_rating": "D+",
+        "areas": [
+          {
+            "type": "a",
+            "protected": false,
+            "version": 11,
+            "locales": [
+              {
+                "title": "Fran\u00e7a",
+                "lang": "ca",
+                "version": 3
+              },
+              {
+                "title": "Frankreich",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "France",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Francia",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "France",
+                "lang": "eu",
+                "version": 2
+              },
+              {
+                "title": "France",
+                "lang": "fr",
+                "version": 4
+              },
+              {
+                "title": "Francia",
+                "lang": "it",
+                "version": 1
+              }
+            ],
+            "available_langs": null,
+            "document_id": 14274,
+            "area_type": "country"
+          },
+          {
+            "type": "a",
+            "protected": true,
+            "version": 3,
+            "locales": [
+              {
+                "title": "Bouches-du-Rh\u00f4ne",
+                "lang": "fr",
+                "version": 5
+              }
+            ],
+            "available_langs": null,
+            "document_id": 14353,
+            "area_type": "admin_limits"
+          },
+          {
+            "type": "a",
+            "protected": false,
+            "version": 9,
+            "locales": [
+              {
+                "title": "Proven\u00e7a",
+                "lang": "ca",
+                "version": 1
+              },
+              {
+                "title": "Provence",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "Provence",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Provenza",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "Proventza",
+                "lang": "eu",
+                "version": 1
+              },
+              {
+                "title": "Provence",
+                "lang": "fr",
+                "version": 3
+              },
+              {
+                "title": "Provenza",
+                "lang": "it",
+                "version": 1
+              }
+            ],
+            "available_langs": null,
+            "document_id": 14463,
+            "area_type": "range"
+          },
+          {
+            "type": "a",
+            "protected": false,
+            "version": 1,
+            "locales": [
+              {
+                "title": "Calanques",
+                "lang": "fr",
+                "version": 9
+              }
+            ],
+            "available_langs": null,
+            "document_id": 820370,
+            "area_type": "range"
+          }
+        ],
+        "height_diff_down": null,
+        "protected": false,
+        "aid_rating": null,
+        "locales": [
+          {
+            "title": "Aven du Canc\u00e9ou - Prends moi sec au-dessus du lagon bleu",
+            "title_prefix": "Calanque de Morgiou - Le Canc\u00e9ou",
+            "lang": "fr",
+            "version": 22,
+            "summary": "Escalade surprenante dans un autre monde, tr\u00e8s bien \u00e9quip\u00e9e. C'est une exp\u00e9rience unique, la luminosit\u00e9 et la couleur de l'eau au fond de l'Aven est tr\u00e8s surprenante. "
+          },
+          {
+            "title": "l'Aven du Canc\u00e9ou: \"Prends moi sec au-dessus du lagon bleu\"",
+            "title_prefix": "Calanque de Morgiou - Le Canc\u00e9ou",
+            "lang": "es",
+            "version": 6,
+            "summary": null
+          }
+        ],
+        "available_langs": [
+          "fr",
+          "es"
+        ]
+      }
+    ],
+    "images": []
+  },
+  "document_id": 946946,
+  "equipment_rating": "P1",
+  "frequentation": "some",
+  "quality": "draft",
+  "disable_comments": null,
+  "elevation_max": null,
+  "hut_status": null,
+  "elevation_access": null,
+  "access_condition": null,
+  "geometry": {
+    "geom_detail": null,
+    "geom": "{\"coordinates\": [605729.0348046693, 5343970.128967229], \"type\": \"Point\"}",
+    "version": 3
+  },
+  "elevation_min": null,
+  "partial_trip": null,
+  "lift_status": null,
+  "date_start": "2017-11-20",
+  "activities": [
+    "rock_climbing"
+  ],
+  "version": 4,
+  "height_diff_up": 100,
+  "locales": [
+    {
+      "access_comment": null,
+      "conditions_levels": "[{\"level_snow_height_soft\":\"\",\"level_snow_height_total\":\"\",\"level_comment\":\"\",\"level_place\":\"\"}]",
+      "version": 2,
+      "topic_id": null,
+      "hut_comment": null,
+      "timing": null,
+      "title": "Calanque de Morgiou - Le Canc\u00e9ou : Aven du Canc\u00e9ou - Prends moi sec au-dessus du lagon bleu",
+      "lang": "fr",
+      "conditions": null,
+      "participants": "Hugues, Alex, J\u00e9r\u00f4me, David",
+      "weather": null,
+      "route_description": null,
+      "description": "Voie magique. Escalade hyper ludique. Les cotations sont tr\u00e8\u00e8\u00e8\u00e8s gentilles.",
+      "summary": null
+    }
+  ],
+  "participant_count": 5,
+  "global_rating": "D+",
+  "condition_rating": "excellent",
+  "date_end": "2017-11-20",
+  "areas": [
+    {
+      "protected": false,
+      "type": "a",
+      "document_id": 14274,
+      "version": 11,
+      "available_langs": null,
+      "locales": [
+        {
+          "title": "Fran\u00e7a",
+          "lang": "ca",
+          "version": 3
+        },
+        {
+          "title": "Frankreich",
+          "lang": "de",
+          "version": 1
+        },
+        {
+          "title": "France",
+          "lang": "en",
+          "version": 1
+        },
+        {
+          "title": "Francia",
+          "lang": "es",
+          "version": 1
+        },
+        {
+          "title": "France",
+          "lang": "eu",
+          "version": 2
+        },
+        {
+          "title": "France",
+          "lang": "fr",
+          "version": 4
+        },
+        {
+          "title": "Francia",
+          "lang": "it",
+          "version": 1
+        }
+      ],
+      "area_type": "country"
+    },
+    {
+      "protected": true,
+      "type": "a",
+      "document_id": 14353,
+      "version": 3,
+      "available_langs": null,
+      "locales": [
+        {
+          "title": "Bouches-du-Rh\u00f4ne",
+          "lang": "fr",
+          "version": 5
+        }
+      ],
+      "area_type": "admin_limits"
+    },
+    {
+      "protected": false,
+      "type": "a",
+      "document_id": 14463,
+      "version": 9,
+      "available_langs": null,
+      "locales": [
+        {
+          "title": "Proven\u00e7a",
+          "lang": "ca",
+          "version": 1
+        },
+        {
+          "title": "Provence",
+          "lang": "de",
+          "version": 1
+        },
+        {
+          "title": "Provence",
+          "lang": "en",
+          "version": 1
+        },
+        {
+          "title": "Provenza",
+          "lang": "es",
+          "version": 1
+        },
+        {
+          "title": "Proventza",
+          "lang": "eu",
+          "version": 1
+        },
+        {
+          "title": "Provence",
+          "lang": "fr",
+          "version": 3
+        },
+        {
+          "title": "Provenza",
+          "lang": "it",
+          "version": 1
+        }
+      ],
+      "area_type": "range"
+    },
+    {
+      "protected": false,
+      "type": "a",
+      "document_id": 820370,
+      "version": 1,
+      "available_langs": null,
+      "locales": [
+        {
+          "title": "Calanques",
+          "lang": "fr",
+          "version": 9
+        }
+      ],
+      "area_type": "range"
+    }
+  ],
+  "public_transport": null,
+  "height_diff_down": null,
+  "available_langs": [
+    "fr"
+  ],
+  "length_total": 0,
+  "protected": false,
+  "type": "o"
+}

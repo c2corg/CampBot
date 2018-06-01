@@ -1,0 +1,171 @@
+{
+  "document_id": 1005116,
+  "exposure_time": null,
+  "focal_length": null,
+  "associations": {
+    "areas": [],
+    "outings": [
+      {
+        "rock_free_rating": "6a+",
+        "date_start": "2018-04-22",
+        "height_diff_up": null,
+        "activities": [
+          "rock_climbing"
+        ],
+        "img_count": 12,
+        "protected": false,
+        "global_rating": "TD-",
+        "locales": [
+          {
+            "title": "Pic du Cap Roux : L'\u00c9chine du dragon",
+            "lang": "fr",
+            "version": 1,
+            "summary": null
+          }
+        ],
+        "equipment_rating": "P1+",
+        "quality": "great",
+        "document_id": 1005098,
+        "condition_rating": null,
+        "date_end": "2018-04-22",
+        "areas": [
+          {
+            "type": "a",
+            "protected": false,
+            "version": 11,
+            "locales": [
+              {
+                "title": "Fran\u00e7a",
+                "lang": "ca",
+                "version": 3
+              },
+              {
+                "title": "Frankreich",
+                "lang": "de",
+                "version": 1
+              },
+              {
+                "title": "France",
+                "lang": "en",
+                "version": 1
+              },
+              {
+                "title": "Francia",
+                "lang": "es",
+                "version": 1
+              },
+              {
+                "title": "France",
+                "lang": "eu",
+                "version": 2
+              },
+              {
+                "title": "France",
+                "lang": "fr",
+                "version": 4
+              },
+              {
+                "title": "Francia",
+                "lang": "it",
+                "version": 1
+              }
+            ],
+            "available_langs": null,
+            "document_id": 14274,
+            "area_type": "country"
+          },
+          {
+            "type": "a",
+            "protected": false,
+            "version": 2,
+            "locales": [
+              {
+                "title": "Var",
+                "lang": "fr",
+                "version": 2
+              }
+            ],
+            "available_langs": null,
+            "document_id": 14286,
+            "area_type": "admin_limits"
+          },
+          {
+            "type": "a",
+            "protected": false,
+            "version": 1,
+            "locales": [
+              {
+                "title": "Pelat - Pr\u00e9alpes de Castellane",
+                "lang": "fr",
+                "version": 4
+              }
+            ],
+            "available_langs": null,
+            "document_id": 14465,
+            "area_type": "range"
+          }
+        ],
+        "elevation_max": 453,
+        "type": "o",
+        "available_langs": [
+          "fr"
+        ],
+        "author": {
+          "name": "hippos83",
+          "user_id": 426694
+        },
+        "geometry": {
+          "has_geom_detail": false,
+          "geom": "{\"type\": \"Point\", \"coordinates\": [768784.7598818246, 5381485.92477476]}",
+          "version": 2
+        },
+        "version": 2
+      }
+    ],
+    "articles": [],
+    "waypoints": [],
+    "users": [],
+    "xreports": [],
+    "routes": [],
+    "images": [],
+    "books": []
+  },
+  "quality": "draft",
+  "image_type": "personal",
+  "type": "i",
+  "filename": "1527861554_1803329464.jpg",
+  "author": null,
+  "geometry": null,
+  "fnumber": null,
+  "categories": [],
+  "width": null,
+  "creator": {
+    "name": "hippos83",
+    "user_id": 426694
+  },
+  "file_size": 53916,
+  "height": null,
+  "activities": [
+    "rock_climbing"
+  ],
+  "version": 1,
+  "camera_name": null,
+  "iso_speed": null,
+  "locales": [
+    {
+      "topic_id": null,
+      "lang": "fr",
+      "description": null,
+      "title": "",
+      "version": 1,
+      "summary": null
+    }
+  ],
+  "elevation": null,
+  "date_time": null,
+  "areas": [],
+  "protected": false,
+  "available_langs": [
+    "fr"
+  ]
+}

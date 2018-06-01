@@ -6,17 +6,6 @@ class MarkdownCleaner(MarkdownProcessor):
     ready_for_production = True
     comment = "Clean markdown"
 
-    _tests = [
-        {
-            "source": "\n\nx\n\nx\nx\n\n\nx\n\n",
-            "expected": "x\n\nx\nx\n\nx",
-        },
-        {
-            "source": "#a\n##  b\n# c",
-            "expected": "# a\n## b\n# c",
-        }
-    ]
-
     def init_modifiers(self):
         self.modifiers = [
             Converter(pattern=r"\n{3,}",
@@ -67,14 +56,6 @@ class UpperFix(OrthographicProcessor):
     comment = "Upper case first letter"
     ready_for_production = True
 
-    _tests = [{
-        "source": "## abc\n#ab\n#\n##A",
-        "expected": "## Abc\n#Ab\n#\n##A",
-    }, {
-        "source": "|aa\nL# | aa | Aa [[routes/132|aa]] | \n a \n|a\na\n\naa",
-        "expected": "|aa\nL# | Aa | Aa [[routes/132|aa]] | \n a \n|A\na\n\naa",
-    }]
-
     def init_modifiers(self):
         def upper(match):
             return match.group(0).upper()
@@ -113,12 +94,6 @@ class MultiplicationSign(OrthographicProcessor):
     comment = "Multiplication sign"
     ready_for_production = True
 
-    _tests = [
-
-        {"source": "2*50m, 2x50 m, 2X50 m",
-         "expected": "2×50 m, 2×50 m, 2×50 m"},
-    ]
-
     def init_modifiers(self):
         self.modifiers = [
 
@@ -132,31 +107,6 @@ class SpaceBetweenNumberAndUnit(OrthographicProcessor):
     comment = "Espace entre chiffre et unité"
     ready_for_production = True
 
-    _tests = [
-        {"source": "",
-         "expected": ""},
-        {"source": "prendre une corde 10-15m ou 2x50m ou 2X50m",
-         "expected": "prendre une corde 10-15 m ou 2x50 m ou 2X50 m"},
-        {"source": "6h, 2min! 4mn? 5m et 6km",
-         "expected": "6 h, 2 min! 4 mn? 5 m et 6 km"},
-        {"source": "L# | 30m |",
-         "expected": "L# | 30 m |"},
-        {"source": "L# |30m |",
-         "expected": "L# |30 m |"},
-        {"source": "L# | 30m|",
-         "expected": "L# | 30 m|"},
-        {"source": "6h\n",
-         "expected": "6 h\n"},
-        {"source": "\n6h\n",
-         "expected": "\n6 h\n"},
-        {"source": "\n6h",
-         "expected": "\n6 h"},
-        {"source": "L#6h",
-         "expected": "L#6h"},
-        {"source": " 6A ",
-         "expected": " 6A "},
-    ]
-
     def init_modifiers(self):
         self.modifiers = [
             Converter(r"(^|[| \n\(])(\d+)(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])",
@@ -169,7 +119,6 @@ class SpaceBetweenNumberAndUnit(OrthographicProcessor):
 
 class AutomaticReplacements(OrthographicProcessor):
     ready_for_production = True
-    _tests = []
 
     def __init__(self, lang, comment, replacements):
         self.replacements = replacements

@@ -35,7 +35,7 @@ class UserInterrupt(BaseException):
 
 
 class BaseBot(object):
-    min_delay = timedelta(seconds=1)
+    min_delay = timedelta(seconds=3)
 
     def __init__(self, campbot, api_url, proxies=None, min_delay=None):
         self.campbot = campbot
@@ -43,7 +43,8 @@ class BaseBot(object):
         self._session = requests.Session()
         self.proxies = proxies
         self._next_request_datetime = datetime.now()
-        self.min_delay = timedelta(seconds=float(min_delay or 3))
+        if min_delay is not None:
+            self.min_delay = timedelta(seconds=float(min_delay))
 
     @property
     def headers(self):
@@ -188,7 +189,9 @@ class WikiBot(BaseBot):
 
         while True:
             filters_url = "&".join(["{}={}".format(k, v) for k, v in filters.items()])
-            data = self.get("/{}?{}".format(url_path, filters_url))
+            url = "/{}?{}".format(url_path, filters_url)
+            print(url)
+            data = self.get(url)
 
             if len(data["documents"]) == 0:
                 raise StopIteration
@@ -433,7 +436,7 @@ class CampBot(object):
     def export(self, url, filename=None):
         constructor, filters = _parse_filter(url)
 
-        headers = ["document_id", "title", "url", "activities", "available_langs"]
+        headers = ["document_id", "title", "url", "activities", "available_langs", "user_name", "user_id"]
 
         data = []
         for raw in self.wiki.get_documents_raw(constructor.url_path, filters):
@@ -447,6 +450,8 @@ class CampBot(object):
             item["url"] = doc.get_url()
             item["activities"] = ",".join(sorted(item["activities"] or []))
             item["available_langs"] = ",".join(sorted(item["available_langs"] or []))
+            item["user_id"] = raw.get("author", {"user_id": ""})["user_id"]
+            item["user_name"] = raw.get("author", {"name": ""})["name"]
 
             data.append(item)
 

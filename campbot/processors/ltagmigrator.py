@@ -6,88 +6,6 @@ class LtagCleaner(MarkdownProcessor):
     ready_for_production = True
     comment = "Simplify L# syntax"
 
-    _tests = [
-        {
-            "source": "L#{} | 1 | 2\nL# | 1 | 2\n\nautre texte",
-            "result": "L#{} | 1 | 2\nL# | 1 | 2\n\nautre texte"
-        },
-        {
-            "source": "L#{} | 1 | 2\n\nL# | 1 | 2\n",
-            "result": "L#{} | 1 | 2\nL# | 1 | 2\n"
-        },
-        {
-            "source": "L#{} | 1\n2 | 2\nL# | 1 | 2\n\n\nautre texte",
-            "result": "L#{} | 1<br>2 | 2\nL# | 1 | 2\n\n\nautre texte",
-        },
-        {
-            "source": "L#{} |\n 12 | 2\nL#{} | 1 \n| 2\n",
-            "result": "L#{} | 12 | 2\nL#{} | 1 | 2\n"
-        },
-        {
-            "source": "L#{} | 1 L# 2 | 2\nL#{} | 1 | 2\n3\n",
-            "result": "L#{} | 1 L# 2 | 2\nL#{} | 1 | 2<br>3\n"
-        },
-        {
-            "source": "L#{} | 12 | 2\nL#{} | 1 | 2\n3\n\n4",
-            "result": "L#{} | 12 | 2\nL#{} | 1 | 2<br>3\n\n4"
-        },
-        {
-            "source": "L#{}:1::2\n##Titre",
-            "result": "L#{}|1|2\n##Titre"
-        },
-        {
-            "source": "L#{} |1::2",
-            "result": "L#{} |1|2"
-        },
-        {
-            "source": "L#{}:1::2",
-            "result": "L#{}|1|2"
-        },
-        {
-            "source": "L#{}|1:2::3||R#4||||5::::6",
-            "result": "L#{}|1:2|3|R#4|5|6"
-        },
-        {
-            "source": "L#{} 1:2",
-            "result": "L#{} |1:2"
-        },
-        {
-            "source": "L#{}|1::2",
-            "result": "L#{}|1|2"
-        },
-        {
-            "source": "L#{}::1::2||3:: ::5|6| |7::8:aussi 8|9",
-            "result": "L#{}|1|2|3| |5|6| |7|8:aussi 8|9"
-        },
-        {
-            "source": "L#~ plein ligne !:: \n| fds : \n\n| {} a la fin",
-            "result": "L#~ plein ligne !:: <br>| fds : \n\n| {} a la fin",
-        },
-        {
-            "source": "L#{} || [[touche/pas|au lien]] : stp::merci ",
-            "result": "L#{} | [[touche/pas|au lien]] : stp|merci "
-        },
-    ]
-
-    _numbering_postfixs = ["", "12", "+3", "+", "-25", "-+2", "+2-+1", "bis",
-                           "bis2", "*5bis", "+5bis", "_", "+bis",
-                           "''", "+''", "!", "2!", "+2!", "="]
-
-    def do_tests(self):
-        def do_test(source, expected):
-            result = self.modify(source)
-            if result != expected:
-                print("source   ", repr(source))
-                print("expected ", repr(expected))
-                print("result   ", repr(result))
-                print()
-
-        for postfix in self._numbering_postfixs:
-            for test in self._tests:
-                source = test["source"].format(postfix, postfix)
-                expected = test["result"].format(postfix, postfix)
-                do_test(source, expected)
-
     def init_modifiers(self):
         self.modifiers = []
 
@@ -395,23 +313,6 @@ class LTagNumbering(object):
 class LtagMigrator(MarkdownProcessor):
     ready_for_production = True
     comment = "Convert L# to V6"
-
-    _tests = [
-        {"source": "L#=\nL#\nL#|L#bis\nL#~",
-         "expected": "L#=\nL#1\nL#2|L#bis\nL#~"},
-
-        {"source": "L#=\nL#\nL#bis|L#\nL#~",
-         "expected": "L#=\nL#\nL#bis|L#\nL#~"},
-
-        {"source": "L#\nL#+2\nL#\nL#6\nL#+2\nL#+\nL#",
-         "expected": "L#1\nL#3\nL#4\nL#6\nL#8\nL#9\nL#10"},
-
-        {"source": "L#\nL#+1-+1\nL#-+1",
-         "expected": "L#1\nL#2-3\nL#4-5"},
-
-        {"source": "L#-+7 | 5c\nL#",
-         "expected": "L#1-8 | 5c\nL#9"},
-    ]
 
     def init_modifiers(self):
         self.modifiers = [self.convert]

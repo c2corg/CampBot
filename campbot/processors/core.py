@@ -15,27 +15,13 @@ class MarkdownProcessor(object):
     modifiers = []
     ready_for_production = False
     comment = NotImplemented
-    _tests = None
     lang = None
 
     def __init__(self):
         self.init_modifiers()
-        self.do_tests()
 
     def init_modifiers(self):
         raise NotImplementedError()
-
-    def do_tests(self):
-        def do_test(source, expected):
-            result = self.modify(source)
-            if result != expected:
-                print("Source   ", repr(source))
-                print("Expected ", repr(expected))
-                print("Result   ", repr(result))
-                raise Exception("TEST FAILED")
-
-        for test in self._tests:
-            do_test(**test)
 
     def __call__(self, wiki_object):
         updated = False

@@ -6,13 +6,6 @@ class ColorAndUnderlineRemover(MarkdownProcessor):
     ready_for_production = True
     comment = "Remove color and u tags"
 
-    _tests = [
-        {
-            "source": "test [u]underlines[/u] and [color=#FFdd1E]color[/color] et [color=red]color[/color]",
-            "expected": "test underlines and color et color"
-        },
-    ]
-
     def init_modifiers(self):
         self.modifiers = []
         self.modifiers.append(
@@ -25,196 +18,8 @@ class BBCodeRemover(MarkdownProcessor):
     ready_for_production = True
     comment = "Replace BBcode by Markdown"
 
-    _tests = [
-        {
-            "source": "*[Voir la discussion sur le forum.](#t158106)*",
-            "expected": "*[Voir la discussion sur le forum.](https://www.camptocamp.org/forums/viewtopic.php?id=158106)*",
-        },
-        {
-            "source": "[col][col 50 left]",
-            "expected": "",
-        },
-        {
-            "source": "x[hr]",
-            "expected": "x\n----\n",
-        },
-        {
-            "expected": "{#coucou}",
-            "source": '<span id="coucou"></span>',
-        },
-        {
-            "source": "[center]coucou[/center]",
-            "expected": "<center>coucou</center>",
-        },
-        {
-            "source": "[acr=1 goujon et 2-3 lunules]1g..3l[/acr]",
-            "expected": '<abbr title="1 goujon et 2-3 lunules">1g..3l</abbr>',
-        },
-        {
-            "source": "L#~ | coucou",
-            "expected": "L#~ coucou",
-        },
-        {
-            "source": "L# | gne\nL#~|coucou",
-            "expected": "L# | gne\nL#~ coucou",
-        },
-        {
-            "source": "L#~|   coucou\nL# | ~",
-            "expected": "L#~ coucou\nL# | ~",
-        },
-        {
-            "source": "L#~ |||| A",
-            "expected": "L#~ A",
-        },
-        {
-            "source": "un texte en [b]gras [/b]et un en [i]italique[/i] [i][/i] ",
-            "expected": "un texte en **gras** et un en *italique*  ",
-        },
-        {
-            "source": "un texte en [b][i]gras et italique[/i][/b]",
-            "expected": "un texte en ***gras et italique***",
-        },
-        {
-            "source": "[center][b]outside![/b][/center]",
-            "expected": "**<center>outside!</center>**",
-        },
-        {
-            "source": "[url=http:google.fr][i]outside![/i][/url]",
-            "expected": "*[outside!](http:google.fr)*",
-        },
-        {
-            "source": "[b]\r\ngrep!\r\n[/b]",
-            "expected": "\r\n**grep!**\r\n",
-        },
-        {
-            "source": "#c coucou ##c s",
-            "expected": "# coucou ##c s",
-        },
-        {
-            "source": "line\n####c coucou ##c s",
-            "expected": "line\n#### coucou ##c s",
-        },
-        {
-            "source": "###coucou",
-            "expected": "###coucou",
-        },
-        {
-            "source": "###C bien",
-            "expected": "###C bien",
-        },
-        {
-            "source": "[url=]http://www.zone-di-tranquillita.ch/[/url]",
-            "expected": "http://www.zone-di-tranquillita.ch/ "
-        },
-        {
-            "source": "[url]http://www.google.com[/url]",
-            "expected": "http://www.google.com "
-        },
-        {
-            "source": "[url]http://www.google.com[/url] x [url]http://www.google2.com[/url]",
-            "expected": "http://www.google.com  x http://www.google2.com "
-        },
-        {
-            "source": "[url=http://www.google.com]google[/url]",
-            "expected": "[google](http://www.google.com)",
-        },
-        {
-            "source": "[url=http://www.google.com]google[/url] et [url=http://www.google2.com]google2[/url]",
-            "expected": "[google](http://www.google.com) et [google2](http://www.google2.com)"
-        },
-        {
-            "source": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]",
-            "expected": "http://www.google.com?a=b&c=d  and [pas touche](http://www.google.com?a=b!c)"
-        },
-        {
-            "source": "[url]http://www.google.com?a=b;d[/url] et [url]pas.touche.fr[/url]",
-            "expected": "http://www.google.com?a=b;d  et [url]pas.touche.fr[/url]"
-        },
-        {
-            "source": "[url]http://www.google.com?a=b&c=d[/url] x [url]http://www.google2.com?a=b&c=d[/url]",
-            "expected": "http://www.google.com?a=b&c=d  x http://www.google2.com?a=b&c=d "
-        },
-        {
-            "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
-            "expected": "[google](http://www.google.com?a=b&c=d)",
-        },
-        {
-            "source": "[url=http://www.google.com?a=b&c=d]go[/url] et [url=http://www.google2.com?a=b&c=d]o[/url]",
-            "expected": "[go](http://www.google.com?a=b&c=d) et [o](http://www.google2.com?a=b&c=d)"
-        },
-        {
-            "source": "[email]dev@camptocamp.org[/email]",
-            "expected": "[dev@camptocamp.org](mailto:dev@camptocamp.org)"
-        },
-        {
-            "source": "[email=dev@camptocamp.org]email[/email]",
-            "expected": "[email](mailto:dev@camptocamp.org)"
-        },
-        {
-            "source": "[url=]http://www.zone-di-tranquillita.ch/[/url]",
-            "expected": "http://www.zone-di-tranquillita.ch/ "
-        },
-        {
-            "source": "[url]http://www.google.com?a=1&b=2[/url]",
-            "expected": "http://www.google.com?a=1&b=2 "
-        },
-        {
-            "source": "[url]http://www.google.com?a=1&b=2[/url] x [url]www.google2.com[/url]",
-            "expected": "http://www.google.com?a=1&b=2  x www.google2.com "
-        },
-        {
-            "source": "[url=http://www.google.com?a=1&b=2]google[/url]",
-            "expected": "[google](http://www.google.com?a=1&b=2)",
-        },
-        {
-            "source": "[url=http://www.google.com]google[/url] et [url=http://www.google2.com]google2[/url]",
-            "expected": "[google](http://www.google.com) et [google2](http://www.google2.com)"
-        },
-        {
-            "source": "[url]http://www.google.com?a=b&c=d[/url] and [url=http://www.google.com?a=b!c]pas touche[/url]",
-            "expected": "http://www.google.com?a=b&c=d  and [pas touche](http://www.google.com?a=b!c)"
-        },
-        {
-            "source": "[url]pas.touche.fr[/url]",
-            "expected": "[url]pas.touche.fr[/url]"
-        },
-        {
-            "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
-            "expected": "[google](http://www.google.com?a=b&c=d)",
-        },
-        {
-            "source": "[url=http://www.google.com?a=b&c=d]google[/url]",
-            "expected": "[google](http://www.google.com?a=b&c=d)",
-        },
-        {
-            "source": "[sub]xx[/sub]",
-            "expected": "<sub>xx</sub>",
-        },
-        {
-            "source": "[sup]xx[/sup]",
-            "expected": "<sup>xx</sup>",
-        },
-        {
-            "source": "[s]xx[/s]",
-            "expected": "<s>xx</s>",
-        },
-    ]
-
     def init_modifiers(self):
         def get_typo_cleaner(bbcode_tag, markdown_tag):
-
-            def invalid_killer(markdown):
-                opener = len(markdown.split("[" + bbcode_tag + "]"))
-                closer = len(markdown.split("[/" + bbcode_tag + "]"))
-
-                if opener == 1 and closer > 1:
-                    markdown = markdown.replace("[/" + bbcode_tag + "]", "")
-
-                if opener > 1 and closer == 1:
-                    markdown = markdown.replace("[" + bbcode_tag + "]", "")
-
-                return markdown
-
             converters = [
 
                 Converter(pattern=r"\[ *url *\]",
@@ -310,7 +115,6 @@ class BBCodeRemover(MarkdownProcessor):
                     repl=markdown_tag + r"\1\n\2\n\3" + markdown_tag,
                     flags=re.IGNORECASE),
 
-                #   invalid_killer,
             ]
 
             def result(markdown):
@@ -563,61 +367,11 @@ class InternalLinkCorrector(MarkdownProcessor):
     ready_for_production = True
     comment = "Fix internal wiki link"
 
-    _tests = [
-        {
-            "source": "[[786432|patate]]",
-            "expected": "[[routes/786432|patate]]"
-        },
-        {
-            "source": "[[/routes/786432|patate]]",
-            "expected": "[[routes/786432|patate]]"
-        },
-        {
-            "source": "[[http://www.camptocamp.org/articles/106859/fr|cotation de randonnée pédestre]]",
-            "expected": "[[articles/106859/fr|cotation de randonnée pédestre]]"
-        },
-        {
-            "source": "[[http://www.camptocamp.org/routes/173371/it/via-bartesaghi-iii-torrione|Via Bartesaghi]] ",
-            "expected": "[[routes/173371/it/via-bartesaghi-iii-torrione|Via Bartesaghi]] "
-        },
-        {
-            "source": "[[http://www.camptocamp.org/images/19796/fr/|photo]]",
-            "expected": "[[images/19796/fr/|photo]]"
-        },
-        {
-            "source": "[[http://www.camptocamp.org/routes/186949/fr/presles-approches-descentes-presles#secteur-fhara-kiri|Voir approches & descentes]]. ",
-            "expected": "[[routes/186949/fr/presles-approches-descentes-presles#secteur-fhara-kiri|Voir approches & descentes]]. "
-        },
-
-    ]
-
     def __init__(self):
-        from ..dump import get_document_types
-
-        self.types = get_document_types()
         super().__init__()
 
     def init_modifiers(self):
-        self.modifiers = [self.fixer_no_type, self.fixer_false_internal, self.fixer_slash_internal]
-
-    def fixer_no_type(self, markdown):
-        def repl(m):
-            doc_id = int(m.group(1))
-            if doc_id not in self.types:
-                return "[[" + str(doc_id) + "|"
-
-            tp = {
-                "r": "routes",
-                "i": "images",
-                "a": "areas",
-                "w": "waypoints",
-                "b": "books",
-                "c": "articles",
-            }[self.types[doc_id]]
-
-            return "[[" + tp + "/" + str(doc_id) + "|"
-
-        return re.sub(r'\[\[ */? *(\d+)\|', repl, markdown)
+        self.modifiers = [self.fixer_false_internal, self.fixer_slash_internal]
 
     def fixer_false_internal(self, markdown):
         def repl(m):
