@@ -362,7 +362,7 @@ class CampBot(object):
                     if voter.username in allowed_members:
                         result += 1
                     else:
-                        if False and get_last_contrib(voter) is None:
+                        if get_last_contrib(voter) is None:
                             ignored_voters.append(voter.username)
                         else:
                             result += 1

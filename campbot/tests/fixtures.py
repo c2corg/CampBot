@@ -44,7 +44,7 @@ messages = [
     ("GET", r"https://api.camptocamp.org/documents/changes.*", get_message("changes")),
 
     # forum
-    ('GET', r'https://forum.camptocamp.org/t/\d+.json\?username_filters=rabot', {"last_posted_at": "2020/01/01"}),
+    ('GET', r'https://forum.camptocamp.org/t/\d+.json\?username_filters=rabot', {"last_posted_at": "2017-12-21"}),
     ('GET', r'https://forum.camptocamp.org/t/\d+.json', get_message("topic")),
     ('GET', r'https://forum.camptocamp.org/posts/\d+.json', get_message("post")),
     ('GET', r'https://forum.camptocamp.org/groups/\w+/members.json.*', get_message("groups")),
@@ -73,14 +73,12 @@ def fix_dump():
     dump._default_db_name = _default_db_name
 
 
-@pytest.fixture()
+@pytest.yield_fixture()
 def fix_requests():
     from requests import Session
     from campbot import core
     import datetime
     import re
-
-    core.today = lambda: datetime.datetime(year=2017, month=12, day=21)
 
     class Response(object):
         def __init__(self, method, url, **kwargs):
@@ -107,6 +105,12 @@ def fix_requests():
     def request(self, method, url, **kwargs):
         return Response(method, url, **kwargs)
 
-    core.BaseBot.min_delay = datetime.timedelta(seconds=0.001)
+    today = core.today
 
+    core.today = lambda: datetime.datetime(year=2017, month=12, day=21)
+    core.BaseBot.min_delay = datetime.timedelta(seconds=0.001)
     Session.request = request
+
+    yield
+
+    core.today = today
