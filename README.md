@@ -1,5 +1,5 @@
 # CampBot
-
+[![Downloads](http://pepy.tech/badge/campbot)](http://pepy.tech/count/campbot)
 Bot framework for camptocamp.org
 
 ## Installation
