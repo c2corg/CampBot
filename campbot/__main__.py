@@ -3,7 +3,7 @@ CampBot, Python bot framework for camptocamp.org
 
 Usage:
   campbot check_rc --login=<login> --password=<password> [--delay=<seconds>] [--batch]
-  campbot clean <url> --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot clean <url> --login=<login> --password=<password> [--delay=<seconds>] [--batch] [--bbcode]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot export <url> [--out=<filename>] [--delay=<seconds>]
 
@@ -13,6 +13,7 @@ Options:
   --password=<password>     Bot password
   --batch                   Batch mode, means that no confirmation is required before saving
                             Use very carefully!
+  --bbcode                  Clean old BBCode in markdown
   --delay=<seconds>         Minimum delay between each request. Default : 3 seconds
   --out=<filename>          Output file name. Default value will depend on process
 
@@ -66,7 +67,7 @@ def main(args):
         check_recent_changes(get_campbot(args), ask_before_saving=not args["--batch"])
 
     elif args["clean"]:
-        get_campbot(args).clean(args["<url>"], ask_before_saving=not args["--batch"])
+        get_campbot(args).clean(args["<url>"], ask_before_saving=not args["--batch"], clean_bbcode=args["--bbcode"])
 
     elif args["contribs"]:
         get_campbot(args).export_contributions(starts=args["--starts"], ends=args["--ends"], filename=args["--out"])

@@ -33,6 +33,9 @@ def test_main_entry_point(fix_requests):
     main(get_main_args("check_rc"))
     main(get_main_args("clean", {"<url>": "routes#w=123"}))
 
+    os.remove("outings.csv")
+    os.remove("contributions.csv")
+
 
 def test_forum(fix_requests):
     from campbot import CampBot
@@ -48,12 +51,19 @@ def test_wiki(fix_requests):
 
     route = CampBot().wiki.get_route(route_id=293549)
     route.is_personal()
+    route.get_title("fr")
 
     xreport = CampBot().wiki.get_xreport(xreport_id=293549)
     xreport.is_personal()
 
     image = CampBot().wiki.get_image(image_id=1005116)
     image.is_personal()
+
+    waypoint = CampBot().wiki.get_waypoint(waypoint_id=952999)
+    waypoint.get_invalidity_reason()
+
+    article = CampBot().wiki.get_article(article_id=1003911)
+    article.is_personal()
 
     CampBot().wiki.get_profile(profile_id=293549)
     CampBot().wiki.get_area(area_id=293549)
@@ -89,10 +99,6 @@ def test_wiki(fix_requests):
     assert route.get_history_url("fr") == "https://www.camptocamp.org/routes/history/293549/fr"
 
     CampBot().wiki.get_contributions(oldest_date="2017-12-12", newest_date="2017-12-13")
-
-    waypoint = CampBot().wiki.get_waypoint(waypoint_id=952999)
-
-    waypoint.get_invalidity_reason()
 
     with pytest.raises(Exception):
         CampBot().wiki.get_user(forum_name="unknown")
@@ -141,8 +147,18 @@ def test_dump(fix_requests, fix_dump):
 
 def test_misc():
     from campbot import core
+    from campbot.__main__ import main_entry_point
+    from docopt import DocoptExit
 
     core.today()
+
+    with pytest.raises(DocoptExit):
+        main_entry_point()
+
+    core._parse_filter("outings")
+    core._parse_filter("outings#")
+    core._parse_filter("outings#bbox=1%252C2%252C3%252C4")
+    core._parse_filter("outings#act=viaferrata")
 
 
 def get_main_args(action, others=None):
@@ -157,6 +173,7 @@ def get_main_args(action, others=None):
         "--login": "x",
         "--password": "y",
         "--lang": "fr",
+        "--bbcode": True,
         "--batch": True,
         "<url>": "outings#u=286726",
         "--ends": "2999-12-31",

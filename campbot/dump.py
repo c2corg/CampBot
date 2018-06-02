@@ -483,7 +483,7 @@ if __name__ == "__main__":
 
     v5_link = r"/\w+/list/"
 
-    _search(r"\b[Nn]r\b", "fr")
+    _search(r"(\n|^) *\* *(\r|\n|$)")
 
     # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):
     #     print(*d)

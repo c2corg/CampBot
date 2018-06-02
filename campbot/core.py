@@ -396,9 +396,9 @@ class CampBot(object):
             ignored_voters = ["@{}".format(v) for v in ignored_voters]
             print("\n**Ignored votes** : {}".format(", ".join(set(ignored_voters))))
 
-    def clean(self, url, ask_before_saving=True):
+    def clean(self, url, ask_before_saving=True, clean_bbcode=False):
         constructor, filters = _parse_filter(url)
-        processors = get_automatic_replacments(self)
+        processors = get_automatic_replacments(self, clean_bbcode)
         documents = self.wiki.get_documents(filters, constructor=constructor)
 
         self._process_documents(documents, processors, ask_before_saving)

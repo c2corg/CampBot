@@ -28,6 +28,7 @@ messages = [
     ('GET', r'https://api.camptocamp.org/routes/\d+', get_message("route")),
     ('GET', r'https://api.camptocamp.org/waypoints/\d+', get_message("waypoint")),
     ('GET', r'https://api.camptocamp.org/images/\d+', get_message("image")),
+    ('GET', r'https://api.camptocamp.org/articles/\d+', get_message("article")),
     ('GET', r'https://api.camptocamp.org/areas/\d+', {}),
     ('GET', r'https://api.camptocamp.org/books/\d+', {}),
     ('GET', r'https://api.camptocamp.org/xreports/\d+', {}),
@@ -96,8 +97,7 @@ def fix_requests():
             print(method, url, self._data)
 
         def raise_for_status(self):
-            if self.status != 200:
-                raise Exception("")
+            pass
 
         def json(self):
             return self._data

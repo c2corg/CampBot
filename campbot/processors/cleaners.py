@@ -137,30 +137,3 @@ class AutomaticReplacements(OrthographicProcessor):
                     new.strip()
                 )
             )
-
-
-def get_automatic_replacments(bot):
-    article = bot.wiki.get_article(996571)
-    result = []
-
-    for locale in article.locales:
-        lang = locale.lang
-        configuration = locale.description
-        test = None
-        for line in configuration.split("\n"):
-            if line.startswith("#"):
-                test = {"lang": lang, "comment": line.lstrip("# "), "replacements": []}
-                result.append(test)
-
-            elif line.startswith("    ") and test:
-                pattern = line[4:]
-                if len(pattern.strip()) != 0:
-                    test["replacements"].append(line[4:].split(">>"))
-
-    result = [AutomaticReplacements(**args) for args in result if len(args["replacements"]) != 0]
-
-    result.append(SpaceBetweenNumberAndUnit())
-    result.append(MultiplicationSign())
-    result.append(UpperFix())
-
-    return result

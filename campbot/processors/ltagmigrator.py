@@ -166,8 +166,7 @@ class LTagNumbering(object):
         cell perfectly match pattern. If an error occurs or a unsupported
         pattern is found, it will returns raw pattern inside a <code/> block
         """
-        if not markdown:
-            return markdown
+        assert markdown
 
         if not self.supported:
             return self.PATTERN.sub(self.handle_unmatched, markdown)
