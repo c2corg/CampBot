@@ -379,6 +379,7 @@ def test_auto_replacements():
     tests = [
         ("deja", "déjà"),
         ("http://deja.com", "http://deja.com"),
+        ("http://www.deja.com [www.vialsace.eu](https://www.vialsace.eu/)", "http://www.deja.com [www.vialsace.eu](https://www.vialsace.eu/)"),
         (":deja:", ":deja:"),
         ("[[route/123/fr/deja|deja]]", "[[route/123/fr/deja|déjà]]"),
         ("référencée sur www.alpes-sud.net", "référencée sur www.alpes-sud.net")
