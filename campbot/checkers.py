@@ -3,18 +3,18 @@
 from __future__ import unicode_literals, print_function, division
 
 from dateutil import parser
+import datetime
+from campbot import utils
 
 
-def check_recent_changes(bot, ask_before_saving):
+def check_recent_changes(bot, days, ask_before_saving):
     check_message_url = "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480"
     lang = "fr"
 
-    oldest_date = bot.forum.get_last_message_timestamp(
-        check_message_url,
-        "rabot"
-    )
+    newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
+    oldest_date = newest_date - datetime.timedelta(days=days)
 
-    bot.fix_recent_changes(oldest_date, lang, ask_before_saving)
+    bot.fix_recent_changes(oldest_date, newest_date, lang, ask_before_saving)
 
     tests = get_fixed_tests(lang)
     tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
@@ -34,7 +34,7 @@ def check_recent_changes(bot, ask_before_saving):
 
     messages.append("</table>\n[/details]\n\n----\n\n")
 
-    items = bot.get_modified_documents(lang=lang, oldest_date=oldest_date)
+    items = bot.get_modified_documents(lang=lang, oldest_date=oldest_date, newest_date=newest_date)
 
     for contribs in items.values():
         need_report = False

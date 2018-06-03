@@ -77,7 +77,7 @@ def fix_dump():
 @pytest.yield_fixture()
 def fix_requests():
     from requests import Session
-    from campbot import core
+    from campbot import core, utils
     import datetime
     import re
 
@@ -105,12 +105,12 @@ def fix_requests():
     def request(self, method, url, **kwargs):
         return Response(method, url, **kwargs)
 
-    today = core.today
+    today = utils.today
 
-    core.today = lambda: datetime.datetime(year=2017, month=12, day=21)
+    utils.today = lambda: datetime.datetime(year=2017, month=12, day=21)
     core.BaseBot.min_delay = datetime.timedelta(seconds=0.001)
     Session.request = request
 
     yield
 
-    core.today = today
+    utils.today = today

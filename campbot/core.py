@@ -10,8 +10,7 @@ from collections import OrderedDict
 import pytz
 import logging
 import time
-from requests.exceptions import HTTPError
-import sys
+from . import utils
 from . import objects
 from campbot.processors import get_automatic_replacments
 
@@ -26,8 +25,6 @@ except NameError:
 __all__ = ['CampBot', 'WikiBot', 'ForumBot', 'BaseBot']
 
 
-def today():
-    return datetime.today()
 
 
 class UserInterrupt(BaseException):
@@ -219,7 +216,7 @@ class WikiBot(BaseBot):
 
     def get_contributions(self, **kwargs):
 
-        oldest_date = kwargs.get("oldest_date", None) or today() + timedelta(days=-1)
+        oldest_date = kwargs.get("oldest_date", None) or utils.today() + timedelta(days=-1)
         newest_date = kwargs.get("newest_date", None) or datetime.now()
 
         if isinstance(oldest_date, basestring):
@@ -243,6 +240,7 @@ class WikiBot(BaseBot):
                     raise StopIteration
 
                 if newest_date > written_at:
+                    print(item["written_at"])
                     yield objects.Contribution(self.campbot, item)
 
             if "pagination_token" not in d:
@@ -253,11 +251,6 @@ class WikiBot(BaseBot):
 
 
 class ForumBot(BaseBot):
-    def get_last_message_timestamp(self, url, username):
-        topic_id, _ = self._get_post_ids(url)
-        data = self.get("/t/{}.json?username_filters={}".format(topic_id, username))
-        return parser.parse(data["last_posted_at"])
-
     def post_message(self, message, url):
         topic_id, _ = self._get_post_ids(url)
         self.post("/posts", {"topic_id": topic_id, "raw": message})
@@ -333,7 +326,7 @@ class CampBot(object):
 
         allowed_members = {u.username: u for u in allowed_members}
 
-        oldest_date = today() - timedelta(days=36500)
+        oldest_date = utils.today() - timedelta(days=36500)
         newest_date = datetime(year=2018, month=2, day=18)
 
         last_contribs = {}
@@ -482,9 +475,9 @@ class CampBot(object):
                       title=c.document.title.replace(";", ","), quality=c.document.quality,
                       user=c.user.username, lang=c.lang)
 
-    def get_modified_documents(self, lang, oldest_date=None, excluded_users=()):
+    def get_modified_documents(self, lang, oldest_date=None, newest_date=None, excluded_users=()):
         result = OrderedDict()
-        for contrib in self.wiki.get_contributions(oldest_date=oldest_date):
+        for contrib in self.wiki.get_contributions(oldest_date=oldest_date, newest_date=newest_date):
             if contrib.lang == lang and \
                     contrib.document.type not in ("i", "o", "x") and \
                     contrib.user.name not in excluded_users:
@@ -497,7 +490,7 @@ class CampBot(object):
 
         return result
 
-    def fix_recent_changes(self, oldest_date, lang, ask_before_saving):
+    def fix_recent_changes(self, oldest_date, newest_date, lang, ask_before_saving):
 
         excluded_ids = [996571, ]
 
@@ -505,7 +498,7 @@ class CampBot(object):
 
         def get_documents():
 
-            for document_id, document_type in self.get_modified_documents(lang, oldest_date,
+            for document_id, document_type in self.get_modified_documents(lang, oldest_date, newest_date,
                                                                           ("rabot", "robot.topoguide", "botopo")):
 
                 document = self.wiki.get_wiki_object(document_id, document_type=document_type)

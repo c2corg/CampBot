@@ -43,7 +43,6 @@ def test_forum(fix_requests):
     CampBot().forum.get_group_members(group_name="Association")
     CampBot().forum.get_participants(MESSAGE_URL)
     CampBot().forum.get_post(url=MESSAGE_URL)
-    CampBot().forum.get_last_message_timestamp(url=MESSAGE_URL, username="rabot")
 
 
 def test_wiki(fix_requests):
@@ -146,11 +145,11 @@ def test_dump(fix_requests, fix_dump):
 
 
 def test_misc():
-    from campbot import core
+    from campbot import core, utils
     from campbot.__main__ import main_entry_point
     from docopt import DocoptExit
 
-    core.today()
+    utils.today()
 
     with pytest.raises(DocoptExit):
         main_entry_point()
@@ -175,6 +174,7 @@ def get_main_args(action, others=None):
         "--lang": "fr",
         "--bbcode": True,
         "--batch": True,
+        "<days>": "1",
         "<url>": "outings#u=286726",
         "--ends": "2999-12-31",
         "--starts": "2017-06-01",

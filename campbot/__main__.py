@@ -2,7 +2,7 @@
 CampBot, Python bot framework for camptocamp.org
 
 Usage:
-  campbot check_rc --login=<login> --password=<password> [--delay=<seconds>] [--batch]
+  campbot check_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
   campbot clean <url> --login=<login> --password=<password> [--delay=<seconds>] [--batch] [--bbcode]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot export <url> [--out=<filename>] [--delay=<seconds>]
@@ -64,7 +64,9 @@ def main(args):
     if args["check_rc"]:
         from campbot.checkers import check_recent_changes
 
-        check_recent_changes(get_campbot(args), ask_before_saving=not args["--batch"])
+        check_recent_changes(get_campbot(args),
+                             days=int(args["<days>"]),
+                             ask_before_saving=not args["--batch"])
 
     elif args["clean"]:
         get_campbot(args).clean(args["<url>"], ask_before_saving=not args["--batch"], clean_bbcode=args["--bbcode"])
