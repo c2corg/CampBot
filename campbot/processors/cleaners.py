@@ -41,6 +41,7 @@ class OrthographicProcessor(MarkdownProcessor):
         result = markdown
 
         result = protect(r"https?://[^ )\n>]*", "http://{}.markdown___placeholder.com", result)
+        result = protect(r"www\.[^ )\n>]*", "www.{}.markdown___placeholder.com", result)
         result = protect(r"\[\[[a-z]+/\d+/[/a-z\-#]+\|", "[[md___ph/666/{}|", result)
         result = protect(r":\w+:", ":emoji___ph{}:", result)
 

@@ -2,7 +2,7 @@
   "locales":[
     {
       "lang":"fr",
-      "description":"### TEST\n\n    deja >> déjà"
+      "description":"### TEST\n\n    deja >> déjà\n    sud >> S\n"
     }
   ]
 }

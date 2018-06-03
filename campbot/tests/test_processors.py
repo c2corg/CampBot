@@ -381,9 +381,10 @@ def test_auto_replacements():
         ("http://deja.com", "http://deja.com"),
         (":deja:", ":deja:"),
         ("[[route/123/fr/deja|deja]]", "[[route/123/fr/deja|déjà]]"),
+        ("référencée sur www.alpes-sud.net", "référencée sur www.alpes-sud.net")
     ]
 
-    p = AutomaticReplacements(lang="fr", comment="test", replacements=(("deja", "déjà"),)).modify
+    p = AutomaticReplacements(lang="fr", comment="test", replacements=(("deja", "déjà"), ("sud", "S"))).modify
 
     for markdown, expected in tests:
         assert p(markdown) == expected

@@ -483,7 +483,14 @@ if __name__ == "__main__":
 
     v5_link = r"/\w+/list/"
 
-    _search(r"(\n|^) *\* *(\r|\n|$)")
+    false_ltag = r"(\n|^)[LR]\d+ *[,\|\:]"
+    false_ol = r"(\n|^)1\)"
+    false_md = r"(\n|^) *\* *(\r|\n|$)"
+    false_title = r"(\n|^)#+.*: *(\r|\n|$)"
+    false_title_1 = r"(\n|^)#[^#]"
+    false_title_bold = r"(\n|^)#+[^\n]*\*"
+
+    _search(false_title_bold)
 
     # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):
     #     print(*d)
