@@ -240,7 +240,6 @@ class WikiBot(BaseBot):
                     raise StopIteration
 
                 if newest_date > written_at:
-                    print(item["written_at"])
                     yield objects.Contribution(self.campbot, item)
 
             if "pagination_token" not in d:
