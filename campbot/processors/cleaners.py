@@ -40,10 +40,14 @@ class OrthographicProcessor(MarkdownProcessor):
 
         result = markdown
 
-        result = protect(r"https?://[^ )\n>]*", "ph§§§§{}§§§§", result)
-        result = protect(r"www\.[^ )\n>]*", "ph§§§§{}§§§§", result)
-        result = protect(r"\[\[[a-z]+/\d+/[/a-z\-#]+\|", "[[ph§§§§{}§§§§|", result)
-        result = protect(r":\w+:", ":ph§§§§{}§§§§:", result)
+        STX = '\u0002'  # Use STX ("Start of text") for start-of-placeholder
+        ETX = '\u0003'  # Use ETX ("End of text") for end-of-placeholder
+        placeholder_pattern = STX + "ph{}ph" + ETX
+
+        result = protect(r"https?://[^ )\n>]*", placeholder_pattern, result)
+        result = protect(r"www\.[^ )\n>\]]*", placeholder_pattern, result)
+        result = protect(r"\[\[[a-z]+/\d+/[/a-z\-#]+\|", "[[" + placeholder_pattern + "|", result)
+        result = protect(r":\w+:", ":" + placeholder_pattern + ":", result)
 
         result = super().modify(result)
 

@@ -376,19 +376,26 @@ def test_arabic_spaces():
 def test_auto_replacements():
     from campbot.processors.cleaners import AutomaticReplacements
 
-    tests = [
+    replaced = [
         ("deja", "déjà"),
-        ("http://deja.com", "http://deja.com"),
-        ("http://www.deja.com [www.vialsace.eu](https://www.vialsace.eu/)", "http://www.deja.com [www.vialsace.eu](https://www.vialsace.eu/)"),
         (":deja:", ":deja:"),
         ("[[route/123/fr/deja|deja]]", "[[route/123/fr/deja|déjà]]"),
-        ("référencée sur www.alpes-sud.net", "référencée sur www.alpes-sud.net")
+    ]
+
+    untouched = [
+        "http://deja.com",
+        "http://www.deja.com [www.vialsace.eu](https://www.vialsace.eu/)",
+        "[www.a.com](https://www.b.eu/) - [www.c.eu](https://www.c.eu/)",
+        "référencée sur www.alpes-sud.net",
     ]
 
     p = AutomaticReplacements(lang="fr", comment="test", replacements=(("deja", "déjà"), ("sud", "S"))).modify
 
-    for markdown, expected in tests:
+    for markdown, expected in replaced:
         assert p(markdown) == expected
+
+    for markdown in untouched:
+        assert p(markdown) == markdown
 
 
 def test_internal_links_corrector():
