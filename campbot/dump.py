@@ -490,7 +490,7 @@ if __name__ == "__main__":
     false_title_1 = r"(\n|^)#[^#]"
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
-    _search(false_title_bold)
+    _search(r"(\n|^)L\d+ *\(")
 
     # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):
     #     print(*d)

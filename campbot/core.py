@@ -25,8 +25,6 @@ except NameError:
 __all__ = ['CampBot', 'WikiBot', 'ForumBot', 'BaseBot']
 
 
-
-
 class UserInterrupt(BaseException):
     pass
 
@@ -80,10 +78,9 @@ class BaseBot(object):
 
         res.raise_for_status()
 
-        if res.headers['Content-type'].startswith('application/json'):
-            return res.json()
+        assert res.headers['Content-type'].startswith('application/json')
 
-        return res.content
+        return res.json()
 
     def put(self, url, data):
         self._wait()
@@ -94,10 +91,9 @@ class BaseBot(object):
 
         res.raise_for_status()
 
-        if res.headers['Content-type'].startswith('application/json'):
-            return res.json()
+        assert res.headers['Content-type'].startswith('application/json')
 
-        return res.content
+        return res.json()
 
 
 class WikiBot(BaseBot):

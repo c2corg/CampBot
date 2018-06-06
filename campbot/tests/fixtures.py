@@ -13,7 +13,7 @@ messages = [
     # auth
     ("GET", r"https://forum.camptocamp.org/session/csrf", {"csrf": "csrf"}),
     ("POST", r"https://api.camptocamp.org/users/login", {"token": "", "redirect_internal": "/sso", "roles": []}),
-    ('GET', r'https://forum.camptocamp.org/sso', {}),
+    ('GET', r'https://forum.camptocamp.org/sso', ""),
 
     # specific responses
     ('GET', r'https://api.camptocamp.org/(outings|routes|articles|waypoints)\?.*offset=30.*', {"documents": []}),
@@ -21,6 +21,10 @@ messages = [
     ('GET', r'https://api.camptocamp.org/articles/996571', get_message("conf_replacements")),
     ('GET', r'https://api.camptocamp.org/routes/293549/fr/(1738922|1738528)', get_message("route_version")),
     ('GET', 'https://api.camptocamp.org/routes/293549/fr/(880880|978249|478470)', get_message("route_version2")),
+    ('GET', 'https://api.camptocamp.org/routes/952126', {'protected': True, 'document_id': 952126}),
+    ('GET', 'https://api.camptocamp.org/routes/952167', {'redirects_to': 952126}),
+    ('GET', r'https://api.camptocamp.org/profiles/3199', {'document_id': 3199}),
+    ('GET', r'https://api.camptocamp.org/documents/changes\?.*&u=3199.*', {'feed': []}),
 
     # documents
     ('GET', r'https://api.camptocamp.org/outings/\d+', get_message("outing")),
@@ -56,7 +60,8 @@ messages = [
     ('PUT', '.*', {}),
 
     ('GET', r'https://forum.camptocamp.org/polls/voters.json.*&offset=0',
-     {"poll": {"option_id": [{"username": "CharlesB"}, {"username": "grimpeur8b"}]}}),
+     {"poll": {"option_id": [{"username": "CharlesB"}, {"username": "grimpeur8b"}, {"username": "charlesdet"}]}}),
+
     ('GET', r'https://forum.camptocamp.org/polls/voters.json.*&offset=1',
      {"poll": {}}),
 ]
@@ -84,7 +89,7 @@ def fix_requests():
     class Response(object):
         def __init__(self, method, url, **kwargs):
             self.status = 200
-            self.headers = {'Content-type': 'application/json'}
+            self.headers = {}
 
             self._data = None
             for m, pattern, data in messages:
@@ -92,6 +97,7 @@ def fix_requests():
                     self._data = data
                     break
 
+            self.headers['Content-type'] = 'application/json' if isinstance(self._data, dict) else ''
             assert self._data is not None, "Cant find message for {} {}".format(method, url)
 
             print(method, url, self._data)
@@ -100,6 +106,10 @@ def fix_requests():
             pass
 
         def json(self):
+            return self._data
+
+        @property
+        def content(self):
             return self._data
 
     def request(self, method, url, **kwargs):

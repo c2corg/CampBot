@@ -3,6 +3,10 @@
     {
       "lang":"fr",
       "description":"### TEST\n\n    deja >> déjà\n    sud >> S\n"
+    },
+    {
+      "lang":"es",
+      "description":"### TEST\n\n    deja >> déjà\n    sud >> S\n"
     }
   ]
 }

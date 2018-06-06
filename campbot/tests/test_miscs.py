@@ -32,6 +32,7 @@ def test_main_entry_point(fix_requests):
     main(get_main_args("export"))
     main(get_main_args("check_rc"))
     main(get_main_args("clean", {"<url>": "routes#w=123"}))
+    main(get_main_args("clean", {"<url>": "waypoints#w=123"}))
 
     os.remove("outings.csv")
     os.remove("contributions.csv")
@@ -92,6 +93,10 @@ def test_wiki(fix_requests):
     assert version.get_locale_length("fr") != 0
 
     CampBot().wiki.get_wiki_object_version(None, "", "", None)
+
+    version = CampBot().wiki.get_wiki_object_version(293549, "r", "fr", 1738922)
+    version.previous_version_id = None
+    assert version.get_diff_url("fr") is not None
 
     route = CampBot().wiki.get_wiki_object(item_id=293549, document_type="r")
     assert route.get_url() == "https://www.camptocamp.org/routes/293549"
@@ -210,9 +215,46 @@ def test_checkers(fix_requests):
     LengthTest("fr")(None, contrib, None)
 
     HistoryTest("fr")(None, contrib, contrib)
+    HistoryTest("fr")(None, None, contrib)
     MainWaypointTest()(None, contrib, contrib)
+    MainWaypointTest()(None, None, contrib)
     RouteTypeTest()(None, contrib, contrib)
+    RouteTypeTest()(None, None, contrib)
 
     t = ReTest("x", "fr")
     t.patterns.append("e")
     t(None, contrib, contrib)
+
+
+def test_weird(fix_requests, monkeypatch):
+    from campbot import CampBot, __main__
+    import os
+
+    monkeypatch.setattr('builtins.input', lambda x: "n")
+
+    bot = CampBot()
+
+    obj = bot.wiki.get_article(123)
+    obj.document_id = 1
+    assert obj["document_id"] == 1
+    assert obj.search(["xxx"], "fr") == False
+    assert obj.save("test", True) is None
+
+    user = bot.wiki.get_profile(123)
+    assert user.get_last_contribution(newest_date="1970-01-01") is None
+
+    obj = bot.wiki.get_waypoint(123)
+    assert obj.get_invalidity_reason() == "elevation is missing"
+    obj.elevation = 12
+    assert obj.get_invalidity_reason() is None
+    obj.waypoint_type = "hut"
+    obj.custodianship = None
+    assert obj.get_invalidity_reason() == "custodianship is missing"
+
+    obj = bot.wiki.get_wiki_object(123, "o")
+    assert obj.is_personal() == True
+
+    os.environ["CAMPBOT_CREDENTIALS"] = "x@y"
+    args = get_main_args("clean")
+    args["--login"] = False
+    __main__.main(args)
