@@ -315,17 +315,23 @@ def test_md_cleaner():
 def test_upper_fix():
     from campbot.processors.cleaners import UpperFix
 
-    tests = [{
-        "source": "## abc\n#ab\n#\n##A",
-        "expected": "## Abc\n#Ab\n#\n##A",
-    }, {
-        "source": "|aa\nL# | aa | Aa [[routes/132|aa]] | \n a \n|a\na\n\naa",
-        "expected": "|aa\nL# | Aa | Aa [[routes/132|aa]] | \n a \n|A\na\n\naa",
-    }]
+    tests = [(
+        "## abc\n#ab\n#\n##A",
+        "## Abc\n#Ab\n#\n##A",
+    ), (
+        "|aa\nL# | aa | Aa [[routes/132|aa]] | \n a \n|à\na",
+        "|aa\nL# | Aa | Aa [[routes/132|aa]] | \n a \n|À\na",
+    ), (
+        "coucou\ncoucou\n\ncoucou",
+        "Coucou\ncoucou\n\nCoucou",
+    ), (
+        "également\n\nà voir\n\nèh oh",
+        "Également\n\nÀ voir\n\nÈh oh",
+    )]
 
     p = UpperFix().modify
-    for test in tests:
-        assert p(test["source"]) == test["expected"]
+    for markdown, expected in tests:
+        assert p(markdown) == expected
 
 
 def test_mult_sign():

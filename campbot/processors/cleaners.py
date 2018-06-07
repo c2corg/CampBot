@@ -68,7 +68,7 @@ class UpperFix(OrthographicProcessor):
         def ltag_converter(markdown):
             result = []
 
-            cell_pattern = re.compile(r'(\| *[a-z])(?![^|]*\]\])')
+            cell_pattern = re.compile(r'(\| *[a-zéèà])(?![^|]*\]\])')
 
             is_ltag = False
 
@@ -89,8 +89,8 @@ class UpperFix(OrthographicProcessor):
             return "\n".join(result)
 
         self.modifiers = [
-            Converter(r"(^|\n)#+ *[a-z]",
-                      upper),
+            Converter(r"(^|\n)#+ *[a-zéèà]", upper),
+            Converter(r"(^|\n\n)[a-zéèà]", upper),
             ltag_converter,
         ]
 
