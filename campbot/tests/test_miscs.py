@@ -180,6 +180,7 @@ def get_main_args(action, others=None):
         "--bbcode": True,
         "--batch": True,
         "<days>": "1",
+        "<langs>": "fr,de",
         "<url>": "outings#u=286726",
         "--ends": "2999-12-31",
         "--starts": "2017-06-01",

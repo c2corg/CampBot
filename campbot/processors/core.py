@@ -23,16 +23,17 @@ class MarkdownProcessor(object):
     def init_modifiers(self):
         raise NotImplementedError()
 
-    def __call__(self, wiki_object):
+    def __call__(self, wiki_object, langs):
         updated = False
         for locale in wiki_object.get("locales", []):
             if self.lang is None or locale.lang == self.lang:
-                for field in locale.get_locale_fields():
-                    if field in locale and locale[field] and field != "title":
-                        markdown = locale[field]
-                        new_value = self.modify(markdown)
-                        updated = updated or (new_value != markdown)
-                        locale[field] = new_value
+                if langs is None or locale.lang in langs:
+                    for field in locale.get_locale_fields():
+                        if field in locale and locale[field] and field not in ("title", "slope"):
+                            markdown = locale[field]
+                            new_value = self.modify(markdown)
+                            updated = updated or (new_value != markdown)
+                            locale[field] = new_value
 
         return updated
 

@@ -384,14 +384,16 @@ class CampBot(object):
             ignored_voters = ["@{}".format(v) for v in ignored_voters]
             print("\n**Ignored votes** : {}".format(", ".join(set(ignored_voters))))
 
-    def clean(self, url, ask_before_saving=True, clean_bbcode=False):
+    def clean(self, url, langs, ask_before_saving=True, clean_bbcode=False):
+        assert len(langs) != 0
+
         constructor, filters = _parse_filter(url)
         processors = get_automatic_replacments(self, clean_bbcode)
         documents = self.wiki.get_documents(filters, constructor=constructor)
 
-        self._process_documents(documents, processors, ask_before_saving)
+        self._process_documents(documents, processors, langs, ask_before_saving)
 
-    def _process_documents(self, documents, processors, ask_before_saving=True):
+    def _process_documents(self, documents, processors, langs, ask_before_saving=True):
 
         for document in documents:
 
@@ -410,7 +412,7 @@ class CampBot(object):
 
                 for processor in processors:
                     if processor.ready_for_production:
-                        if processor(document):
+                        if processor(document, langs):
                             messages.append(processor.comment)
                             must_save = True
 
@@ -494,7 +496,8 @@ class CampBot(object):
         def get_documents():
 
             for document_id, document_type in self.get_modified_documents(lang, oldest_date, newest_date,
-                                                                          ("rabot", "robot.topoguide", "botopo")):
+                                                                          ("rabot", "robot.topoguide", "botopo",
+                                                                           "CaBot")):
 
                 document = self.wiki.get_wiki_object(document_id, document_type=document_type)
 
@@ -502,7 +505,7 @@ class CampBot(object):
                     yield document
 
         print("Fix recent changes")
-        self._process_documents(get_documents(), processors, ask_before_saving)
+        self._process_documents(get_documents(), processors, [lang, ], ask_before_saving)
         print("Fix recent changes finished")
 
 
