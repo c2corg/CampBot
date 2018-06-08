@@ -1,5 +1,9 @@
 from setuptools import setup, find_packages
 
+
+with open('requirements.txt') as f:
+    install_requires = f.read().splitlines()
+
 setup(
     name='campbot',
     version="0.3.9",
@@ -8,16 +12,7 @@ setup(
     author_email="charles.de.beauchesne@gmail.com",
     description="Package for automatic edition of camptocamp.org",
     long_description=open('README.txt').read(),
-
-    install_requires=[
-        "docopt==0.6.2",
-        "requests==2.18.4",
-        "python-dateutil==2.6.1",
-        "pytz==2017.2",
-        "pytest",
-        "pytest-cov",
-    ],
-
+    install_requires=install_requires,
     include_package_data=True,
 
     url='http://github.com/cbeauchesne/CampBot',
