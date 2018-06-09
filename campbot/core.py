@@ -524,6 +524,8 @@ class CampBot(object):
             811780,  # compteferme
             108727,  # moderation article
             841148,  # tvmoutain
+            383098,  # gite_ecologique_sigoyer_c
+            437422,  # Aventures verticales des gorges du Todgha
         )
 
         def display(user, contribs, outings="?"):
