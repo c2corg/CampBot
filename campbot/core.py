@@ -522,6 +522,8 @@ class CampBot(object):
             154418,  # Moderazione IT
             943665,  # robot.topoguide
             811780,  # compteferme
+            108727,  # moderation article
+            841148,  # tvmoutain
         )
 
         def display(user, contribs, outings="?"):
@@ -537,18 +539,22 @@ class CampBot(object):
 
         for user_id, contribs in contributors:
             if user_id not in excluded:
-                user = self.wiki.get_profile(user_id)
+                try:
+                    user = self.wiki.get_profile(user_id)
+                except Exception:
+                    user = None
 
-                if user.forum_username in still_members:
-                    pass
-                elif contribs >= contrib_threshold:
-                    display(user, contribs)
+                if user:
+                    if user.forum_username in still_members or "club" in (user.categories or []):
+                        pass
+                    elif contribs >= contrib_threshold:
+                        display(user, contribs)
 
-                else:
+                    else:
 
-                    outings = self.wiki.get("/outings?u={}".format(user_id))
-                    if outings["total"] >= outings_threshold:
-                        display(user, contribs, outings["total"])
+                        outings = self.wiki.get("/outings?u={}".format(user_id))
+                        if outings["total"] >= outings_threshold:
+                            display(user, contribs, outings["total"])
 
 
 def _parse_filter(url):

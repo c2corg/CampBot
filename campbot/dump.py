@@ -492,7 +492,7 @@ if __name__ == "__main__":
 
     #    _search(false_ltag)
 
-    with open("contrib_count.txt", "w") as f:
+    with open("contributors.txt", "w") as f:
         for d in Dump().sql_file("campbot/sql/contrib_count.sql"):
             f.write("|".join(map(str, d)) + "\n")
             print(*d)
