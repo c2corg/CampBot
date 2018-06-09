@@ -7,4 +7,4 @@ SELECT * FROM (
 	GROUP BY user_id
 	ORDER BY contribs DESC
 )
-WHERE contribs >= 5
+WHERE contribs >= 1

@@ -508,6 +508,48 @@ class CampBot(object):
         self._process_documents(get_documents(), processors, [lang, ], ask_before_saving)
         print("Fix recent changes finished")
 
+    def get_new_contributors(self, contrib_threshold=20, outings_threshold=15):
+        with open("contributors.txt", "r") as f:
+            contributors = [map(int, line.replace("\n", "").split("|")) for line in f.readlines()]
+
+        still_members = {d["username"] for d in self.forum.get_group_members("Contributeurs")}
+        excluded = (
+            940299,  # rabot
+            2,  # camptocamp.association
+            1001061,  # botop
+            1006785,  # cabot
+            108544,  # Modération Topoguide
+            154418,  # Moderazione IT
+            943665,  # robot.topoguide
+            811780,  # compteferme
+        )
+
+        def display(user, contribs, outings="?"):
+            line = "* `@`{forum} [{name}]({page}), [{contribs} contibutions](https://www.camptocamp.org/whatsnew#u={user_id}), [{outings} outings](https://www.camptocamp.org/outings#u={user_id})".format(
+                name=user.name,
+                page=user.get_url(),
+                forum=user.forum_username,
+                contribs=contribs,
+                outings=outings,
+                user_id=user.document_id)
+
+            print(line)
+
+        for user_id, contribs in contributors:
+            if user_id not in excluded:
+                user = self.wiki.get_profile(user_id)
+
+                if user.forum_username in still_members:
+                    pass
+                elif contribs >= contrib_threshold:
+                    display(user, contribs)
+
+                else:
+
+                    outings = self.wiki.get("/outings?u={}".format(user_id))
+                    if outings["total"] >= outings_threshold:
+                        display(user, contribs, outings["total"])
+
 
 def _parse_filter(url):
     url = url.replace("https://www.camptocamp.org/", "")

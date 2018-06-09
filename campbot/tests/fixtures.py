@@ -25,6 +25,8 @@ messages = [
     ('GET', 'https://api.camptocamp.org/routes/952167', {'redirects_to': 952126}),
     ('GET', r'https://api.camptocamp.org/profiles/3199', {'document_id': 3199}),
     ('GET', r'https://api.camptocamp.org/documents/changes\?.*&u=3199.*', {'feed': []}),
+    ('GET', r'https://api.camptocamp.org/profiles/666',
+     {'document_id': 666, 'forum_username': "new_user", "name": "new_user"}),
 
     # documents
     ('GET', r'https://api.camptocamp.org/outings/\d+', get_message("outing")),

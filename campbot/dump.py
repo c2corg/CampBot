@@ -490,7 +490,9 @@ if __name__ == "__main__":
     false_title_1 = r"(\n|^)#[^#]"
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
-    _search(false_ltag)
+    #    _search(false_ltag)
 
-    # for d in Dump().sql_file("campbot/sql/contributions_by_user.sql"):
-    #     print(*d)
+    with open("contrib_count.txt", "w") as f:
+        for d in Dump().sql_file("campbot/sql/contrib_count.sql"):
+            f.write("|".join(map(str, d)) + "\n")
+            print(*d)

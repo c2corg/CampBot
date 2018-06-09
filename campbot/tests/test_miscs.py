@@ -259,3 +259,10 @@ def test_weird(fix_requests, monkeypatch):
     args = get_main_args("clean")
     args["--login"] = False
     __main__.main(args)
+
+    with open("contributors.txt", "w") as f:
+        f.write("666|1\n")
+        f.write("666|100\n")
+        f.write("123|1\n")
+
+    bot.get_new_contributors()
