@@ -262,7 +262,9 @@ def test_weird(fix_requests, monkeypatch):
 
     with open("contributors.txt", "w") as f:
         f.write("666|1\n")
-        f.write("666|100\n")
+        f.write("667|1\n")
+        f.write("667|100\n")
+        f.write("668|100\n")
         f.write("123|1\n")
 
     bot.get_new_contributors()

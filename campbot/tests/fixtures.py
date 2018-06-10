@@ -20,13 +20,16 @@ messages = [
     ('GET', r'https://api.camptocamp.org/routes/123/fr/(123|122)', get_message("redirection")),
     ('GET', r'https://api.camptocamp.org/articles/996571', get_message("conf_replacements")),
     ('GET', r'https://api.camptocamp.org/routes/293549/fr/(1738922|1738528)', get_message("route_version")),
-    ('GET', 'https://api.camptocamp.org/routes/293549/fr/(880880|978249|478470)', get_message("route_version2")),
+    ('GET', 'https://api.camptocamp.org/routes/293549/fr/(880880|978249|478470|1738923)', get_message("route_version2")),
     ('GET', 'https://api.camptocamp.org/routes/952126', {'protected': True, 'document_id': 952126}),
     ('GET', 'https://api.camptocamp.org/routes/952167', {'redirects_to': 952126}),
     ('GET', r'https://api.camptocamp.org/profiles/3199', {'document_id': 3199}),
     ('GET', r'https://api.camptocamp.org/documents/changes\?.*&u=3199.*', {'feed': []}),
-    ('GET', r'https://api.camptocamp.org/profiles/666',
-     {'document_id': 666, 'forum_username': "new_user", "name": "new_user"}),
+    ('GET', r'https://api.camptocamp.org/profiles/666', Exception()),
+    ('GET', r'https://api.camptocamp.org/profiles/667',
+     {'document_id': 666, 'forum_username': "new_user", "name": "new_user", "categories": []}),
+    ('GET', r'https://api.camptocamp.org/profiles/668',
+     {'document_id': 666, 'forum_username': "new_user", "name": "new_user", "categories": ['club']}),
 
     # documents
     ('GET', r'https://api.camptocamp.org/outings/\d+', get_message("outing")),
@@ -103,6 +106,9 @@ def fix_requests():
             assert self._data is not None, "Cant find message for {} {}".format(method, url)
 
             print(method, url, self._data)
+
+            if isinstance(self._data, Exception):
+                self.status = 500
 
         def raise_for_status(self):
             pass
