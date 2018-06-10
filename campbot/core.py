@@ -513,6 +513,8 @@ class CampBot(object):
             contributors = [map(int, line.replace("\n", "").split("|")) for line in f.readlines()]
 
         still_members = {d["username"] for d in self.forum.get_group_members("Contributeurs")}
+        association = {d["username"] for d in self.forum.get_group_members("Association")}
+
         excluded = (
             940299,  # rabot
             2,  # camptocamp.association
@@ -528,8 +530,17 @@ class CampBot(object):
             437422,  # Aventures verticales des gorges du Todgha
         )
 
-        def display(user, contribs, outings="?"):
-            line = "* `@`{forum} [{name}]({page}), [{contribs} contibutions](https://www.camptocamp.org/whatsnew#u={user_id}), [{outings} outings](https://www.camptocamp.org/outings#u={user_id})".format(
+        def display(reason, user, contribs, outings="?"):
+            pattern = ('<tr>'
+                       '<td><strong>{reason}</strong></td>'
+                       '<td>@{forum}</td>'
+                       '<td><a href="https://www.camptocamp.org/profiles/{user_id}">{name}</a></td>'
+                       '<td><a href="https://www.camptocamp.org/whatsnew#u={user_id}">{contribs}</a></td>'
+                       '<td><a href="https://www.camptocamp.org/outings#u={user_id}">{outings}</a></td>'
+                       '</tr>')
+
+            line = pattern.format(
+                reason=reason,
                 name=user.name,
                 page=user.get_url(),
                 forum=user.forum_username,
@@ -538,6 +549,8 @@ class CampBot(object):
                 user_id=user.document_id)
 
             print(line)
+
+        print("<table><tr><th>R</th><th>Forum</th><th>Wiki</th><th>Contribs</th><th>Outings</th></tr>")
 
         for user_id, contribs in contributors:
             if user_id not in excluded:
@@ -549,14 +562,20 @@ class CampBot(object):
                 if user:
                     if user.forum_username in still_members or "club" in (user.categories or []):
                         pass
+
+                    elif user.forum_username in association:
+                        display("A", user, contribs)
+
                     elif contribs >= contrib_threshold:
-                        display(user, contribs)
+                        display("C", user, contribs)
 
                     else:
 
                         outings = self.wiki.get("/outings?u={}".format(user_id))
                         if outings["total"] >= outings_threshold:
-                            display(user, contribs, outings["total"])
+                            display("O", user, contribs, outings["total"])
+
+        print("</table>")
 
 
 def _parse_filter(url):
