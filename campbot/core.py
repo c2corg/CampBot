@@ -261,6 +261,12 @@ class ForumBot(BaseBot):
 
         return [objects.ForumUser(self.campbot, user) for user in result]
 
+    def add_users_to_group(self, group_name, users):
+        group = self.get("/groups/{}.json".format(group_name))
+
+        data = {"usernames": ",".join(users)}
+        self.put("/groups/{}/members.json".format(group["basic_group"]["id"]), data)
+
     def _get_post_ids(self, url):
         url = url.replace(self.api_url, "").split("?")[0].split("/")
         assert url[1] == 't'
