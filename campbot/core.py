@@ -608,6 +608,11 @@ class CampBot(object):
             135490,  #
             167815,  #
             130633,  #
+            634898,  #
+            286748,  #
+            109426,  #
+            11879,  #
+            10057,  #
         )
 
         def display(reason, user, contribs, outings="?"):
@@ -640,7 +645,12 @@ class CampBot(object):
                     user = None
 
                 if user:
-                    if user.forum_username in still_members or "club" in (user.categories or []):
+                    categories = user.categories or []
+
+                    if user.forum_username in still_members:
+                        pass
+
+                    elif "institution" in categories or "club" in categories:
                         pass
 
                     elif user.forum_username in association:

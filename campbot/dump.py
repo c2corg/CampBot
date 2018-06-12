@@ -404,6 +404,7 @@ def _search(pattern, lang=None):
     from campbot.objects import get_constructor
 
     dump = Dump()
+
     dump.complete()
     dump.complete_contributions()
 
@@ -490,9 +491,9 @@ if __name__ == "__main__":
     false_title_1 = r"(\n|^)#[^#]"
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
-    _search(false_ltag)
+    _search(r"\d+ *\* *\d+ *m")
 
-    with open("contributors.txt", "w") as f:
-        for d in Dump().sql_file("campbot/sql/contrib_count.sql"):
-            f.write("|".join(map(str, d)) + "\n")
-            print(*d)
+    # with open("contributors.txt", "w") as f:
+    #     for d in Dump().sql_file("campbot/sql/contrib_count.sql"):
+    #         f.write("|".join(map(str, d)) + "\n")
+    #         print(*d)

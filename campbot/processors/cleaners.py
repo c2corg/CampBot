@@ -102,7 +102,7 @@ class MultiplicationSign(OrthographicProcessor):
     def init_modifiers(self):
         self.modifiers = [
 
-            Converter(r"(\b\d)([*xX])(\d+) ?(m\b)",
+            Converter(r"(\b\d) ?([*xX]) ?(\d+) ?(m\b)",
                       r"\1×\3 \4")
         ]
 
