@@ -9,6 +9,13 @@ import pytest
 MESSAGE_URL = "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480/1"
 
 
+def test_add_user_to_group(fix_requests):
+    from campbot import CampBot
+
+    bot = CampBot()
+    bot.forum.add_users_to_group("Association", ["rabot", ])
+
+
 def test_post_message(fix_requests):
     from campbot import CampBot
 

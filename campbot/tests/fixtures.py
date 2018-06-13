@@ -58,6 +58,7 @@ messages = [
     ('GET', r'https://forum.camptocamp.org/t/\d+.json', get_message("topic")),
     ('GET', r'https://forum.camptocamp.org/posts/\d+.json', get_message("post")),
     ('GET', r'https://forum.camptocamp.org/groups/\w+/members.json.*', get_message("groups")),
+    ('GET', r'https://forum.camptocamp.org/groups/Association.json', get_message("groups_Association")),
 
     # Misc
     ('GET', r'https://api.camptocamp.org/search.*', get_message("search_user")),
