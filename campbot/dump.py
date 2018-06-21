@@ -491,7 +491,8 @@ if __name__ == "__main__":
     false_title_1 = r"(\n|^)#[^#]"
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
-    _search(r"\d+ *\* *\d+ *m")
+    _search(r"<sup>(ème|ère)")
+#    _search(r"((\n|^) {0,3}[LR]#.*)\n( {0,3}#)")
 
     # with open("contributors.txt", "w") as f:
     #     for d in Dump().sql_file("campbot/sql/contrib_count.sql"):

@@ -1,0 +1,22 @@
+test:
+  script:
+  - apt-get update -qy
+  - apt-get install -y python3-dev python3-pip
+  - pip3 install -r requirements.txt
+  - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
+  - pytest --cov campbot --cov-report=html --cov-report=term
+  artifacts:
+    paths:
+      - htmlcov
+
+pages:
+  stage: deploy
+  dependencies:
+    - test
+  script:
+  - mv htmlcov/ public/
+  only:
+  - master
+  artifacts:
+    paths:
+      - public

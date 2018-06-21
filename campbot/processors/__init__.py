@@ -1,5 +1,5 @@
 from .bbcode import BBCodeRemover, ColorAndUnderlineRemover, InternalLinkCorrector
-from .cleaners import MarkdownCleaner, AutomaticReplacements, SpaceBetweenNumberAndUnit, MultiplicationSign, UpperFix
+from .cleaners import MarkdownCleaner, AutomaticReplacements, SpaceBetweenNumberAndUnit, MultiplicationSign, UpperFix, OrthographicProcessor
 from .ltagmigrator import LtagCleaner, LtagMigrator
 
 
