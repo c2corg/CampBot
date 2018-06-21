@@ -7,7 +7,7 @@ Requirements
 
 * Working `Python <http://www.python.org/>`_ 3.5 or 3.6
 
-and, optionnaly : 
+and, optionnaly if you need to write : 
 
 
 * `camptocamp.org <http://www.camptocamp.org/>`_ account for editing documents ;
