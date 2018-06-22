@@ -2,7 +2,7 @@ CampBot class
 =============
 
 .. autoclass:: campbot.CampBot
-   :members: login, clean, export, export_contributions, fix_recent_changes
+   :members: login, clean, export, export_contributions, fix_recent_changes, wiki, forum, moderator
 
 Properties
 ----------

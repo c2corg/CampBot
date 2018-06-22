@@ -320,11 +320,15 @@ class CampBot(object):
 
         self.wiki = WikiBot(self, "https://api.{}.org".format(domain),
                             proxies=proxies, min_delay=min_delay)
+        """WikiBot instance"""
 
         self.forum = ForumBot(self, "https://forum.{}.org".format(domain),
                               proxies=proxies, min_delay=min_delay)
 
+        """ForumBot instance"""
+
         self.moderator = False
+        """True if logged with a moderator account"""
 
         self.forum.headers['X-Requested-With'] = "XMLHttpRequest"
         self.forum.headers['Host'] = "forum.{}.org".format(domain)
@@ -467,6 +471,14 @@ class CampBot(object):
                         print("Error while saving {} :\n{}".format(document.get_url(), e))
 
     def export(self, url, filename=None):
+        """
+            Export all document given by a camptocamp.org url
+
+            :param url: Camptocamp.org URL
+            :param filename: Output file name. Defaut : <document_type>.csv
+
+        """
+
         constructor, filters = _parse_filter(url)
 
         headers = ["document_id", "title", "url", "activities", "available_langs", "user_name", "user_id"]
@@ -496,6 +508,14 @@ class CampBot(object):
                 f.write(message.format(**{h: item.get(h, "") for h in headers}))
 
     def export_contributions(self, starts=None, ends=None, filename=None):
+        """
+            Export all document given by a camptocamp.org url
+
+            :param starts: Start date, default is now minus 24 hours
+            :param ends: default is now
+            :param filename: Output file name. Defaut : contributions.csv
+
+        """
 
         message = ("{timestamp};{type};{document_id};{version_id};{document_version};"
                    "{title};{quality};{user};{lang}\n")
