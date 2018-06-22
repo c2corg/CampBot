@@ -2,8 +2,8 @@
 
 from __future__ import division, print_function, unicode_literals
 
+import sys
 from datetime import datetime
-
 from recommonmark.parser import CommonMarkParser
 
 extensions = ["sphinx.ext.autodoc",]
@@ -26,3 +26,5 @@ latex_documents = [
   ('index', 'campbot.tex', u'CampBot Documentation',
    u'', 'manual'),
 ]
+
+sys.path.insert(0, os.path.abspath('../'))
