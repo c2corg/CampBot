@@ -5,8 +5,11 @@ Check that last day modifications pass these tests :
 
 * History is filled
 * No big deletions
-* And all patterns present in the first message of topic where report should be posted
-* and all corrections present in https://www.camptocamp.org/articles/996571
+* Pitch type is set
+* Warning for new users
+* all patterns present in the first message of topic where report should be posted
+
+Also, all corrections made by :doc:`clean </CLI/clean>` procedure.
 
 Report will be posted on https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480
 
