@@ -296,7 +296,17 @@ class ForumBot(BaseBot):
 
 
 class CampBot(object):
-    def __init__(self, proxies=None, min_delay=None, use_demo=False):
+    def __init__(self, min_delay=None, proxies=None, use_demo=False):
+        """
+            :param min_delay: in seconds, minimum delay between each request
+            :param proxies: key-url dictionary
+            :param use_demo: Boolean, True if you want to use C2C demo API
+    
+            :Example:
+    
+            >>> bot = CampBot(min_delay=10, proxies={"https": "https://login:password@proxy.com"})
+            
+        """
 
         domain = "camptocamp" if not use_demo else "demov6.camptocamp"
 
@@ -312,6 +322,15 @@ class CampBot(object):
         self.forum.headers['Host'] = "forum.{}.org".format(domain)
 
     def login(self, login, password):
+        """
+            Login to camptocamp.org, mandatory for write actions. 
+            It also sign-in to forum. 
+
+            :param login: bot login used to sign-in (not the numerical ID)
+            :param password: bot password
+            
+        """
+
         res = self.wiki.post("/users/login", {"username": login, "password": password, "discourse": True})
         token = res["token"]
         self.moderator = "moderator" in res["roles"]
