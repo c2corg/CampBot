@@ -296,6 +296,14 @@ class ForumBot(BaseBot):
 
 
 class CampBot(object):
+    """
+    CampBot() object is the main class. You must instanciate only one instance of it.
+    It contains two property : 
+
+    * ``wiki`` for interacting with camptocamp.org wiki
+    * ``forum`` for interacting with camptocamp.org forum
+    """
+
     def __init__(self, min_delay=None, proxies=None, use_demo=False):
         """
             :param min_delay: in seconds, minimum delay between each request
