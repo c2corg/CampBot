@@ -15,7 +15,7 @@ setup(
     install_requires=install_requires,
     include_package_data=True,
 
-    url='http://github.com/cbeauchesne/CampBot',
+    url='http://gitlab.com/cbeauchesne/CampBot',
 
     classifiers=[
         "Programming Language :: Python",
