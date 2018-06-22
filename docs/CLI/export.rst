@@ -15,7 +15,7 @@ Command line
 Output
 ------
 
-.. code-block:: csv
+here is a sample of output::
 
     date_start;date_end;title;equipement_rating;global_rating;height_diff_up;rock_free_rating;condition_rating;elevation_max;img_count;quality;activities
     2017-11-20;2017-11-20;Calanque de Morgiou - Le Cancéou : Aven du Cancéou - Prends moi sec au-dessus du lagon bleu;;D+;100;5c;excellent;None;0;draft;rock_climbing

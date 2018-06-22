@@ -22,7 +22,7 @@ Optional arguments
 Output
 ------
 
-.. code-block:: csv
+here is a sample of output::
 
     timestamp;type;document_id;version_id;document_version;title;quality;username;lang
     2017-12-21T21:49:41.363647+00:00;routes;293549;1738922;4;Escalades à Presles;medium;charles b;fr
