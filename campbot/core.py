@@ -418,6 +418,16 @@ class CampBot(object):
             print("\n**Ignored votes** : {}".format(", ".join(set(ignored_voters))))
 
     def clean(self, url, langs, ask_before_saving=True, clean_bbcode=False):
+        """
+            Clean a set of document.
+
+            :param url: Camptocamp.org URL
+            :param langs: comma-separated list of lang identifiers
+            :param ask_before_saving: Boolean
+            :param clean_bbcode: Boolean
+
+        """
+
         assert len(langs) != 0
 
         constructor, filters = _parse_filter(url)
