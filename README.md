@@ -8,7 +8,7 @@ Bot framework for [camptocamp.org](https://www.camptocamp.org/)
 ## Installation
 
 ```batch
-    pip install campbot
+pip install campbot
 ```
 
 ## Documentation
