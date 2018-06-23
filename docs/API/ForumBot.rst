@@ -2,5 +2,5 @@ ForumBot class
 ==============
 
 
-.. autoclass:: campbot.ForumBot
+.. autoclass:: campbot.core.ForumBot
    :members: post_message
