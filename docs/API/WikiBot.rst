@@ -22,6 +22,17 @@ Mapping :
 * "b": Book
 * "r": Route
 
+Example : this two line are equivalents
+
+.. code-block:: python
+    from campbot import Campbot, objects
+
+    bot = Campbot(user_demo=True)
+
+    bot.wiki.get_documents(filters, document_type='r')
+    bot.wiki.get_documents(filters, constructor=objects.Route)
+
+
 About filters
 -------------
 
