@@ -135,7 +135,7 @@ class WikiBot(BaseBot):
         """
         Get article object
 
-        :param article_id:
+        :param article_id: article numerical id
         :return: article object
         """
 
@@ -145,12 +145,20 @@ class WikiBot(BaseBot):
         """
         Get route object
 
-        :param route_id:
+        :param route_id: route numerical id
         :return: route object
         """
+
         return self.get_wiki_object(route_id, constructor=objects.Route)
 
     def get_waypoint(self, waypoint_id):
+        """
+        Get waypoint object
+
+        :param waypoint_id: waypoint numerical id
+        :return:  waypoint object
+        """
+
         return self.get_wiki_object(waypoint_id, constructor=objects.Waypoint)
 
     def get_profile(self, profile_id):
@@ -185,6 +193,13 @@ class WikiBot(BaseBot):
             yield doc["document_id"]
 
     def get_routes(self, filters):
+        """
+        Get list of route. This function is a generator.
+
+        :param filters: key-value dictionary
+        :return: generator of route objects
+        """
+
         return self.get_documents(constructor=objects.Route, filters=filters)
 
     def get_waypoints(self, filters):
@@ -194,6 +209,13 @@ class WikiBot(BaseBot):
         return self.get_documents(constructor=objects.Outing, filters=filters)
 
     def get_documents(self, filters=None, document_type=None, constructor=None):
+        """
+        Return a list of wiki objects, this function is a generator
+
+        :param filters: a key-value dictionary
+        :param document_type: type letter, like 'a', 'r', 'w'...
+        :param constructor: objects.Area, objects.Route ...
+        """
         if not constructor:
             constructor = objects.get_constructor(document_type=document_type)
 
@@ -284,6 +306,13 @@ class ForumBot(BaseBot):
         self.post("/posts", {"topic_id": topic_id, "raw": message})
 
     def get_group_members(self, group_name):
+        """
+        Get all group members
+
+        :param group_name: example : "Association"
+
+        :return: list of forum username
+        """
         result = []
 
         expected_len = 1
