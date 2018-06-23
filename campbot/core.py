@@ -97,6 +97,10 @@ class BaseBot(object):
 
 
 class WikiBot(BaseBot):
+    """
+        Get functions for all camptocamp.org wiki
+    """
+
     @property
     def ui_url(self):
         return self.api_url.replace("api", "www")
@@ -113,15 +117,37 @@ class WikiBot(BaseBot):
         return objects.Version(self.campbot, data)
 
     def get_wiki_object(self, item_id, document_type=None, constructor=None):
+        """
+        Return a wiki object. You must specify document_type OR constructor
+
+        :param item_id: numerical document id
+        :param document_type: type letter ('r' for route, 'w' for waypoint...)
+        :param constructor: objects.Route, objects.Waypoint...
+
+        :return: a wiki object
+        """
         if not constructor:
             constructor = objects.get_constructor(document_type)
 
         return constructor(self.campbot, self.get("/{}/{}".format(constructor.url_path, item_id)))
 
     def get_article(self, article_id):
+        """
+        Get article object
+
+        :param article_id:
+        :return: article object
+        """
+
         return self.get_wiki_object(article_id, constructor=objects.Article)
 
     def get_route(self, route_id):
+        """
+        Get route object
+
+        :param route_id:
+        :return: route object
+        """
         return self.get_wiki_object(route_id, constructor=objects.Route)
 
     def get_waypoint(self, waypoint_id):
@@ -247,6 +273,13 @@ class WikiBot(BaseBot):
 
 class ForumBot(BaseBot):
     def post_message(self, message, url):
+        """
+        post a message into an existant forum thread
+
+        :param message: message content
+        :param url: thread URL
+        """
+
         topic_id, _ = self._get_post_ids(url)
         self.post("/posts", {"topic_id": topic_id, "raw": message})
 

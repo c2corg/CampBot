@@ -102,3 +102,7 @@ ENV/
 
 /*.csv
 /ids.txt
+
+# exclude user script
+/workbench.py
+/contributors.txt
