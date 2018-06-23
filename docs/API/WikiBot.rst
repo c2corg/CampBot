@@ -25,6 +25,7 @@ Mapping :
 Example : this two line are equivalents
 
 .. code-block:: python
+
     from campbot import Campbot, objects
 
     bot = Campbot(user_demo=True)
