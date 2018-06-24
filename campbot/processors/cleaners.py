@@ -138,9 +138,4 @@ class AutomaticReplacements(OrthographicProcessor):
         self.modifiers = []
 
         for old, new in self.replacements:
-            self.modifiers.append(
-                Converter(
-                    r"\b" + old.strip() + r"\b",
-                    new.strip()
-                )
-            )
+            self.modifiers.append(Converter(r"\b" + old + r"\b", new))

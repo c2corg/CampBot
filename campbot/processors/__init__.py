@@ -1,5 +1,6 @@
 from .bbcode import BBCodeRemover, ColorAndUnderlineRemover, InternalLinkCorrector
-from .cleaners import MarkdownCleaner, AutomaticReplacements, SpaceBetweenNumberAndUnit, MultiplicationSign, UpperFix, OrthographicProcessor
+from .cleaners import MarkdownCleaner, AutomaticReplacements, SpaceBetweenNumberAndUnit, MultiplicationSign, UpperFix, \
+    OrthographicProcessor
 from .ltagmigrator import LtagCleaner, LtagMigrator
 
 
@@ -19,7 +20,8 @@ def get_automatic_replacments(bot, clean_bbcode=False):
             elif line.startswith("    ") and test:
                 pattern = line[4:]
                 if len(pattern.strip()) != 0:
-                    test["replacements"].append(line[4:].split(">>"))
+                    needle, stack = line.split(">>")
+                    test["replacements"].append((needle.strip(), stack.strip()))
 
     result = [AutomaticReplacements(**args) for args in result if len(args["replacements"]) != 0]
 

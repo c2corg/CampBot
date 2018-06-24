@@ -306,6 +306,8 @@ class Dump(object):
 
         self._conn.commit()
 
+        self.complete_contributions()
+
     def sql_file(self, filename):
         with open(filename) as f:
             sql = " ".join(f.readlines())
@@ -405,9 +407,6 @@ def _search(pattern, lang=None):
 
     dump = Dump()
 
-    dump.complete()
-    dump.complete_contributions()
-
     with open("ids.txt", "w") as f:
         for doc_id, typ, lang, field, title, _ in dump.search(pattern, lang):
             print("* [{}](https://www.camptocamp.org/{}/{}/{})".format(title, get_constructor(typ).url_path, doc_id,
@@ -491,10 +490,12 @@ if __name__ == "__main__":
     false_title_1 = r"(\n|^)#[^#]"
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
-    _search(r"<sup>(ème|ère)")
+    Dump().complete()
+    _search(r"\b[Cc]amelot\b")
+
 #    _search(r"((\n|^) {0,3}[LR]#.*)\n( {0,3}#)")
 
-    # with open("contributors.txt", "w") as f:
-    #     for d in Dump().sql_file("campbot/sql/contrib_count.sql"):
-    #         f.write("|".join(map(str, d)) + "\n")
-    #         print(*d)
+# with open("contributors.txt", "w") as f:
+#     for d in Dump().sql_file("campbot/sql/contrib_count.sql"):
+#         f.write("|".join(map(str, d)) + "\n")
+#         print(*d)
