@@ -1,5 +1,27 @@
 # coding: utf-8
 
+"""
+
+This module contains all data objects getted from forum and wiki API. These API provides JSON data, and this module enhances data model by mirroring data attributes to data model. Here is an exemple : 
+
+.. code-block:: python
+
+    from campbot import CampBot
+    
+    bot = CampBot(use_demo=True)
+    waypoint = bot.wiki.get_waypoint(107702)
+    
+    # this two lines are perfectly equivalents
+    elevation = waypoint["elevation"]  # standard way to access data
+    elevation = waypoint.elevation  # and sexier way.
+    
+    # set values is possible
+    waypoint.elevation = 1000  
+    assert waypoint["elevation"] == 1000  # it's true!
+    
+We try to use the second way every times it's possible in this documentation.
+"""
+
 from __future__ import print_function, unicode_literals, division
 
 import re
@@ -20,6 +42,10 @@ def get_constructor(document_type):
 
 
 class BotObject(dict):
+    """
+    Base class for all data object
+    """
+    
     def __init__(self, campbot, data):
         super(BotObject, self).__init__(data)
         self._campbot = campbot
@@ -50,6 +76,10 @@ class BotObject(dict):
 
 
 class Version(BotObject):
+    """
+    A historical version of one wiki document.
+    """
+    
     def __init__(self, campbot, data):
         super(Version, self).__init__(campbot, data)
         self['document'] = get_constructor(self['document']['type'])(campbot, self['document'])
@@ -87,7 +117,17 @@ class Contribution(BotObject):
 
 
 class Locale(BotObject):
+    """
+    Locale is a set of field, given a lang.
+    """
+    
     def get_title(self):
+        """
+        Get the title, with prefix if it exists.
+        
+        :return: String, pretty title
+        """
+        
         if "title_prefix" in self:
             return "{} : {}".format(self.title_prefix, self.title)
         else:
@@ -100,6 +140,12 @@ class Locale(BotObject):
                 "slackline_anchor1", "slackline_anchor2")
 
     def get_length(self):
+        """
+        Get text length
+        
+        :return: Integer, number of characters
+        """
+        
         result = 0
         for field in self.get_locale_fields():
             if field in self and self[field]:
@@ -109,6 +155,10 @@ class Locale(BotObject):
 
 
 class WikiObject(BotObject):
+    """
+    Base object for all wiki documents
+    """
+    
     url_path = None
 
     def __init__(self, campbot, data):
@@ -117,12 +167,21 @@ class WikiObject(BotObject):
         self._data = data
 
     def get_url(self, lang=None):
+        """
+        :return: camptocamp.org URL.  
+        """
+        
         return "{}/{}/{}{}".format(self._campbot.wiki.ui_url,
                                    self.url_path,
                                    self.document_id,
                                    "" if lang is None else "/" + lang)
 
     def get_history_url(self, lang):
+        """
+        
+        :return: camptocamp.org version list URL
+        """
+        
         return "{}/{}/history/{}/{}".format(self._campbot.wiki.ui_url,
                                             self.url_path,
                                             self.document_id,
@@ -133,6 +192,12 @@ class WikiObject(BotObject):
         return locale.get_title() if locale else ""
 
     def get_locale(self, lang):
+        """
+        :param lang: fr, en, de ...
+        
+        :return: String, or None if locale does not exists in this lang  
+        """
+        
         if "locales" not in self:
             return None
 
@@ -141,6 +206,13 @@ class WikiObject(BotObject):
                 return locale
 
     def search(self, patterns, lang):
+        """
+        Search a pattern (regular expression)
+        
+        :param lang: fr, de, en...
+        
+        :return: True if pattern is found, False otherwise
+        """
 
         locale = self.get_locale(lang)
 
@@ -158,6 +230,15 @@ class WikiObject(BotObject):
             print(l)
 
     def save(self, message, ask_before_saving=True):
+        """
+        Save object to camptocamp.org. Bot must be authentified.
+        
+        :param message: Modification comment
+        :param ask_before_saving: Boolean, ask user before saing document
+        
+        :return: raw request response, useless.
+        """
+        
         self.print_diff()
 
         if ask_before_saving:
@@ -170,6 +251,10 @@ class WikiObject(BotObject):
         return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id), payload)
 
     def is_valid(self):
+        """
+        :return: True if document can be saved
+        """
+        
         return self.get_invalidity_reason() is None
 
     def is_personal(self):
@@ -211,10 +296,14 @@ class WikiUser(WikiObject):
 
 
 class Route(WikiObject):
+    """Route object : https://www.camptocamp.org/routes"""
+    
     url_path = "routes"
 
 
 class Article(WikiObject):
+    """Article object : https://www.camptocamp.org/articles"""
+    
     url_path = "articles"
 
     def is_personal(self):
@@ -222,6 +311,8 @@ class Article(WikiObject):
 
 
 class Image(WikiObject):
+    """Image object : https://www.camptocamp.org/images"""
+    
     url_path = "images"
 
     def is_personal(self):
@@ -229,10 +320,14 @@ class Image(WikiObject):
 
 
 class Book(WikiObject):
+    """Book object : https://www.camptocamp.org/books"""
+    
     url_path = "books"
 
 
 class Xreport(WikiObject):
+    """Xreport object : https://www.camptocamp.org/xreports"""
+    
     url_path = "xreports"
 
     def is_personal(self):
@@ -240,6 +335,8 @@ class Xreport(WikiObject):
 
 
 class Waypoint(WikiObject):
+    """Waypoint object : https://www.camptocamp.org/waypoints"""
+    
     url_path = "waypoints"
 
     def get_invalidity_reason(self):
@@ -254,14 +351,20 @@ class Waypoint(WikiObject):
 
 
 class Area(WikiObject):
+    """Area object : https://www.camptocamp.org/areas"""
+    
     url_path = "areas"
 
 
 class Map(WikiObject):
+    """Map object : https://www.camptocamp.org/maps"""
+    
     url_path = "maps"
 
 
 class Outing(WikiObject):
+    """Outings object : https://www.camptocamp.org/outings"""
+    
     url_path = "outings"
 
     def is_personal(self):
