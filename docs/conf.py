@@ -7,6 +7,9 @@ from datetime import datetime
 from recommonmark.parser import CommonMarkParser
 
 extensions = ["sphinx.ext.autodoc",]
+
+autodoc_member_order = 'bysource'
+
 templates_path = ['/home/docs/checkouts/readthedocs.org/readthedocs/templates/sphinx', 'templates', '_templates', '.templates']
 source_suffix = ['.rst', '.md']
 source_parsers = {
