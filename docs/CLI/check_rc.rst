@@ -1,15 +1,16 @@
 Check (and clean) recent changes
 ================================
 
-Check that last day modifications pass these tests :
+This procedure will execute two process : 
 
-* History is filled
-* No big deletions
-* Pitch type is set
-* Warning for new users
-* all patterns present in the first message of topic where report should be posted
+1. All corrections made by :doc:`clean </CLI/clean>` procedure on every documents recently modified (bot modifications not included)
+2. Check that last day modifications pass these tests 
 
-Also, all corrections made by :doc:`clean </CLI/clean>` procedure.
+   * History is filled
+   * No big deletions
+   * Pitch type is set
+   * Warning for new users
+   * all patterns present in the first message of topic where report should be posted
 
 Report will be posted on https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480
 
@@ -27,3 +28,10 @@ Arguments and options
 * ``<login>`` : your bot login
 * ``<password>`` : your bot password
 * ``<delay>`` : delay, in seconds between each request. By defaut, 3 seconds 
+
+.. warning::
+
+    This process is quite long, especially for the second part. So, please consider this two points :
+    
+    * Execute it when camptocamp is not overloaded
+    * and use a delay of 0.1 seconds. 
