@@ -787,6 +787,25 @@ class CampBot(object):
 
         print("</table>")
 
+    def get_forum_users_from_route(self, route_id):
+        """
+        Get forum printable list of users that have done a given route.
+
+        Result can be copied into a message. It contains 20 name per row (forum limitation)
+
+        :param route_id:
+        """
+
+        result = set()
+        for outing in self.wiki.get_outings({"r": route_id}):
+            for user in outing.associations["users"]:
+                result.add(user["forum_username"])
+
+        result = sorted(result)
+
+        for sub_result in [result[i:i + 20] for i in range(0, len(result), 20)]:
+            print(", ".join(["@" + name for name in sub_result]))
+
 
 def _parse_filter(url):
     url = url.replace("https://www.camptocamp.org/", "")
