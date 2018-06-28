@@ -806,7 +806,7 @@ class CampBot(object):
         result = {}
         for outing in self.wiki.get_outings({"r": route_id}):
             for user in outing.associations["users"]:
-                result[user.document_id] = user
+                result[user["document_id"]] = user
 
         return list(result.values())
 

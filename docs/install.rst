@@ -23,7 +23,7 @@ Installation
 Test installation
 -----------------
 
-In :doc:`command line interface </CLI>`, type : 
+In :doc:`command line interface </CLI/index.rst>`, type : 
 
 .. code-block:: bash
 
