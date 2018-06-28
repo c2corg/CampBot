@@ -8,9 +8,11 @@ Command line
 
 .. code-block:: bash
 
-    campbot export <url>
+    campbot export <url> [--out=<filename>] [--delay=<seconds>]
 
-* url is a camptocamp url, like https://www.camptocamp.org/routes#a=523281
+* ``<url>`` is a camptocamp url, like https://www.camptocamp.org/routes#a=523281
+* ``<filename>`` is the output file. By default, it will be ``outings.csv`` for outings, ``routes.csv`` for routes...
+* ``<seconds>``, numerical, is the delay between each request. 3s by default.
 
 Output
 ------
