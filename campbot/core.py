@@ -803,12 +803,12 @@ class CampBot(object):
         :param route_id: route numrical identifier
         """
 
-        result = set()
+        result = {}
         for outing in self.wiki.get_outings({"r": route_id}):
             for user in outing.associations["users"]:
-                result.add(user)
+                result[user.document_id] = user
 
-        return result
+        return list(result.values())
 
 
 def _parse_filter(url):
