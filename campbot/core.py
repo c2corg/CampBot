@@ -483,6 +483,16 @@ class CampBot(object):
             ignored_voters = ["@{}".format(v) for v in ignored_voters]
             print("\n**Ignored votes** : {}".format(", ".join(set(ignored_voters))))
 
+    def get_documents_from_url(self, url):
+        """
+        Get a generator of document, given a camptocamp url
+
+        :param url: camptocamp url, or shorthand like routes#w=123
+        :return: generator
+        """
+        constructor, filters = _parse_filter(url)
+        return self.wiki.get_documents(filters, constructor=constructor)
+
     def clean(self, url, langs, ask_before_saving=True, clean_bbcode=False):
         """
             Clean a set of document.
@@ -496,9 +506,8 @@ class CampBot(object):
 
         assert len(langs) != 0
 
-        constructor, filters = _parse_filter(url)
+        documents = self.get_documents_from_url(url)
         processors = get_automatic_replacments(self, clean_bbcode)
-        documents = self.wiki.get_documents(filters, constructor=constructor)
 
         self._process_documents(documents, processors, langs, ask_before_saving)
 
@@ -787,24 +796,19 @@ class CampBot(object):
 
         print("</table>")
 
-    def get_forum_users_from_route(self, route_id):
+    def get_users_from_route(self, route_id):
         """
-        Get forum printable list of users that have done a given route.
+        Get list of user that have done a given route.
 
-        Result can be copied into a message. It contains 20 name per row (forum limitation)
-
-        :param route_id:
+        :param route_id: route numrical identifier
         """
 
         result = set()
         for outing in self.wiki.get_outings({"r": route_id}):
             for user in outing.associations["users"]:
-                result.add(user["forum_username"])
+                result.add(user)
 
-        result = sorted(result)
-
-        for sub_result in [result[i:i + 20] for i in range(0, len(result), 20)]:
-            print(", ".join(["@" + name for name in sub_result]))
+        return result
 
 
 def _parse_filter(url):

@@ -9,9 +9,8 @@ Requirements
 
 and, optionnaly if you need to modify documents :
 
-
-* `camptocamp.org <http://www.camptocamp.org/>`_ account for editing documents ;
-* `demov6camptocamp.org <http://www.demov6.camptocamp.org/>`_ account for testing editions.
+* a `camptocamp.org <http://www.camptocamp.org/>`_ account for editing documents ;
+* a `demov6camptocamp.org <http://www.demov6.camptocamp.org/>`_ account for testing editions.
 
 Installation
 ------------
@@ -24,7 +23,7 @@ Installation
 Test installation
 -----------------
 
-In command line interface, type : 
+In :doc:`command line interface </CLI>`, type : 
 
 .. code-block:: bash
 

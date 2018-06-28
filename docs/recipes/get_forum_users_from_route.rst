@@ -9,5 +9,8 @@ It can be usefull, when you want to discuss about a point on a route, to mention
     
     bot = CampBot(use_demo=True)
     
-    bot.get_forum_users_from_route(56048)
+    users = bot.get_users_from_route(56048)
+
+    for sub_users in [users[i:i + 20] for i in range(0, len(users), 20)]:
+        print(", ".join(["@" + user["forum_username"] for user in sub_users]))
 
