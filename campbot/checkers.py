@@ -298,4 +298,5 @@ class DistanceTest(object):
         if "redirects_to" in old_doc or "redirects_to" in new_doc:
             return True, True
 
-        return True, utils.compute_distance(old_doc, new_doc) < 10
+        distance = utils.compute_distance(old_doc, new_doc)
+        return True, distance is None or distance < 10

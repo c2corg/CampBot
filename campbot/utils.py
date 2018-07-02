@@ -38,7 +38,7 @@ def compute_distance(object1, object2):
         return RADIUS * c
 
     def get_gps_coordinates(wiki_object):
-        if wiki_object["geometry"]["geom"] is None:
+        if "geometry" not in wiki_object or wiki_object["geometry"]["geom"] is None:
             return None
 
         geometry = json.loads(wiki_object["geometry"]["geom"])
