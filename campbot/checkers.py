@@ -277,3 +277,51 @@ class RouteTypeTest(object):
             return climbing_outdoor_type is not None and len(climbing_outdoor_type) != 0
 
         return test(old_version), test(new_version)
+
+
+class DistanceTest(object):
+    def __init__(self):
+        self.name = "Gros déplcament géographique"
+        self.fail_marker = emoji("/uploads/default/original/2X/0/0178043b1b70e669946f609571bd4b8f7d18e820.png",
+                                 self.name)
+        self.success_marker = ""
+
+    def __call__(self, contrib, old_version, new_version):
+        if old_version is None or new_version is None:
+            return True, True
+
+        old_doc = old_version.document
+        new_doc = new_version.document
+
+        return True, utils.compute_distance(old_doc, new_doc) < 10
+
+
+class DistanceWithLinkTest(object):
+    def __init__(self):
+        self.name = "Document associé trop lointain"
+        self.fail_marker = emoji("/uploads/default/original/2X/0/0178043b1b70e669946f609571bd4b8f7d18e820.png",
+                                 self.name)
+        self.success_marker = "..."
+
+    def __call__(self, contrib, old_version, new_version):
+        if old_version is None or new_version is None:
+            return True, True
+
+        old_doc = old_version.document
+        new_doc = new_version.document
+
+        def get_linked_items(item):
+
+            for linked_items in ("images", "routes", "waypoints", "xreports"):
+                for linked_item in item.associations.get(linked_items, []):
+                    yield linked_item
+
+        old_links = set(item["document_id"] for item in get_linked_items(old_doc))
+
+        for item in get_linked_items(new_doc):
+            if item["document_id"] not in old_links:
+                distance = utils.compute_distance(new_doc, item)
+                if distance is not None and distance > 1000:
+                    return True, False
+
+        return True, True
