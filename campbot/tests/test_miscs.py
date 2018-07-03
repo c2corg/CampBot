@@ -9,6 +9,19 @@ import pytest
 MESSAGE_URL = "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480/1"
 
 
+def test_distance(fix_requests):
+    from campbot import CampBot, utils
+
+    bot = CampBot()
+
+    item1 = bot.wiki.get_route(123)
+    item2 = bot.wiki.get_wiki_object_version(293549, "r", "fr", 880880)
+    item3 = bot.wiki.get_waypoint(123)
+
+    assert utils.compute_distance(item1, item2) is None
+    assert 571.9 < utils.compute_distance(item1, item3) < 572
+
+
 def test_get_users_from_route(fix_requests):
     from campbot import CampBot
 
