@@ -2,6 +2,7 @@
 
 from __future__ import print_function, unicode_literals, division
 
+import os
 import io
 import requests
 from datetime import datetime, timedelta
@@ -483,6 +484,33 @@ class CampBot(object):
             ignored_voters = ["@{}".format(v) for v in ignored_voters]
             print("\n**Ignored votes** : {}".format(", ".join(set(ignored_voters))))
 
+    def get_documents(self, url_or_filename):
+        """
+        Get a generator of document, given a filename or a URL.
+
+        :param url_or_filename:
+        :return: generator
+        """
+        if os.path.isfile(url_or_filename):
+            return self.get_documents_from_file(url_or_filename)
+
+        return self.get_documents_from_url(url_or_filename)
+
+    def get_documents_from_file(self, filename):
+        """
+        Get a generator of document, given a file.
+        The file must contains one id/type per line, separated by a pipe.
+
+        :param filename:
+        :return: generator
+        """
+        with open(filename, "r") as f:
+            for line in f:
+                item_id, item_type = line.replace(" ", "").replace("\n", "").replace("\r", "").split("|")
+                item_id = int(item_id)
+
+                yield self.wiki.get_wiki_object(item_id, item_type)
+
     def get_documents_from_url(self, url):
         """
         Get a generator of document, given a camptocamp url
@@ -493,11 +521,11 @@ class CampBot(object):
         constructor, filters = _parse_filter(url)
         return self.wiki.get_documents(filters, constructor=constructor)
 
-    def clean(self, url, langs, ask_before_saving=True, clean_bbcode=False):
+    def clean(self, url_or_filename, langs, ask_before_saving=True, clean_bbcode=False):
         """
             Clean a set of document.
 
-            :param url: Camptocamp.org URL
+            :param url_or_filename: Camptocamp.org URL, or filename
             :param langs: comma-separated list of lang identifiers
             :param ask_before_saving: Boolean
             :param clean_bbcode: Boolean
@@ -506,7 +534,7 @@ class CampBot(object):
 
         assert len(langs) != 0
 
-        documents = self.get_documents_from_url(url)
+        documents = self.get_documents(url_or_filename)
         processors = get_automatic_replacments(self, clean_bbcode)
 
         self._process_documents(documents, processors, langs, ask_before_saving)
