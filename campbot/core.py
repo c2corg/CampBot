@@ -492,11 +492,11 @@ class CampBot(object):
         :return: generator
         """
         if os.path.isfile(url_or_filename):
-            return self.get_documents_from_file(url_or_filename)
+            return self._get_documents_from_file(url_or_filename)
 
-        return self.get_documents_from_url(url_or_filename)
+        return self._get_documents_from_url(url_or_filename)
 
-    def get_documents_from_file(self, filename):
+    def _get_documents_from_file(self, filename):
         """
         Get a generator of document, given a file.
         The file must contains one id/type per line, separated by a pipe.
@@ -511,7 +511,7 @@ class CampBot(object):
 
                 yield self.wiki.get_wiki_object(item_id, item_type)
 
-    def get_documents_from_url(self, url):
+    def _get_documents_from_url(self, url):
         """
         Get a generator of document, given a camptocamp url
 
