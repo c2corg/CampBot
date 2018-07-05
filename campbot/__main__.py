@@ -3,7 +3,7 @@ CampBot, Python bot framework for camptocamp.org
 
 Usage:
   campbot check_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
-  campbot clean <url> <langs> --login=<login> --password=<password> [--delay=<seconds>] [--batch] [--bbcode]
+  campbot clean <url_or_file> <langs> --login=<login> --password=<password> [--delay=<seconds>] [--batch] [--bbcode]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot export <url> [--out=<filename>] [--delay=<seconds>]
 
@@ -21,7 +21,10 @@ Options:
 Commands:
   check_rc      Check (and clean) recent changes.
   clean         Clean documents.
-                <url> is like https://www.camptocamp.org/routes#a=523281, or, simplier, routes#a=523281
+                <url_or_file> is like https://www.camptocamp.org/routes#a=523281, or, simplier, routes#a=523281. 
+                filename is also accepted, and must be like : 
+                123 | r
+                456 | w
                 <langs> is comma-separated lang identifiers, like fr,de for french and german.
   contribs      Export all contribution in a CSV file. <start_date> and <end_date> are like 2018-05-12
   export        Export all documents in a CSV file.
@@ -70,7 +73,7 @@ def main(args):
                              ask_before_saving=not args["--batch"])
 
     elif args["clean"]:
-        get_campbot(args).clean(args["<url>"],
+        get_campbot(args).clean(args["<url_or_file>"],
                                 langs=args["<langs>"].split(","),
                                 ask_before_saving=not args["--batch"],
                                 clean_bbcode=args["--bbcode"])

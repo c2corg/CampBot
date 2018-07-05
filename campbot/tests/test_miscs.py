@@ -2,7 +2,7 @@
 
 from __future__ import print_function, unicode_literals, division
 
-from campbot.tests.fixtures import fix_requests, fix_dump
+from campbot.tests.fixtures import fix_requests, fix_dump, ids_files
 import os
 import pytest
 
@@ -52,14 +52,15 @@ def test_check_voters(fix_requests):
     CampBot().check_voters(url=MESSAGE_URL, allowed_groups=("Association",))
 
 
-def test_main_entry_point(fix_requests):
+def test_main_entry_point(fix_requests, ids_files):
     from campbot.__main__ import main
 
     main(get_main_args("contribs"))
     main(get_main_args("export"))
     main(get_main_args("check_rc"))
-    main(get_main_args("clean", {"<url>": "routes#w=123"}))
-    main(get_main_args("clean", {"<url>": "waypoints#w=123"}))
+    main(get_main_args("clean", {"<url_or_file>": "routes#w=123"}))
+    main(get_main_args("clean", {"<url_or_file>": "waypoints#w=123"}))
+    main(get_main_args("clean", {"<url_or_file>": ids_files}))
 
     os.remove("outings.csv")
     os.remove("contributions.csv")
@@ -209,6 +210,7 @@ def get_main_args(action, others=None):
         "<days>": "1",
         "<langs>": "fr,de",
         "<url>": "outings#u=286726",
+        "<url_or_file>": "outings#u=286726",
         "--ends": "2999-12-31",
         "--starts": "2017-06-01",
         "--out": "",

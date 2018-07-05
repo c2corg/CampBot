@@ -133,3 +133,16 @@ def fix_requests():
     yield
 
     utils.today = today
+
+
+@pytest.yield_fixture()
+def ids_files():
+    filename = "ids.txt"
+
+    with open(filename, "w") as f:
+        f.write("123|r\n")
+        f.write("456|w\n")
+
+    yield filename
+
+    os.remove(filename)
