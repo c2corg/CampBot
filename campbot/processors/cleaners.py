@@ -48,7 +48,7 @@ class OrthographicProcessor(MarkdownProcessor):
 
         result = protect(r"https?://[^ )\n>]*", placeholder_pattern, result)
         result = protect(r"www\.[^ )\n>\]]*", placeholder_pattern, result)
-        result = protect(r"\[\[[a-z]+/\d+/[/a-z\-#]+\|", "[[" + placeholder_pattern + "|", result)
+        result = protect(r"\[\[[a-z]+/\d+/[/a-z0-9\-#]+\|", "[[" + placeholder_pattern + "|", result)
         result = protect(r":\w+:", ":" + placeholder_pattern + ":", result)
 
         result = super().modify(result)
