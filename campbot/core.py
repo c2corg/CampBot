@@ -524,17 +524,24 @@ class CampBot(object):
         documents = self.get_documents(url_or_filename)
         processors = get_automatic_replacments(self, clean_bbcode)
 
-        self._process_documents(documents, processors, langs, ask_before_saving)
+        self._process_documents(documents, processors, langs,
+                                ask_before_saving, excluded_ids=[996571, ])
 
-    def _process_documents(self, documents, processors, langs, ask_before_saving=True):
+    def _process_documents(self, documents, processors, langs, ask_before_saving=True, excluded_ids=None):
 
         for document in documents:
 
-            if document.get("protected", False) and not self.moderator:
+            if "redirects_to" in document:
+                pass  # document id is not available...
+
+            elif excluded_ids is not None and document.document_id in excluded_ids:
+                pass
+
+            elif document.get("protected", False) and not self.moderator:
                 print("{} is a protected".format(document.get_url()))
 
-            elif "redirects_to" in document:
-                pass  # document id is not available...
+            elif document.is_personal() and not self.moderator:
+                print("{} is a personal".format(document.get_url()))
 
             elif not document.is_valid():
                 print("{} : {}".format(document.get_url(), document.get_invalidity_reason()))

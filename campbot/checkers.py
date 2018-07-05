@@ -299,4 +299,4 @@ class DistanceTest(object):
             return True, True
 
         distance = utils.compute_distance(old_doc, new_doc)
-        return True, distance is None or distance < 10
+        return True, distance is None or distance < 100

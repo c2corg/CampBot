@@ -45,7 +45,7 @@ class BotObject(dict):
     """
     Base class for all data object
     """
-    
+
     def __init__(self, campbot, data):
         super(BotObject, self).__init__(data)
         self._campbot = campbot
@@ -79,7 +79,7 @@ class Version(BotObject):
     """
     A historical version of one wiki document.
     """
-    
+
     def __init__(self, campbot, data):
         super(Version, self).__init__(campbot, data)
         self['document'] = get_constructor(self['document']['type'])(campbot, self['document'])
@@ -120,14 +120,14 @@ class Locale(BotObject):
     """
     Locale is a set of field, given a lang.
     """
-    
+
     def get_title(self):
         """
         Get the title, with prefix if it exists.
         
         :return: String, pretty title
         """
-        
+
         if "title_prefix" in self:
             return "{} : {}".format(self.title_prefix, self.title)
         else:
@@ -145,7 +145,7 @@ class Locale(BotObject):
         
         :return: Integer, number of characters
         """
-        
+
         result = 0
         for field in self.get_locale_fields():
             if field in self and self[field]:
@@ -158,7 +158,7 @@ class WikiObject(BotObject):
     """
     Base object for all wiki documents
     """
-    
+
     url_path = None
 
     def __init__(self, campbot, data):
@@ -170,7 +170,7 @@ class WikiObject(BotObject):
         """
         :return: camptocamp.org URL.  
         """
-        
+
         return "{}/{}/{}{}".format(self._campbot.wiki.ui_url,
                                    self.url_path,
                                    self.document_id,
@@ -181,7 +181,7 @@ class WikiObject(BotObject):
         
         :return: camptocamp.org version list URL
         """
-        
+
         return "{}/{}/history/{}/{}".format(self._campbot.wiki.ui_url,
                                             self.url_path,
                                             self.document_id,
@@ -197,7 +197,7 @@ class WikiObject(BotObject):
         
         :return: String, or None if locale does not exists in this lang  
         """
-        
+
         if "locales" not in self:
             return None
 
@@ -238,7 +238,7 @@ class WikiObject(BotObject):
         
         :return: raw request response, useless.
         """
-        
+
         self.print_diff()
 
         if ask_before_saving:
@@ -254,7 +254,7 @@ class WikiObject(BotObject):
         """
         :return: True if document can be saved
         """
-        
+
         return self.get_invalidity_reason() is None
 
     def is_personal(self):
@@ -297,13 +297,13 @@ class WikiUser(WikiObject):
 
 class Route(WikiObject):
     """Route object : https://www.camptocamp.org/routes"""
-    
+
     url_path = "routes"
 
 
 class Article(WikiObject):
     """Article object : https://www.camptocamp.org/articles"""
-    
+
     url_path = "articles"
 
     def is_personal(self):
@@ -312,7 +312,7 @@ class Article(WikiObject):
 
 class Image(WikiObject):
     """Image object : https://www.camptocamp.org/images"""
-    
+
     url_path = "images"
 
     def is_personal(self):
@@ -321,13 +321,13 @@ class Image(WikiObject):
 
 class Book(WikiObject):
     """Book object : https://www.camptocamp.org/books"""
-    
+
     url_path = "books"
 
 
 class Xreport(WikiObject):
     """Xreport object : https://www.camptocamp.org/xreports"""
-    
+
     url_path = "xreports"
 
     def is_personal(self):
@@ -336,7 +336,7 @@ class Xreport(WikiObject):
 
 class Waypoint(WikiObject):
     """Waypoint object : https://www.camptocamp.org/waypoints"""
-    
+
     url_path = "waypoints"
 
     def get_invalidity_reason(self):
@@ -352,19 +352,19 @@ class Waypoint(WikiObject):
 
 class Area(WikiObject):
     """Area object : https://www.camptocamp.org/areas"""
-    
+
     url_path = "areas"
 
 
 class Map(WikiObject):
     """Map object : https://www.camptocamp.org/maps"""
-    
+
     url_path = "maps"
 
 
 class Outing(WikiObject):
     """Outings object : https://www.camptocamp.org/outings"""
-    
+
     url_path = "outings"
 
     def is_personal(self):
@@ -372,8 +372,7 @@ class Outing(WikiObject):
 
 
 class ForumUser(BotObject):
-    def get_wiki_user(self):
-        return self._campbot.wiki.get_user(forum_name=self.username)
+    pass
 
 
 class Post(BotObject):
