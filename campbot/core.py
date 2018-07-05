@@ -413,76 +413,63 @@ class CampBot(object):
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
         self.forum.headers['X-CSRF-Token'] = self.forum.get("/session/csrf")["csrf"]
 
-    def check_voters(self, url, allowed_groups=()):
+    def check_voters(self, url, allowed_groups=None):
 
-        allowed_members = []
-        for group in allowed_groups:
-            allowed_members += self.forum.get_group_members(group)
+        allowed_members = set()
+        for group in allowed_groups or []:
+            for user in self.forum.get_group_members(group):
+                allowed_members.add(user.username)
 
-        allowed_members = {u.username: u for u in allowed_members}
-
-        oldest_date = utils.today() - timedelta(days=36500)
-        newest_date = datetime(year=2018, month=2, day=18)
-
-        last_contribs = {}
-        ignored_voters = []
-
-        def get_last_contrib(voter):
-            if voter.username not in last_contribs:
-                contributor = voter.get_wiki_user()
-
-                last_contribs[voter.username] = contributor.get_last_contribution(
-                    oldest_date=oldest_date,
-                    newest_date=newest_date)
-
-            return last_contribs[voter.username]
-
+        ignored_voters = set()
         polls = {}
-        options = {}
+        options = []
 
         post = self.forum.get_post(url=url)
 
         for poll_name in post.polls:
-            polls[poll_name] = {}
+            polls[poll_name] = {option.html: 0 for option in post.polls[poll_name].options}
             for option in post.polls[poll_name].options:
-                result = 0
                 for voter in option.get_voters(post.id, poll_name):
-                    if voter.username in allowed_members:
-                        result += 1
+                    if voter.username in allowed_members or allowed_groups is None:
+                        polls[poll_name][option.html] += 1
                     else:
-                        if get_last_contrib(voter) is None:
-                            ignored_voters.append(voter.username)
-                        else:
-                            result += 1
+                        ignored_voters.add(voter.username)
 
-                polls[poll_name][option.html] = result
-                options[option.html] = 0
+                options.append(option.html)
 
-        sort_option = next(iter(options))
+        sort_option = options[0]
+        options = set(options)
 
-        print("<table><tr><th>Vote</th>")
-        for option in options:
-            print("<th>{}</th>".format(option))
+        th = "<th>{}</th>".format
+        td = "<td>{} <small>({}%)</small></td>".format
 
-        print("<th>Total</th></tr>")
+        table = [[th("Vote")] + [th(option) for option in options] + [th("Total")]]
 
         for poll_name, values in sorted(polls.items(),
                                         key=lambda item: item[1][sort_option],
                                         reverse=True):
-            print("<tr><th>{}</th>".format(poll_name))
-            total = 0
+
+            total = sum(values.values())
+
+            row = [th(poll_name)]
+
             for option in options:
                 value = values.get(option, 0)
-                print("<td>{}</td>".format(value))
-                total += value
+                row.append(td(value, int(100.0 * value / total)))
 
-            print("<th>{}</th></tr>".format(total))
+            row.append(th(total))
+            table.append(row)
+
+        print("<table>")
+
+        for row in table:
+            print("<tr>\n  {}\n</tr>".format("\n  ".join(row)))
 
         print("</table>\n")
 
         if len(ignored_voters) != 0:
-            ignored_voters = ["@{}".format(v) for v in ignored_voters]
-            print("\n**Ignored votes** : {}".format(", ".join(set(ignored_voters))))
+            ignored_voters = map("@{}".format, ignored_voters)
+            print("**Ignored votes** : {}".format(", ".join(ignored_voters)))
 
     def get_documents(self, url_or_filename):
         """
