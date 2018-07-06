@@ -7,6 +7,154 @@ import datetime
 from campbot import utils
 
 
+def _format_delta(delta):
+    if delta < 0:
+        return "<del>{:+d}</del>".format(delta)
+
+    if delta > 0:
+        return "<ins>{:+d}</ins>".format(delta)
+
+    return "**=**"
+
+
+def _get_diff_url(bot, document, lang, previous_version_id, version_id):
+    if not previous_version_id:
+        return document.get_url(lang)
+
+    return "{}/{}/diff/{}/{}/{}/{}".format(
+        bot.wiki.ui_url,
+        document.url_path,
+        document.document_id,
+        lang,
+        previous_version_id,
+        version_id)
+
+
+class ContributionReport(object):
+    def __init__(self, bot, contrib, tests):
+        self.contrib = contrib
+        self.need_report = False
+
+        self.new = bot.wiki.get_wiki_object_version(contrib.document.document_id,
+                                                    contrib.document.type,
+                                                    contrib.lang,
+                                                    contrib.version_id)
+
+        self.old = bot.wiki.get_wiki_object_version(contrib.document.document_id,
+                                                    contrib.document.type,
+                                                    contrib.lang,
+                                                    self.new.previous_version_id)
+
+        self.emojis = []
+
+        for test in tests:
+            old_is_ok, new_is_ok = test(contrib, self.old, self.new)
+
+            if old_is_ok and not new_is_ok:
+                self.emojis.append(test.fail_marker)
+                self.need_report = True
+            elif not old_is_ok and new_is_ok:
+                self.emojis.append(test.success_marker)
+
+        self.delta = self.new.get_locale_length(contrib.lang) if self.new else 0
+        self.delta -= self.old.get_locale_length(contrib.lang) if self.old else 0
+
+    def get_multi_report(self, lang):
+
+        result = ("  * {timestamp} "
+                  "([{diff_title}]({diff_url})) **·** "
+                  "{delta} "
+                  "{emojis} **·** "
+                  "[{username}]({user_contrib_url}) →‎ "
+                  "*{comment}*").format(
+            timestamp=parser.parse(self.contrib.written_at).strftime("%H:%M"),
+            emojis="".join(self.emojis),
+            diff_title="diff" if self.new.previous_version_id else "**new**",
+            diff_url=self.new.get_diff_url(lang),
+            delta=_format_delta(self.delta),
+            username=self.contrib.user.name,
+            user_contrib_url=self.contrib.user.get_contributions_url(),
+            comment=self.contrib.comment if len(self.contrib.comment) else "&nbsp;"
+        )
+
+        return result
+
+    def get_mono_report(self, bot, lang):
+
+        title = bot.wiki.get_wiki_object(self.new.document.document_id, self.new.document.type).get_title(lang)
+
+        result = ("* {timestamp} "
+                  "([{diff_title}]({diff_url}) | [hist]({hist_url})) **·** "
+                  "{delta} "
+                  "{emojis} **·** "
+                  "[{doc_title}]({doc_url}) **·** "
+                  "[{username}]({user_contrib_url}) →‎ "
+                  "*{comment}*").format(
+            timestamp=parser.parse(self.contrib.written_at).strftime("%H:%M"),
+            emojis="".join(self.emojis),
+            doc_title=title if len(title) else "*Vide*",
+            doc_url=self.new.document.get_url(lang),
+            diff_title="diff" if self.new.previous_version_id else "**new**",
+            diff_url=self.new.get_diff_url(lang),
+            hist_url=self.new.document.get_history_url(self.contrib.lang),
+            delta=_format_delta(self.delta),
+            username=self.contrib.user.name,
+            user_contrib_url=self.contrib.user.get_contributions_url(),
+            comment=self.contrib.comment if len(self.contrib.comment) else "&nbsp;"
+        )
+
+        return result
+
+
+class DocumentReport(object):
+    def __init__(self, bot, contributions, tests):
+        self.need_report = False
+        self.sub_reports = []
+
+        for contrib in contributions:
+            report = ContributionReport(bot, contrib, tests)
+            self.sub_reports.append(report)
+            self.need_report = self.need_report or report.need_report
+
+    def get_report(self, bot, lang):
+        result = []
+
+        if len(self.sub_reports) == 1:
+            result.append(self.sub_reports[0].get_mono_report(bot, lang))
+
+        else:
+            newest_report = self.sub_reports[0]
+            oldest_report = self.sub_reports[-1]
+
+            delta = sum([r.delta for r in self.sub_reports])
+
+            title = bot.wiki.get_wiki_object(newest_report.new.document.document_id,
+                                             newest_report.new.document.type).get_title(lang)
+
+            result.append(
+                "* {timestamp} "
+                "([{diff_title}]({diff_url}) | [hist]({hist_url})) **·** "
+                "({delta}) **·** "
+                "[{doc_title}]({doc_url}) → "
+                "*{modifications} modifications*".format(
+                    timestamp=parser.parse(newest_report.contrib.written_at).strftime("%H:%M"),
+                    doc_title=title if len(title) else "*Vide*",
+                    doc_url=newest_report.new.document.get_url(lang),
+                    hist_url=newest_report.new.document.get_history_url(newest_report.contrib.lang),
+                    diff_title="**new**" if not oldest_report.old else "diff",
+                    diff_url=_get_diff_url(bot, newest_report.contrib.document, lang,
+                                           oldest_report.new.previous_version_id,
+                                           newest_report.contrib.version_id),
+                    modifications=len(self.sub_reports),
+                    delta=_format_delta(delta)
+                ))
+
+            for report in self.sub_reports:
+                result.append(report.get_multi_report(lang))
+
+        return "\n".join(result)
+
+
 def check_recent_changes(bot, days, ask_before_saving):
     check_message_url = "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480"
     lang = "fr"
@@ -18,6 +166,10 @@ def check_recent_changes(bot, days, ask_before_saving):
 
     tests = get_fixed_tests(lang)
     tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
+
+    items = bot.get_modified_documents(lang=lang, oldest_date=oldest_date, newest_date=newest_date)
+
+    reports = [DocumentReport(bot, contributions, tests) for contributions in items.values()]
 
     messages = [
         "[Explications]({})\n".format(check_message_url),
@@ -33,73 +185,7 @@ def check_recent_changes(bot, days, ask_before_saving):
         messages.append("</tr>")
 
     messages.append("</table>\n[/details]\n\n----\n\n")
-
-    items = bot.get_modified_documents(lang=lang, oldest_date=oldest_date, newest_date=newest_date)
-
-    for contribs in items.values():
-        need_report = False
-        report = []
-
-        if len(contribs) != 1:
-            report.append("* {} modifications ".format(len(contribs), ))
-
-        for contrib in contribs:
-            print(contrib.written_at, "get doc")
-            new = bot.wiki.get_wiki_object_version(contrib.document.document_id,
-                                                   contrib.document.type,
-                                                   contrib.lang,
-                                                   contrib.version_id)
-
-            old = bot.wiki.get_wiki_object_version(contrib.document.document_id,
-                                                   contrib.document.type,
-                                                   contrib.lang,
-                                                   new.previous_version_id)
-
-            emojis = []
-
-            for test in tests:
-                old_is_ok, new_is_ok = test(contrib, old, new)
-
-                if old_is_ok and not new_is_ok:
-                    emojis.append(test.fail_marker)
-                    need_report = True
-                elif not old_is_ok and new_is_ok:
-                    emojis.append(test.success_marker)
-
-            delta = new.get_locale_length(contrib.lang) if new else 0
-            delta -= old.get_locale_length(contrib.lang) if old else 0
-
-            if delta < 0:
-                delta = "<del>{:+d}</del>".format(delta)
-            elif delta > 0:
-                delta = "<ins>{:+d}</ins>".format(delta)
-            else:
-                delta = "**=**"
-
-            title = new.document.get_title(lang)
-
-            report.append(
-                "{prefix}* {timestamp} {emojis} [{doc_title}]({doc_url}) "
-                "([{diff_title}]({diff_url}) | [hist]({hist_url})) "
-                "**·** ({delta}) **·** [{username}]({user_contrib_url})"
-                " →‎ *{comment}*".format(
-                    prefix="" if len(contribs) == 1 else "  ",
-                    timestamp=parser.parse(contrib.written_at).strftime("%H:%M"),
-                    emojis="".join(emojis),
-                    doc_title=title if len(title) else "*Vide*",
-                    doc_url=new.document.get_url(lang),
-                    diff_title="diff" if new.previous_version_id else "**new**",
-                    diff_url=new.get_diff_url(lang),
-                    hist_url=new.document.get_history_url(contrib.lang),
-                    delta=delta,
-                    username=contrib.user.name,
-                    user_contrib_url=contrib.user.get_contributions_url(),
-                    comment=contrib.comment if len(contrib.comment) else "&nbsp;"
-                )
-            )
-
-        if need_report:
-            messages += report
+    messages += [report.get_report(bot, lang) for report in reports if report.need_report]
 
     for m in messages:
         print(m)
@@ -299,4 +385,4 @@ class DistanceTest(object):
             return True, True
 
         distance = utils.compute_distance(old_doc, new_doc)
-        return True, distance is None or distance < 100
+        return True, distance is None or distance < 10
