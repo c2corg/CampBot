@@ -167,9 +167,13 @@ def check_recent_changes(bot, days, ask_before_saving):
     tests = get_fixed_tests(lang)
     tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
 
-    items = bot.get_modified_documents(lang=lang, oldest_date=oldest_date, newest_date=newest_date)
+    items = bot.get_modified_documents(lang=lang, oldest_date=oldest_date, newest_date=newest_date).values()
 
-    reports = [DocumentReport(bot, contributions, tests) for contributions in items.values()]
+    reports = []
+
+    for i, contributions in enumerate(items):
+        print("Build report {}/{}".format(i, len(items)))
+        reports.append(DocumentReport(bot, contributions, tests))
 
     messages = [
         "[Explications]({})\n".format(check_message_url),
