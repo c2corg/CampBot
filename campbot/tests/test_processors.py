@@ -372,7 +372,9 @@ def test_arabic_spaces():
         {"source": "L#6h",
          "expected": "L#6h"},
         {"source": " 6A ",
-         "expected": " 6A "}, ]
+         "expected": " 6A "}, 
+        {"source": "1h30. Compter 1h15. ou 1h10",
+         "expected": "1 h 30. Compter 1 h 15. ou 1 h 10"}, ]
 
     p = SpaceBetweenNumberAndUnit().modify
     for test in tests:

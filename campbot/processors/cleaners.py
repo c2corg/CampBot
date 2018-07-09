@@ -121,6 +121,9 @@ class SpaceBetweenNumberAndUnit(OrthographicProcessor):
 
             Converter(r"(^|[| \n\(])(\d+)([\-xX])(\d+)(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])",
                       r"\1\2\3\4 \5\6"),
+
+            Converter(r"\b(\d\d?)h(\d\d)\b",
+                      r"\1 h \2"),
         ]
 
 
