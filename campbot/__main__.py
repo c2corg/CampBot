@@ -3,7 +3,7 @@ CampBot, Python bot framework for camptocamp.org
 
 Usage:
   campbot check_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
-  campbot clean <url_or_file> <langs> --login=<login> --password=<password> [--delay=<seconds>] [--batch] [--bbcode]
+  campbot clean <url_or_file> <langs> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch] [--bbcode]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot export <url> [--out=<filename>] [--delay=<seconds>]
 
@@ -50,7 +50,7 @@ def get_campbot(args):
         proxies["https"] = os.environ["HTTPS_PROXY"]
 
     if "CAMPBOT_CREDENTIALS" in os.environ and not args["--login"]:
-        args["--login"], args["--login"] = os.environ["CAMPBOT_CREDENTIALS"].split("@", 1)
+        args["--login"], args["--password"] = os.environ["CAMPBOT_CREDENTIALS"].split("@", 1)
 
     bot = CampBot(proxies=proxies, min_delay=args["--delay"])
 
