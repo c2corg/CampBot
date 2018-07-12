@@ -229,6 +229,9 @@ class WikiObject(BotObject):
         for l in report:
             print(l)
 
+    def _build_payload(self, message):
+        return {"document": self, "message": message}
+
     def save(self, message, ask_before_saving=True):
         """
         Save object to camptocamp.org. Bot must be authentified.
@@ -247,8 +250,8 @@ class WikiObject(BotObject):
         else:
             print("Saving {} : {}".format(self.get_url(), message))
 
-        payload = {"document": self, "message": message}
-        return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id), payload)
+        return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id),
+                                      self._build_payload(message))
 
     def is_valid(self):
         """
@@ -354,6 +357,15 @@ class Area(WikiObject):
     """Area object : https://www.camptocamp.org/areas"""
 
     url_path = "areas"
+
+    def _build_payload(self, message):
+
+        payload = super()._build_payload(message)
+
+        #  Geometry info must not be present in payload, otherwise, save actions fails 
+        del payload["document"]["geometry"]
+        
+        return payload
 
 
 class Map(WikiObject):
