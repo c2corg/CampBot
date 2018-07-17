@@ -1,6 +1,7 @@
 from .bbcode import BBCodeRemover, ColorAndUnderlineRemover, InternalLinkCorrector
-from .cleaners import MarkdownCleaner, AutomaticReplacements, SpaceBetweenNumberAndUnit, MultiplicationSign, UpperFix, \
-    OrthographicProcessor
+from .cleaners import (MarkdownCleaner, AutomaticReplacements,
+                       SpaceBetweenNumberAndUnit, MultiplicationSign,
+                       UpperFix, OrthographicProcessor, RemoveColonInHeader)
 from .ltagmigrator import LtagCleaner, LtagMigrator
 
 
@@ -29,6 +30,7 @@ def get_automatic_replacments(bot, clean_bbcode=False):
         result.append(BBCodeRemover())
         result.append(ColorAndUnderlineRemover())
         result.append(InternalLinkCorrector())
+        result.append(RemoveColonInHeader())
 
     result.append(SpaceBetweenNumberAndUnit())
     result.append(MultiplicationSign())

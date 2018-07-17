@@ -142,3 +142,14 @@ class AutomaticReplacements(OrthographicProcessor):
 
         for old, new in self.replacements:
             self.modifiers.append(Converter(r"\b" + old + r"\b", new))
+
+
+class RemoveColonInHeader(OrthographicProcessor):
+    ready_for_production = True
+    comment = 'Remove ":" in header'
+
+    def init_modifiers(self):
+        self.modifiers = [
+            Converter(r"(^|\n)(#+.*): *($|\n)",
+                      r"\1\2\3"),
+        ]

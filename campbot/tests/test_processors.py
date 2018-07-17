@@ -312,8 +312,8 @@ def test_md_cleaner():
         assert p(markdown) == expected
 
 
-def test_upper_fix():
-    from campbot.processors.cleaners import UpperFix
+def test_fixed_corrections():
+    from campbot.processors.cleaners import UpperFix, MultiplicationSign, SpaceBetweenNumberAndUnit, RemoveColonInHeader
 
     tests = [(
         "## abc\n#ab\n#\n##A",
@@ -327,59 +327,61 @@ def test_upper_fix():
     ), (
         "également\n\nà voir\n\nèh oh",
         "Également\n\nÀ voir\n\nÈh oh",
+    ), (
+        "2*50m, 2x50 m, 2X50 m",
+        "2×50 m, 2×50 m, 2×50 m",
+    ), (
+        "",
+        ""
+    ), (
+        "Prendre une corde 10-15m ou 2x50m ou 2X50m",
+        "Prendre une corde 10-15 m ou 2×50 m ou 2×50 m"
+    ), (
+        "6h, 2min! 4mn? 5m et 6km",
+        "6 h, 2 min! 4 mn? 5 m et 6 km"
+    ), (
+        "L# | 30m |",
+        "L# | 30 m |"
+    ), (
+        "L# |30m |",
+        "L# |30 m |"
+    ), (
+        "L# | 30m|",
+        "L# | 30 m|"
+    ), (
+        "6h\n",
+        "6 h\n"
+    ), (
+        "\n6h\n",
+        "\n6 h\n"
+    ), (
+        "\n6h",
+        "\n6 h"
+    ), (
+        "L#6h",
+        "L#6h"
+    ), (
+        " 6A ",
+        " 6A "
+    ), (
+        "1h30. Compter 1h15. ou 1h10",
+        "1 h 30. Compter 1 h 15. ou 1 h 10"
+    ), (
+        "# X : Y :\n\n## X :\nX :\n## X #:\nY #4 X :",
+        "# X : Y \n\n## X \nX :\n## X #\nY #4 X :",
     )]
 
-    p = UpperFix().modify
+    processors = (UpperFix().modify,
+                  MultiplicationSign().modify,
+                  SpaceBetweenNumberAndUnit().modify,
+                  RemoveColonInHeader().modify)
+
     for markdown, expected in tests:
-        assert p(markdown) == expected
+        for foo in processors:
+            markdown = foo(markdown)
 
-
-def test_mult_sign():
-    from campbot.processors.cleaners import MultiplicationSign
-
-    tests = [
-
-        {"source": "2*50m, 2x50 m, 2X50 m",
-         "expected": "2×50 m, 2×50 m, 2×50 m"}, ]
-
-    p = MultiplicationSign().modify
-    for test in tests:
-        assert p(test["source"]) == test["expected"]
-
-
-def test_arabic_spaces():
-    from campbot.processors.cleaners import SpaceBetweenNumberAndUnit
-
-    tests = [
-        {"source": "",
-         "expected": ""},
-        {"source": "prendre une corde 10-15m ou 2x50m ou 2X50m",
-         "expected": "prendre une corde 10-15 m ou 2x50 m ou 2X50 m"},
-        {"source": "6h, 2min! 4mn? 5m et 6km",
-         "expected": "6 h, 2 min! 4 mn? 5 m et 6 km"},
-        {"source": "L# | 30m |",
-         "expected": "L# | 30 m |"},
-        {"source": "L# |30m |",
-         "expected": "L# |30 m |"},
-        {"source": "L# | 30m|",
-         "expected": "L# | 30 m|"},
-        {"source": "6h\n",
-         "expected": "6 h\n"},
-        {"source": "\n6h\n",
-         "expected": "\n6 h\n"},
-        {"source": "\n6h",
-         "expected": "\n6 h"},
-        {"source": "L#6h",
-         "expected": "L#6h"},
-        {"source": " 6A ",
-         "expected": " 6A "}, 
-        {"source": "1h30. Compter 1h15. ou 1h10",
-         "expected": "1 h 30. Compter 1 h 15. ou 1 h 10"}, ]
-
-    p = SpaceBetweenNumberAndUnit().modify
-    for test in tests:
-        assert p(test["source"]) == test["expected"]
-
+        assert markdown == expected
+        
 
 def test_auto_replacements():
     from campbot.processors.cleaners import AutomaticReplacements
