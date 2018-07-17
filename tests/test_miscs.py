@@ -2,7 +2,7 @@
 
 from __future__ import print_function, unicode_literals, division
 
-from campbot.tests.fixtures import fix_requests, fix_dump, ids_files
+from tests.fixtures import fix_requests, fix_dump, ids_files
 import os
 import pytest
 

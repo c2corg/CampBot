@@ -1,4 +1,4 @@
-from campbot.tests.fixtures import fix_requests, fix_dump
+from tests.fixtures import fix_requests, fix_dump
 import pytest
 
 def test_differ():
