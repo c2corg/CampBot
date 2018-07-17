@@ -468,8 +468,8 @@ class CampBot(object):
         print("</table>\n")
 
         if len(ignored_voters) != 0:
-            ignored_voters = map("@{}".format, ignored_voters)
-            print("**Ignored votes** : {}".format(", ".join(ignored_voters)))
+            mentions = map("@{}".format, sorted(ignored_voters))
+            print("**{} ignored votes** : {}".format(len(ignored_voters), ", ".join(mentions)))
 
     def get_documents(self, url_or_filename):
         """
