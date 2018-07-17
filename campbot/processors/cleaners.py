@@ -46,11 +46,11 @@ class OrthographicProcessor(MarkdownProcessor):
         ETX = '\u0003'  # Use ETX ("End of text") for end-of-placeholder
         placeholder_pattern = STX + "ph{}ph" + ETX
 
+        result = protect(r"(?:\[.*\])\([^ \n\)]+\)", ":" + placeholder_pattern + ":", result)
         result = protect(r"https?://[^ )\n>]*", placeholder_pattern, result)
         result = protect(r"www\.[^ )\n>\]]*", placeholder_pattern, result)
         result = protect(r"\[\[[a-z]+/\d+/[/a-z0-9\-#]+\|", "[[" + placeholder_pattern + "|", result)
         result = protect(r":\w+:", ":" + placeholder_pattern + ":", result)
-        result = protect(r"(?:\[.*\])\([^ \)]+\)", ":" + placeholder_pattern + ":", result)
 
         result = super().modify(result)
 

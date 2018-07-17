@@ -30,10 +30,10 @@ def get_automatic_replacments(bot, clean_bbcode=False):
         result.append(BBCodeRemover())
         result.append(ColorAndUnderlineRemover())
         result.append(InternalLinkCorrector())
-        result.append(RemoveColonInHeader())
 
     result.append(SpaceBetweenNumberAndUnit())
     result.append(MultiplicationSign())
     result.append(UpperFix())
+    result.append(RemoveColonInHeader())
 
     return result

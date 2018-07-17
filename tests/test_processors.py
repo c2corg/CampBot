@@ -369,6 +369,9 @@ def test_fixed_corrections():
     ), (
         "# X : Y :\n\n## X :\nX :\n## X #:\nY #4 X :",
         "# X : Y \n\n## X \nX :\n## X #\nY #4 X :",
+    ), (
+        "### Les 100 plus belles :\n",
+        "### Les 100 plus belles \n"
     )]
 
     processors = (UpperFix().modify,
