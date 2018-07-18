@@ -328,8 +328,8 @@ class HistoryTest(object):
 class MainWaypointTest(object):
     def __init__(self):
         self.name = "Main waypoint"
-        self.fail_marker = emoji("https://www.openstreetmap.org/assets/marker-red.png", self.name)
-        self.success_marker = emoji("https://www.openstreetmap.org/assets/marker-green.png", self.name + " corrigé")
+        self.fail_marker = emoji("https://forum.camptocamp.org/uploads/default/original/2X/f/f2c72706b83fd5bd21e110cb1b9758c763905023.png", self.name)
+        self.success_marker = emoji("https://forum.camptocamp.org/uploads/default/original/2X/3/37abfd096a21bed932bea1d7150b9264abc12476.png", self.name + " corrigé")
 
     def __call__(self, contrib, old_version, new_version):
         if new_version.document.type != "r":
