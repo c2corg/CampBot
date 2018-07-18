@@ -1,0 +1,130 @@
+{
+  "quality": "medium",
+  "document_id": 14273,
+  "associations": {
+    "images": [
+      {
+        "author": null,
+        "document_id": 237014,
+        "type": "i",
+        "geometry": {
+          "geom": null,
+          "version": 1
+        },
+        "locales": [
+          {
+            "lang": "fr",
+            "title": "Respectons la Montagne!",
+            "version": 1
+          }
+        ],
+        "available_langs": [
+          "fr"
+        ],
+        "version": 1,
+        "filename": "1284582060_1526517467.jpg",
+        "protected": false,
+        "areas": []
+      },
+      {
+        "author": null,
+        "document_id": 237152,
+        "type": "i",
+        "geometry": {
+          "geom": null,
+          "version": 1
+        },
+        "locales": [
+          {
+            "lang": "fr",
+            "title": "Carte d'Andorre, mise \u00e0 libre disposition dans les cabanes",
+            "version": 1
+          }
+        ],
+        "available_langs": [
+          "fr"
+        ],
+        "version": 1,
+        "filename": "1284667351_682727060.jpg",
+        "protected": false,
+        "areas": []
+      }
+    ]
+  },
+  "geometry": {
+    "geom": null,
+    "geom_detail": "{\"coordinates\": [[[[192406.1993146453, 5236202.6961817965], [190463.96904751562, 5232173.3628794905], [170689.84253331556, 5226530.623009102], [161227.69483970338, 5228751.28710256], [161011.1763408321, 5247082.63667362], [159770.95901626977, 5250853.444098711], [160183.67833486697, 5251940.545926669], [162286.99315287045, 5251857.181890768], [164082.72047159192, 5252970.576396144], [163698.26175412541, 5256548.969756857], [164723.87657388768, 5258976.697219513], [166282.93799630846, 5259334.830922304], [167193.68190401673, 5258128.110839046], [169444.93799128645, 5258725.430251068], [170775.24998865963, 5258818.027243269], [172457.83491497047, 5259710.524200896], [172857.3072779659, 5259446.751472732], [174179.0402262272, 5259185.3316522995], [174851.46002780882, 5258559.909939329], [175316.05365170536, 5258550.859532489], [176203.72711807705, 5256644.601928776], [178405.7830875724, 5255279.6181755215], [182025.87011522907, 5255710.961023868], [183573.66509981483, 5255353.792091416], [184815.2876471484, 5254379.647883223], [187371.21121349125, 5254988.295956146], [190774.40520981554, 5253611.398435859], [192877.16700307443, 5253676.804779828], [193313.36261899042, 5253981.734160754], [193469.75345132544, 5252995.400364791], [193148.20700967114, 5252569.154353217], [192167.78757701043, 5250732.211363952], [192386.76917675286, 5249708.732413919], [196398.14166280066, 5248382.721701255], [197969.90182964355, 5248574.654335927], [198200.12136301625, 5248232.944915842], [197138.38290081834, 5246027.248594306], [196990.77997003432, 5245917.962066904], [196464.16612646036, 5245998.269734195], [194440.98070675702, 5245481.072700422], [193303.75906868442, 5243711.027843603], [193009.03306771518, 5241064.6295007765], [191916.340465828, 5239240.0179925375], [192217.77974941043, 5236610.427104872], [192406.1993146453, 5236202.6961817965]]]], \"type\": \"MultiPolygon\"}",
+    "version": 8
+  },
+  "locales": [
+    {
+      "topic_id": null,
+      "lang": "fr",
+      "version": 4,
+      "description": "Quelques liens sur la Principaut\u00e9 d'Andorre: \r\n- [wikipedia](http://fr.wikipedia.org/wiki/Andorre)\r\n\r\n- [Tourisme en Andorre](http://www.tourisme-andorre.net), [guide du routard](http://www.routard.com/guide/code_dest/andorre.htm)\r\n\r\n- Court r\u00e9sum\u00e9 de R\u00e9mi Thivel sur les possibilit\u00e9s alpines: [www.remi-thivel.com](http://www.remi-thivel.com/pyrenees/andorre.html)\r\n\r\n- les [cartes andorranes](http://www.cartografiandorra.ad/ord_cartografia_home.html) : [1:10000](http://www.cartografiandorra.ad/ord_cartografia_muntanyesandorra.html) , [1:50000](http://www.cartografiandorra.ad/docs/1-50000.jpg) , [autres liens utiles](http://www.lexilogos.com/andorre_carte.htm)\r\n\r\n- [liste des refuges](http://www.andorra.ad/ca-ES/recursos/Pagines/Grans_Recorreguts_Refugis4.aspx), [autre lien](http://www.hola-andorra.com/arinsal/francais/refugisf.html), [carte des refuges](http://www.andorra.ad/SiteCollectionImages/Fitxes/Recursos/natura/Mapes/Grans_recorreguts_refugis.jpg), [liste des campings](http://www.andorre.fr/Telechargements/campings_i_refugis_2010.pdf)\r\n\r\n- [Id\u00e9es de rando \u00e0 pied](http://www.hola-andorra.com/arinsal/francais/randof.html)\r\n\r\n- [voies d\u2019escalade, vias ferratas et murs d\u2019escalade](http://andorre-tourisme.andorramania.com/pdf-fr/escalada_ferrades_roco_fr.pdf)",
+      "summary": null,
+      "title": "Andorre"
+    },
+    {
+      "topic_id": null,
+      "lang": "ca",
+      "version": 1,
+      "description": null,
+      "summary": null,
+      "title": "Andorra"
+    },
+    {
+      "topic_id": null,
+      "lang": "de",
+      "version": 1,
+      "description": null,
+      "summary": null,
+      "title": "Andorra"
+    },
+    {
+      "topic_id": null,
+      "lang": "en",
+      "version": 1,
+      "description": null,
+      "summary": null,
+      "title": "Andorra"
+    },
+    {
+      "topic_id": null,
+      "lang": "es",
+      "version": 1,
+      "description": null,
+      "summary": null,
+      "title": "Andorra"
+    },
+    {
+      "topic_id": null,
+      "lang": "eu",
+      "version": 1,
+      "description": null,
+      "summary": null,
+      "title": "Andorra"
+    },
+    {
+      "topic_id": null,
+      "lang": "it",
+      "version": 1,
+      "description": null,
+      "summary": null,
+      "title": "Andorra"
+    }
+  ],
+  "version": 8,
+  "available_langs": [
+    "fr",
+    "ca",
+    "de",
+    "en",
+    "es",
+    "eu",
+    "it"
+  ],
+  "area_type": "country",
+  "protected": false,
+  "type": "a"
+}

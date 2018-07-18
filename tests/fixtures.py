@@ -38,7 +38,7 @@ messages = [
     ('GET', r'https://api.camptocamp.org/waypoints/\d+', get_message("waypoint")),
     ('GET', r'https://api.camptocamp.org/images/\d+', get_message("image")),
     ('GET', r'https://api.camptocamp.org/articles/\d+', get_message("article")),
-    ('GET', r'https://api.camptocamp.org/areas/\d+', {}),
+    ('GET', r'https://api.camptocamp.org/areas/\d+', get_message("area")),
     ('GET', r'https://api.camptocamp.org/books/\d+', {}),
     ('GET', r'https://api.camptocamp.org/xreports/\d+', {}),
     ('GET', r'https://api.camptocamp.org/maps/\d+', {}),

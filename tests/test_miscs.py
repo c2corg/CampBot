@@ -74,8 +74,10 @@ def test_forum(fix_requests):
     CampBot().forum.get_post(url=MESSAGE_URL)
 
 
-def test_wiki(fix_requests):
+def test_wiki(fix_requests, monkeypatch):
     from campbot import CampBot, objects
+
+    monkeypatch.setattr('builtins.input', lambda x: "y")
 
     route = CampBot().wiki.get_route(route_id=293549)
     route.is_personal()
@@ -93,8 +95,10 @@ def test_wiki(fix_requests):
     article = CampBot().wiki.get_article(article_id=1003911)
     article.is_personal()
 
+    area = CampBot().wiki.get_area(area_id=14273)
+    area.save("Test")
+
     CampBot().wiki.get_profile(profile_id=293549)
-    CampBot().wiki.get_area(area_id=293549)
     CampBot().wiki.get_book(book_id=293549)
     CampBot().wiki.get_map(map_id=293549)
 
