@@ -496,7 +496,10 @@ class CampBot(object):
                 item_id, item_type = line.replace(" ", "").replace("\n", "").replace("\r", "").split("|")
                 item_id = int(item_id)
 
-                yield self.wiki.get_wiki_object(item_id, item_type)
+                try:
+                    yield self.wiki.get_wiki_object(item_id, item_type)
+                except HTTPError as e:
+                    print("{error}, item skipped".format(error=e))
 
     def _get_documents_from_url(self, url):
         """
