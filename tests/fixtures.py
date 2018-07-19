@@ -6,7 +6,7 @@ import os
 
 def get_message(filename):
     filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data/" + filename + ".json")
-    return json.load(io.open(filename, encoding="utf8"))
+    return json.load(io.open(filename, encoding="utf-8"))
 
 
 def _wiki(method, url, answer):

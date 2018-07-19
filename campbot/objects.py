@@ -57,12 +57,12 @@ class BotObject(dict):
         super(BotObject, self).__init__(data)
         self._campbot = campbot
 
-        # we must define __setattr__ after _campbot, otherwise it will be stored in dict
-        self.__setattr__ = self.__setitem__
-
     # make instance.key equivalent to instance["key"]
     def __getattr__(self, item):
         if item.startswith("_"):
+            raise AttributeError
+
+        if item not in self:
             raise AttributeError
 
         return self[item]

@@ -8,6 +8,11 @@ from copy import deepcopy
 from dateutil.parser import parse as parse_datetime
 from time import time
 
+try:
+    _ = basestring  # py2
+except NameError:
+    basestring = (str,)  # py3
+
 _default_db_name = "camptocamp.db"
 
 
@@ -155,7 +160,7 @@ class Dump(object):
                             "VALUES (?,?,?)",
                             (doc.document_id, key_id, value))
 
-            elif isinstance(value, str):
+            elif isinstance(value, basestring):
                 string_id = self.get_string_id(value, cur)
 
                 cur.execute("INSERT INTO string_property"
