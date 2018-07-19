@@ -1,4 +1,12 @@
-test:
+test-py2:
+  script:
+  - apt-get update -qy
+  - apt-get install -y python2-dev python2-pip
+  - pip3 install -r requirements.txt
+  - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
+  - pytest --cov campbot --cov-report=term
+      
+test-py3:
   script:
   - apt-get update -qy
   - apt-get install -y python3-dev python3-pip
@@ -8,11 +16,11 @@ test:
   artifacts:
     paths:
       - htmlcov
-
+      
 pages:
   stage: deploy
   dependencies:
-    - test
+    - test-py3
   script:
   - mv htmlcov/ public/
   only:
