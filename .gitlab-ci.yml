@@ -1,7 +1,7 @@
 test-py2:
   script:
   - apt-get update -qy
-  - apt-get install -y python2-dev python2-pip
+  - apt-get install -y python-dev python-pip
   - pip3 install -r requirements.txt
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
   - pytest --cov campbot --cov-report=term
