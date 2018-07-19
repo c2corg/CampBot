@@ -12,6 +12,7 @@ setup(
     author_email="charles.de.beauchesne@gmail.com",
     description="Package for automatic edition of camptocamp.org",
     long_description=open('README.txt').read(),
+    python_requires="==2.7.*, ==3.5.*",
     install_requires=install_requires,
     include_package_data=True,
 
@@ -19,10 +20,11 @@ setup(
 
     classifiers=[
         "Programming Language :: Python",
-        "Development Status :: 1 - Planning",
+        "Development Status :: 3 - Alpha",
         "License :: OSI Approved",
-        "Natural Language :: French",
+        "Natural Language :: English",
         "Operating System :: OS Independent",
+        'Programming Language :: Python :: 2.7',
         "Programming Language :: Python :: 3.5",
         "Topic :: Communications",
     ],
