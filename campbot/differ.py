@@ -30,7 +30,11 @@ def get_diff_report(old, new):
 
 
 def flatten(source, root_path="root"):
-    base_types = (str, int, float, bool)
+    try:
+        base_types = (unicode, str, int, long, float, bool)  # py 2.7
+    except NameError:
+        base_types = (str, int, float, bool)  # py 3
+        
     result = {}
 
     def worker(obj, path):
@@ -49,7 +53,7 @@ def flatten(source, root_path="root"):
                 worker(item, path + "[" + str(i) + "]")
 
         else:
-            raise Exception()
+            raise Exception("{} type is not supported".format(type(obj)))
 
     worker(source, root_path)
 

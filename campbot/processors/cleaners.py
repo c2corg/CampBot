@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from __future__ import unicode_literals
+
 from .core import MarkdownProcessor, Converter
 import re
 
@@ -52,7 +54,7 @@ class OrthographicProcessor(MarkdownProcessor):
         result = protect(r"\[\[[a-z]+/\d+/[/a-z0-9\-#]+\|", "[[" + placeholder_pattern + "|", result)
         result = protect(r":\w+:", ":" + placeholder_pattern + ":", result)
 
-        result = super().modify(result)
+        result = super(OrthographicProcessor, self).modify(result)
 
         for url, placeholder in placeholders.items():
             result = result.replace(placeholder, url)
@@ -133,7 +135,7 @@ class AutomaticReplacements(OrthographicProcessor):
 
     def __init__(self, lang, comment, replacements):
         self.replacements = replacements
-        super().__init__()
+        super(AutomaticReplacements, self).__init__()
         self.lang = lang
         self.comment = comment
         self.placeholders = None

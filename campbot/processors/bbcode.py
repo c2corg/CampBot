@@ -368,7 +368,7 @@ class InternalLinkCorrector(MarkdownProcessor):
     comment = "Fix internal wiki link"
 
     def __init__(self):
-        super().__init__()
+        super(InternalLinkCorrector, self).__init__()
 
     def init_modifiers(self):
         self.modifiers = [self.fixer_false_internal, self.fixer_slash_internal]

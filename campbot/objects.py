@@ -28,6 +28,13 @@ import re
 from .differ import get_diff_report
 
 
+def _input(message):
+    try:  # py 2
+        return raw_input(message)
+    except NameError:  # py 3
+        return input(message)
+
+
 def get_constructor(document_type):
     return {"u": WikiUser,
             "a": Area,
@@ -64,7 +71,7 @@ class BotObject(dict):
         if key in self:
             self[key] = value
         else:
-            super().__setattr__(key, value)
+            super(BotObject, self).__setattr__(key, value)
 
     def _convert_list(self, name, constructor):
         if name in self:
@@ -245,7 +252,7 @@ class WikiObject(BotObject):
         self.print_diff()
 
         if ask_before_saving:
-            if input("Save {} : {}, y/[n] ?\n".format(self.get_url(), message)) != "y":
+            if _input("Save {} : {}, y/[n] ?\n".format(self.get_url(), message)) != "y":
                 return None
         else:
             print("Saving {} : {}".format(self.get_url(), message))

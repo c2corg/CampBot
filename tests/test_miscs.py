@@ -2,7 +2,7 @@
 
 from __future__ import print_function, unicode_literals, division
 
-from tests.fixtures import fix_requests, fix_dump, ids_files
+from tests.fixtures import fix_requests, fix_dump, ids_files, fix_input
 import os
 import pytest
 
@@ -74,10 +74,10 @@ def test_forum(fix_requests):
     CampBot().forum.get_post(url=MESSAGE_URL)
 
 
-def test_wiki(fix_requests, monkeypatch):
+def test_wiki(fix_requests, fix_input):
     from campbot import CampBot, objects
 
-    monkeypatch.setattr('builtins.input', lambda x: "y")
+    fix_input.set_response(lambda x: "y")
 
     route = CampBot().wiki.get_route(route_id=293549)
     route.is_personal()
@@ -260,11 +260,11 @@ def test_checkers(fix_requests):
     t(None, contrib, contrib)
 
 
-def test_weird(fix_requests, monkeypatch):
+def test_weird(fix_requests, fix_input):
     from campbot import CampBot, __main__
     import os
 
-    monkeypatch.setattr('builtins.input', lambda x: "n")
+    fix_input.set_response(lambda x: "n")
 
     bot = CampBot()
 

@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from tests.fixtures import fix_requests, fix_dump
 import os
 import pytest

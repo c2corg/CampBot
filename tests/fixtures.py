@@ -92,6 +92,13 @@ def fix_requests():
     import datetime
     import re
 
+    try:
+        fullmatch = re.fullmatch
+    except AttributeError:  # py 2.7
+        def fullmatch(regex, string, flags=0):
+            """Emulate python-3.4 re.fullmatch()."""
+            return re.match("(?:" + regex + r")\Z", string, flags=flags)
+
     class Response(object):
         def __init__(self, method, url, **kwargs):
             self.status = 200
@@ -99,7 +106,7 @@ def fix_requests():
 
             self._data = None
             for m, pattern, data in messages:
-                if m == method and re.fullmatch(pattern, url):
+                if m == method and fullmatch(pattern, url):
                     self._data = data
                     break
 
@@ -146,3 +153,22 @@ def ids_files():
     yield filename
 
     os.remove(filename)
+
+    
+@pytest.yield_fixture()
+def fix_input():
+    from campbot import objects
+
+    class MockInput(object):
+        def __call__(self, message):
+            return ""
+
+        def set_response(self, callback):
+            self.__call__ = callback
+
+    backup = objects._input
+    objects._input = MockInput()
+
+    yield objects._input
+
+    objects._input = backup
