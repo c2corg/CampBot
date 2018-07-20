@@ -24,9 +24,10 @@ test-py3.5:
   - pip install -r requirements.txt
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
   - pytest --cov campbot --cov-report=html --cov-report=term
+  - mv htmlcov/ htmlcov-3.5/
   artifacts:
     paths:
-      - htmlcov
+      - htmlcov-3.5
       
 test-py3.6:
   stage: test
@@ -42,7 +43,8 @@ pages:
   dependencies:
     - test-py3.5
   script:
-  - mv htmlcov/ public/
+  - mkdir public/
+  - mv htmlcov-3.5/ public/htmlcov-3.5/
   only:
   - master
   artifacts:
