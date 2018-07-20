@@ -21,7 +21,7 @@ test-py3.5:
   image: python:3.5
   script:
   - apt-get update -qy
-  - pip3 install -r requirements.txt
+  - pip install -r requirements.txt
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
   - pytest --cov campbot --cov-report=html --cov-report=term
   artifacts:
@@ -31,15 +31,6 @@ test-py3.5:
 test-py3.6:
   stage: test
   image: python:3.6
-  script:
-  - apt-get update -qy
-  - pip install -r requirements.txt
-  - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
-  - pytest --cov campbot --cov-report=term
-      
-test-py3.7:
-  stage: test
-  image: python:3.7
   script:
   - apt-get update -qy
   - pip install -r requirements.txt
