@@ -7,6 +7,15 @@ test-py2.7:
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
   - pytest --cov campbot --cov-report=term
       
+test-py3.4:
+  stage: test
+  image: python:3.4
+  script:
+  - apt-get update -qy
+  - pip install -r requirements.txt
+  - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
+  - pytest --cov campbot --cov-report=term
+      
 test-py3.5:
   stage: test
   image: python:3.5
@@ -24,7 +33,7 @@ test-py3.6:
   image: python:3.6
   script:
   - apt-get update -qy
-  - pip3.6 install -r requirements.txt
+  - pip install -r requirements.txt
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
   - pytest --cov campbot --cov-report=term
       
