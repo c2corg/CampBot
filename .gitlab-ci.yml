@@ -14,10 +14,7 @@ test-py3.6:
   - apt-get install -y python3.6-dev python3.6-pip
   - pip3.6 install -r requirements.txt
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
-  - pytest --cov campbot --cov-report=html --cov-report=term
-  artifacts:
-    paths:
-      - htmlcov
+  - pytest --cov campbot --cov-report=term
       
 test-py3.5:
   stage: test
