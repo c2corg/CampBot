@@ -435,10 +435,10 @@ class CampBot(object):
                     else:
                         ignored_voters.add(voter.username)
 
-                options.append(option.html)
+                if option.html not in options:
+                    options.append(option.html)
 
         sort_option = options[0]
-        options = set(options)
 
         th = "<th>{}</th>".format
         td = "<td>{} <small>({}%)</small></td>".format
