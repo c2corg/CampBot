@@ -5,7 +5,11 @@ test-py2.7:
   - apt-get update -qy
   - pip install -r requirements.txt
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
-  - pytest --cov campbot --cov-report=term
+  - pytest --cov campbot --cov-report=html --cov-report=term
+  - mv htmlcov/ htmlcov-2.7/
+  artifacts:
+    paths:
+      - htmlcov-2.7
       
 test-py3.4:
   stage: test
@@ -41,9 +45,11 @@ test-py3.6:
 pages:
   stage: deploy
   dependencies:
+    - test-py2.7
     - test-py3.5
   script:
   - mkdir public/
+  - mv htmlcov-2.7/ public/htmlcov-2.7/
   - mv htmlcov-3.5/ public/htmlcov-3.5/
   only:
   - master
