@@ -11,7 +11,7 @@ test-py3.6:
   stage: test
   script:
   - apt-get update -qy
-  - apt-get install -y python3.6-dev python3.6-pip
+  - apt-get install -y python3.6 
   - pip3.6 install -r requirements.txt
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
   - pytest --cov campbot --cov-report=term
