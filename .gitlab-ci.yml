@@ -1,4 +1,5 @@
-test-py2:
+test-py2.7:
+  stage: test
   script:
   - apt-get update -qy
   - apt-get install -y python-dev python-pip
@@ -6,7 +7,20 @@ test-py2:
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
   - pytest --cov campbot --cov-report=term
       
-test-py3:
+test-py3.6:
+  stage: test
+  script:
+  - apt-get update -qy
+  - apt-get install -y python3.6-dev python3.6-pip
+  - pip3.6 install -r requirements.txt
+  - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
+  - pytest --cov campbot --cov-report=html --cov-report=term
+  artifacts:
+    paths:
+      - htmlcov
+      
+test-py3.5:
+  stage: test
   script:
   - apt-get update -qy
   - apt-get install -y python3-dev python3-pip
@@ -20,7 +34,7 @@ test-py3:
 pages:
   stage: deploy
   dependencies:
-    - test-py3
+    - test-py3.5
   script:
   - mv htmlcov/ public/
   only:
