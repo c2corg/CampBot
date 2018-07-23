@@ -496,7 +496,7 @@ if __name__ == "__main__":
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
     Dump().complete()
-    _search(r"(^|\n)(#+.*): *($|\n)")
+    _search(r"(^|\n)(#+.*): *($|\n)", "fr")
 
 #    _search(r"((\n|^) {0,3}[LR]#.*)\n( {0,3}#)")
 
