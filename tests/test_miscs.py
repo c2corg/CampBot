@@ -28,7 +28,7 @@ def test_get_users_from_route(fix_requests):
     bot = CampBot()
     bot.get_users_from_route(123)
 
-    
+
 def test_add_user_to_group(fix_requests):
     from campbot import CampBot
 
@@ -74,8 +74,17 @@ def test_forum(fix_requests):
     CampBot().forum.get_post(url=MESSAGE_URL)
 
 
+def test_saving(fix_requests, fix_input):
+    from campbot import CampBot
+
+    fix_input.set_response(lambda x: "y")
+
+    area = CampBot().wiki.get_area(area_id=14273)
+    area.save("Test")
+
+
 def test_wiki(fix_requests, fix_input):
-    from campbot import CampBot, objects
+    from campbot import CampBot
 
     fix_input.set_response(lambda x: "y")
 

@@ -498,7 +498,7 @@ class CampBot(object):
 
                 try:
                     yield self.wiki.get_wiki_object(item_id, item_type)
-                except HTTPError as e:
+                except HTTPError as e:  # pragma: no cover
                     print("{error}, item skipped".format(error=e))
 
     def _get_documents_from_url(self, url):
@@ -690,7 +690,7 @@ class CampBot(object):
 
             # banned
             183887, 129043, 812098, 238764,
-            
+
             # :'(
             463, 233, 282, 289, 7274, 7321, 2651, 8602, 2871, 5483, 9063,
             9938, 1083, 5926, 9921, 8454, 8719, 8861, 8737, 7956, 7588, 9657,
@@ -760,7 +760,6 @@ class CampBot(object):
                 display("A", user, 0)
 
         print("</table>")
-
 
     def get_users_from_route(self, route_id):
         """

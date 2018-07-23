@@ -28,7 +28,7 @@ import re
 from .differ import get_diff_report
 
 
-def _input(message):
+def _input(message):  # pragma: no cover
     try:  # py 2
         return raw_input(message)
     except NameError:  # py 3
@@ -62,7 +62,7 @@ class BotObject(dict):
         if item.startswith("_"):
             raise AttributeError
 
-        if item not in self:
+        if item not in self:  # pragma: no cover
             raise AttributeError
 
         return self[item]
@@ -366,12 +366,11 @@ class Area(WikiObject):
     url_path = "areas"
 
     def _build_payload(self, message):
-
         payload = super()._build_payload(message)
 
         #  Geometry info must not be present in payload, otherwise, save actions fails 
         del payload["document"]["geometry"]
-        
+
         return payload
 
 

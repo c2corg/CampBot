@@ -167,17 +167,22 @@ def ids_files():
 
     os.remove(filename)
 
-    
+
 @pytest.yield_fixture()
 def fix_input():
     from campbot import objects
 
     class MockInput(object):
+        def _callback(self, message):
+            return "n"
+
         def __call__(self, message):
-            return ""
+            answer = self._callback(message)
+            print(message, answer)
+            return answer
 
         def set_response(self, callback):
-            self.__call__ = callback
+            self._callback = callback
 
     backup = objects._input
     objects._input = MockInput()
