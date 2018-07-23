@@ -366,7 +366,7 @@ class Area(WikiObject):
     url_path = "areas"
 
     def _build_payload(self, message):
-        payload = super()._build_payload(message)
+        payload = super(Area, self)._build_payload(message)
 
         #  Geometry info must not be present in payload, otherwise, save actions fails 
         del payload["document"]["geometry"]
