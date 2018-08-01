@@ -376,6 +376,9 @@ def test_fixed_corrections():
     ), (
         "### Les 100 plus belles :\n",
         "### Les 100 plus belles \n"
+    ), (
+        "# Un [lien](https://a.com)",
+        "# Un [lien](https://a.com)"
     )]
 
     processors = (UpperFix().modify,
