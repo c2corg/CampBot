@@ -789,7 +789,7 @@ def _parse_filter(url):
         document_type, filters = url, {}
 
     for key in filters:
-        if key == "bbox":
+        if key in ("bbox", "date"):
             filters[key] = filters[key].replace("%252C", "%2C")
         elif key in ("act", "rock_type"):
             filters[key] = filters[key].replace("%252C", ",")
