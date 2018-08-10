@@ -408,14 +408,16 @@ def test_auto_replacements():
         "[www.a.com](https://www.b.eu/) - [www.c.eu](https://www.c.eu/)",
         "référencée sur www.alpes-sud.net",
         "[[articles/226763/fr/noeud-machard#machard-tresse-img-226816-right-no-border-no-legend|Machard tressé]]",
-        "[Les gites](/waypoints#a=14361%252C14328&wtyp=gite)"
+        "[Les gites](/waypoints#a=14361%252C14328&wtyp=gite)",
+        "[[articles/106920#comment-rediger-un-itineraire|voir l'aide]]"
     ]
 
     p = AutomaticReplacements(lang="fr", comment="test", replacements=(
         ("deja", "déjà"),
         ("sud", "S"),
         ("noeud", "nœud"),
-        ("gite", "gîte")
+        ("gite", "gîte"),
+        ('itineraire', "itinéraire")
     )).modify
 
     for markdown, expected in replaced:

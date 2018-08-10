@@ -6,13 +6,12 @@ with open('requirements.txt') as f:
 
 setup(
     name='campbot',
-    version="0.5.1",
+    version="0.5.3",
     packages=find_packages(),
     author="Charles de Beauchesne",
     author_email="charles.de.beauchesne@gmail.com",
     description="Package for automatic edition of camptocamp.org",
     long_description=open('README.txt').read(),
-    python_requires="==2.7.*, ==3.4.*, ==3.5.*, ==3.6.*",
     install_requires=install_requires,
     include_package_data=True,
 
