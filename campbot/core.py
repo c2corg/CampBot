@@ -468,7 +468,7 @@ class CampBot(object):
         print("</table>\n")
 
         if len(ignored_voters) != 0:
-            mentions = map("@{}".format, sorted(ignored_voters))
+            mentions = map("{}".format, sorted(ignored_voters))
             print("**{} ignored votes** : {}".format(len(ignored_voters), ", ".join(mentions)))
 
     def get_documents(self, url_or_filename):
@@ -755,9 +755,11 @@ class CampBot(object):
                             display("O", user, contribs, outings["total"])
                             still_members.add(user.forum_username)
 
-        for user in association:
-            if user not in still_members:
-                display("A", user, 0)
+        for forum_username in association:
+            if forum_username not in still_members:
+                user = self.wiki.get_user(forum_name=forum_username)
+                if user.document_id not in excluded:
+                    display("A", user, 0)
 
         print("</table>")
 

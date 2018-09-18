@@ -496,11 +496,11 @@ if __name__ == "__main__":
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
     Dump().complete()
-    _search(r"(^|\n)(#+.*): *($|\n)", "fr")
+#    _search(r"\b[Ee]tapes?\b", "fr")
 
 #    _search(r"((\n|^) {0,3}[LR]#.*)\n( {0,3}#)")
 
-# with open("contributors.txt", "w") as f:
-#     for d in Dump().sql_file("campbot/sql/contrib_count.sql"):
-#         f.write("|".join(map(str, d)) + "\n")
-#         print(*d)
+    with open("contributors.txt", "w") as f:
+        for d in Dump().sql_file("campbot/sql/contrib_count.sql"):
+             f.write("|".join(map(str, d)) + "\n")
+             print(*d)

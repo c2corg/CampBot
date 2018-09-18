@@ -373,7 +373,7 @@ class RouteTypeTest(object):
 
 class DistanceTest(object):
     def __init__(self):
-        self.name = "Gros déplcament géographique"
+        self.name = "Gros déplacement géographique"
         self.fail_marker = emoji("/uploads/default/original/2X/0/0178043b1b70e669946f609571bd4b8f7d18e820.png",
                                  self.name)
         self.success_marker = ""
