@@ -341,8 +341,8 @@ def test_fixed_corrections():
         "Prendre une corde 10-15m ou 2x50m ou 2X50m",
         "Prendre une corde 10-15 m ou 2×50 m ou 2×50 m"
     ), (
-        "6h, 2min! 4mn? 5m et 6km",
-        "6 h, 2 min! 4 mn? 5 m et 6 km"
+        "6h, 2 min! 4 mn? 5m et 6km",
+        "6h, 2 min! 4 mn? 5 m et 6 km"
     ), (
         "L# | 30m |",
         "L# | 30 m |"
@@ -354,13 +354,13 @@ def test_fixed_corrections():
         "L# | 30 m|"
     ), (
         "6h\n",
-        "6 h\n"
+        "6h\n"
     ), (
         "\n6h\n",
-        "\n6 h\n"
+        "\n6h\n"
     ), (
         "\n6h",
-        "\n6 h"
+        "\n6h"
     ), (
         "L#6h",
         "L#6h"
@@ -369,7 +369,7 @@ def test_fixed_corrections():
         " 6A "
     ), (
         "1h30. Compter 1h15. ou 1h10",
-        "1 h 30. Compter 1 h 15. ou 1 h 10"
+        "1h30. Compter 1h15. ou 1h10"
     ), (
         "# X : Y :\n\n## X :\nX :\n## X #:\nY #4 X :",
         "# X : Y \n\n## X \nX :\n## X #\nY #4 X :",
