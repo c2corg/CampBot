@@ -413,13 +413,53 @@ class CampBot(object):
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
         self.forum.headers['X-CSRF-Token'] = self.forum.get("/session/csrf")["csrf"]
 
-    def check_voters(self, url, allowed_groups=None):
+    def check_voters(self, url, allowed_groups=None, aggregated_report=True):
+
+        def print_aggregated_report():
+
+            sort_option = options[0]
+
+            th = "<th>{}</th>".format
+            td = "<td>{} <small>({}%)</small></td>".format
+
+            table = [[th("Vote")] + [th(option) for option in options] + [th("Total")]]
+
+            for poll_name, values in sorted(polls.items(),
+                                            key=lambda item: item[1][sort_option],
+                                            reverse=True):
+
+                total = sum(values.values())
+
+                row = [th(poll_name)]
+
+                for option in options:
+                    value = values.get(option, 0)
+                    row.append(td(value, int(100.0 * value / total)))
+
+                row.append(th(total))
+                table.append(row)
+
+            print("<table>")
+
+            for row in table:
+                print("<tr>\n  {}\n</tr>".format("\n  ".join(row)))
+
+            print("</table>\n")
+
+        def print_normal_report():
+            for poll in polls:
+                print("* " + poll)
+                for option in polls[poll]:
+                    print("  * {} : {}".format(option, polls[poll][option]))
+
+            print()
 
         allowed_members = set()
         for group in allowed_groups or []:
             for user in self.forum.get_group_members(group):
                 allowed_members.add(user.username)
 
+        print("Allowed members :", allowed_members)
         ignored_voters = set()
         polls = {}
         options = []
@@ -438,34 +478,10 @@ class CampBot(object):
                 if option.html not in options:
                     options.append(option.html)
 
-        sort_option = options[0]
-
-        th = "<th>{}</th>".format
-        td = "<td>{} <small>({}%)</small></td>".format
-
-        table = [[th("Vote")] + [th(option) for option in options] + [th("Total")]]
-
-        for poll_name, values in sorted(polls.items(),
-                                        key=lambda item: item[1][sort_option],
-                                        reverse=True):
-
-            total = sum(values.values())
-
-            row = [th(poll_name)]
-
-            for option in options:
-                value = values.get(option, 0)
-                row.append(td(value, int(100.0 * value / total)))
-
-            row.append(th(total))
-            table.append(row)
-
-        print("<table>")
-
-        for row in table:
-            print("<tr>\n  {}\n</tr>".format("\n  ".join(row)))
-
-        print("</table>\n")
+        if aggregated_report:
+            print_aggregated_report()
+        else:
+            print_normal_report()
 
         if len(ignored_voters) != 0:
             mentions = map("{}".format, sorted(ignored_voters))
