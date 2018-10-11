@@ -371,6 +371,21 @@ def test_fixed_corrections():
         "1h30. Compter 1h15. ou 1h10",
         "1h30. Compter 1h15. ou 1h10"
     ), (
+        "1 h",
+        "1h"
+    ), (
+        "1 h 30",
+        "1h30"
+    ), (
+        "1h 30",
+        "1h30"
+    ), (
+        "1 h30",
+        "1h30"
+    ), (
+        "1 h 30 - 2 h",
+        "1h30 - 2h"
+    ), (
         "# X : Y :\n\n## X :\nX :\n## X #:\nY #4 X :",
         "# X : Y \n\n## X \nX :\n## X #\nY #4 X :",
     ), (
