@@ -119,10 +119,10 @@ class SpaceBetweenNumberAndUnit(OrthographicProcessor):
 
     def init_modifiers(self):
         self.modifiers = [
-            Converter(r"(^|[| \n\(])(\d+)(m|km|mn|min|s)($|[ |,.?!:;\)\n])",
+            Converter(r"(^|[| \n\(])(\d+)(m|km|s)($|[ |,.?!:;\)\n])",
                       r"\1\2 \3\4"),
 
-            Converter(r"(^|[| \n\(])(\d+)([\-xX])(\d+)(m|km|mn|min|s)($|[ |,.?!:;\)\n])",
+            Converter(r"(^|[| \n\(])(\d+)([\-xX])(\d+)(m|km|s)($|[ |,.?!:;\)\n])",
                       r"\1\2\3\4 \5\6"),
 
             Converter(r"\b(\d\d?) ?h ?(\d\d)\b",
@@ -130,6 +130,9 @@ class SpaceBetweenNumberAndUnit(OrthographicProcessor):
 
             Converter(r"\b(\d\d?) ?h\b",
                       r"\1h"),
+
+            Converter(r"\b(\d\d?) ?(min|mn)\b",
+                      r"\1\2"),
         ]
 
 

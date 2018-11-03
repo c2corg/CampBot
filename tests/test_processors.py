@@ -341,8 +341,8 @@ def test_fixed_corrections():
         "Prendre une corde 10-15m ou 2x50m ou 2X50m",
         "Prendre une corde 10-15 m ou 2×50 m ou 2×50 m"
     ), (
-        "6h, 2 min! 4 mn? 5m et 6km",
-        "6h, 2 min! 4 mn? 5 m et 6 km"
+        "6 h, 6h, 2 min! 4 mn? 2min, 5m et 6km",
+        "6h, 6h, 2min! 4mn? 2min, 5 m et 6 km"
     ), (
         "L# | 30m |",
         "L# | 30 m |"
