@@ -1,7 +1,7 @@
 SELECT * FROM (
 	SELECT user_id, count(1) AS contribs FROM (
 		SELECT * FROM contribution
-		WHERE type!="i" AND written_at < "2018-09-18"
+		WHERE type!="i" AND written_at < "2018-11-04"
 		GROUP BY document_id, user_id
 	)
 	GROUP BY user_id

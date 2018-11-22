@@ -499,10 +499,10 @@ if __name__ == "__main__":
     false_title_1 = r"(\n|^)#[^#]"
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
-    Dump().complete()
-    _search(r"[dD][ue] (la|là|parking|sommet|col|refuge|relais) (redescendre|remonter|suivre|traverser|tourner|se diriger|prendre)", "fr")
+#    Dump().complete()
+#    _search(r"[dD][ue] (la|là|parking|sommet|col|refuge|relais) (redescendre|remonter|suivre|traverser|tourner|se diriger|prendre)", "fr")
 
-#    _search(r"((\n|^) {0,3}[LR]#.*)\n( {0,3}#)")
+    _search(r"\b\d+ h( \d+)?\b", "fr")
 
     # with open("contributors.txt", "w") as f:
     #     for d in Dump().sql_file("campbot/sql/contrib_count.sql"):

@@ -517,7 +517,7 @@ class CampBot(object):
 
                 try:
                     yield self.wiki.get_wiki_object(item_id, item_type)
-                except HTTPError as e:  # pragma: no cover
+                except requests.HTTPError as e:  # pragma: no cover
                     print("{error}, item skipped".format(error=e))
 
     def _get_documents_from_url(self, url):
