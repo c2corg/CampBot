@@ -325,6 +325,9 @@ class ForumBot(BaseBot):
         return [objects.ForumUser(self.campbot, user) for user in result]
 
     def add_users_to_group(self, group_name, users):
+        for user in users:
+            assert not user.startswith("@"), "Please provide names without trailing @"
+
         group = self.get("/groups/{}.json".format(group_name))
 
         data = {"usernames": ",".join(users)}
