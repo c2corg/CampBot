@@ -16,6 +16,7 @@ Note the coding header, if you're in Python 2.7, and your update contains specia
     bot.login("botname", "botpass")
 
     remarks="!! VTNO rocks!"
+    update_comment = "Remarque gestion par VTNO"
 
     filters = {
         "w": 107049,
@@ -23,13 +24,15 @@ Note the coding header, if you're in Python 2.7, and your update contains specia
     }
 
     for route in bot.wiki.get_routes(filters):
-        remarks=route.get_locale("fr").remarks
+        locale = route.get_locale("fr")
 
-        if remarks is None:
-            route.get_locale("fr").remarks = remarks
-            route.save("Remarque gestion par VTNO")
+        if locale: # document may have not fr locale : skip it.
+            if not locale.remarks: # remarks is none, or empty string
+                locale.remarks = remarks
+                route.save(update_comment)
 
-        elif remarks is not None and "VTNO" not in remarks:
-            # We consider that if VTNO still exists, then locale is still processed
-            route.get_locale("fr").remarks = remarks + "\n\n" + remark
-            route.save("Remarque gestion par VTNO")
+            elif "VTNO" not in locale.remarks:
+                # We consider that if remarks field still containes "VTNO",
+                # then locale is still processed
+                locale.remarks = locale.remarks + "\n\n" + remarks
+                route.save(update_comment)
