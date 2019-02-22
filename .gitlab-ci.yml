@@ -41,6 +41,15 @@ test-py3.6:
   - pip install -r requirements.txt
   - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
   - pytest --cov campbot --cov-report=term
+
+test-py3.7:
+  stage: test
+  image: python:3.7
+  script:
+  - apt-get update -qy
+  - pip install -r requirements.txt
+  - export PYTHONPATH=/builds/cbeauchesne/CampBot:$PYTHONPATH
+  - pytest --cov campbot --cov-report=term
       
 pages:
   stage: deploy
@@ -50,7 +59,7 @@ pages:
   script:
   - mkdir public/
   - mv htmlcov-2.7/ public/htmlcov-2.7/
-  - mv htmlcov-3.5/ public/htmlcov-3.5/
+  - mv htmlcov-3.7/ public/htmlcov-3.7/
   only:
   - master
   artifacts:
