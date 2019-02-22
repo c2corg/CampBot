@@ -1,0 +1,4544 @@
+{
+  "total": 30,
+  "documents": [
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            }
+          ],
+          "protected": false,
+          "area_type": "country",
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "it"
+            }
+          ],
+          "protected": false,
+          "area_type": "admin_limits",
+          "available_langs": null,
+          "document_id": 14295,
+          "type": "a"
+        },
+        {
+          "version": 3,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Grajische Alpen - Charbonnel",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Graian Alps - Charbonnel",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alpes Grayos - Charbonnel",
+              "lang": "es"
+            },
+            {
+              "version": 5,
+              "title": "Alpes Gr\u00e9es - Charbonnel",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alpi Graie - Charbonnel",
+              "lang": "it"
+            }
+          ],
+          "protected": false,
+          "area_type": "range",
+          "available_langs": null,
+          "document_id": 14424,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "other"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 5,
+      "locales": [
+        {
+          "version": 3,
+          "title": "Gorge de Malpasset",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 2,
+      "protected": false,
+      "date": "2019-02-15",
+      "available_langs": [
+        "fr"
+      ],
+      "document_id": 1081975,
+      "nb_impacted": null,
+      "activities": [
+        "skitouring"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [784104.4368853049, 5693583.98232348], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "1m_to_3m",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            }
+          ],
+          "protected": false,
+          "area_type": "country",
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "it"
+            }
+          ],
+          "protected": false,
+          "area_type": "admin_limits",
+          "available_langs": null,
+          "document_id": 14295,
+          "type": "a"
+        },
+        {
+          "version": 1,
+          "locales": [
+            {
+              "version": 3,
+              "title": "Cerces - Thabor - Mont-Cenis",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Tabor \u2013 Moncenisio",
+              "lang": "it"
+            }
+          ],
+          "protected": false,
+          "area_type": "range",
+          "available_langs": null,
+          "document_id": 252522,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall",
+        "falling_ice"
+      ],
+      "elevation": 1150,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 4,
+          "title": "Effondrement en cascade",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 3,
+      "protected": false,
+      "date": "2019-02-14",
+      "available_langs": [
+        "fr"
+      ],
+      "document_id": 1081942,
+      "nb_impacted": 1,
+      "activities": [
+        "ice_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [727356.5434661638, 5651958.94443463], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 7,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Alpi Bernesi",
+              "lang": "it"
+            },
+            {
+              "version": 3,
+              "title": "Alpes Bernoises",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Bernese Alps",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alpes berneses",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Berner Alpen",
+              "lang": "de"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14442,
+          "type": "a"
+        },
+        {
+          "version": 1,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Canton Berna",
+              "lang": "it"
+            },
+            {
+              "version": 3,
+              "title": "Canton de Berne",
+              "lang": "fr"
+            },
+            {
+              "version": 3,
+              "title": "Berna",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Cant\u00f3n de Berna",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "Canton of Bern",
+              "lang": "en"
+            },
+            {
+              "version": 3,
+              "title": "Bern",
+              "lang": "de"
+            },
+            {
+              "version": 2,
+              "title": "Cant\u00f3 de Berna",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14394,
+          "type": "a"
+        },
+        {
+          "version": 10,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14067,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "avalanche"
+      ],
+      "elevation": 1830,
+      "type": "x",
+      "nb_participants": 20,
+      "locales": [
+        {
+          "version": 4,
+          "title": "Avalanche au Louwenehore",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": "level_3",
+      "version": 4,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1080004,
+      "date": "2019-02-09",
+      "activities": [
+        "skitouring"
+      ],
+      "geometry": {
+        "version": 2,
+        "geom": "{\"coordinates\": [816402.0060271205, 5852387.645622725], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "medium",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 6,
+              "title": "Bauges",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14399,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14295,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "avalanche"
+      ],
+      "elevation": 2150,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 4,
+          "title": "petite plaque sur le Trelod",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": "level_3",
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1082547,
+      "date": "2019-01-25",
+      "activities": [
+        "skitouring"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [689656.0828386968, 5731218.04152044], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": "slope_35_40"
+    },
+    {
+      "quality": "draft",
+      "severity": null,
+      "areas": [
+        {
+          "version": 11,
+          "available_langs": null,
+          "area_type": "country",
+          "protected": false,
+          "document_id": 14274,
+          "type": "a",
+          "locales": [
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            }
+          ]
+        },
+        {
+          "version": 9,
+          "available_langs": null,
+          "area_type": "range",
+          "protected": false,
+          "document_id": 14414,
+          "type": "a",
+          "locales": [
+            {
+              "version": 5,
+              "title": "B\u00e9arn - Bala\u00eftous - Partacua",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Bearne - Balaitus - Partacua",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "B\u00e9arn - Bala\u00eftous - Partacua",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Bearn - Balait\u00fas - Partacua",
+              "lang": "ca"
+            }
+          ]
+        },
+        {
+          "version": 3,
+          "available_langs": null,
+          "area_type": "admin_limits",
+          "protected": false,
+          "document_id": 14303,
+          "type": "a",
+          "locales": [
+            {
+              "version": 1,
+              "title": "Pirenei Atlantici",
+              "lang": "it"
+            },
+            {
+              "version": 3,
+              "title": "Pyr\u00e9n\u00e9es-Atlantiques",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Pirinio Atlantikoak",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Pirineos Atl\u00e1nticos",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Pyr\u00e9n\u00e9es-Atlantiques",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Pyr\u00e9n\u00e9es-Atlantiques",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Pirineus Atl\u00e0ntics",
+              "lang": "ca"
+            }
+          ]
+        }
+      ],
+      "protected": false,
+      "event_type": [
+        "person_fall"
+      ],
+      "elevation": 1500,
+      "type": "x",
+      "nb_participants": 4,
+      "locales": [
+        {
+          "version": 1,
+          "title": "chute 100m falaise",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "date": "2019-01-18",
+      "document_id": 1072943,
+      "nb_impacted": 1,
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [-65443.28148398522, 5295805.266168579], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "medium",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 8,
+              "title": "Vanoise",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14409,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14295,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "other"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Rappel noeud en bout de corde",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 0,
+      "document_id": 1047864,
+      "date": "2018-09-26",
+      "activities": [
+        "mountain_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [754850.565260759, 5684032.484681847], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "more_than_3m",
+      "areas": [
+        {
+          "version": 10,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14067,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Pr\u00e9alpes Fribourgeoises - Bernoises",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Freiburger und Berner Voralpen",
+              "lang": "de"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14431,
+          "type": "a"
+        },
+        {
+          "version": 1,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Canton Friburgo",
+              "lang": "it"
+            },
+            {
+              "version": 2,
+              "title": "Canton de Fribourg",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Friburgo",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Cant\u00f3n de Friburgo",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "Canton of Fribourg",
+              "lang": "en"
+            },
+            {
+              "version": 3,
+              "title": "Freiburg",
+              "lang": "de"
+            },
+            {
+              "version": 2,
+              "title": "Cant\u00f3 de Friburg",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14380,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall"
+      ],
+      "elevation": 1175,
+      "type": "x",
+      "nb_participants": 1,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Chute \u00e0 VTT",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 2,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1048386,
+      "date": "2018-09-21",
+      "activities": [
+        "mountain_biking"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [793971.9078687115, 5885683.471884923], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "draft",
+      "severity": "1d_to_3d",
+      "areas": [
+        {
+          "version": 3,
+          "available_langs": null,
+          "area_type": "admin_limits",
+          "protected": false,
+          "document_id": 14366,
+          "type": "a",
+          "locales": [
+            {
+              "version": 3,
+              "title": "Haute-Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia Garaia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Alta Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "it"
+            }
+          ]
+        },
+        {
+          "version": 11,
+          "available_langs": null,
+          "area_type": "country",
+          "protected": false,
+          "document_id": 14274,
+          "type": "a",
+          "locales": [
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            }
+          ]
+        },
+        {
+          "version": 2,
+          "available_langs": null,
+          "area_type": "range",
+          "protected": false,
+          "document_id": 14399,
+          "type": "a",
+          "locales": [
+            {
+              "version": 6,
+              "title": "Bauges",
+              "lang": "fr"
+            }
+          ]
+        }
+      ],
+      "protected": false,
+      "event_type": [
+        "roped_fall"
+      ],
+      "elevation": 1550,
+      "type": "x",
+      "nb_participants": 6,
+      "locales": [
+        {
+          "version": 2,
+          "title": "Chute en grande voie",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 3,
+      "available_langs": [
+        "fr"
+      ],
+      "date": "2018-08-26",
+      "document_id": 1035804,
+      "nb_impacted": 1,
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [687040.2974440363, 5743882.250541566], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 10,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14067,
+          "type": "a"
+        },
+        {
+          "version": 1,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Massiccio del Giura",
+              "lang": "it"
+            },
+            {
+              "version": 3,
+              "title": "Jura",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Jura mendigunea",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Jura",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Jura Mountains",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Jura",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Serralada del Jura",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14405,
+          "type": "a"
+        },
+        {
+          "version": 1,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Vaud",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Vaud",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Vaud",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Vaud",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Vaud",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Waadt",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Vaud",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14397,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "other"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 5,
+      "locales": [
+        {
+          "version": 2,
+          "title": "Fausse manip en couenne",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1033558,
+      "date": "2018-08-18",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [719117.4539940812, 5904339.487542741], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 2,
+          "available_langs": null,
+          "area_type": "admin_limits",
+          "protected": false,
+          "document_id": 14295,
+          "type": "a",
+          "locales": [
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "it"
+            },
+            {
+              "version": 2,
+              "title": "Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "ca"
+            }
+          ]
+        },
+        {
+          "version": 11,
+          "available_langs": null,
+          "area_type": "country",
+          "protected": false,
+          "document_id": 14274,
+          "type": "a",
+          "locales": [
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            }
+          ]
+        },
+        {
+          "version": 17,
+          "available_langs": null,
+          "area_type": "range",
+          "protected": false,
+          "document_id": 14410,
+          "type": "a",
+          "locales": [
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Montblanc",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "ca"
+            },
+            {
+              "version": 26,
+              "title": "Mont-Blanc",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Monte Bianco",
+              "lang": "it"
+            }
+          ]
+        }
+      ],
+      "protected": false,
+      "event_type": [
+        "crevasse_fall"
+      ],
+      "elevation": 3450,
+      "type": "x",
+      "nb_participants": 4,
+      "locales": [
+        {
+          "version": 2,
+          "title": "Chute en crevasse",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 3,
+      "available_langs": [
+        "fr"
+      ],
+      "date": "2018-08-05",
+      "document_id": 1027371,
+      "nb_impacted": 1,
+      "activities": [
+        "snow_ice_mixed"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [756290.0375962066, 5744485.217980833], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "great",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 11,
+          "available_langs": null,
+          "area_type": "country",
+          "protected": false,
+          "document_id": 14274,
+          "type": "a",
+          "locales": [
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            }
+          ]
+        },
+        {
+          "version": 4,
+          "available_langs": null,
+          "area_type": "admin_limits",
+          "protected": false,
+          "document_id": 14328,
+          "type": "a",
+          "locales": [
+            {
+              "version": 5,
+              "title": "Is\u00e8re",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8ra",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "it"
+            }
+          ]
+        },
+        {
+          "version": 21,
+          "available_langs": null,
+          "area_type": "range",
+          "protected": false,
+          "document_id": 14403,
+          "type": "a",
+          "locales": [
+            {
+              "version": 37,
+              "title": "\u00c9crins",
+              "lang": "fr"
+            }
+          ]
+        }
+      ],
+      "protected": false,
+      "event_type": [
+        "stone_fall"
+      ],
+      "elevation": 3200,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 2,
+          "title": "Chute de pierre au col des \u00c9crins",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "date": "2018-08-03",
+      "document_id": 1033188,
+      "nb_impacted": 1,
+      "activities": [
+        "mountain_climbing",
+        "snow_ice_mixed"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [707511.0612449931, 5611313.549038724], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "medium",
+      "severity": "4d_to_1m",
+      "areas": [
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8ra",
+              "lang": "ca"
+            },
+            {
+              "version": 5,
+              "title": "Is\u00e8re",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14328,
+          "type": "a"
+        },
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 9,
+              "title": "Grandes Rousses - Arves",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14407,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall"
+      ],
+      "elevation": 2000,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "glissade d'un n\u00e9v\u00e9",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1027340,
+      "date": "2018-08-03",
+      "activities": [
+        "mountain_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [683016.3204908412, 5644788.723959776], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "draft",
+      "severity": "1m_to_3m",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 14,
+              "title": "Vercors",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14459,
+          "type": "a"
+        },
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8ra",
+              "lang": "ca"
+            },
+            {
+              "version": 5,
+              "title": "Is\u00e8re",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14328,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "roped_fall"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 4,
+      "locales": [
+        {
+          "version": 1,
+          "title": "chute d'une personne Rochers de Gonson",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1022428,
+      "date": "2018-07-22",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [611251.4277636874, 5638204.135675862], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "great",
+      "severity": "more_than_3m",
+      "areas": [
+        {
+          "version": 6,
+          "locales": [
+            {
+              "version": 6,
+              "title": "Valais W - Alpes Pennines W",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Walliser Alpen W - Penninische Alpen W",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Valais W - Pennine Alps W",
+              "lang": "en"
+            },
+            {
+              "version": 2,
+              "title": "Alpi Pennine Occidentali",
+              "lang": "it"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14437,
+          "type": "a"
+        },
+        {
+          "version": 10,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Svizzera",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Suisse",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Suitza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Suiza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Switzerland",
+              "lang": "en"
+            },
+            {
+              "version": 2,
+              "title": "Schweiz",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Su\u00efssa",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14067,
+          "type": "a"
+        },
+        {
+          "version": 9,
+          "locales": [
+            {
+              "version": 10,
+              "title": "Valais",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Valais",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Wallis",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Valais",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Valais",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Valais",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Vallese",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14384,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall"
+      ],
+      "elevation": 3600,
+      "type": "x",
+      "nb_participants": 3,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Chute de 300m au Grand Combin",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1029683,
+      "date": "2018-07-16",
+      "activities": [
+        "snow_ice_mixed"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [811312.7015470337, 5769552.012728283], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 3,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alta Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoia Garaia",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Haute-Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14366,
+          "type": "a"
+        },
+        {
+          "version": 17,
+          "locales": [
+            {
+              "version": 26,
+              "title": "Mont-Blanc",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Monte Bianco",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Montblanc",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "eu"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14410,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "other"
+      ],
+      "elevation": 1400,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "incident li\u00e9 \u00e0 pb de communication ds la cord\u00e9e",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1024625,
+      "date": "2018-07-13",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [769463.3634977012, 5772255.926857047], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "great",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8ra",
+              "lang": "ca"
+            },
+            {
+              "version": 5,
+              "title": "Is\u00e8re",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14328,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 14,
+              "title": "Vercors",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14459,
+          "type": "a"
+        },
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "physical_failure"
+      ],
+      "elevation": 1550,
+      "type": "x",
+      "nb_participants": 3,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Malaise dans la mont\u00e9e du Pas de l'Aiguille",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1014254,
+      "date": "2018-06-30",
+      "activities": [
+        "hiking"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [613653.4797360247, 5591589.481455808], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 1,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Haute Ari\u00e8ge - Andorre",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alta Ari\u00e8ge - Andorra",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Upper Ari\u00e8ge - Andorra",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Haute Ari\u00e8ge - Andorra",
+              "lang": "de"
+            },
+            {
+              "version": 2,
+              "title": "Alt Arieja - Andorra",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 294786,
+          "type": "a"
+        },
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Pyr\u00e9n\u00e9es-Orientales",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Ekialdeko Pirinioak",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Pirineos Orientales",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Pirineus Orientals",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14301,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "stone_fall"
+      ],
+      "elevation": 2715,
+      "type": "x",
+      "nb_participants": 1,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Chute d'une prise et presqu'accident",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1013719,
+      "date": "2018-06-28",
+      "activities": [
+        "hiking"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [195038.31571977213, 5240955.402753009], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 3,
+          "available_langs": null,
+          "area_type": "admin_limits",
+          "protected": false,
+          "document_id": 14366,
+          "type": "a",
+          "locales": [
+            {
+              "version": 3,
+              "title": "Haute-Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia Garaia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Alta Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "it"
+            }
+          ]
+        },
+        {
+          "version": 17,
+          "available_langs": null,
+          "area_type": "range",
+          "protected": false,
+          "document_id": 14410,
+          "type": "a",
+          "locales": [
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Montblanc",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "ca"
+            },
+            {
+              "version": 26,
+              "title": "Mont-Blanc",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Monte Bianco",
+              "lang": "it"
+            }
+          ]
+        },
+        {
+          "version": 11,
+          "available_langs": null,
+          "area_type": "country",
+          "protected": false,
+          "document_id": 14274,
+          "type": "a",
+          "locales": [
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            }
+          ]
+        }
+      ],
+      "protected": false,
+      "event_type": [
+        "person_fall"
+      ],
+      "elevation": 3350,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 3,
+          "title": "Double presque-accident dans le couloir du Go\u00fbter",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 2,
+      "available_langs": [
+        "fr"
+      ],
+      "date": "2018-06-27",
+      "document_id": 1046291,
+      "nb_impacted": 1,
+      "activities": [
+        "snow_ice_mixed"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [759669.2520587274, 5757014.254149087], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 11,
+          "available_langs": null,
+          "area_type": "country",
+          "protected": false,
+          "document_id": 14274,
+          "type": "a",
+          "locales": [
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            }
+          ]
+        },
+        {
+          "version": 3,
+          "available_langs": null,
+          "area_type": "admin_limits",
+          "protected": false,
+          "document_id": 14366,
+          "type": "a",
+          "locales": [
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alta Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoia Garaia",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Haute-Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "it"
+            }
+          ]
+        },
+        {
+          "version": 17,
+          "available_langs": null,
+          "area_type": "range",
+          "protected": false,
+          "document_id": 14410,
+          "type": "a",
+          "locales": [
+            {
+              "version": 26,
+              "title": "Mont-Blanc",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Monte Bianco",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Montblanc",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "eu"
+            }
+          ]
+        },
+        {
+          "version": 1,
+          "available_langs": null,
+          "area_type": "admin_limits",
+          "protected": false,
+          "document_id": 280072,
+          "type": "a",
+          "locales": [
+            {
+              "version": 4,
+              "title": "Vall\u00e9e d'Aoste",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Vall d'Aosta",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Aostatal",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Aosta Valley",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Valle de Aosta",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Aostako Harana",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Valle d'Aosta",
+              "lang": "it"
+            }
+          ]
+        }
+      ],
+      "protected": false,
+      "event_type": [
+        "physical_failure"
+      ],
+      "elevation": 4050,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Aiguille de Bionnassay - ar\u00eate sud. But \u00e0 la d\u00e9scente, m\u00e9forme.",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "date": "2018-06-24",
+      "document_id": 1012739,
+      "nb_impacted": 1,
+      "activities": [
+        "snow_ice_mixed",
+        "mountain_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [762027.8894296552, 5754786.342915072], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "4d_to_1m",
+      "areas": [
+        {
+          "version": 17,
+          "locales": [
+            {
+              "version": 26,
+              "title": "Mont-Blanc",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Monte Bianco",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Montblanc",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "eu"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14410,
+          "type": "a"
+        },
+        {
+          "version": 3,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alta Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoia Garaia",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Haute-Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14366,
+          "type": "a"
+        },
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "stone_fall"
+      ],
+      "elevation": 2400,
+      "type": "x",
+      "nb_participants": 8,
+      "locales": [
+        {
+          "version": 1,
+          "title": "chute de bloc rocheux",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 2,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1036413,
+      "date": "2018-06-22",
+      "activities": [
+        "mountain_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [765837.5763630734, 5769107.068788745], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "4d_to_1m",
+      "areas": [
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Dr\u00f4me",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Dr\u00f4me",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Droma",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Dr\u00f4me",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Dr\u00f4me",
+              "lang": "eu"
+            },
+            {
+              "version": 2,
+              "title": "Dr\u00f4me",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Dr\u00f4me",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14342,
+          "type": "a"
+        },
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 1,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Luberon - Baronnies - Sao\u00fb",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14460,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 4,
+      "locales": [
+        {
+          "version": 2,
+          "title": "Chute GV petite pomme, Roche Rousse, Les 3 becs",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 2,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1010191,
+      "date": "2018-06-15",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [578008.8674645277, 5563789.486747357], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "1m_to_3m",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 2,
+              "title": "C\u00f4te-d'Or",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14346,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall",
+        "other"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": null,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Chute en installant une couenne et rappel trop court",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 2,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1046532,
+      "date": "2018-05-26",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [517486.68671004067, 5937447.368499645], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "medium",
+      "severity": "1d_to_3d",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 19,
+              "title": "Calanques",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 820370,
+          "type": "a"
+        },
+        {
+          "version": 9,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Provenza",
+              "lang": "it"
+            },
+            {
+              "version": 3,
+              "title": "Provence",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Proventza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Provenza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Provence",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Provence",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Proven\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14463,
+          "type": "a"
+        },
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 5,
+              "title": "Bouches-du-Rh\u00f4ne",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14353,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "stone_fall"
+      ],
+      "elevation": 25,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Calanques de Marseille - Chutes de pierre en rappel",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1002001,
+      "date": "2018-05-19",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [603095.6052707183, 5343639.529345641], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "1d_to_3d",
+      "areas": [
+        {
+          "version": 9,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Provenza",
+              "lang": "it"
+            },
+            {
+              "version": 3,
+              "title": "Provence",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Proventza",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Provenza",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Provence",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Provence",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Proven\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14463,
+          "type": "a"
+        },
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 5,
+              "title": "Bouches-du-Rh\u00f4ne",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14353,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall",
+        "roped_fall"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Chute au sol en TA",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1000113,
+      "date": "2018-05-09",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [620924.8688746414, 5393036.741071255], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "1m_to_3m",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 2,
+              "title": "H\u00e9rault",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14332,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "stone_fall",
+        "roped_fall"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 9,
+          "title": "Accident au Caroux",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 3,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 2,
+      "document_id": 1000400,
+      "date": "2018-05-07",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [330515.91712703876, 5401421.621494604], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "medium",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 1,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Aosta Valley",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Valle d'Aosta",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Aostako Harana",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Valle de Aosta",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Aostatal",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Vall d'Aosta",
+              "lang": "ca"
+            },
+            {
+              "version": 4,
+              "title": "Vall\u00e9e d'Aoste",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 280072,
+          "type": "a"
+        },
+        {
+          "version": 8,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Gran Paradiso",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Gran Paradiso",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Gran Paradiso",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Gran Paradiso",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Gran Paradiso",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Gran Paradiso",
+              "lang": "ca"
+            },
+            {
+              "version": 5,
+              "title": "Grand Paradis",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14427,
+          "type": "a"
+        },
+        {
+          "version": 9,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Italia",
+              "lang": "it"
+            },
+            {
+              "version": 2,
+              "title": "Italie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Italia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Italia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Italy",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Italien",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "It\u00e0lia",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14270,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "stone_fall"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Incident dans la descente du refuge Vittorio Emanuele",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 0,
+      "document_id": 997640,
+      "date": "2018-05-05",
+      "activities": [
+        "skitouring",
+        "snowshoeing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [803774.2569500039, 5702222.874067316], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "great",
+      "severity": "more_than_3m",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8re",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Is\u00e8ra",
+              "lang": "ca"
+            },
+            {
+              "version": 5,
+              "title": "Is\u00e8re",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14328,
+          "type": "a"
+        },
+        {
+          "version": 21,
+          "locales": [
+            {
+              "version": 37,
+              "title": "\u00c9crins",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14403,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall"
+      ],
+      "elevation": 2650,
+      "type": "x",
+      "nb_participants": 4,
+      "locales": [
+        {
+          "version": 3,
+          "title": "Chute de 40 m\u00e8tres dans la descente des Rouies",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 1018098,
+      "date": "2018-04-29",
+      "activities": [
+        "skitouring",
+        "snow_ice_mixed"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [698852.7425705829, 5602455.666515901], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "medium",
+      "severity": "1d_to_3d",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 4,
+          "locales": [
+            {
+              "version": 9,
+              "title": "Grandes Rousses - Arves",
+              "lang": "fr"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14407,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 2,
+              "title": "Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Savoia",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14295,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "person_fall"
+      ],
+      "elevation": 2670,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "Glissade au col d'Emy",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 992719,
+      "date": "2018-04-19",
+      "activities": [
+        "skitouring"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [708937.1752415455, 5650954.042779493], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "draft",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 3,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alta Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoia Garaia",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Haute-Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14366,
+          "type": "a"
+        },
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 17,
+          "locales": [
+            {
+              "version": 26,
+              "title": "Mont-Blanc",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Monte Bianco",
+              "lang": "it"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Montblanc",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Mont-Blanc",
+              "lang": "eu"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14410,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "other"
+      ],
+      "elevation": 3000,
+      "type": "x",
+      "nb_participants": 2,
+      "locales": [
+        {
+          "version": 1,
+          "title": "arrachage de but\u00e9e avant dans un virage : perte du ski. Descente \u00e0 pied de 3000m \u00e0 1100m",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 1,
+      "document_id": 991248,
+      "date": "2018-04-19",
+      "activities": [
+        "skitouring"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [754335.7126158401, 5750291.308843153], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    },
+    {
+      "quality": "fine",
+      "severity": "severity_no",
+      "areas": [
+        {
+          "version": 11,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "it"
+            },
+            {
+              "version": 5,
+              "title": "France",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "France",
+              "lang": "eu"
+            },
+            {
+              "version": 1,
+              "title": "Francia",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "France",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Frankreich",
+              "lang": "de"
+            },
+            {
+              "version": 3,
+              "title": "Fran\u00e7a",
+              "lang": "ca"
+            }
+          ],
+          "area_type": "country",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14274,
+          "type": "a"
+        },
+        {
+          "version": 2,
+          "locales": [
+            {
+              "version": 4,
+              "title": "Bornes - Aravis",
+              "lang": "fr"
+            },
+            {
+              "version": 2,
+              "title": "Bornes -Aravis",
+              "lang": "es"
+            }
+          ],
+          "area_type": "range",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14417,
+          "type": "a"
+        },
+        {
+          "version": 3,
+          "locales": [
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "ca"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "de"
+            },
+            {
+              "version": 1,
+              "title": "Haute-Savoie",
+              "lang": "en"
+            },
+            {
+              "version": 1,
+              "title": "Alta Saboya",
+              "lang": "es"
+            },
+            {
+              "version": 1,
+              "title": "Savoia Garaia",
+              "lang": "eu"
+            },
+            {
+              "version": 3,
+              "title": "Haute-Savoie",
+              "lang": "fr"
+            },
+            {
+              "version": 1,
+              "title": "Alta Savoia",
+              "lang": "it"
+            }
+          ],
+          "area_type": "admin_limits",
+          "protected": false,
+          "available_langs": null,
+          "document_id": 14366,
+          "type": "a"
+        }
+      ],
+      "event_type": [
+        "stone_fall",
+        "roped_fall"
+      ],
+      "elevation": null,
+      "type": "x",
+      "nb_participants": 3,
+      "locales": [
+        {
+          "version": 2,
+          "title": "Chute de bloc sans cons\u00e9quence aux grandes suites",
+          "lang": "fr"
+        }
+      ],
+      "avalanche_level": null,
+      "version": 1,
+      "available_langs": [
+        "fr"
+      ],
+      "protected": false,
+      "nb_impacted": 0,
+      "document_id": 985414,
+      "date": "2018-04-01",
+      "activities": [
+        "rock_climbing"
+      ],
+      "geometry": {
+        "version": 1,
+        "geom": "{\"coordinates\": [689591.9628119997, 5760037.473811508], \"type\": \"Point\"}"
+      },
+      "avalanche_slope": null
+    }
+  ]
+}

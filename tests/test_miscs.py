@@ -114,6 +114,7 @@ def test_wiki(fix_requests, fix_input):
     list(CampBot().wiki.get_routes({}))
     list(CampBot().wiki.get_waypoints({}))
     list(CampBot().wiki.get_outings({}))
+    list(CampBot().wiki.get_xreports({}))
 
     for _ in CampBot().wiki.get_route_ids():
         break

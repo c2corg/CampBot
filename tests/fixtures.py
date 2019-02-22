@@ -24,7 +24,7 @@ messages = [
     _wiki("POST", r"users/login", {"token": "", "redirect_internal": "/sso", "roles": []}),
 
     # specific responses
-    _wiki('GET', r'(outings|routes|articles|waypoints)\?.*offset=30.*', {"documents": []}),
+    _wiki('GET', r'(outings|routes|articles|waypoints|xreports)\?.*offset=30.*', {"documents": []}),
     _wiki('GET', r'routes/123/fr/(123|122)', get_message("redirection")),
     _wiki('GET', r'articles/996571', get_message("conf_replacements")),
     _wiki('GET', r'routes/293549/fr/(1738922|1738528)', get_message("route_version")),
@@ -60,7 +60,7 @@ messages = [
     # document list
     _wiki('GET', r'outings(\?.*)?', get_message("outings")),
     _wiki('GET', r'routes(\?.*)?', get_message("routes")),
-    _wiki('GET', r'xreports(\?.*)?', get_message("routes")),
+    _wiki('GET', r'xreports(\?.*)?', get_message("xreports")),
     _wiki('GET', r'waypoints(\?.*)?', get_message("routes")),
 
     # recent changes

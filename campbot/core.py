@@ -209,6 +209,9 @@ class WikiBot(BaseBot):
     def get_outings(self, filters):
         return self.get_documents(constructor=objects.Outing, filters=filters)
 
+    def get_xreports(self, filters):
+        return self.get_documents(constructor=objects.Xreport, filters=filters)
+
     def get_documents(self, filters=None, document_type=None, constructor=None):
         """
         Return a list of wiki objects, this function is a generator

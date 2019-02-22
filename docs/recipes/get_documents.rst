@@ -22,9 +22,10 @@ Here is a code that load every single documents based on a filter. Corresponding
 
 ``bot.wiki`` object has also theese functions :
 
-* ``bot.wiki.get_areas(filters)`` 
-* ``bot.wiki.get_waypoints(filters)`` 
+* ``bot.wiki.get_areas(filters)``
 * ``bot.wiki.get_outings(filters)``
+* ``bot.wiki.get_waypoints(filters)``
+* ``bot.wiki.get_xreports(filters)``
 
 .. warning::
 
