@@ -11,5 +11,7 @@ As a good short example will always be better than a long explanation, here is s
    get_documents
    search_text
    rock_type
+   get_forum_users_from_route
+   update_locale
 
 
