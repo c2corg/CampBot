@@ -414,7 +414,7 @@ class PollOption(BotObject):
                 url.format(post_id, poll_name, self.id, offset))[poll_name]
 
             if self.id not in data or len(data[self.id]) == 0:
-                raise StopIteration
+                return
             for voter in data[self.id]:
                 yield ForumUser(self._campbot, voter)
 

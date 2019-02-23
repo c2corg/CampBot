@@ -239,7 +239,7 @@ class WikiBot(BaseBot):
             data = self.get(url)
 
             if len(data["documents"]) == 0:
-                raise StopIteration
+                return
 
             for doc in data["documents"]:
                 yield doc
@@ -285,7 +285,7 @@ class WikiBot(BaseBot):
             for item in d["feed"]:
                 written_at = parser.parse(item["written_at"])
                 if written_at < oldest_date:
-                    raise StopIteration
+                    return
 
                 if newest_date > written_at:
                     yield objects.Contribution(self.campbot, item)
