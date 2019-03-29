@@ -46,15 +46,10 @@ def test_post_message(fix_requests):
     bot.forum.post_message("coucou", url)
 
 
-def test_check_voters(fix_requests):
-    from campbot import CampBot
-
-    CampBot().check_voters(url=MESSAGE_URL, allowed_groups=("Association",))
-
-
 def test_main_entry_point(fix_requests, ids_files):
     from campbot.__main__ import main
 
+    main(get_main_args("check_voters", {"<url>": MESSAGE_URL}))
     main(get_main_args("contribs"))
     main(get_main_args("export"))
     main(get_main_args("check_rc"))

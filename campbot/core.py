@@ -419,7 +419,7 @@ class CampBot(object):
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
         self.forum.headers['X-CSRF-Token'] = self.forum.get("/session/csrf")["csrf"]
 
-    def check_voters(self, url, allowed_groups=None, aggregated_report=True):
+    def check_voters(self, url, allowed_group="contributeurs", aggregated_report=True):
 
         def print_aggregated_report():
 
@@ -453,7 +453,7 @@ class CampBot(object):
             print("</table>\n")
 
         def print_normal_report():
-            for poll in polls:
+            for poll in sorted(polls):
                 print("* " + poll)
                 for option in polls[poll]:
                     print("  * {} : {}".format(option, polls[poll][option]))
@@ -461,8 +461,8 @@ class CampBot(object):
             print()
 
         allowed_members = set()
-        for group in allowed_groups or []:
-            for user in self.forum.get_group_members(group):
+        if allowed_group:
+            for user in self.forum.get_group_members(allowed_group):
                 allowed_members.add(user.username)
 
         print("Allowed members :", allowed_members)
@@ -476,7 +476,7 @@ class CampBot(object):
             polls[poll_name] = {option.html: 0 for option in post.polls[poll_name].options}
             for option in post.polls[poll_name].options:
                 for voter in option.get_voters(post.id, poll_name):
-                    if voter.username in allowed_members or allowed_groups is None:
+                    if voter.username in allowed_members or allowed_group is None:
                         polls[poll_name][option.html] += 1
                     else:
                         ignored_voters.add(voter.username)
