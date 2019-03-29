@@ -6,7 +6,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='campbot',
-    version="1.0.0",
+    version="1.1.0",
     packages=find_packages(),
     author="Charles de Beauchesne",
     author_email="charles.de.beauchesne@gmail.com",

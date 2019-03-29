@@ -799,6 +799,32 @@ class CampBot(object):
 
         return list(result.values())
 
+    def find_closest_documents(self, constructor, longitude, latitude, buffer, filters=None):
+        fake_object = {
+            "geometry": {
+                "geom": '{' + '"type":"Point", "coordinates": [{}, {}]'.format(longitude, latitude) + '}'
+            }
+        }
+
+        filters = filters or {}
+        filters["bbox"] = ",".join(map(str, [
+            longitude - buffer,
+            latitude - buffer,
+            longitude + buffer,
+            latitude + buffer
+        ]))
+
+        result = []
+
+        for document in self.wiki.get_documents(constructor=constructor, filters=filters):
+            result.append({
+                "document": document,
+                "distance": utils.compute_distance(fake_object, document)
+            })
+
+        result.sort(key=lambda item: item["distance"])
+
+        return result
 
 def _parse_filter(url):
     url = url.replace("https://www.camptocamp.org/", "")

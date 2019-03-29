@@ -306,3 +306,11 @@ def test_weird(fix_requests, fix_input):
         f.write("123|1\n")
 
     bot.get_new_contributors()
+
+
+def test_get_closest_documents(fix_requests):
+    from campbot import CampBot, objects
+
+    bot = CampBot()
+
+    bot.find_closest_documents(objects.Waypoint, 289284, 6175526, 2000)
