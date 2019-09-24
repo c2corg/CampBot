@@ -170,6 +170,11 @@ class WikiObject(BotObject):
 
     def __init__(self, campbot, data):
         super(WikiObject, self).__init__(campbot, data)
+
+        if "associations" in self and self["associations"] is not None:
+            self["associations"] = BotObject(campbot=campbot, data=self["associations"])
+            self.associations._convert_list("images", Image)
+            
         self._convert_list("locales", Locale)
         self._data = data
 
