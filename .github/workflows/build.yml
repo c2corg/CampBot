@@ -17,7 +17,7 @@ jobs:
           python-version: ${{ matrix.python_version }}
           architecture: x64
       - name: Install dependancies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt -r dev-requirements.txt
       - name: Run python tests
         run: pytest --cov campbot --cov-report=term
 
