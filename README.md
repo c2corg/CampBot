@@ -13,6 +13,15 @@ Bot framework for [camptocamp.org](https://www.camptocamp.org/)
 pip install campbot
 ```
 
+## Contribute
+
+```batch
+git clone git@github.com:c2corg/CampBot.git
+cd CampBot
+pip install -r requirements.txt -r dev-requirements.txt
+pytest --cov=campbot --cov-report=html
+```
+
 ## Documentation
 
 [Read the docs!](https://campbot.readthedocs.io/)
