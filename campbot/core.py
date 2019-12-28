@@ -658,6 +658,7 @@ class CampBot(object):
         for contrib in self.wiki.get_contributions(oldest_date=oldest_date, newest_date=newest_date):
             if contrib.lang == lang and \
                     contrib.document.type not in ("i", "o", "x") and \
+                    contrib.document.type != "m" and \
                     contrib.user.name not in excluded_users:
 
                 key = (contrib.document["document_id"], contrib.document.type)
