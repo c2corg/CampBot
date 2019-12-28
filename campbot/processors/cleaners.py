@@ -162,3 +162,13 @@ class RemoveColonInHeader(OrthographicProcessor):
             Converter(r"(^|\n)(#+.*): *($|\n)",
                       r"\1\2\3"),
         ]
+
+
+class DiacriticsFix(OrthographicProcessor):
+    ready_for_production = True
+    comment = 'Fix diacritics'
+
+    def init_modifiers(self):
+        self.modifiers = [
+            Converter("e\u0301", "é"),  #
+        ]
