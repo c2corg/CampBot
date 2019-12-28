@@ -1,12 +1,16 @@
 from .bbcode import BBCodeRemover, ColorAndUnderlineRemover, InternalLinkCorrector
-from .cleaners import (MarkdownCleaner, AutomaticReplacements,
+from .cleaners import (MarkdownCleaner, AutomaticReplacements, DiacriticsFix,
                        SpaceBetweenNumberAndUnit, MultiplicationSign,
                        UpperFix, OrthographicProcessor, RemoveColonInHeader)
 from .ltagmigrator import LtagCleaner, LtagMigrator
 
 
-def get_automatic_replacments(bot, clean_bbcode=False):
-    article = bot.wiki.get_article(996571)
+def get_automatic_replacments(bot, clean_bbcode=False, replacements_version = None):
+    if replacements_version is None:
+        article = bot.wiki.get_article(996571)
+    else:
+        article = bot.wiki.get_wiki_object_version(996571, "c", "fr", replacements_version)
+
     result = []
 
     for locale in article.locales:
@@ -24,16 +28,17 @@ def get_automatic_replacments(bot, clean_bbcode=False):
                     needle, stack = line.split(">>")
                     test["replacements"].append((needle.strip(), stack.strip()))
 
-    result = [AutomaticReplacements(**args) for args in result if len(args["replacements"]) != 0]
+    processors = [DiacriticsFix(), ]
+    processors = [AutomaticReplacements(**args) for args in result if len(args["replacements"]) != 0]
 
     if clean_bbcode:
-        result.append(BBCodeRemover())
-        result.append(ColorAndUnderlineRemover())
-        result.append(InternalLinkCorrector())
+        processors.append(BBCodeRemover())
+        processors.append(ColorAndUnderlineRemover())
+        processors.append(InternalLinkCorrector())
 
-    result.append(SpaceBetweenNumberAndUnit())
-    result.append(MultiplicationSign())
-    result.append(UpperFix())
-    result.append(RemoveColonInHeader())
+    processors.append(SpaceBetweenNumberAndUnit())
+    processors.append(MultiplicationSign())
+    processors.append(UpperFix())
+    processors.append(RemoveColonInHeader())
 
-    return result
+    return processors

@@ -442,6 +442,20 @@ def test_auto_replacements():
         assert p(markdown) == markdown
 
 
+
+def test_auto_replacements():
+    from campbot.processors.cleaners import DiacriticsFix
+
+    replaced = [
+        ("e\u0301", "é"),
+    ]
+
+    p = DiacriticsFix().modify
+
+    for markdown, expected in replaced:
+        assert p(markdown) == expected
+
+
 def test_internal_links_corrector():
     from campbot.processors.bbcode import InternalLinkCorrector
 
