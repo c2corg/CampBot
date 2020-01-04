@@ -447,7 +447,13 @@ def test_auto_replacements():
     from campbot.processors.cleaners import DiacriticsFix
 
     replaced = [
+        ("a\u0300", "à"),
+        ("e\u0300", "è"),
+
         ("e\u0301", "é"),
+
+        ("a\u0302", "â"),
+        ("e\u0302", "ê"),
     ]
 
     p = DiacriticsFix().modify

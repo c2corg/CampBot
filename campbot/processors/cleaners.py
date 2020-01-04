@@ -170,5 +170,9 @@ class DiacriticsFix(OrthographicProcessor):
 
     def init_modifiers(self):
         self.modifiers = [
-            Converter("e\u0301", "é"),  #
+            Converter("a\u0300", "à"),
+            Converter("e\u0300", "è"),
+            Converter("e\u0301", "é"),
+            Converter("a\u0302", "â"),
+            Converter("e\u0302", "ê"),
         ]
