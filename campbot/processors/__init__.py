@@ -29,7 +29,7 @@ def get_automatic_replacments(bot, clean_bbcode=False, replacements_version = No
                     test["replacements"].append((needle.strip(), stack.strip()))
 
     processors = [DiacriticsFix(), ]
-    processors = [AutomaticReplacements(**args) for args in result if len(args["replacements"]) != 0]
+    processors += [AutomaticReplacements(**args) for args in result if len(args["replacements"]) != 0]
 
     if clean_bbcode:
         processors.append(BBCodeRemover())
