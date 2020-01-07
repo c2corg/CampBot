@@ -442,8 +442,38 @@ def test_auto_replacements():
         assert p(markdown) == markdown
 
 
+def test_all_replacements(fix_requests):
+    from campbot import CampBot
+    from campbot.objects import Route
+    from campbot.processors import get_automatic_replacments
 
-def test_auto_replacements():
+    source = """
+    deja en éte\u0301
+    """
+
+    corrected = """
+    déjà en été
+    """
+
+    bot = CampBot()
+    processors = get_automatic_replacments(bot)
+    r = Route(bot, {
+        "locales": [
+            {
+                "lang": "fr",
+                "description": source
+            }
+        ]
+    })
+
+    for processor in processors:
+        if processor.ready_for_production:
+            processor(r, ["fr"])
+
+    assert r.get_locale("fr").description == corrected
+
+
+def test_diacritics_replacements():
     from campbot.processors.cleaners import DiacriticsFix
 
     replaced = [
