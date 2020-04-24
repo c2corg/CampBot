@@ -14,5 +14,6 @@ As a good short example will always be better than a long explanation, here is s
    get_forum_users_from_route
    update_locale
    export_as_csv
+   add_area
 
 
