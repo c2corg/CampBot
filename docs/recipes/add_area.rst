@@ -7,6 +7,7 @@ There is no UI for adding new areas. But API entry point is up and running!
 
     from campbot import CampBot
 
+    import json
 
     def create_area(bot, title, geom_detail):
         result = bot.wiki.post(
