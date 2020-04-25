@@ -5,6 +5,7 @@ There is no UI for adding new areas. But API entry point is up and running!
 
 .. code-block:: python
 
+    import json
     from campbot import CampBot
 
 
