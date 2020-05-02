@@ -36,16 +36,18 @@ def _input(message):  # pragma: no cover
 
 
 def get_constructor(document_type):
-    return {"u": WikiUser,
-            "a": Area,
-            "w": Waypoint,
-            "o": Outing,
-            "i": Image,
-            "m": Map,
-            "x": Xreport,
-            "c": Article,
-            "b": Book,
-            "r": Route}[document_type]
+    return {
+        "u": WikiUser,
+        "a": Area,
+        "w": Waypoint,
+        "o": Outing,
+        "i": Image,
+        "m": Map,
+        "x": Xreport,
+        "c": Article,
+        "b": Book,
+        "r": Route,
+    }[document_type]
 
 
 class BotObject(dict):
@@ -60,10 +62,14 @@ class BotObject(dict):
     # make instance.key equivalent to instance["key"]
     def __getattr__(self, item):
         if item.startswith("_"):
-            raise AttributeError("Object {} has not attribute {}".format(self.__class__.name, item))
+            raise AttributeError(
+                "Object {} has not attribute {}".format(self.__class__.name, item)
+            )
 
         if item not in self:  # pragma: no cover
-            raise AttributeError("Object {} has not attribute {}".format(self.__class__.name, item))
+            raise AttributeError(
+                "Object {} has not attribute {}".format(self.__class__.name, item)
+            )
 
         return self[item]
 
@@ -79,7 +85,9 @@ class BotObject(dict):
 
     def _convert_dict(self, name, constructor):
         if name in self:
-            self[name] = {key: constructor(self._campbot, self[name][key]) for key in self[name]}
+            self[name] = {
+                key: constructor(self._campbot, self[name][key]) for key in self[name]
+            }
 
 
 class Version(BotObject):
@@ -89,7 +97,9 @@ class Version(BotObject):
 
     def __init__(self, campbot, data):
         super(Version, self).__init__(campbot, data)
-        self['document'] = get_constructor(self['document']['type'])(campbot, self['document'])
+        self["document"] = get_constructor(self["document"]["type"])(
+            campbot, self["document"]
+        )
 
     def get_diff_url(self, lang):
         constructor = get_constructor(document_type=self.document.type)
@@ -103,7 +113,7 @@ class Version(BotObject):
             self.document.document_id,
             lang,
             self.previous_version_id,
-            self.version["version_id"]
+            self.version["version_id"],
         )
 
     def get_locale_length(self, lang):
@@ -115,12 +125,15 @@ class Version(BotObject):
 class Contribution(BotObject):
     def __init__(self, campbot, data):
         super(Contribution, self).__init__(campbot, data)
-        self['document'] = get_constructor(self['document']['type'])(campbot, self['document'])
-        self['user'] = ShortWikiUser(campbot, self['user'])
+        self["document"] = get_constructor(self["document"]["type"])(
+            campbot, self["document"]
+        )
+        self["user"] = ShortWikiUser(campbot, self["user"])
 
     def get_full_document(self):
-        return self._campbot.wiki.get_wiki_object(self.document["document_id"],
-                                                  document_type=self.document["type"])
+        return self._campbot.wiki.get_wiki_object(
+            self.document["document_id"], document_type=self.document["type"]
+        )
 
 
 class Locale(BotObject):
@@ -141,10 +154,21 @@ class Locale(BotObject):
             return self.title
 
     def get_locale_fields(self):
-        return ("description", "gear", "remarks", "route_history",
-                "summary", "access", "access_period", "title",
-                "external_resources", "other_comments", "slope",
-                "slackline_anchor1", "slackline_anchor2")
+        return (
+            "description",
+            "gear",
+            "remarks",
+            "route_history",
+            "summary",
+            "access",
+            "access_period",
+            "title",
+            "external_resources",
+            "other_comments",
+            "slope",
+            "slackline_anchor1",
+            "slackline_anchor2",
+        )
 
     def get_length(self):
         """
@@ -174,7 +198,7 @@ class WikiObject(BotObject):
         if "associations" in self and self["associations"] is not None:
             self["associations"] = BotObject(campbot=campbot, data=self["associations"])
             self.associations._convert_list("images", Image)
-            
+
         self._convert_list("locales", Locale)
         self._data = data
 
@@ -183,10 +207,12 @@ class WikiObject(BotObject):
         :return: camptocamp.org URL.  
         """
 
-        return "{}/{}/{}{}".format(self._campbot.wiki.ui_url,
-                                   self.url_path,
-                                   self.document_id,
-                                   "" if lang is None else "/" + lang)
+        return "{}/{}/{}{}".format(
+            self._campbot.wiki.ui_url,
+            self.url_path,
+            self.document_id,
+            "" if lang is None else "/" + lang,
+        )
 
     def get_history_url(self, lang):
         """
@@ -194,10 +220,9 @@ class WikiObject(BotObject):
         :return: camptocamp.org version list URL
         """
 
-        return "{}/{}/history/{}/{}".format(self._campbot.wiki.ui_url,
-                                            self.url_path,
-                                            self.document_id,
-                                            lang)
+        return "{}/{}/history/{}/{}".format(
+            self._campbot.wiki.ui_url, self.url_path, self.document_id, lang
+        )
 
     def get_title(self, lang):
         locale = self.get_locale(lang)
@@ -262,8 +287,10 @@ class WikiObject(BotObject):
         else:
             print("Saving {} : {}".format(self.get_url(), message))
 
-        return self._campbot.wiki.put("/{}/{}".format(self.url_path, self.document_id),
-                                      self._build_payload(message))
+        return self._campbot.wiki.put(
+            "/{}/{}".format(self.url_path, self.document_id),
+            self._build_payload(message),
+        )
 
     def is_valid(self):
         """
@@ -284,7 +311,9 @@ class ShortWikiUser(BotObject):
         return "{}/whatsnew#u={}".format(self._campbot.wiki.ui_url, self.user_id)
 
     def is_newbie(self):
-        contribs = self._campbot.wiki.get("/documents/changes?limit=50&u={}".format(self.user_id))
+        contribs = self._campbot.wiki.get(
+            "/documents/changes?limit=50&u={}".format(self.user_id)
+        )
         return len(contribs["feed"]) < 50
 
     def get_wiki_user(self):
@@ -295,13 +324,14 @@ class WikiUser(WikiObject):
     url_path = "profiles"
 
     def get_contributions(self, oldest_date=None, newest_date=None):
-        return self._campbot.wiki.get_contributions(user_id=self.document_id,
-                                                    oldest_date=oldest_date,
-                                                    newest_date=newest_date)
+        return self._campbot.wiki.get_contributions(
+            user_id=self.document_id, oldest_date=oldest_date, newest_date=newest_date
+        )
 
     def get_last_contribution(self, oldest_date=None, newest_date=None):
-        for contribution in self.get_contributions(oldest_date=oldest_date,
-                                                   newest_date=newest_date):
+        for contribution in self.get_contributions(
+            oldest_date=oldest_date, newest_date=newest_date
+        ):
             return contribution
 
         return None
@@ -358,8 +388,7 @@ class Waypoint(WikiObject):
         if self.waypoint_type in ("hut", "gite") and self.custodianship is None:
             return "custodianship is missing"
 
-        if self.elevation is None and self.waypoint_type not in (
-            "climbing_indoor",):
+        if self.elevation is None and self.waypoint_type not in ("climbing_indoor",):
             return "elevation is missing"
 
         return None
@@ -373,7 +402,7 @@ class Area(WikiObject):
     def _build_payload(self, message):
         payload = super(Area, self)._build_payload(message)
 
-        #  Geometry info must not be present in payload, otherwise, save actions fails 
+        #  Geometry info must not be present in payload, otherwise, save actions fails
         del payload["document"]["geometry"]
 
         return payload
@@ -416,7 +445,8 @@ class PollOption(BotObject):
         offset = 0
         while True:
             data = self._campbot.forum.get(
-                url.format(post_id, poll_name, self.id, offset))[poll_name]
+                url.format(post_id, poll_name, self.id, offset)
+            )[poll_name]
 
             if self.id not in data or len(data[self.id]) == 0:
                 return

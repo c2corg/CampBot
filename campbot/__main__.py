@@ -52,7 +52,9 @@ def get_campbot(args):
         proxies["https"] = os.environ["HTTPS_PROXY"]
 
     if "CAMPBOT_CREDENTIALS" in os.environ and not args["--login"]:
-        args["--login"], args["--password"] = os.environ["CAMPBOT_CREDENTIALS"].split("@", 1)
+        args["--login"], args["--password"] = os.environ["CAMPBOT_CREDENTIALS"].split(
+            "@", 1
+        )
 
     bot = CampBot(proxies=proxies, min_delay=args["--delay"])
 
@@ -70,18 +72,24 @@ def main(args):
     if args["check_rc"]:
         from campbot.checkers import check_recent_changes
 
-        check_recent_changes(get_campbot(args),
-                             days=int(args["<days>"]),
-                             ask_before_saving=not args["--batch"])
+        check_recent_changes(
+            get_campbot(args),
+            days=int(args["<days>"]),
+            ask_before_saving=not args["--batch"],
+        )
 
     elif args["clean"]:
-        get_campbot(args).clean(args["<url_or_file>"],
-                                langs=args["<langs>"].split(","),
-                                ask_before_saving=not args["--batch"],
-                                clean_bbcode=args["--bbcode"])
+        get_campbot(args).clean(
+            args["<url_or_file>"],
+            langs=args["<langs>"].split(","),
+            ask_before_saving=not args["--batch"],
+            clean_bbcode=args["--bbcode"],
+        )
 
     elif args["contribs"]:
-        get_campbot(args).export_contributions(starts=args["--starts"], ends=args["--ends"], filename=args["--out"])
+        get_campbot(args).export_contributions(
+            starts=args["--starts"], ends=args["--ends"], filename=args["--out"]
+        )
 
     elif args["export"]:
         get_campbot(args).export(args["<url>"], args["--out"])

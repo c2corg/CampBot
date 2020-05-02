@@ -12,17 +12,10 @@ class MarkdownCleaner(MarkdownProcessor):
 
     def init_modifiers(self):
         self.modifiers = [
-            Converter(pattern=r"\n{3,}",
-                      repl=r"\n\n"),
-
-            Converter(pattern=r"^\n*",
-                      repl=r""),
-
-            Converter(pattern=r"\n*$",
-                      repl=r""),
-
-            Converter(pattern=r"(^|\n)(#+) *",
-                      repl=r"\1\2 "),
+            Converter(pattern=r"\n{3,}", repl=r"\n\n"),
+            Converter(pattern=r"^\n*", repl=r""),
+            Converter(pattern=r"\n*$", repl=r""),
+            Converter(pattern=r"(^|\n)(#+) *", repl=r"\1\2 "),
         ]
 
 
@@ -31,7 +24,6 @@ class OrthographicProcessor(MarkdownProcessor):
         placeholders = {}
 
         def protect(pattern, ph, markdown):
-
             def repl(match):
                 markdown = match.group(0)
 
@@ -44,14 +36,16 @@ class OrthographicProcessor(MarkdownProcessor):
 
         result = markdown
 
-        STX = '\u0002'  # Use STX ("Start of text") for start-of-placeholder
-        ETX = '\u0003'  # Use ETX ("End of text") for end-of-placeholder
+        STX = "\u0002"  # Use STX ("Start of text") for start-of-placeholder
+        ETX = "\u0003"  # Use ETX ("End of text") for end-of-placeholder
         placeholder_pattern = STX + "ph{}ph" + ETX
 
         result = protect(r"(?:\[.*\])\([^ \n\)]+\)", placeholder_pattern, result)
         result = protect(r"https?://[^ )\n>]*", placeholder_pattern, result)
         result = protect(r"www\.[^ )\n>\]]*", placeholder_pattern, result)
-        result = protect(r"\[\[[a-z]+/\d+[/a-z0-9\-#]*\|", "[[" + placeholder_pattern + "|", result)
+        result = protect(
+            r"\[\[[a-z]+/\d+[/a-z0-9\-#]*\|", "[[" + placeholder_pattern + "|", result
+        )
         result = protect(r":\w+:", placeholder_pattern, result)
 
         result = super(OrthographicProcessor, self).modify(result)
@@ -73,7 +67,7 @@ class UpperFix(OrthographicProcessor):
         def ltag_converter(markdown):
             result = []
 
-            cell_pattern = re.compile(r'(\| *[a-zéèà])(?![^|]*\]\])')
+            cell_pattern = re.compile(r"(\| *[a-zéèà])(?![^|]*\]\])")
 
             is_ltag = False
 
@@ -105,11 +99,7 @@ class MultiplicationSign(OrthographicProcessor):
     ready_for_production = True
 
     def init_modifiers(self):
-        self.modifiers = [
-
-            Converter(r"(\b\d) ?([*xX]) ?(\d+) ?(m\b)",
-                      r"\1×\3 \4")
-        ]
+        self.modifiers = [Converter(r"(\b\d) ?([*xX]) ?(\d+) ?(m\b)", r"\1×\3 \4")]
 
 
 class SpaceBetweenNumberAndUnit(OrthographicProcessor):
@@ -119,20 +109,14 @@ class SpaceBetweenNumberAndUnit(OrthographicProcessor):
 
     def init_modifiers(self):
         self.modifiers = [
-            Converter(r"(^|[| \n\(])(\d+)(m|km|s)($|[ |,.?!:;\)\n])",
-                      r"\1\2 \3\4"),
-
-            Converter(r"(^|[| \n\(])(\d+)([\-xX])(\d+)(m|km|s)($|[ |,.?!:;\)\n])",
-                      r"\1\2\3\4 \5\6"),
-
-            Converter(r"\b(\d\d?) ?h ?(\d\d)\b",
-                      r"\1h\2"),
-
-            Converter(r"\b(\d\d?) ?h\b",
-                      r"\1h"),
-
-            Converter(r"\b(\d\d?) ?(min|mn)\b",
-                      r"\1\2"),
+            Converter(r"(^|[| \n\(])(\d+)(m|km|s)($|[ |,.?!:;\)\n])", r"\1\2 \3\4"),
+            Converter(
+                r"(^|[| \n\(])(\d+)([\-xX])(\d+)(m|km|s)($|[ |,.?!:;\)\n])",
+                r"\1\2\3\4 \5\6",
+            ),
+            Converter(r"\b(\d\d?) ?h ?(\d\d)\b", r"\1h\2"),
+            Converter(r"\b(\d\d?) ?h\b", r"\1h"),
+            Converter(r"\b(\d\d?) ?(min|mn)\b", r"\1\2"),
         ]
 
 
@@ -159,14 +143,13 @@ class RemoveColonInHeader(OrthographicProcessor):
 
     def init_modifiers(self):
         self.modifiers = [
-            Converter(r"(^|\n)(#+.*): *($|\n)",
-                      r"\1\2\3"),
+            Converter(r"(^|\n)(#+.*): *($|\n)", r"\1\2\3"),
         ]
 
 
 class DiacriticsFix(OrthographicProcessor):
     ready_for_production = True
-    comment = 'Fix diacritics'
+    comment = "Fix diacritics"
 
     def init_modifiers(self):
         self.modifiers = [

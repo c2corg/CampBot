@@ -16,14 +16,20 @@ def get_diff_report(old, new):
             result.append("--- {} : {}".format(key, repr(old[key])))
 
         elif old[key] != new[key]:
-            if isinstance(old[key], (int, bool, float)) or (len(old[key]) < 20 and len(new[key]) < 20):
+            if isinstance(old[key], (int, bool, float)) or (
+                len(old[key]) < 20 and len(new[key]) < 20
+            ):
                 result.append(("^^^ {} : {} >>> {}".format(key, old[key], new[key])))
             else:
                 d = difflib.Differ()
-                diff = d.compare(old[key].replace("\r", "").split("\n"),
-                                 new[key].replace("\r", "").split("\n"))
+                diff = d.compare(
+                    old[key].replace("\r", "").split("\n"),
+                    new[key].replace("\r", "").split("\n"),
+                )
 
-                report = "\n    ".join(dd.replace("\n", "") for dd in diff if dd[0] != " ")
+                report = "\n    ".join(
+                    dd.replace("\n", "") for dd in diff if dd[0] != " "
+                )
                 result.append("^^^ {} :\n    {}".format(key, report))
 
     return result
@@ -34,7 +40,7 @@ def flatten(source, root_path="root"):
         base_types = (unicode, str, int, long, float, bool)  # py 2.7
     except NameError:
         base_types = (str, int, float, bool)  # py 3
-        
+
     result = {}
 
     def worker(obj, path):

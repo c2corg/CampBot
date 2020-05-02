@@ -23,7 +23,7 @@ except NameError:
     # py3
     basestring = (str,)
 
-__all__ = ['CampBot', 'WikiBot', 'ForumBot', 'BaseBot']
+__all__ = ["CampBot", "WikiBot", "ForumBot", "BaseBot"]
 
 
 class UserInterrupt(BaseException):
@@ -60,13 +60,11 @@ class BaseBot(object):
         self._wait()
         logging.debug("GET %s", url)
 
-        res = self._session.get(self.api_url + url,
-                                proxies=self.proxies,
-                                params=kwargs)
+        res = self._session.get(self.api_url + url, proxies=self.proxies, params=kwargs)
 
         res.raise_for_status()
 
-        if res.headers['Content-type'].startswith('application/json'):
+        if res.headers["Content-type"].startswith("application/json"):
             return res.json()
         else:
             return res.content
@@ -79,7 +77,7 @@ class BaseBot(object):
 
         res.raise_for_status()
 
-        assert res.headers['Content-type'].startswith('application/json')
+        assert res.headers["Content-type"].startswith("application/json")
 
         return res.json()
 
@@ -87,12 +85,11 @@ class BaseBot(object):
         self._wait()
         logging.debug("POST %s", url)
 
-        res = self._session.put(self.api_url + url, json=data,
-                                proxies=self.proxies)
+        res = self._session.put(self.api_url + url, json=data, proxies=self.proxies)
 
         res.raise_for_status()
 
-        assert res.headers['Content-type'].startswith('application/json')
+        assert res.headers["Content-type"].startswith("application/json")
 
         return res.json()
 
@@ -130,7 +127,9 @@ class WikiBot(BaseBot):
         if not constructor:
             constructor = objects.get_constructor(document_type)
 
-        return constructor(self.campbot, self.get("/{}/{}".format(constructor.url_path, item_id)))
+        return constructor(
+            self.campbot, self.get("/{}/{}".format(constructor.url_path, item_id))
+        )
 
     def get_article(self, article_id):
         """
@@ -230,7 +229,10 @@ class WikiBot(BaseBot):
         filters = filters or {}
         filters["offset"] = 0
 
-        filters = {k: ",".join(map(str, v)) if isinstance(v, (list, set, tuple)) else v for k, v in filters.items()}
+        filters = {
+            k: ",".join(map(str, v)) if isinstance(v, (list, set, tuple)) else v
+            for k, v in filters.items()
+        }
 
         while True:
             filters_url = "&".join(["{}={}".format(k, v) for k, v in filters.items()])
@@ -248,7 +250,9 @@ class WikiBot(BaseBot):
 
     def get_user(self, user_id=None, wiki_name=None, forum_name=None):
         if user_id:
-            return objects.WikiUser(self.campbot, self.get("/profiles/{}".format(user_id)))
+            return objects.WikiUser(
+                self.campbot, self.get("/profiles/{}".format(user_id))
+            )
 
         name = wiki_name or forum_name
 
@@ -264,7 +268,9 @@ class WikiBot(BaseBot):
 
     def get_contributions(self, **kwargs):
 
-        oldest_date = kwargs.get("oldest_date", None) or utils.today() + timedelta(days=-1)
+        oldest_date = kwargs.get("oldest_date", None) or utils.today() + timedelta(
+            days=-1
+        )
         newest_date = kwargs.get("newest_date", None) or datetime.now()
 
         if isinstance(oldest_date, basestring):
@@ -294,7 +300,9 @@ class WikiBot(BaseBot):
                 break
 
             pagination_token = d["pagination_token"]
-            d = self.get("/documents/changes?limit=50&token=" + pagination_token + user_filter)
+            d = self.get(
+                "/documents/changes?limit=50&token=" + pagination_token + user_filter
+            )
 
 
 class ForumBot(BaseBot):
@@ -321,7 +329,11 @@ class ForumBot(BaseBot):
 
         expected_len = 1
         while len(result) < expected_len:
-            data = self.get("/groups/{}/members.json?limit=50&offset={}".format(group_name, len(result)))
+            data = self.get(
+                "/groups/{}/members.json?limit=50&offset={}".format(
+                    group_name, len(result)
+                )
+            )
             expected_len = data["meta"]["total"]
             result += data["members"]
 
@@ -338,7 +350,7 @@ class ForumBot(BaseBot):
 
     def _get_post_ids(self, url):
         url = url.replace(self.api_url, "").split("?")[0].split("/")
-        assert url[1] == 't'
+        assert url[1] == "t"
         topic_id = url[3]
         post_number = int(url[4]) if len(url) >= 5 else 1
 
@@ -387,20 +399,28 @@ class CampBot(object):
 
         domain = "camptocamp" if not use_demo else "demov6.camptocamp"
 
-        self.wiki = WikiBot(self, "https://api.{}.org".format(domain),
-                            proxies=proxies, min_delay=min_delay)
+        self.wiki = WikiBot(
+            self,
+            "https://api.{}.org".format(domain),
+            proxies=proxies,
+            min_delay=min_delay,
+        )
         """WikiBot instance"""
 
-        self.forum = ForumBot(self, "https://forum.{}.org".format(domain),
-                              proxies=proxies, min_delay=min_delay)
+        self.forum = ForumBot(
+            self,
+            "https://forum.{}.org".format(domain),
+            proxies=proxies,
+            min_delay=min_delay,
+        )
 
         """ForumBot instance"""
 
         self.moderator = False
         """True if logged with a moderator account"""
 
-        self.forum.headers['X-Requested-With'] = "XMLHttpRequest"
-        self.forum.headers['Host'] = "forum.{}.org".format(domain)
+        self.forum.headers["X-Requested-With"] = "XMLHttpRequest"
+        self.forum.headers["Host"] = "forum.{}.org".format(domain)
 
     def login(self, login, password):
         """
@@ -412,15 +432,16 @@ class CampBot(object):
             
         """
 
-        res = self.wiki.post("/users/login", {"username": login, "password": password, "discourse": True})
+        res = self.wiki.post(
+            "/users/login", {"username": login, "password": password, "discourse": True}
+        )
         token = res["token"]
         self.moderator = "moderator" in res["roles"]
         self.wiki.headers["Authorization"] = 'JWT token="{}"'.format(token)
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
-        self.forum.headers['X-CSRF-Token'] = self.forum.get("/session/csrf")["csrf"]
+        self.forum.headers["X-CSRF-Token"] = self.forum.get("/session/csrf")["csrf"]
 
     def check_voters(self, url, allowed_group="contributeurs", aggregated_report=True):
-
         def print_aggregated_report():
 
             sort_option = options[0]
@@ -430,9 +451,9 @@ class CampBot(object):
 
             table = [[th("Vote")] + [th(option) for option in options] + [th("Total")]]
 
-            for poll_name, values in sorted(polls.items(),
-                                            key=lambda item: item[1][sort_option],
-                                            reverse=True):
+            for poll_name, values in sorted(
+                polls.items(), key=lambda item: item[1][sort_option], reverse=True
+            ):
 
                 total = sum(values.values())
 
@@ -473,7 +494,9 @@ class CampBot(object):
         post = self.forum.get_post(url=url)
 
         for poll_name in post.polls:
-            polls[poll_name] = {option.html: 0 for option in post.polls[poll_name].options}
+            polls[poll_name] = {
+                option.html: 0 for option in post.polls[poll_name].options
+            }
             for option in post.polls[poll_name].options:
                 for voter in option.get_voters(post.id, poll_name):
                     if voter.username in allowed_members or allowed_group is None:
@@ -491,7 +514,11 @@ class CampBot(object):
 
         if len(ignored_voters) != 0:
             mentions = map("{}".format, sorted(ignored_voters))
-            print("**{} ignored votes** : {}".format(len(ignored_voters), ", ".join(mentions)))
+            print(
+                "**{} ignored votes** : {}".format(
+                    len(ignored_voters), ", ".join(mentions)
+                )
+            )
 
     def get_documents(self, url_or_filename):
         """
@@ -515,7 +542,9 @@ class CampBot(object):
         """
         with open(filename, "r") as f:
             for line in f:
-                item_id, item_type = line.replace(" ", "").replace("\n", "").replace("\r", "").split("|")
+                item_id, item_type = (
+                    line.replace(" ", "").replace("\n", "").replace("\r", "").split("|")
+                )
                 item_id = int(item_id)
 
                 try:
@@ -549,10 +578,13 @@ class CampBot(object):
         documents = self.get_documents(url_or_filename)
         processors = get_automatic_replacments(self, clean_bbcode)
 
-        self._process_documents(documents, processors, langs,
-                                ask_before_saving, excluded_ids=[996571, ])
+        self._process_documents(
+            documents, processors, langs, ask_before_saving, excluded_ids=[996571,]
+        )
 
-    def _process_documents(self, documents, processors, langs, ask_before_saving=True, excluded_ids=None):
+    def _process_documents(
+        self, documents, processors, langs, ask_before_saving=True, excluded_ids=None
+    ):
 
         for document in documents:
 
@@ -569,7 +601,11 @@ class CampBot(object):
                 print("{} is a personal".format(document.get_url()))
 
             elif not document.is_valid():
-                print("{} : {}".format(document.get_url(), document.get_invalidity_reason()))
+                print(
+                    "{} : {}".format(
+                        document.get_url(), document.get_invalidity_reason()
+                    )
+                )
 
             else:
                 messages = []
@@ -586,7 +622,9 @@ class CampBot(object):
                     try:
                         document.save(comment, ask_before_saving=ask_before_saving)
                     except Exception as e:
-                        print("Error while saving {} :\n{}".format(document.get_url(), e))
+                        print(
+                            "Error while saving {} :\n{}".format(document.get_url(), e)
+                        )
 
     def export(self, url, filename=None):
         """
@@ -599,7 +637,15 @@ class CampBot(object):
 
         constructor, filters = _parse_filter(url)
 
-        headers = ["document_id", "title", "url", "activities", "available_langs", "user_name", "user_id"]
+        headers = [
+            "document_id",
+            "title",
+            "url",
+            "activities",
+            "available_langs",
+            "user_name",
+            "user_id",
+        ]
 
         data = []
         for raw in self.wiki.get_documents_raw(constructor.url_path, filters):
@@ -620,7 +666,9 @@ class CampBot(object):
 
         message = ";".join(["{" + h + "}" for h in headers]) + "\n"
 
-        with io.open(filename or constructor.url_path + ".csv", "w", encoding="utf-8") as f:
+        with io.open(
+            filename or constructor.url_path + ".csv", "w", encoding="utf-8"
+        ) as f:
             f.write(message.format(**{h: h for h in headers}))
             for item in data:
                 f.write(message.format(**{h: item.get(h, "") for h in headers}))
@@ -635,31 +683,54 @@ class CampBot(object):
 
         """
 
-        message = ("{timestamp};{type};{document_id};{version_id};{document_version};"
-                   "{title};{quality};{user};{lang}\n")
+        message = (
+            "{timestamp};{type};{document_id};{version_id};{document_version};"
+            "{title};{quality};{user};{lang}\n"
+        )
 
         with io.open(filename or "contributions.csv", "w", encoding="utf-8") as f:
+
             def write(**kwargs):
                 f.write(message.format(**kwargs))
 
-            write(timestamp="timestamp", type="type",
-                  document_id="document_id", version_id="version_id", document_version="document_version",
-                  title="title", quality="quality", user="username", lang="lang")
+            write(
+                timestamp="timestamp",
+                type="type",
+                document_id="document_id",
+                version_id="version_id",
+                document_version="document_version",
+                title="title",
+                quality="quality",
+                user="username",
+                lang="lang",
+            )
 
             for c in self.wiki.get_contributions(oldest_date=starts, newest_date=ends):
-                write(timestamp=c.written_at,
-                      type=c.document.url_path, document_id=c.document.document_id,
-                      version_id=c.version_id, document_version=c.document.version,
-                      title=c.document.title.replace(";", ","), quality=c.document.quality,
-                      user=c.user.username, lang=c.lang)
+                write(
+                    timestamp=c.written_at,
+                    type=c.document.url_path,
+                    document_id=c.document.document_id,
+                    version_id=c.version_id,
+                    document_version=c.document.version,
+                    title=c.document.title.replace(";", ","),
+                    quality=c.document.quality,
+                    user=c.user.username,
+                    lang=c.lang,
+                )
 
-    def get_modified_documents(self, lang, oldest_date=None, newest_date=None, excluded_users=()):
+    def get_modified_documents(
+        self, lang, oldest_date=None, newest_date=None, excluded_users=()
+    ):
         result = OrderedDict()
-        for contrib in self.wiki.get_contributions(oldest_date=oldest_date, newest_date=newest_date):
-            if contrib.lang == lang and \
-                    contrib.document.type not in ("i", "o", "x") and \
-                    contrib.document.type != "m" and \
-                    contrib.user.name not in excluded_users:
+        for contrib in self.wiki.get_contributions(
+            oldest_date=oldest_date, newest_date=newest_date
+        ):
+            if (
+                contrib.lang == lang
+                and contrib.document.type not in ("i", "o", "x")
+                and contrib.document.type != "m"
+                and contrib.user.name not in excluded_users
+            ):
 
                 key = (contrib.document["document_id"], contrib.document.type)
                 if key not in result:
@@ -671,31 +742,44 @@ class CampBot(object):
 
     def fix_recent_changes(self, oldest_date, newest_date, lang, ask_before_saving):
 
-        excluded_ids = [996571, ]
+        excluded_ids = [
+            996571,
+        ]
 
         processors = get_automatic_replacments(self)
 
         def get_documents():
 
-            for document_id, document_type in self.get_modified_documents(lang, oldest_date, newest_date,
-                                                                          ("rabot", "robot.topoguide", "botopo",
-                                                                           "CaBot")):
+            for document_id, document_type in self.get_modified_documents(
+                lang,
+                oldest_date,
+                newest_date,
+                ("rabot", "robot.topoguide", "botopo", "CaBot"),
+            ):
 
-                document = self.wiki.get_wiki_object(document_id, document_type=document_type)
+                document = self.wiki.get_wiki_object(
+                    document_id, document_type=document_type
+                )
 
                 if document_id not in excluded_ids:
                     yield document
 
         print("Fix recent changes")
-        self._process_documents(get_documents(), processors, [lang, ], ask_before_saving)
+        self._process_documents(get_documents(), processors, [lang,], ask_before_saving)
         print("Fix recent changes finished")
 
     def get_new_contributors(self, contrib_threshold=20, outings_threshold=15):
         with open("contributors.txt", "r") as f:
-            contributors = [map(int, line.replace("\n", "").split("|")) for line in f.readlines()]
+            contributors = [
+                map(int, line.replace("\n", "").split("|")) for line in f.readlines()
+            ]
 
-        still_members = {d["username"] for d in self.forum.get_group_members("Contributeurs")}
-        association = {d["username"] for d in self.forum.get_group_members("Association")}
+        still_members = {
+            d["username"] for d in self.forum.get_group_members("Contributeurs")
+        }
+        association = {
+            d["username"] for d in self.forum.get_group_members("Association")
+        }
 
         excluded = (
             940299,  # rabot
@@ -710,29 +794,96 @@ class CampBot(object):
             841148,  # tvmoutain
             383098,  # gite_ecologique_sigoyer_c
             437422,  # Aventures verticales des gorges du Todgha
-
             # banned
-            183887, 129043, 812098, 238764,
-
+            183887,
+            129043,
+            812098,
+            238764,
             # :'(
-            463, 233, 282, 289, 7274, 7321, 2651, 8602, 2871, 5483, 9063,
-            9938, 1083, 5926, 9921, 8454, 8719, 8861, 8737, 7956, 7588, 9657,
-            1959, 6218, 3093, 5951, 9444, 2950, 8844, 6070, 7269, 1158, 13404,
-            11673, 10490, 10103, 12667, 10888, 11108, 12003, 10133, 13563,
-            483128, 447865, 725295, 492299, 376440, 433042, 359048, 359048,
-            106910, 372413, 240992, 278481, 522816, 162444, 216336, 270681,
-            450463, 119728, 235213, 119310, 169200, 106832, 135490, 167815,
-            130633, 634898, 286748, 109426, 11879, 10057,  #
+            463,
+            233,
+            282,
+            289,
+            7274,
+            7321,
+            2651,
+            8602,
+            2871,
+            5483,
+            9063,
+            9938,
+            1083,
+            5926,
+            9921,
+            8454,
+            8719,
+            8861,
+            8737,
+            7956,
+            7588,
+            9657,
+            1959,
+            6218,
+            3093,
+            5951,
+            9444,
+            2950,
+            8844,
+            6070,
+            7269,
+            1158,
+            13404,
+            11673,
+            10490,
+            10103,
+            12667,
+            10888,
+            11108,
+            12003,
+            10133,
+            13563,
+            483128,
+            447865,
+            725295,
+            492299,
+            376440,
+            433042,
+            359048,
+            359048,
+            106910,
+            372413,
+            240992,
+            278481,
+            522816,
+            162444,
+            216336,
+            270681,
+            450463,
+            119728,
+            235213,
+            119310,
+            169200,
+            106832,
+            135490,
+            167815,
+            130633,
+            634898,
+            286748,
+            109426,
+            11879,
+            10057,  #
         )
 
         def display(reason, user, contribs, outings="?"):
-            pattern = ('<tr>'
-                       '<td><strong>{reason}</strong></td>'
-                       '<td>@{forum}</td>'
-                       '<td><a href="https://www.camptocamp.org/profiles/{user_id}">{name}</a></td>'
-                       '<td><a href="https://www.camptocamp.org/whatsnew#u={user_id}">{contribs}</a></td>'
-                       '<td><a href="https://www.camptocamp.org/outings#u={user_id}">{outings}</a></td>'
-                       '</tr>')
+            pattern = (
+                "<tr>"
+                "<td><strong>{reason}</strong></td>"
+                "<td>@{forum}</td>"
+                '<td><a href="https://www.camptocamp.org/profiles/{user_id}">{name}</a></td>'
+                '<td><a href="https://www.camptocamp.org/whatsnew#u={user_id}">{contribs}</a></td>'
+                '<td><a href="https://www.camptocamp.org/outings#u={user_id}">{outings}</a></td>'
+                "</tr>"
+            )
 
             line = pattern.format(
                 reason=reason,
@@ -741,11 +892,14 @@ class CampBot(object):
                 forum=user.forum_username,
                 contribs=contribs,
                 outings=outings,
-                user_id=user.document_id)
+                user_id=user.document_id,
+            )
 
             print(line)
 
-        print("<table><tr><th>R</th><th>Forum</th><th>Wiki</th><th>Contribs</th><th>Outings</th></tr>")
+        print(
+            "<table><tr><th>R</th><th>Forum</th><th>Wiki</th><th>Contribs</th><th>Outings</th></tr>"
+        )
 
         for user_id, contribs in contributors:
             if user_id not in excluded:
@@ -800,32 +954,46 @@ class CampBot(object):
 
         return list(result.values())
 
-    def find_closest_documents(self, constructor, longitude, latitude, buffer, filters=None):
+    def find_closest_documents(
+        self, constructor, longitude, latitude, buffer, filters=None
+    ):
         fake_object = {
             "geometry": {
-                "geom": '{' + '"type":"Point", "coordinates": [{}, {}]'.format(longitude, latitude) + '}'
+                "geom": "{"
+                + '"type":"Point", "coordinates": [{}, {}]'.format(longitude, latitude)
+                + "}"
             }
         }
 
         filters = filters or {}
-        filters["bbox"] = ",".join(map(str, [
-            longitude - buffer,
-            latitude - buffer,
-            longitude + buffer,
-            latitude + buffer
-        ]))
+        filters["bbox"] = ",".join(
+            map(
+                str,
+                [
+                    longitude - buffer,
+                    latitude - buffer,
+                    longitude + buffer,
+                    latitude + buffer,
+                ],
+            )
+        )
 
         result = []
 
-        for document in self.wiki.get_documents(constructor=constructor, filters=filters):
-            result.append({
-                "document": document,
-                "distance": utils.compute_distance(fake_object, document)
-            })
+        for document in self.wiki.get_documents(
+            constructor=constructor, filters=filters
+        ):
+            result.append(
+                {
+                    "document": document,
+                    "distance": utils.compute_distance(fake_object, document),
+                }
+            )
 
         result.sort(key=lambda item: item["distance"])
 
         return result
+
 
 def _parse_filter(url):
     url = url.replace("https://www.camptocamp.org/", "")
@@ -855,7 +1023,7 @@ def _parse_filter(url):
         "xreports": objects.Xreport,
         "articles": objects.Article,
         "books": objects.Book,
-        "routes": objects.Route
+        "routes": objects.Route,
     }[document_type]
 
     return constructor, filters
