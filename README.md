@@ -18,9 +18,11 @@ pip install campbot
 ```batch
 git clone git@github.com:c2corg/CampBot.git
 cd CampBot
-pip install -r requirements.txt -r dev-requirements.txt
+pip install -r requirements.txt -r dev-requirements.txt black==19.10b0
 pytest --cov=campbot --cov-report=html
 ```
+
+Before commit, check your format with `black campbot` :pray:
 
 ## Documentation
 

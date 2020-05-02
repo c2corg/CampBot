@@ -3,6 +3,23 @@ name: build
 on: [push]
 
 jobs:
+  check-format:
+    name: Check python format with black
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version: ["3.7"]
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python_version }}
+          architecture: x64
+      - name: Install dependancies
+        run: pip install -r requirements.txt -r dev-requirements.txt black==19.10b0
+      - name: Check python format
+        run: black --check campbot
   test:
     name: Test on python ${{ matrix.python_version }}
     runs-on: ubuntu-latest
@@ -20,4 +37,3 @@ jobs:
         run: pip install -r requirements.txt -r dev-requirements.txt
       - name: Run python tests
         run: pytest --cov campbot --cov-report=term
-
