@@ -228,7 +228,7 @@ def get_re_tests(configuration, lang):
 def get_fixed_tests(lang):
     return [HistoryTest(lang), LengthTest(lang),
             NewbieTest(), MainWaypointTest(),
-            RouteTypeTest(), DistanceTest()]
+            RouteTypeTest(), DistanceTest(), QualityTest()]
 
 
 class LengthTest(object):
@@ -389,4 +389,26 @@ class DistanceTest(object):
             return True, True
 
         distance = utils.compute_distance(old_doc, new_doc)
-        return True, distance is None or distance < 10
+        return True, distance is None or distance < 500
+
+
+class QualityTest():
+    """
+    Report when quality field changes
+    """
+    def __init__(self):
+        self.name = "Changement du champ qualité"
+        self.fail_marker = "🧹"
+        self.success_marker = ""
+
+    def __call__(self, contrib, old_version, new_version):
+        if old_version is None or new_version is None:
+            return True, True
+
+        old_doc = old_version.document
+        new_doc = new_version.document
+
+        if "redirects_to" in old_doc or "redirects_to" in new_doc:
+            return True, True
+
+        return True, old_doc.quality == new_doc.quality
