@@ -27,7 +27,8 @@ def _get_diff_url(bot, document, lang, previous_version_id, version_id):
         document.document_id,
         lang,
         previous_version_id,
-        version_id)
+        version_id,
+    )
 
 
 class ContributionReport(object):
@@ -35,15 +36,19 @@ class ContributionReport(object):
         self.contrib = contrib
         self.need_report = False
 
-        self.new = bot.wiki.get_wiki_object_version(contrib.document.document_id,
-                                                    contrib.document.type,
-                                                    contrib.lang,
-                                                    contrib.version_id)
+        self.new = bot.wiki.get_wiki_object_version(
+            contrib.document.document_id,
+            contrib.document.type,
+            contrib.lang,
+            contrib.version_id,
+        )
 
-        self.old = bot.wiki.get_wiki_object_version(contrib.document.document_id,
-                                                    contrib.document.type,
-                                                    contrib.lang,
-                                                    self.new.previous_version_id)
+        self.old = bot.wiki.get_wiki_object_version(
+            contrib.document.document_id,
+            contrib.document.type,
+            contrib.lang,
+            self.new.previous_version_id,
+        )
 
         self.emojis = []
 
@@ -61,12 +66,14 @@ class ContributionReport(object):
 
     def get_multi_report(self, lang):
 
-        result = ("  * {timestamp} "
-                  "([{diff_title}]({diff_url})) **·** "
-                  "{delta} "
-                  "{emojis} **·** "
-                  "[{username}]({user_contrib_url}) →‎ "
-                  "*{comment}*").format(
+        result = (
+            "  * {timestamp} "
+            "([{diff_title}]({diff_url})) **·** "
+            "{delta} "
+            "{emojis} **·** "
+            "[{username}]({user_contrib_url}) →‎ "
+            "*{comment}*"
+        ).format(
             timestamp=parser.parse(self.contrib.written_at).strftime("%H:%M"),
             emojis="".join(self.emojis),
             diff_title="diff" if self.new.previous_version_id else "**new**",
@@ -74,22 +81,26 @@ class ContributionReport(object):
             delta=_format_delta(self.delta),
             username=self.contrib.user.name,
             user_contrib_url=self.contrib.user.get_contributions_url(),
-            comment=self.contrib.comment if len(self.contrib.comment) else "&nbsp;"
+            comment=self.contrib.comment if len(self.contrib.comment) else "&nbsp;",
         )
 
         return result
 
     def get_mono_report(self, bot, lang):
 
-        title = bot.wiki.get_wiki_object(self.new.document.document_id, self.new.document.type).get_title(lang)
+        title = bot.wiki.get_wiki_object(
+            self.new.document.document_id, self.new.document.type
+        ).get_title(lang)
 
-        result = ("* {timestamp} "
-                  "([{diff_title}]({diff_url}) | [hist]({hist_url})) **·** "
-                  "{delta} "
-                  "{emojis} **·** "
-                  "[{doc_title}]({doc_url}) **·** "
-                  "[{username}]({user_contrib_url}) →‎ "
-                  "*{comment}*").format(
+        result = (
+            "* {timestamp} "
+            "([{diff_title}]({diff_url}) | [hist]({hist_url})) **·** "
+            "{delta} "
+            "{emojis} **·** "
+            "[{doc_title}]({doc_url}) **·** "
+            "[{username}]({user_contrib_url}) →‎ "
+            "*{comment}*"
+        ).format(
             timestamp=parser.parse(self.contrib.written_at).strftime("%H:%M"),
             emojis="".join(self.emojis),
             doc_title=title if len(title) else "*Vide*",
@@ -100,7 +111,7 @@ class ContributionReport(object):
             delta=_format_delta(self.delta),
             username=self.contrib.user.name,
             user_contrib_url=self.contrib.user.get_contributions_url(),
-            comment=self.contrib.comment if len(self.contrib.comment) else "&nbsp;"
+            comment=self.contrib.comment if len(self.contrib.comment) else "&nbsp;",
         )
 
         return result
@@ -128,8 +139,9 @@ class DocumentReport(object):
 
             delta = sum([r.delta for r in self.sub_reports])
 
-            title = bot.wiki.get_wiki_object(newest_report.new.document.document_id,
-                                             newest_report.new.document.type).get_title(lang)
+            title = bot.wiki.get_wiki_object(
+                newest_report.new.document.document_id, newest_report.new.document.type
+            ).get_title(lang)
 
             result.append(
                 "* {timestamp} "
@@ -137,17 +149,26 @@ class DocumentReport(object):
                 "({delta}) **·** "
                 "[{doc_title}]({doc_url}) → "
                 "*{modifications} modifications*".format(
-                    timestamp=parser.parse(newest_report.contrib.written_at).strftime("%H:%M"),
+                    timestamp=parser.parse(newest_report.contrib.written_at).strftime(
+                        "%H:%M"
+                    ),
                     doc_title=title if len(title) else "*Vide*",
                     doc_url=newest_report.new.document.get_url(lang),
-                    hist_url=newest_report.new.document.get_history_url(newest_report.contrib.lang),
+                    hist_url=newest_report.new.document.get_history_url(
+                        newest_report.contrib.lang
+                    ),
                     diff_title="**new**" if not oldest_report.old else "diff",
-                    diff_url=_get_diff_url(bot, newest_report.contrib.document, lang,
-                                           oldest_report.new.previous_version_id,
-                                           newest_report.contrib.version_id),
+                    diff_url=_get_diff_url(
+                        bot,
+                        newest_report.contrib.document,
+                        lang,
+                        oldest_report.new.previous_version_id,
+                        newest_report.contrib.version_id,
+                    ),
                     modifications=len(self.sub_reports),
-                    delta=_format_delta(delta)
-                ))
+                    delta=_format_delta(delta),
+                )
+            )
 
             for report in self.sub_reports:
                 result.append(report.get_multi_report(lang))
@@ -156,7 +177,9 @@ class DocumentReport(object):
 
 
 def check_recent_changes(bot, days, ask_before_saving):
-    check_message_url = "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480"
+    check_message_url = (
+        "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480"
+    )
     lang = "fr"
 
     newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -167,7 +190,9 @@ def check_recent_changes(bot, days, ask_before_saving):
     tests = get_fixed_tests(lang)
     tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
 
-    items = bot.get_modified_documents(lang=lang, oldest_date=oldest_date, newest_date=newest_date).values()
+    items = bot.get_modified_documents(
+        lang=lang, oldest_date=oldest_date, newest_date=newest_date
+    ).values()
 
     reports = []
 
@@ -189,7 +214,9 @@ def check_recent_changes(bot, days, ask_before_saving):
         messages.append("</tr>")
 
     messages.append("</table>\n[/details]\n\n----\n\n")
-    messages += [report.get_report(bot, lang) for report in reports if report.need_report]
+    messages += [
+        report.get_report(bot, lang) for report in reports if report.need_report
+    ]
 
     for m in messages:
         print(m)
@@ -226,9 +253,15 @@ def get_re_tests(configuration, lang):
 
 
 def get_fixed_tests(lang):
-    return [HistoryTest(lang), LengthTest(lang),
-            NewbieTest(), MainWaypointTest(),
-            RouteTypeTest(), DistanceTest(), QualityTest()]
+    return [
+        HistoryTest(lang),
+        LengthTest(lang),
+        NewbieTest(),
+        MainWaypointTest(),
+        RouteTypeTest(),
+        DistanceTest(),
+        QualityTest(),
+    ]
 
 
 class LengthTest(object):
@@ -280,8 +313,9 @@ class ReTest(object):
         self.lang = lang
         self.patterns = []
         self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
-        self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3",
-                                    self.name + " corrigé")
+        self.success_marker = emoji(
+            "/images/emoji/apple/white_check_mark.png?v=3", self.name + " corrigé"
+        )
 
     def __call__(self, contrib, old_version, new_version):
         old_doc = old_version.document if old_version else None
@@ -297,13 +331,20 @@ class ReTest(object):
 
 
 class HistoryTest(object):
-    activities_with_history = ["snow_ice_mixed", "mountain_climbing", "rock_climbing", "ice_climbing"]
+    activities_with_history = [
+        "snow_ice_mixed",
+        "mountain_climbing",
+        "rock_climbing",
+        "ice_climbing",
+    ]
 
     def __init__(self, lang):
         self.name = "Champ historique"
         self.lang = lang
         self.fail_marker = emoji("/images/emoji/apple/closed_book.png?v=3", self.name)
-        self.success_marker = emoji("/images/emoji/apple/green_book.png?v=3", self.name + " rempli")
+        self.success_marker = emoji(
+            "/images/emoji/apple/green_book.png?v=3", self.name + " rempli"
+        )
 
     def __call__(self, contrib, old_version, new_version):
         old_doc = old_version.document if old_version else None
@@ -313,7 +354,16 @@ class HistoryTest(object):
             if not doc or "redirects_to" in doc or doc.type != "r":
                 return True
 
-            if len([act for act in doc.activities if act in self.activities_with_history]) == 0:
+            if (
+                len(
+                    [
+                        act
+                        for act in doc.activities
+                        if act in self.activities_with_history
+                    ]
+                )
+                == 0
+            ):
                 return True
 
             locale = doc.get_locale(self.lang)
@@ -328,8 +378,14 @@ class HistoryTest(object):
 class MainWaypointTest(object):
     def __init__(self):
         self.name = "Main waypoint"
-        self.fail_marker = emoji("https://forum.camptocamp.org/uploads/default/original/2X/f/f2c72706b83fd5bd21e110cb1b9758c763905023.png", self.name)
-        self.success_marker = emoji("https://forum.camptocamp.org/uploads/default/original/2X/3/37abfd096a21bed932bea1d7150b9264abc12476.png", self.name + " corrigé")
+        self.fail_marker = emoji(
+            "https://forum.camptocamp.org/uploads/default/original/2X/f/f2c72706b83fd5bd21e110cb1b9758c763905023.png",
+            self.name,
+        )
+        self.success_marker = emoji(
+            "https://forum.camptocamp.org/uploads/default/original/2X/3/37abfd096a21bed932bea1d7150b9264abc12476.png",
+            self.name + " corrigé",
+        )
 
     def __call__(self, contrib, old_version, new_version):
         if new_version.document.type != "r":
@@ -351,8 +407,9 @@ class RouteTypeTest(object):
     def __init__(self):
         self.name = "Type de voie renseigné"
         self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
-        self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3",
-                                    self.name + " corrigé")
+        self.success_marker = emoji(
+            "/images/emoji/apple/white_check_mark.png?v=3", self.name + " corrigé"
+        )
 
     def __call__(self, contrib, old_version, new_version):
         def test(version):
@@ -362,7 +419,10 @@ class RouteTypeTest(object):
             if "redirects_to" in version.document:
                 return True
 
-            if version.document.type != "r" or "rock_climbing" not in version.document.activities:
+            if (
+                version.document.type != "r"
+                or "rock_climbing" not in version.document.activities
+            ):
                 return True
 
             climbing_outdoor_type = version.document.climbing_outdoor_type
@@ -374,8 +434,10 @@ class RouteTypeTest(object):
 class DistanceTest(object):
     def __init__(self):
         self.name = "Gros déplacement géographique"
-        self.fail_marker = emoji("/uploads/default/original/2X/0/0178043b1b70e669946f609571bd4b8f7d18e820.png",
-                                 self.name)
+        self.fail_marker = emoji(
+            "/uploads/default/original/2X/0/0178043b1b70e669946f609571bd4b8f7d18e820.png",
+            self.name,
+        )
         self.success_marker = ""
 
     def __call__(self, contrib, old_version, new_version):
@@ -392,10 +454,11 @@ class DistanceTest(object):
         return True, distance is None or distance < 500
 
 
-class QualityTest():
+class QualityTest:
     """
     Report when quality field changes
     """
+
     def __init__(self):
         self.name = "Changement du champ qualité"
         self.fail_marker = "🧹"

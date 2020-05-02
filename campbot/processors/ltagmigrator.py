@@ -10,31 +10,34 @@ class LtagCleaner(MarkdownProcessor):
         self.modifiers = []
 
         newline_converters = [
-            Converter(pattern=r'\nL#(.*)\n\nL#',
-                      repl=r"\nL#\1\nL#",
-                      flags=re.IGNORECASE),
-
-            Converter(pattern=r'\nR#(.*)\n\nR#',
-                      repl=r"\nR#\1\nR#",
-                      flags=re.IGNORECASE),
+            Converter(
+                pattern=r"\nL#(.*)\n\nL#", repl=r"\nL#\1\nL#", flags=re.IGNORECASE
+            ),
+            Converter(
+                pattern=r"\nR#(.*)\n\nR#", repl=r"\nR#\1\nR#", flags=re.IGNORECASE
+            ),
         ]
 
         # replace leading `:` by `|`
-        leading_converter = Converter(pattern=r'^([LR]#)([^\n \|\:]*)( *)\:+',
-                                      repl=r"\1\2\3|",
-                                      flags=re.IGNORECASE)
+        leading_converter = Converter(
+            pattern=r"^([LR]#)([^\n \|\:]*)( *)\:+",
+            repl=r"\1\2\3|",
+            flags=re.IGNORECASE,
+        )
 
         # replace no first sep by `|`
         no_leading_converter = Converter(
-            pattern=r'^([LR]#)([^\n \|\:]*)( +)([^\:\|\ ])',
+            pattern=r"^([LR]#)([^\n \|\:]*)( +)([^\:\|\ ])",
             repl=r"\1\2\3|\4",
-            flags=re.IGNORECASE)
+            flags=re.IGNORECASE,
+        )
 
         # replace multiple consecutives  `:` or  `|` by `|`
         multiple_converter = Converter(
-            pattern=r'( *)(<br>)?( *)([\:\|]{2,}|\|)( *)(<br>)?( *)',
+            pattern=r"( *)(<br>)?( *)([\:\|]{2,}|\|)( *)(<br>)?( *)",
             repl=r"\1\3|\5\7",
-            flags=re.IGNORECASE)
+            flags=re.IGNORECASE,
+        )
 
         def modifier(markdown):
             markdown = markdown.replace("\r\n", "\n")
@@ -138,8 +141,8 @@ class LTagNumbering(object):
     PATTERN = re.compile(_get_ltag_pattern())
 
     # helper for final formatting
-    FORMAT = '{type}#{text}'.format
-    FORMAT_UNMATCHED = '{}'.format
+    FORMAT = "{type}#{text}".format
+    FORMAT_UNMATCHED = "{}".format
 
     def __init__(self):
 
@@ -263,25 +266,25 @@ class LTagNumbering(object):
         value = match.group("mono_pitch_value")
 
         if value.isdigit():
-            return self.handle_monopitch_value(typ, is_first_cell,
-                                               value, label)
+            return self.handle_monopitch_value(typ, is_first_cell, value, label)
 
         elif len(value) == 0:
             old_value = self.value[typ if is_first_cell else row_type]
 
-            return self.handle_monopitch_offset(typ, is_first_cell,
-                                                old_value)
+            return self.handle_monopitch_offset(typ, is_first_cell, old_value)
 
         else:
             assert value[0] == "+"
             value = value[1:]
             if len(value) == 0:
-                value = '1'
+                value = "1"
 
             assert value.isdigit()
 
             old_value = self.value[typ if is_first_cell else row_type]
-            return self.handle_monopitch_offset(typ, is_first_cell, old_value, int(value))
+            return self.handle_monopitch_offset(
+                typ, is_first_cell, old_value, int(value)
+            )
             # may be
             # L#+12  (offset)
             # L#+12bis (offset with label)

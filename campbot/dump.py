@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 
 from __future__ import print_function
 
@@ -53,76 +53,102 @@ class Dump(object):
 
         self._conn = sqlite3.connect(db_name or _default_db_name)
 
-        self._conn.execute("CREATE TABLE IF NOT EXISTS document ("
-                           " document_id INTEGER PRIMARY KEY,"
-                           " type CHAR(1),"
-                           " version_id INTEGER NOT NULL,"
-                           " filename TEXT,"
-                           " geometry_geom TEXT,"
-                           " geometry_geom_detail TEXT,"
-                           " geometry_version INTEGER"
-                           ") WITHOUT ROWID;")
+        self._conn.execute(
+            "CREATE TABLE IF NOT EXISTS document ("
+            " document_id INTEGER PRIMARY KEY,"
+            " type CHAR(1),"
+            " version_id INTEGER NOT NULL,"
+            " filename TEXT,"
+            " geometry_geom TEXT,"
+            " geometry_geom_detail TEXT,"
+            " geometry_version INTEGER"
+            ") WITHOUT ROWID;"
+        )
 
-        self._conn.execute("CREATE TABLE IF NOT EXISTS locale ("
-                           " document_id INT,"
-                           " lang CHAR(2),"
-                           " field VARCHAR,"
-                           " value TEXT"
-                           ");")
+        self._conn.execute(
+            "CREATE TABLE IF NOT EXISTS locale ("
+            " document_id INT,"
+            " lang CHAR(2),"
+            " field VARCHAR,"
+            " value TEXT"
+            ");"
+        )
 
-        self._conn.execute("CREATE TABLE IF NOT EXISTS contribution ("
-                           " version_id INTEGER PRIMARY KEY DESC,"
-                           " document_id INTEGER,"
-                           " user_id INTEGER,"
-                           " type CHAR(1),"
-                           " written_at CHAR(32)"
-                           ") WITHOUT ROWID;")
+        self._conn.execute(
+            "CREATE TABLE IF NOT EXISTS contribution ("
+            " version_id INTEGER PRIMARY KEY DESC,"
+            " document_id INTEGER,"
+            " user_id INTEGER,"
+            " type CHAR(1),"
+            " written_at CHAR(32)"
+            ") WITHOUT ROWID;"
+        )
 
-        self._conn.execute("CREATE TABLE IF NOT EXISTS string_property ("
-                           " document_id INTEGER,"
-                           " field INTEGER,"
-                           " value INTEGER"
-                           ");")
+        self._conn.execute(
+            "CREATE TABLE IF NOT EXISTS string_property ("
+            " document_id INTEGER,"
+            " field INTEGER,"
+            " value INTEGER"
+            ");"
+        )
 
-        self._conn.execute("CREATE TABLE IF NOT EXISTS integer_property ("
-                           " document_id INTEGER,"
-                           " field INTEGER,"
-                           " value INTEGER"
-                           ");")
+        self._conn.execute(
+            "CREATE TABLE IF NOT EXISTS integer_property ("
+            " document_id INTEGER,"
+            " field INTEGER,"
+            " value INTEGER"
+            ");"
+        )
 
-        self._conn.execute("CREATE TABLE IF NOT EXISTS real_property ("
-                           " document_id INTEGER,"
-                           " field INTEGER,"
-                           " value REAL"
-                           ");")
+        self._conn.execute(
+            "CREATE TABLE IF NOT EXISTS real_property ("
+            " document_id INTEGER,"
+            " field INTEGER,"
+            " value REAL"
+            ");"
+        )
 
-        self._conn.execute("CREATE TABLE IF NOT EXISTS string ("
-                           " string_id INTEGER PRIMARY KEY,"
-                           " value TEXT"
-                           ");")
+        self._conn.execute(
+            "CREATE TABLE IF NOT EXISTS string ("
+            " string_id INTEGER PRIMARY KEY,"
+            " value TEXT"
+            ");"
+        )
 
-        self._conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS IX_document_document_id "
-                           " ON document(document_id);")
+        self._conn.execute(
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_document_document_id "
+            " ON document(document_id);"
+        )
 
-        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_locale_document_id "
-                           " ON locale(document_id);")
+        self._conn.execute(
+            "CREATE INDEX IF NOT EXISTS IX_locale_document_id "
+            " ON locale(document_id);"
+        )
 
-        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_contribution_document_id "
-                           " ON contribution(document_id);")
+        self._conn.execute(
+            "CREATE INDEX IF NOT EXISTS IX_contribution_document_id "
+            " ON contribution(document_id);"
+        )
 
-        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_real_property_document_id "
-                           " ON real_property(document_id);")
+        self._conn.execute(
+            "CREATE INDEX IF NOT EXISTS IX_real_property_document_id "
+            " ON real_property(document_id);"
+        )
 
-        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_integer_property_document_id "
-                           " ON integer_property(document_id);")
+        self._conn.execute(
+            "CREATE INDEX IF NOT EXISTS IX_integer_property_document_id "
+            " ON integer_property(document_id);"
+        )
 
-        self._conn.execute("CREATE INDEX IF NOT EXISTS IX_string_property_document_id "
-                           " ON string_property(document_id);")
+        self._conn.execute(
+            "CREATE INDEX IF NOT EXISTS IX_string_property_document_id "
+            " ON string_property(document_id);"
+        )
 
         def regexp(y, x, search=re.search):
             return 1 if search(y, str(x)) else 0
 
-        self._conn.create_function('regexp', 2, regexp)
+        self._conn.create_function("regexp", 2, regexp)
 
         self.string_ids = {}
 
@@ -153,24 +179,30 @@ class Dump(object):
             key_id = self.get_string_id(key, cur)
 
             if isinstance(value, (bool, int)):
-                cur.execute("INSERT INTO integer_property"
-                            "(document_id,field,value)"
-                            "VALUES (?,?,?)",
-                            (doc.document_id, key_id, value))
+                cur.execute(
+                    "INSERT INTO integer_property"
+                    "(document_id,field,value)"
+                    "VALUES (?,?,?)",
+                    (doc.document_id, key_id, value),
+                )
 
             elif isinstance(value, float):
-                cur.execute("INSERT INTO real_property"
-                            "(document_id,field,value)"
-                            "VALUES (?,?,?)",
-                            (doc.document_id, key_id, value))
+                cur.execute(
+                    "INSERT INTO real_property"
+                    "(document_id,field,value)"
+                    "VALUES (?,?,?)",
+                    (doc.document_id, key_id, value),
+                )
 
             elif isinstance(value, basestring):
                 string_id = self.get_string_id(value, cur)
 
-                cur.execute("INSERT INTO string_property"
-                            "(document_id,field,value)"
-                            "VALUES (?,?,?)",
-                            (doc.document_id, key_id, string_id))
+                cur.execute(
+                    "INSERT INTO string_property"
+                    "(document_id,field,value)"
+                    "VALUES (?,?,?)",
+                    (doc.document_id, key_id, string_id),
+                )
             else:
                 raise NotImplementedError(key, value)
 
@@ -213,12 +245,14 @@ class Dump(object):
 
         assert len(geometry) == 0
 
-        cur.execute("INSERT INTO document"
-                    "(document_id, type, version_id,"
-                    "geometry_version,geometry_geom_detail,geometry_geom,"
-                    "filename)"
-                    "VALUES (?,?,?,?,?,?,?)",
-                    props)
+        cur.execute(
+            "INSERT INTO document"
+            "(document_id, type, version_id,"
+            "geometry_version,geometry_geom_detail,geometry_geom,"
+            "filename)"
+            "VALUES (?,?,?,?,?,?,?)",
+            props,
+        )
 
         for key in doc:
             value = doc[key]
@@ -230,13 +264,18 @@ class Dump(object):
 
                     for field in locale:
                         value = locale[field]
-                        if isinstance(value, str) and len(value.strip()) != 0 and field not in (
-                            "version", "topic_id"):
+                        if (
+                            isinstance(value, str)
+                            and len(value.strip()) != 0
+                            and field not in ("version", "topic_id")
+                        ):
                             field_id = self.get_string_id(field, cur)
-                            cur.execute("INSERT INTO locale"
-                                        "(document_id,lang,field,value)"
-                                        "VALUES (?,?,?,?)",
-                                        (doc.document_id, lang, field_id, value))
+                            cur.execute(
+                                "INSERT INTO locale"
+                                "(document_id,lang,field,value)"
+                                "VALUES (?,?,?,?)",
+                                (doc.document_id, lang, field_id, value),
+                            )
             else:
                 self._insert_prop(doc, key, value, cur)
 
@@ -273,7 +312,9 @@ class Dump(object):
 
         cur = self._conn.cursor()
 
-        for i, contrib in enumerate(bot.wiki.get_contributions(oldest_date="1990-12-25")):
+        for i, contrib in enumerate(
+            bot.wiki.get_contributions(oldest_date="1990-12-25")
+        ):
             if highest_version_id >= contrib.version_id:
                 break
 
@@ -281,12 +322,18 @@ class Dump(object):
 
             doc = contrib.document
             try:
-                cur.execute("INSERT INTO contribution"
-                            "(document_id, type, version_id, user_id, written_at)"
-                            "VALUES (?,?,?,?,?)",
-                            (doc.document_id, doc.type, contrib.version_id,
-                             contrib.user.user_id,
-                             contrib.written_at))
+                cur.execute(
+                    "INSERT INTO contribution"
+                    "(document_id, type, version_id, user_id, written_at)"
+                    "VALUES (?,?,?,?,?)",
+                    (
+                        doc.document_id,
+                        doc.type,
+                        contrib.version_id,
+                        contrib.user.user_id,
+                        contrib.written_at,
+                    ),
+                )
             except sqlite3.IntegrityError:
                 pass
 
@@ -301,7 +348,9 @@ class Dump(object):
 
         cur = self._conn.cursor()
 
-        for i, contrib in enumerate(bot.wiki.get_contributions(oldest_date="2018-01-24")):
+        for i, contrib in enumerate(
+            bot.wiki.get_contributions(oldest_date="2018-01-24")
+        ):
             if highest_version_id >= contrib.version_id:
                 break
 
@@ -310,7 +359,12 @@ class Dump(object):
                 still_done.append(key)
                 doc = contrib.get_full_document()
 
-                self.insert(cur=cur, contrib=contrib, version_id=contrib.version_id, base_doc=doc)
+                self.insert(
+                    cur=cur,
+                    contrib=contrib,
+                    version_id=contrib.version_id,
+                    base_doc=doc,
+                )
                 print(i, contrib.written_at, key, "inserted")
 
         self._conn.commit()
@@ -324,15 +378,17 @@ class Dump(object):
         return self._conn.execute(sql)
 
     def search(self, pattern, lang=None):
-        sql = ("SELECT document.document_id, document.type, locale.lang, string.value, title.value, locale.value "
-               "FROM locale "
-               "LEFT JOIN document ON document.document_id=locale.document_id "
-               "LEFT JOIN string ON string.string_id=locale.field "
-               "LEFT JOIN locale as title ON document.document_id=title.document_id "
-               "   AND title.lang=locale.lang "
-               "   AND title.field=29 "
-               "WHERE locale.value REGEXP ? "
-               "AND string.value!='title' AND string.value!='title_prefix'")
+        sql = (
+            "SELECT document.document_id, document.type, locale.lang, string.value, title.value, locale.value "
+            "FROM locale "
+            "LEFT JOIN document ON document.document_id=locale.document_id "
+            "LEFT JOIN string ON string.string_id=locale.field "
+            "LEFT JOIN locale as title ON document.document_id=title.document_id "
+            "   AND title.lang=locale.lang "
+            "   AND title.field=29 "
+            "WHERE locale.value REGEXP ? "
+            "AND string.value!='title' AND string.value!='title_prefix'"
+        )
 
         if lang is not None:
             sql += " AND locale.lang=?"
@@ -369,14 +425,17 @@ class Dump(object):
 
     def re_update(self):
         from campbot import CampBot
+
         # c = self._conn.execute("SELECT document.document_id, document.type FROM document "
         #                        "LEFT OUTER JOIN string_property "
         #                        "    ON string_property.document_id = document.document_id "
         #                        "WHERE field IS NULL")
 
-        c = self._conn.execute("SELECT locale.document_id, document.type FROM locale "
-                               "LEFT JOIN document on document.document_id=locale.document_id "
-                               "WHERE field='blob'")
+        c = self._conn.execute(
+            "SELECT locale.document_id, document.type FROM locale "
+            "LEFT JOIN document on document.document_id=locale.document_id "
+            "WHERE field='blob'"
+        )
 
         result = c.fetchall()
 
@@ -402,7 +461,13 @@ class Dump(object):
             else:
                 t = time()
                 self.insert(cur=cur, base_doc=doc)
-                print("{}/{}".format(i, len(result)), document_id, typ, get_time, int((time() - t) * 1000))
+                print(
+                    "{}/{}".format(i, len(result)),
+                    document_id,
+                    typ,
+                    get_time,
+                    int((time() - t) * 1000),
+                )
 
         self._conn.commit()
 
@@ -418,8 +483,11 @@ def _search(pattern, lang=None):
 
     with open("ids.txt", "w") as f:
         for doc_id, typ, lang, field, title, _ in dump.search(pattern, lang):
-            print("* [{}](https://www.camptocamp.org/{}/{}/{})".format(title, get_constructor(typ).url_path, doc_id,
-                                                                       lang))
+            print(
+                "* [{}](https://www.camptocamp.org/{}/{}/{})".format(
+                    title, get_constructor(typ).url_path, doc_id, lang
+                )
+            )
 
             f.write("{}|{}\n".format(doc_id, typ))
 
@@ -475,7 +543,7 @@ if __name__ == "__main__":
     leading_lf = "^\n"
     too_many_lf = "\n\n\n"
 
-    wrong_minute_abbr = "\d+ *mn"
+    wrong_minute_abbr = r"\d+ *mn"
 
     nospace = r"(^|[| \n\(])(\d+[-xX])?\d+(m|km|h|mn|min|s)($|[ |,.?!:;\)\n])"
 
@@ -499,8 +567,8 @@ if __name__ == "__main__":
     false_title_1 = r"(\n|^)#[^#]"
     false_title_bold = r"(\n|^)#+[^\n]*\*"
 
-#    Dump().complete()
-#    _search(r"[dD][ue] (la|là|parking|sommet|col|refuge|relais) (redescendre|remonter|suivre|traverser|tourner|se diriger|prendre)", "fr")
+    #    Dump().complete()
+    #    _search(r"[dD][ue] (la|là|parking|sommet|col|refuge|relais) (redescendre|remonter|suivre|traverser|tourner|se diriger|prendre)", "fr")
 
     _search(r"\b\d+ h( \d+)?\b", "fr")
 
