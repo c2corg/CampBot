@@ -29,7 +29,7 @@ class MarkdownProcessor(object):
             if self.lang is None or locale.lang == self.lang:
                 if langs is None or locale.lang in langs:
                     for field in locale.get_locale_fields():
-                        if field in locale and locale[field] and field not in ("title", "slope"):
+                        if field in locale and locale[field] and field not in ("title", "slope", "external_resources"):
                             markdown = locale[field]
                             new_value = self.modify(markdown)
                             updated = updated or (new_value != markdown)

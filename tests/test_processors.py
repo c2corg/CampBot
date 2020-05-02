@@ -461,7 +461,10 @@ def test_all_replacements(fix_requests):
         "locales": [
             {
                 "lang": "fr",
-                "description": source
+                "title": source,
+                "description": source,
+                "slope": source,
+                "external_resources": source
             }
         ]
     })
@@ -471,6 +474,9 @@ def test_all_replacements(fix_requests):
             processor(r, ["fr"])
 
     assert r.get_locale("fr").description == corrected
+    assert r.get_locale("fr").title == source, "title field must no be corrected"
+    assert r.get_locale("fr").slope == source, "slope field must no be corrected"
+    assert r.get_locale("fr").external_resources == source, "external_resources field must no be corrected"
 
 
 def test_diacritics_replacements():
