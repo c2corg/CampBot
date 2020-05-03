@@ -8,6 +8,7 @@ from .cleaners import (
     UpperFix,
     OrthographicProcessor,
     RemoveColonInHeader,
+    FixFakeExternalLinks,
 )
 from .ltagmigrator import LtagCleaner, LtagMigrator
 
@@ -55,5 +56,6 @@ def get_automatic_replacments(bot, clean_bbcode=False, replacements_version=None
     processors.append(MultiplicationSign())
     processors.append(UpperFix())
     processors.append(RemoveColonInHeader())
+    processors.append(FixFakeExternalLinks())
 
     return processors

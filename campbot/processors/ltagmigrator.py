@@ -108,7 +108,7 @@ def _get_ltag_pattern():
 
     # mono pitch
     mono_pitch_label = p("mono_pitch_label", raw_label)
-    mono_pitch_value = p("mono_pitch_value", "\+?\d*")
+    mono_pitch_value = p("mono_pitch_value", r"\+?\d*")
     mono_pitch = p("mono_pitch", mono_pitch_value + mono_pitch_label + "?")
 
     local_ref = p("local_ref", r"!")
