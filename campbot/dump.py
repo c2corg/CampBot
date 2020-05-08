@@ -521,7 +521,7 @@ if __name__ == "__main__":
     forum_links_pattern = r"#t\d+"  # 1
     wrong_pipe_pattern = r"(\n|^)L#\~ *\|"  # 0
     empty_link_label = r"\[ *\]\("  # 0
-    important_pattern = "\[ *(important|warning)"  # 0
+    important_pattern = r"\[ *(important|warning)"  # 0
 
     img_not_first_pattern = r"[^\n\]`]\[img"
 
@@ -531,7 +531,7 @@ if __name__ == "__main__":
     video_youtube_short = r"\[video\]https?:\/\/(?:www\.)?youtu\.be"
     daily_video = r"\[video\]https?://(?:www\.)?dailymotion\.com"
     daily_short = r"\[video\]https?://(?:www\.)?dai\.ly"
-    vimeo_short = "\[video\]https?://(?:www\.)?vimeo\.com"
+    vimeo_short = r"\[video\]https?://(?:www\.)?vimeo\.com"
 
     video_pattern = r"youtube"
 

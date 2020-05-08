@@ -159,3 +159,27 @@ class DiacriticsFix(OrthographicProcessor):
             Converter("a\u0302", "â"),
             Converter("e\u0302", "ê"),
         ]
+
+
+class FixFakeExternalLinks(MarkdownProcessor):
+    ready_for_production = True
+    comment = "Convert external link to wikilink"
+
+    def init_modifiers(self):
+        def build_pattern(url_ending):
+            return (
+                r"\[([^\]\n]*)\]\(https://www.camptocamp.org/(articles|routes|waypoints|outings|books|images|areas)/"
+                + url_ending
+            )
+
+        self.modifiers = [
+            Converter(build_pattern(r"(\d+)/?#?\)"), r"[[\2/\3|\1]]",),
+            Converter(
+                build_pattern(r"(\d+)/([a-z]{2})(/[\w-]*)?#?\)"), r"[[\2/\3|\1]]",
+            ),
+            Converter(build_pattern(r"(\d+)#([a-z0-9\-]+)\)"), r"[[\2/\3#\4|\1]]",),
+            Converter(
+                build_pattern(r"(\d+)/([a-z]{2})(/[\w-]*)?#([a-z0-9\-]+)\)"),
+                r"[[\2/\3/\4#\6|\1]]",
+            ),
+        ]
