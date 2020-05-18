@@ -261,6 +261,8 @@ def get_fixed_tests(lang):
         RouteTypeTest(),
         DistanceTest(),
         QualityTest(),
+        MissingRoute(),
+        MissingAccess(),
     ]
 
 
@@ -461,7 +463,7 @@ class QualityTest:
 
     def __init__(self):
         self.name = "Changement du champ qualité"
-        self.fail_marker = "🧹"
+        self.fail_marker = ""
         self.success_marker = ""
 
     def __call__(self, contrib, old_version, new_version):
@@ -475,3 +477,62 @@ class QualityTest:
             return True, True
 
         return True, old_doc.quality == new_doc.quality
+    
+class MissingAccess():
+    """
+    Route with no access
+    """
+    def __init__(self):
+        self.name = "Accès Manquant"
+        self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
+        self.success_marker = ""
+
+    def __call__(self, contrib, old_version, new_version):
+        def test(version):
+            if not version:
+                return True
+
+            if "redirects_to" in version.document:
+                return True
+
+            if version.document.type != "r":
+                return True
+
+            waypoints = version.document.associations.waypoints
+            bool_value = False
+            for waypoint in waypoints:
+                if waypoints.waypoint_type = "access":
+                    bool_value=True
+                    
+            return bool_value
+
+        return True, test(new_version)
+
+class MissingRoute():
+    """
+    Climbing Site with no route
+    """
+    def __init__(self):
+        self.name = "Accès Pédestre Manquant"
+        self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
+        self.success_marker = ""
+
+    def __call__(self, contrib, old_version, new_version):
+        def test(version):
+            if not version:
+                return True
+
+            if "redirects_to" in version.document:
+                return True
+
+            if (
+                version.document.type != "w"
+                or "climbing_outdoor" not in version.document.wtyp
+            ):
+                return True
+
+            routes = version.document.associations.all_routes
+            return len(association.get("documents")) != 0
+
+        return True, test(new_version)
+    
