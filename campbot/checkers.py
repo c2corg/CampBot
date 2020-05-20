@@ -485,7 +485,7 @@ class MissingAccess():
     def __init__(self):
         self.name = "Accès Manquant"
         self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
-        self.success_marker = ""
+        self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3", "Accès corrigé")
 
     def __call__(self, contrib, old_version, new_version):
         def test(version):
