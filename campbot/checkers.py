@@ -506,7 +506,7 @@ class MissingAccess():
                     
             return bool_value
 
-        return True, test(new_version)
+        return test(old_version), test(new_version)
 
 class MissingRoute():
     """
