@@ -534,5 +534,5 @@ class MissingRoute():
             routes = version.document.associations.all_routes
             return len(association.get("documents")) != 0
 
-        return True, test(new_version)
+        return test(old_version), test(new_version)
     
