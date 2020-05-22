@@ -1,5 +1,40 @@
 # coding: utf-8
 
+
+"""
+## Test contributions validity, and report suspicious contribution.
+
+The main function is `check_recent_changes(bot, days)`, and it will test contributions made in the <days> past days. 
+
+Tests can be in two categories: 
+
+* ReTest (re stands for regular expression). It tests textual contents based on patterns. Patterns are defined in the 
+  very first post on thread where will be reported the check report. If a pattern is found on the new version, and not 
+  in the old one, the contribution will be reported.
+* Fixed tests, can be a lot of things. They are scripted here
+
+A test is simply a callable : test(contrib, old_version, new_version). It returns two boolean, where `False` means
+"bad quality", and `True` means "good quality".
+
+* First one is the test result on old version;
+* second one is the test result on old version.
+
+Then, you can have 4 results: 
+
+* `(False, False)` => it was bad, it's still bad
+* `(True, True)` => it was good, it's still good
+* `(False, True)` => it was bad, it's now fixed
+* `(True, False)` => it was good, it's now bad => REPORT
+
+You can use them in two different maneer:
+
+1. what you are testing is on a document version: you must write a function that test a given version, let's call
+  it test(), and return `test(old), test(new)`. For instance *a document must contains this pattern*.
+2. Or what you are testing is computed from both version. Then, return `True, test(old, new)`. For instance, *the
+  text length must not decrease more than 50%*.
+"""
+
+
 from __future__ import unicode_literals, print_function, division
 
 from dateutil import parser
@@ -185,7 +220,7 @@ def check_recent_changes(bot, days, ask_before_saving):
     newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
     oldest_date = newest_date - datetime.timedelta(days=days)
 
-    bot.fix_recent_changes(oldest_date, newest_date, lang, ask_before_saving)
+    # bot.fix_recent_changes(oldest_date, newest_date, lang, ask_before_saving)
 
     tests = get_fixed_tests(lang)
     tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
@@ -221,8 +256,8 @@ def check_recent_changes(bot, days, ask_before_saving):
     for m in messages:
         print(m)
 
-    if len(messages) != 0:
-        bot.forum.post_message("\n".join(messages), check_message_url)
+    # if len(messages) != 0:
+    #     bot.forum.post_message("\n".join(messages), check_message_url)
 
 
 def emoji(src, text):
@@ -261,8 +296,6 @@ def get_fixed_tests(lang):
         RouteTypeTest(),
         DistanceTest(),
         QualityTest(),
-        MissingRoute(),
-        MissingAccess(),
     ]
 
 
@@ -477,62 +510,3 @@ class QualityTest:
             return True, True
 
         return True, old_doc.quality == new_doc.quality
-    
-class MissingAccess():
-    """
-    Route with no access
-    """
-    def __init__(self):
-        self.name = "Accès Manquant"
-        self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
-        self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3", "Accès corrigé")
-
-    def __call__(self, contrib, old_version, new_version):
-        def test(version):
-            if not version:
-                return True
-
-            if "redirects_to" in version.document:
-                return True
-
-            if version.document.type != "r":
-                return True
-
-            waypoints = version.document.associations.waypoints
-            bool_value = False
-            for waypoint in waypoints:
-                if waypoints.waypoint_type = "access":
-                    bool_value=True
-                    
-            return bool_value
-
-        return test(old_version), test(new_version)
-
-class MissingRoute():
-    """
-    Climbing Site with no route
-    """
-    def __init__(self):
-        self.name = "Accès Pédestre Manquant"
-        self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
-        self.success_marker = emoji("/images/emoji/apple/white_check_mark.png?v=3", "Accès corrigé")
-
-    def __call__(self, contrib, old_version, new_version):
-        def test(version):
-            if not version:
-                return True
-
-            if "redirects_to" in version.document:
-                return True
-
-            if (
-                version.document.type != "w"
-                or "climbing_outdoor" not in version.document.wtyp
-            ):
-                return True
-
-            routes = version.document.associations.all_routes
-            return len(association.get("documents")) != 0
-
-        return test(old_version), test(new_version)
-    

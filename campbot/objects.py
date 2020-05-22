@@ -63,12 +63,12 @@ class BotObject(dict):
     def __getattr__(self, item):
         if item.startswith("_"):
             raise AttributeError(
-                "Object {} has not attribute {}".format(self.__class__.name, item)
+                "Object {} has not attribute {}".format(self.__class__.__name__, item)
             )
 
         if item not in self:  # pragma: no cover
             raise AttributeError(
-                "Object {} has not attribute {}".format(self.__class__.name, item)
+                "Object {} has not attribute {}".format(self.__class__.__name__, item)
             )
 
         return self[item]
