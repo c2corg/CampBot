@@ -168,7 +168,7 @@ class FixFakeExternalLinks(MarkdownProcessor):
     def init_modifiers(self):
         def build_pattern(url_ending):
             return (
-                r"\[([^\]\n]*)\]\(https://www.camptocamp.org/(articles|routes|waypoints|outings|books|images|areas)/"
+                r"\[([^\]\n]*)\]\(https?://www.camptocamp.org/(articles|routes|waypoints|outings|books|images|areas)/"
                 + url_ending
             )
 

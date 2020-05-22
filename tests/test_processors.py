@@ -453,6 +453,10 @@ def test_fake_wiki_links():
             "[[articles/12345|label]]",
         ),
         (
+            "[label](http://www.camptocamp.org/articles/12345)",
+            "[[articles/12345|label]]",
+        ),
+        (
             "[label](https://www.camptocamp.org/outings/12345)",
             "[[outings/12345|label]]",
         ),

@@ -998,8 +998,8 @@ class CampBot(object):
 def _parse_filter(url):
     url = url.replace("https://www.camptocamp.org/", "")
 
-    if "#" in url:
-        document_type, filters = url.split("#", 1)
+    if "#" in url or "?" in url:
+        document_type, filters = url.split("?" if "?" in url else "#", 1)
         if len(filters) != 0:
             filters = {k: v for k, v in (v.split("=") for v in filters.split("&"))}
         else:

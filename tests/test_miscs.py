@@ -200,6 +200,7 @@ def test_misc():
     core._parse_filter("outings#")
     core._parse_filter("outings#bbox=1%252C2%252C3%252C4")
     core._parse_filter("outings#act=viaferrata")
+    core._parse_filter("outings?act=viaferrata")
 
 
 def get_main_args(action, others=None):
