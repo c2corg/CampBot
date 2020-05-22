@@ -463,7 +463,7 @@ class QualityTest:
 
     def __init__(self):
         self.name = "Changement du champ qualité"
-        self.fail_marker = ""
+        self.fail_marker = "🧹"
         self.success_marker = ""
 
     def __call__(self, contrib, old_version, new_version):
