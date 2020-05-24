@@ -27,6 +27,7 @@ messages = [
     _wiki('GET', r'(outings|routes|articles|waypoints|xreports)\?.*offset=30.*', {"documents": []}),
     _wiki('GET', r'routes/123/fr/(123|122)', get_message("redirection")),
     _wiki('GET', r'articles/996571', get_message("conf_replacements")),
+    _wiki('GET', r'waypoints/\d+/../\d+', get_message("waypoint_version")),
     _wiki('GET', r'routes/293549/fr/(1738922|1738528)', get_message("route_version")),
     _wiki('GET', r'routes/293549/fr/(880880|978249|478470|1738923)', get_message("route_version2")),
     _wiki('GET', r'routes/952126', {'protected': True, 'document_id': 952126}),

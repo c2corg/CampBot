@@ -6,32 +6,14 @@
 
 The main function is `check_recent_changes(bot, days)`, and it will test contributions made in the <days> past days. 
 
-Tests can be in two categories: 
+A test can inherits one of those two classes:
 
-* ReTest (re stands for regular expression). It tests textual contents based on patterns. Patterns are defined in the 
-  very first post on thread where will be reported the check report. If a pattern is found on the new version, and not 
-  in the old one, the contribution will be reported.
-* Fixed tests, can be a lot of things. They are scripted here
-
-A test is simply a callable : test(contrib, old_version, new_version). It returns two boolean, where `False` means
-"bad quality", and `True` means "good quality".
-
-* First one is the test result on old version;
-* second one is the test result on old version.
-
-Then, you can have 4 results: 
-
-* `(False, False)` => it was bad, it's still bad
-* `(True, True)` => it was good, it's still good
-* `(False, True)` => it was bad, it's now fixed
-* `(True, False)` => it was good, it's now bad => REPORT
-
-You can use them in two different maneer:
-
-1. what you are testing is on a document version: you must write a function that test a given version, let's call
-  it test(), and return `test(old), test(new)`. For instance *a document must contains this pattern*.
-2. Or what you are testing is computed from both version. Then, return `True, test(old, new)`. For instance, *the
-  text length must not decrease more than 50%*.
+* `BaseVersionTest()`:
+  * implements `test_document(document)`
+  * returns `True` if document is OK
+* `BaseContributionTest()`:
+  * implements `test_contribution(old_doc, new_doc)`
+  * returns `True` if going from old_doc to old_doc is OK (for instance, not a too big move)
 """
 
 
@@ -220,7 +202,7 @@ def check_recent_changes(bot, days, ask_before_saving):
     newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
     oldest_date = newest_date - datetime.timedelta(days=days)
 
-    # bot.fix_recent_changes(oldest_date, newest_date, lang, ask_before_saving)
+    bot.fix_recent_changes(oldest_date, newest_date, lang, ask_before_saving)
 
     tests = get_fixed_tests(lang)
     tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
@@ -256,8 +238,8 @@ def check_recent_changes(bot, days, ask_before_saving):
     for m in messages:
         print(m)
 
-    # if len(messages) != 0:
-    #     bot.forum.post_message("\n".join(messages), check_message_url)
+    if len(messages) != 0:
+        bot.forum.post_message("\n".join(messages), check_message_url)
 
 
 def emoji(src, text):
@@ -299,23 +281,63 @@ def get_fixed_tests(lang):
     ]
 
 
-class LengthTest(object):
-    def __init__(self, lang):
-        self.name = "Grosse suppression"
+class _BaseTest(object):
+    def __init__(self, name, lang=None):
+        self.name = name
         self.lang = lang
+
+    def __call__(self, contrib, old_version, new_version):
+        raise NotImplementedError()
+
+
+class BaseVersionTest(_BaseTest):
+    def __init__(self, name, lang=None):
+        super(BaseVersionTest, self).__init__(name, lang)
+
+    def __call__(self, contrib, old_version, new_version):
+        return self.test_version(old_version), self.test_version(new_version)
+
+    def test_version(self, version):
+        if not version or not version.document:
+            return True
+
+        if "redirects_to" in version.document:
+            return True
+
+        return self.test_document(document=version.document)
+
+    def test_document(self, document):
+        raise NotImplementedError()
+
+
+class BaseContributionTest(_BaseTest):
+    def __init__(self, name, lang=None):
+        super(BaseContributionTest, self).__init__(name, lang)
+
+    def __call__(self, contrib, old_version, new_version):
+        if not old_version or not new_version:
+            return True, True
+
+        if not old_version.document or not new_version.document:
+            return True, True
+
+        old_doc = old_version.document
+        new_doc = new_version.document
+
+        if "redirects_to" in old_doc or "redirects_to" in new_doc:
+            return True, True
+
+        return True, self.test_contribution(old_doc, new_doc)
+
+
+class LengthTest(BaseContributionTest):
+    def __init__(self, lang):
+        super(LengthTest, self).__init__(name="Grosse suppression", lang=lang)
 
         self.fail_marker = emoji("/images/emoji/apple/rage.png?v=3", self.name)
         self.success_marker = ""
 
-    def __call__(self, contrib, old_version, new_version):
-        old_doc = old_version.document if old_version else None
-        new_doc = new_version.document if new_version else None
-
-        if not old_doc or "redirects_to" in old_doc:
-            return True, True
-
-        if not new_doc or "redirects_to" in new_doc:
-            return True, True
+    def test_contribution(self, old_doc, new_doc):
 
         result = True
 
@@ -325,12 +347,12 @@ class LengthTest(object):
         if old_locale_length != 0 and new_locale_length / old_locale_length < 0.5:
             result = False
 
-        return True, result
+        return result
 
 
-class NewbieTest(object):
+class NewbieTest(_BaseTest):
     def __init__(self):
-        self.name = "Nouvel utilisateur"
+        super(NewbieTest, self).__init__(name="Nouvel utilisateur")
 
         self.fail_marker = emoji("/images/emoji/apple/gift.png?v=3", self.name)
         self.success_marker = ""
@@ -339,33 +361,23 @@ class NewbieTest(object):
         if contrib.user.is_newbie():
             return True, False
         else:
-            return False, False
+            return True, True
 
 
-class ReTest(object):
+class ReTest(BaseVersionTest):
     def __init__(self, name, lang):
-        self.name = name
-        self.lang = lang
+        super(ReTest, self).__init__(name=name, lang=lang)
         self.patterns = []
         self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
         self.success_marker = emoji(
             "/images/emoji/apple/white_check_mark.png?v=3", self.name + " corrigé"
         )
 
-    def __call__(self, contrib, old_version, new_version):
-        old_doc = old_version.document if old_version else None
-        new_doc = new_version.document if new_version else None
-
-        def test(doc):
-            if not doc or "redirects_to" in doc:
-                return True
-
-            return not doc.search(self.patterns, self.lang)
-
-        return test(old_doc), test(new_doc)
+    def test_document(self, document):
+        return not document.search(self.patterns, self.lang)
 
 
-class HistoryTest(object):
+class HistoryTest(BaseVersionTest):
     activities_with_history = [
         "snow_ice_mixed",
         "mountain_climbing",
@@ -374,45 +386,39 @@ class HistoryTest(object):
     ]
 
     def __init__(self, lang):
-        self.name = "Champ historique"
-        self.lang = lang
+        super(HistoryTest, self).__init__(name="Champ historique", lang=lang)
         self.fail_marker = emoji("/images/emoji/apple/closed_book.png?v=3", self.name)
         self.success_marker = emoji(
             "/images/emoji/apple/green_book.png?v=3", self.name + " rempli"
         )
 
-    def __call__(self, contrib, old_version, new_version):
-        old_doc = old_version.document if old_version else None
-        new_doc = new_version.document if new_version else None
-
-        def test(doc):
-            if not doc or "redirects_to" in doc or doc.type != "r":
-                return True
-
-            if (
-                len(
-                    [
-                        act
-                        for act in doc.activities
-                        if act in self.activities_with_history
-                    ]
-                )
-                == 0
-            ):
-                return True
-
-            locale = doc.get_locale(self.lang)
-            if locale and (not locale.route_history or len(locale.route_history) == 0):
-                return False
-
+    def test_document(self, document):
+        if document.type != "r":
             return True
 
-        return test(old_doc), test(new_doc)
+        if (
+            len(
+                [
+                    act
+                    for act in document.activities
+                    if act in self.activities_with_history
+                ]
+            )
+            == 0
+        ):
+            return True
+
+        locale = document.get_locale(self.lang)
+        if locale and (not locale.route_history or len(locale.route_history) == 0):
+            return False
+
+        return True
 
 
-class MainWaypointTest(object):
+class MainWaypointTest(BaseVersionTest):
     def __init__(self):
-        self.name = "Main waypoint"
+        super(MainWaypointTest, self).__init__(name="Main waypoint")
+
         self.fail_marker = emoji(
             "https://forum.camptocamp.org/uploads/default/original/2X/f/f2c72706b83fd5bd21e110cb1b9758c763905023.png",
             self.name,
@@ -422,91 +428,53 @@ class MainWaypointTest(object):
             self.name + " corrigé",
         )
 
-    def __call__(self, contrib, old_version, new_version):
-        if new_version.document.type != "r":
-            return True, True
+    def test_document(self, document):
+        if document.type != "r":
+            return True
 
-        def test(version):
-            if not version:
-                return True
-
-            if "redirects_to" in version.document:
-                return True
-
-            return version.document.main_waypoint_id is not None
-
-        return test(old_version), test(new_version)
+        return document.main_waypoint_id is not None
 
 
-class RouteTypeTest(object):
+class RouteTypeTest(BaseVersionTest):
     def __init__(self):
-        self.name = "Type de voie renseigné"
+        super(RouteTypeTest, self).__init__(name="Type de voie renseigné")
         self.fail_marker = emoji("/images/emoji/apple/red_circle.png?v=3", self.name)
         self.success_marker = emoji(
             "/images/emoji/apple/white_check_mark.png?v=3", self.name + " corrigé"
         )
 
-    def __call__(self, contrib, old_version, new_version):
-        def test(version):
-            if not version:
-                return True
+    def test_document(self, document):
 
-            if "redirects_to" in version.document:
-                return True
+        if document.type != "r" or "rock_climbing" not in document.activities:
+            return True
 
-            if (
-                version.document.type != "r"
-                or "rock_climbing" not in version.document.activities
-            ):
-                return True
-
-            climbing_outdoor_type = version.document.climbing_outdoor_type
-            return climbing_outdoor_type is not None and len(climbing_outdoor_type) != 0
-
-        return test(old_version), test(new_version)
+        climbing_outdoor_type = document.climbing_outdoor_type
+        return climbing_outdoor_type is not None and len(climbing_outdoor_type) != 0
 
 
-class DistanceTest(object):
+class DistanceTest(BaseContributionTest):
     def __init__(self):
-        self.name = "Gros déplacement géographique"
+        super(DistanceTest, self).__init__(name="Gros déplacement géographique")
         self.fail_marker = emoji(
             "/uploads/default/original/2X/0/0178043b1b70e669946f609571bd4b8f7d18e820.png",
             self.name,
         )
         self.success_marker = ""
 
-    def __call__(self, contrib, old_version, new_version):
-        if old_version is None or new_version is None:
-            return True, True
-
-        old_doc = old_version.document
-        new_doc = new_version.document
-
-        if "redirects_to" in old_doc or "redirects_to" in new_doc:
-            return True, True
-
+    def test_contribution(self, old_doc, new_doc):
         distance = utils.compute_distance(old_doc, new_doc)
-        return True, distance is None or distance < 500
+        return distance is None or distance < 500
 
 
-class QualityTest:
+class QualityTest(BaseContributionTest):
     """
     Report when quality field changes
     """
 
     def __init__(self):
-        self.name = "Changement du champ qualité"
+        super(QualityTest, self).__init__(name="Changement du champ qualité")
         self.fail_marker = "🧹"
         self.success_marker = ""
 
-    def __call__(self, contrib, old_version, new_version):
-        if old_version is None or new_version is None:
-            return True, True
-
-        old_doc = old_version.document
-        new_doc = new_version.document
-
-        if "redirects_to" in old_doc or "redirects_to" in new_doc:
-            return True, True
-
-        return True, old_doc.quality == new_doc.quality
+    def test_contribution(self, old_doc, new_doc):
+        return old_doc.quality == new_doc.quality

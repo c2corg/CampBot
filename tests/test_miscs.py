@@ -6,7 +6,9 @@ from tests.fixtures import fix_requests, fix_dump, ids_files, fix_input
 import os
 import pytest
 
-MESSAGE_URL = "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480/1"
+MESSAGE_URL = (
+    "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480/1"
+)
 
 
 def test_distance(fix_requests):
@@ -33,7 +35,7 @@ def test_add_user_to_group(fix_requests):
     from campbot import CampBot
 
     bot = CampBot()
-    bot.forum.add_users_to_group("Association", ["rabot", ])
+    bot.forum.add_users_to_group("Association", ["rabot",])
 
 
 def test_post_message(fix_requests):
@@ -137,7 +139,10 @@ def test_wiki(fix_requests, fix_input):
 
     route = CampBot().wiki.get_wiki_object(item_id=293549, document_type="r")
     assert route.get_url() == "https://www.camptocamp.org/routes/293549"
-    assert route.get_history_url("fr") == "https://www.camptocamp.org/routes/history/293549/fr"
+    assert (
+        route.get_history_url("fr")
+        == "https://www.camptocamp.org/routes/history/293549/fr"
+    )
 
     CampBot().wiki.get_contributions(oldest_date="2017-12-12", newest_date="2017-12-13")
 
@@ -169,7 +174,7 @@ def test_dump(fix_requests, fix_dump):
 
     route = CampBot().wiki.get_route(123)
 
-    class Contrib():
+    class Contrib:
         document = route
 
     dump = Dump()
@@ -240,30 +245,39 @@ def get_main_args(action, others=None):
 
 
 def test_checkers(fix_requests):
-    from campbot.checkers import LengthTest, ReTest, HistoryTest, MainWaypointTest, RouteTypeTest
+    from campbot.checkers import get_fixed_tests, ReTest
     from campbot import CampBot
-    from campbot.objects import Contribution
+    from campbot.objects import Version, Contribution
 
     bot = CampBot()
 
     route = bot.wiki.get_route(123)
-    contrib = Contribution(bot, {"document": route, "user": {}})
+    waypoint = bot.wiki.get_waypoint(123)
 
-    LengthTest("fr")(None, contrib, contrib)
+    changes = (
+        (
+            Contribution(bot, {"user": {"user_id": 3199}, "document": {"type": "r"}}),
+            Version(bot, {"document": route, "user": {}}),
+            Version(bot, {"document": route, "user": {}}),
+        ),
+        (
+            Contribution(bot, {"user": {"user_id": 3199}, "document": {"type": "w"}}),
+            Version(bot, {"document": waypoint, "user": {}}),
+            Version(bot, {"document": waypoint, "user": {}}),
+        ),
+    )
 
-    LengthTest("fr")(None, None, contrib)
-    LengthTest("fr")(None, contrib, None)
+    for test in get_fixed_tests("fr"):
+        for contrib, old_version, new_version in changes:
+            test(contrib, old_version, Version(bot, {"document": None, "user": {}}))
+            test(contrib, old_version, new_version)
+            test(contrib, None, new_version)
+            test(contrib, old_version, None)
 
-    HistoryTest("fr")(None, contrib, contrib)
-    HistoryTest("fr")(None, None, contrib)
-    MainWaypointTest()(None, contrib, contrib)
-    MainWaypointTest()(None, None, contrib)
-    RouteTypeTest()(None, contrib, contrib)
-    RouteTypeTest()(None, None, contrib)
-
-    t = ReTest("x", "fr")
-    t.patterns.append("e")
-    t(None, contrib, contrib)
+    for contrib, old_version, new_version in changes:
+        t = ReTest("x", "fr")
+        t.patterns.append("e")
+        t(contrib, old_version, new_version)
 
 
 def test_weird(fix_requests, fix_input):

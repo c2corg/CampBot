@@ -1,0 +1,51 @@
+{
+    "version": {
+        "user_id": 346086,
+        "comment": "Ajustement emplacement parking",
+        "version_id": 2115565,
+        "written_at": "2019-04-03T06:04:42.562079+00:00",
+        "name": "phil12"
+    },
+    "previous_version_id": 1920276,
+    "document": {
+        "version": 1,
+        "elevation": 500,
+        "snow_clearance_rating": null,
+        "lift_access": null,
+        "quality": "medium",
+        "geometry": {
+            "version": 2,
+            "geom": "{\"coordinates\": [625140.7606299642, 5391555.64085266], \"type\": \"Point\"}"
+        },
+        "maps_info": null,
+        "protected": false,
+        "locales": [
+            {
+                "version": 2,
+                "summary": null,
+                "title": "Parking du Collet de Saint Pierre",
+                "lang": "fr",
+                "description": "Aix >> D17 entre Le Tholonet et Puyloubier >> Parking du Collet de Saint Pierre, sur la droite apr\u00e8s le carrefour avec la route de Rousset.",
+                "access_period": null,
+                "access": "Navette"
+            }
+        ],
+        "public_transportation_types": null,
+        "document_id": 108217,
+        "waypoint_type": "access",
+        "parking_fee": null,
+        "type": "w",
+        "public_transportation_rating": "good service",
+        "elevation_min": null,
+        "cooked": {
+            "version": 2,
+            "summary": null,
+            "title": "Parking du Collet de Saint Pierre",
+            "lang": "fr",
+            "description": "<p>Aix &gt;&gt; D17&nbsp;entre Le Tholonet et Puyloubier &gt;&gt; Parking du Collet de Saint Pierre, sur la droite apr\u00e8s le carrefour avec la route de Rousset.</p>",
+            "access_period": null,
+            "access": "<p>Navette</p>"
+        }
+    },
+    "next_version_id": null
+}

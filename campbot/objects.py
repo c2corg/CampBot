@@ -97,9 +97,12 @@ class Version(BotObject):
 
     def __init__(self, campbot, data):
         super(Version, self).__init__(campbot, data)
-        self["document"] = get_constructor(self["document"]["type"])(
-            campbot, self["document"]
-        )
+        if self["document"]:
+            self["document"] = get_constructor(self["document"]["type"])(
+                campbot, self["document"]
+            )
+        else:
+            self["document"] = None
 
     def get_diff_url(self, lang):
         constructor = get_constructor(document_type=self.document.type)
