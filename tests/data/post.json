@@ -74,8 +74,8 @@
   "edit_reason": null,
   "can_view_edit_history": true,
   "wiki": true,
-  "polls": {
-    "poll": {
+  "polls": [
+    {
       "options": [
         {
           "id": "option_id",
@@ -87,5 +87,5 @@
         }
       ]
     }
-  }
+  ]
 }
