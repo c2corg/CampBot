@@ -433,7 +433,7 @@ class ForumUser(BotObject):
 class Post(BotObject):
     def __init__(self, campbot, data):
         super(Post, self).__init__(campbot, data)
-        self._convert_dict("polls", Poll)
+        self._convert_list("polls", Poll)
 
 
 class Poll(BotObject):

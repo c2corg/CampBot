@@ -164,6 +164,9 @@ class WikiBot(BaseBot):
     def get_profile(self, profile_id):
         return self.get_wiki_object(profile_id, constructor=objects.WikiUser)
 
+    def get_outing(self, outing_id):
+        return self.get_wiki_object(outing_id, constructor=objects.Outing)
+
     def get_area(self, area_id):
         return self.get_wiki_object(area_id, constructor=objects.Area)
 
@@ -179,8 +182,14 @@ class WikiBot(BaseBot):
     def get_xreport(self, xreport_id):
         return self.get_wiki_object(xreport_id, constructor=objects.Xreport)
 
+    def get_document_versions(self, document_id, lang):
+        return self.get("/document/{}/history/{}".format(document_id, lang))    
+
     def get_route_ids(self, filters=None):
         return self.get_document_ids(filters=filters, constructor=objects.Route)
+
+    def get_outing_ids(self, filters=None):
+        return self.get_document_ids(filters=filters, constructor=objects.Outing)
 
     def get_xreport_ids(self, filters=None):
         return self.get_document_ids(filters=filters, constructor=objects.Xreport)
@@ -371,6 +380,24 @@ class ForumBot(BaseBot):
 
         return objects.Post(self.campbot, self.get("/posts/{}.json".format(post_id)))
 
+    def get_voters(self, post_id, poll_name, option_id):
+        """Return the complete list of voters for a given option on a forum poll"""
+        page = 1
+
+        result = []
+
+        while True:
+            temp = self.get("/polls/voters.json?post_id={}&poll_name={}&option_id={}&page={}".format(post_id, poll_name, option_id, page))
+
+            if len(temp["voters"][option_id]) == 0:
+                break
+
+            result += temp["voters"][option_id]
+
+            page += 1
+
+        return result
+
     def get_participants(self, url):
         topic = self.get_topic(url=url)
         return topic["details"]["participants"]
@@ -440,85 +467,6 @@ class CampBot(object):
         self.wiki.headers["Authorization"] = 'JWT token="{}"'.format(token)
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
         self.forum.headers["X-CSRF-Token"] = self.forum.get("/session/csrf")["csrf"]
-
-    def check_voters(self, url, allowed_group="contributeurs", aggregated_report=True):
-        def print_aggregated_report():
-
-            sort_option = options[0]
-
-            th = "<th>{}</th>".format
-            td = "<td>{} <small>({}%)</small></td>".format
-
-            table = [[th("Vote")] + [th(option) for option in options] + [th("Total")]]
-
-            for poll_name, values in sorted(
-                polls.items(), key=lambda item: item[1][sort_option], reverse=True
-            ):
-
-                total = sum(values.values())
-
-                row = [th(poll_name)]
-
-                for option in options:
-                    value = values.get(option, 0)
-                    row.append(td(value, int(100.0 * value / total)))
-
-                row.append(th(total))
-                table.append(row)
-
-            print("<table>")
-
-            for row in table:
-                print("<tr>\n  {}\n</tr>".format("\n  ".join(row)))
-
-            print("</table>\n")
-
-        def print_normal_report():
-            for poll in sorted(polls):
-                print("* " + poll)
-                for option in polls[poll]:
-                    print("  * {} : {}".format(option, polls[poll][option]))
-
-            print()
-
-        allowed_members = set()
-        if allowed_group:
-            for user in self.forum.get_group_members(allowed_group):
-                allowed_members.add(user.username)
-
-        print("Allowed members :", allowed_members)
-        ignored_voters = set()
-        polls = {}
-        options = []
-
-        post = self.forum.get_post(url=url)
-
-        for poll_name in post.polls:
-            polls[poll_name] = {
-                option.html: 0 for option in post.polls[poll_name].options
-            }
-            for option in post.polls[poll_name].options:
-                for voter in option.get_voters(post.id, poll_name):
-                    if voter.username in allowed_members or allowed_group is None:
-                        polls[poll_name][option.html] += 1
-                    else:
-                        ignored_voters.add(voter.username)
-
-                if option.html not in options:
-                    options.append(option.html)
-
-        if aggregated_report:
-            print_aggregated_report()
-        else:
-            print_normal_report()
-
-        if len(ignored_voters) != 0:
-            mentions = map("{}".format, sorted(ignored_voters))
-            print(
-                "**{} ignored votes** : {}".format(
-                    len(ignored_voters), ", ".join(mentions)
-                )
-            )
 
     def get_documents(self, url_or_filename):
         """
