@@ -183,7 +183,7 @@ class WikiBot(BaseBot):
         return self.get_wiki_object(xreport_id, constructor=objects.Xreport)
 
     def get_document_versions(self, document_id, lang):
-        return self.get("/document/{}/history/{}".format(document_id, lang))    
+        return self.get("/document/{}/history/{}".format(document_id, lang))
 
     def get_route_ids(self, filters=None):
         return self.get_document_ids(filters=filters, constructor=objects.Route)
@@ -387,7 +387,11 @@ class ForumBot(BaseBot):
         result = []
 
         while True:
-            temp = self.get("/polls/voters.json?post_id={}&poll_name={}&option_id={}&page={}".format(post_id, poll_name, option_id, page))
+            temp = self.get(
+                "/polls/voters.json?post_id={}&poll_name={}&option_id={}&page={}".format(
+                    post_id, poll_name, option_id, page
+                )
+            )
 
             if len(temp["voters"][option_id]) == 0:
                 break
