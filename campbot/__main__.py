@@ -6,7 +6,6 @@ Usage:
   campbot clean <url_or_file> <langs> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch] [--bbcode]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot export <url> [--out=<filename>] [--delay=<seconds>]
-  campbot check_voters <url> [--login=<login>] [--password=<password>]
 
 
 Options:
@@ -30,7 +29,6 @@ Commands:
   contribs      Export all contribution in a CSV file. <start_date> and <end_date> are like 2018-05-12
   export        Export all documents in a CSV file.
                 <url> is like https://www.camptocamp.org/outings#u=2, or, simplier, outings#u=2
-  check_voters  Compile forum poll with only members of "contributeurs" group
 
 """
 
@@ -93,9 +91,6 @@ def main(args):
 
     elif args["export"]:
         get_campbot(args).export(args["<url>"], args["--out"])
-
-    elif args["check_voters"]:
-        get_campbot(args).check_voters(args["<url>"])
 
 
 if __name__ == "__main__":

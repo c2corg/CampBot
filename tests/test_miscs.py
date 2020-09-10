@@ -51,7 +51,6 @@ def test_post_message(fix_requests):
 def test_main_entry_point(fix_requests, ids_files):
     from campbot.__main__ import main
 
-    main(get_main_args("check_voters", {"<url>": MESSAGE_URL}))
     main(get_main_args("contribs"))
     main(get_main_args("export"))
     main(get_main_args("check_rc"))
@@ -212,7 +211,6 @@ def get_main_args(action, others=None):
     # noinspection PyDictCreation
     result = {
         "check_rc": False,
-        "check_voters": False,
         "contribs": False,
         "export": False,
         "clean": False,
