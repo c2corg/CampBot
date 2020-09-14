@@ -14,6 +14,7 @@ import time
 from . import utils
 from . import objects
 from campbot.processors import get_automatic_replacments
+from campbot.checkers import get_document_tests
 
 try:
     # py2
@@ -534,6 +535,43 @@ class CampBot(object):
             documents, processors, langs, ask_before_saving, excluded_ids=[996571,]
         )
 
+    def report(self, url_or_filename, lang):
+        """
+            Make quality report on a set of document.
+
+            :param url_or_filename: Camptocamp.org URL, or filename
+            :param langs: comma-separated list of lang identifiers
+        """
+
+        documents = [d for d in self.get_documents(url_or_filename)]
+
+        tests = get_document_tests(lang)
+        forum_report = []
+        stdout_report = []
+
+        for test in tests:
+            failing_docs = []
+            for document in documents:
+                if "redirects_to" in document:
+                    pass  # document id is not available...
+                elif not test.test_document(document):
+                    failing_docs.append(document)
+
+            if len(failing_docs) != 0:
+                stdout_report.append(test.name)
+                forum_report.append("* {}".format(test.name))
+
+                failing_docs.sort(key=lambda d: d.get_title(lang))
+
+                for document in failing_docs:
+                    url = document.get_url()
+                    title = document.get_title(lang)
+
+                    stdout_report.append("    {}\t {}".format(url, title))
+                    forum_report.append("  * [{}]({})".format(title, url))
+
+        print("\n".join(stdout_report))
+
     def _process_documents(
         self, documents, processors, langs, ask_before_saving=True, excluded_ids=None
     ):
@@ -692,7 +730,9 @@ class CampBot(object):
 
         return result
 
-    def fix_recent_changes(self, oldest_date, newest_date, lang, ask_before_saving):
+    def clean_recent_changes(self, days, lang, ask_before_saving):
+        newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
+        oldest_date = newest_date - timedelta(days=days)
 
         excluded_ids = [
             996571,
