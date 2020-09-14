@@ -4,7 +4,7 @@
 """
 ## Test contributions validity, and report suspicious contribution.
 
-The main function is `check_recent_changes(bot, days)`, and it will test contributions made in the <days> past days. 
+The main function is `report_recent_changes(bot, days)`, and it will test contributions made in the <days> past days. 
 
 A test can inherits one of those two classes:
 
@@ -193,7 +193,7 @@ class DocumentReport(object):
         return "\n".join(result)
 
 
-def check_recent_changes(bot, days, ask_before_saving):
+def report_recent_changes(bot, days, ask_before_saving):
     check_message_url = (
         "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480"
     )
@@ -201,8 +201,6 @@ def check_recent_changes(bot, days, ask_before_saving):
 
     newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
     oldest_date = newest_date - datetime.timedelta(days=days)
-
-    bot.fix_recent_changes(oldest_date, newest_date, lang, ask_before_saving)
 
     tests = get_fixed_tests(lang)
     tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
@@ -278,6 +276,16 @@ def get_fixed_tests(lang):
         RouteTypeTest(),
         DistanceTest(),
         QualityTest(),
+    ]
+
+
+def get_document_tests(lang):
+    """ Returns a list of tests that can be run on a single document"""
+
+    return [
+        HistoryTest(lang),
+        MainWaypointTest(),
+        RouteTypeTest(),
     ]
 
 

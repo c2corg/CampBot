@@ -4,9 +4,14 @@ import pytest
 import os
 
 
-def get_message(filename):
+def get_message(filename, overwrite_properties=None):
     filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data/" + filename + ".json")
-    return json.load(io.open(filename, encoding="utf-8"))
+    data = json.load(io.open(filename, encoding="utf-8"))
+
+    if overwrite_properties:
+        data = {**data, **overwrite_properties}
+
+    return data
 
 
 def _wiki(method, url, answer):
@@ -30,7 +35,7 @@ messages = [
     _wiki('GET', r'waypoints/\d+/../\d+', get_message("waypoint_version")),
     _wiki('GET', r'routes/293549/fr/(1738922|1738528)', get_message("route_version")),
     _wiki('GET', r'routes/293549/fr/(880880|978249|478470|1738923)', get_message("route_version2")),
-    _wiki('GET', r'routes/952126', {'protected': True, 'document_id': 952126}),
+    _wiki('GET', r'routes/952126', get_message("route", {'protected': True, 'document_id': 952126})),
     _wiki('GET', r'routes/952167', {'redirects_to': 952126}),
     _wiki('GET', r'profiles/3199', {'document_id': 3199}),
     _wiki('GET', r'documents/changes\?.*&u=3199.*', {'feed': []}),
@@ -78,10 +83,10 @@ messages = [
     # Misc
     _wiki('GET', r'search.*', get_message("search_user")),
     _forum('POST', r'posts', {}),
-    _forum('GET', r'polls/voters.json.*&offset=0', {"poll": {"option_id": [{"username": "CharlesB"},
+    _forum('GET', r'polls/voters.json.*&page=1', {"voters": {"option_id": [{"username": "CharlesB"},
                                                                            {"username": "grimpeur8b"},
                                                                            {"username": "charlesdet"}]}}),
-    _forum('GET', r'polls/voters.json.*&offset=1', {"poll": {}}),
+    _forum('GET', r'polls/voters.json.*&page=2', {"voters": {"option_id": []}}),
 
     ('PUT', '.*', {}),
 ]

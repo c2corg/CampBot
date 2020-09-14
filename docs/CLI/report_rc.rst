@@ -1,10 +1,7 @@
-Check (and clean) recent changes
+Quality report on recent changes
 ================================
 
-This procedure will execute two process : 
-
-1. All corrections made by :doc:`clean </CLI/clean>` procedure on every documents recently modified (bot modifications not included)
-2. Check that last day modifications pass these tests 
+This procedure will check that last day modifications pass these tests 
 
    * History is filled
    * No big deletions
@@ -19,7 +16,7 @@ Command line
 
 .. code-block:: bash
 
-    campbot check_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>]
+    campbot report_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>]
 
 Arguments and options
 ---------------------
@@ -31,7 +28,7 @@ Arguments and options
 
 .. warning::
 
-    This process is quite long, especially for the second part. So, please consider this two points :
+    This process is quite long. So, please consider this two points :
     
     * Execute it when camptocamp is not overloaded
     * and use a delay of 0.1 seconds. 

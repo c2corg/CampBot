@@ -53,7 +53,9 @@ def test_main_entry_point(fix_requests, ids_files):
 
     main(get_main_args("contribs"))
     main(get_main_args("export"))
-    main(get_main_args("check_rc"))
+    main(get_main_args("report_rc"))
+    main(get_main_args("report", {"<url_or_file>": "routes#w=123"}))
+    main(get_main_args("clean_rc"))
     main(get_main_args("clean", {"<url_or_file>": "routes#w=123"}))
     main(get_main_args("clean", {"<url_or_file>": "waypoints#w=123"}))
     main(get_main_args("clean", {"<url_or_file>": ids_files}))
@@ -210,10 +212,12 @@ def test_misc():
 def get_main_args(action, others=None):
     # noinspection PyDictCreation
     result = {
-        "check_rc": False,
+        "report_rc": False,
+        "clean_rc": False,
         "contribs": False,
         "export": False,
         "clean": False,
+        "report": False,
         "--delay": 0.01,
         "--login": "x",
         "--password": "y",
@@ -221,6 +225,7 @@ def get_main_args(action, others=None):
         "--bbcode": True,
         "--batch": True,
         "<days>": "1",
+        "<lang>": "fr",
         "<langs>": "fr,de",
         "<url>": "outings#u=286726",
         "<url_or_file>": "outings#u=286726",
@@ -327,3 +332,11 @@ def test_get_closest_documents(fix_requests):
     bot = CampBot()
 
     bot.find_closest_documents(objects.Waypoint, 289284, 6175526, 2000)
+
+
+def test_get_voters(fix_requests):
+    from campbot import CampBot, objects
+
+    bot = CampBot()
+
+    bot.forum.get_voters(1234, "poll", "option_id")

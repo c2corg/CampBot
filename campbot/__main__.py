@@ -2,8 +2,10 @@
 CampBot, Python bot framework for camptocamp.org
 
 Usage:
-  campbot check_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
+  campbot clean_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
+  campbot report_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
   campbot clean <url_or_file> <langs> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch] [--bbcode]
+  campbot report <url_or_file> <lang> [--login=<login>] [--password=<password>] [--delay=<seconds>]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot export <url> [--out=<filename>] [--delay=<seconds>]
 
@@ -19,13 +21,15 @@ Options:
 
 
 Commands:
-  check_rc      Check (and clean) recent changes.
+  report_rc     Make quality report on recent changes.
+  clean_rc      Clean recent changes.
   clean         Clean documents.
                 <url_or_file> is like https://www.camptocamp.org/routes#a=523281, or, simplier, routes#a=523281. 
                 filename is also accepted, and must be like : 
                 123 | r
                 456 | w
                 <langs> is comma-separated lang identifiers, like fr,de for french and german.
+  report        Make quality report on documents.
   contribs      Export all contribution in a CSV file. <start_date> and <end_date> are like 2018-05-12
   export        Export all documents in a CSV file.
                 <url> is like https://www.camptocamp.org/outings#u=2, or, simplier, outings#u=2
@@ -67,13 +71,23 @@ def main_entry_point():
 
 
 def main(args):
-    if args["check_rc"]:
-        from campbot.checkers import check_recent_changes
+    if args["report_rc"]:
+        from campbot.checkers import report_recent_changes
 
-        check_recent_changes(
+        report_recent_changes(
             get_campbot(args),
             days=int(args["<days>"]),
             ask_before_saving=not args["--batch"],
+        )
+
+    elif args["clean_rc"]:
+        get_campbot(args).clean_recent_changes(
+            days=int(args["<days>"]), lang="fr", ask_before_saving=not args["--batch"],
+        )
+
+    elif args["report"]:
+        get_campbot(args).report(
+            args["<url_or_file>"], lang=args["<lang>"],
         )
 
     elif args["clean"]:

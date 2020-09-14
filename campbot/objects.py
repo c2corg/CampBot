@@ -67,6 +67,7 @@ class BotObject(dict):
             )
 
         if item not in self:  # pragma: no cover
+            print("666777", self)
             raise AttributeError(
                 "Object {} has not attribute {}".format(self.__class__.__name__, item)
             )
@@ -83,11 +84,11 @@ class BotObject(dict):
         if name in self:
             self[name] = [constructor(self._campbot, data) for data in self[name]]
 
-    def _convert_dict(self, name, constructor):
-        if name in self:
-            self[name] = {
-                key: constructor(self._campbot, self[name][key]) for key in self[name]
-            }
+    # def _convert_dict(self, name, constructor):
+    #     if name in self:
+    #         self[name] = {
+    #             key: constructor(self._campbot, self[name][key]) for key in self[name]
+    #         }
 
 
 class Version(BotObject):
@@ -439,21 +440,3 @@ class Post(BotObject):
 class Poll(BotObject):
     def __init__(self, campbot, data):
         super(Poll, self).__init__(campbot, data)
-        self._convert_list("options", PollOption)
-
-
-class PollOption(BotObject):
-    def get_voters(self, post_id, poll_name):
-        url = "/polls/voters.json?post_id={}&poll_name={}&option_id={}&offset={}"
-        offset = 0
-        while True:
-            data = self._campbot.forum.get(
-                url.format(post_id, poll_name, self.id, offset)
-            )[poll_name]
-
-            if self.id not in data or len(data[self.id]) == 0:
-                return
-            for voter in data[self.id]:
-                yield ForumUser(self._campbot, voter)
-
-            offset += 1

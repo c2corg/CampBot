@@ -6,14 +6,15 @@ Here isthe help you get by typing ``campbot`` in you command line tool :
 .. code-block:: bash
 
     CampBot, Python bot framework for camptocamp.org
-    
+
     Usage:
-      campbot check_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
+      campbot clean_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
+      campbot report_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
       campbot clean <url_or_file> <langs> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch] [--bbcode]
       campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
       campbot export <url> [--out=<filename>] [--delay=<seconds>]
-    
-    
+
+
     Options:
       --login=<login>           Bot login
       --password=<password>     Bot password
@@ -22,10 +23,11 @@ Here isthe help you get by typing ``campbot`` in you command line tool :
       --delay=<seconds>         Minimum delay between each request. Default : 3 seconds
       --bbcode                  Clean old BBCode in markdown
       --out=<filename>          Output file name. Default value will depend on process
-    
-    
+
+
     Commands:
-      check_rc      Check (and clean) recent changes.
+      report_rc     Make quality report on recent changes.
+      clean_rc      Clean recent changes.
       clean         Clean documents.
                     <url_or_file> is like https://www.camptocamp.org/routes#a=523281, or, simplier, routes#a=523281. 
                     filename is also accepted, and must be like : 
@@ -43,4 +45,4 @@ Here isthe help you get by typing ``campbot`` in you command line tool :
    export
    contribs
    clean
-   check_rc
+   report_rc
