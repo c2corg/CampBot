@@ -558,8 +558,8 @@ class CampBot(object):
                     failing_docs.append(document)
 
             if len(failing_docs) != 0:
-                stdout_report.append(f"{test.name}")
-                forum_report.append(f"* {test.name}")
+                stdout_report.append(test.name)
+                forum_report.append("* {}".format(test.name))
 
                 failing_docs.sort(key=lambda d: d.get_title(lang))
 
@@ -567,8 +567,8 @@ class CampBot(object):
                     url = document.get_url()
                     title = document.get_title(lang)
 
-                    stdout_report.append(f"    {url}\t {title}")
-                    forum_report.append(f"  * [{title}]({url})")
+                    stdout_report.append("    {}\t {}".format(url, title))
+                    forum_report.append("  * [{}]({})".format(title, url))
 
         print("\n".join(stdout_report))
 

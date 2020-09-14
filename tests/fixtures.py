@@ -9,7 +9,7 @@ def get_message(filename, overwrite_properties=None):
     data = json.load(io.open(filename, encoding="utf-8"))
 
     if overwrite_properties:
-        data = {**data, **overwrite_properties}
+        data.update(overwrite_properties)
 
     return data
 
