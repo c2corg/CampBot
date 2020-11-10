@@ -7,6 +7,7 @@ The rules are :
 * a participant cannot submit more than 3 pictures
 
 .. code-block:: python
+
     from collections import defaultdict
     from campbot import CampBot
 
