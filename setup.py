@@ -1,3 +1,4 @@
+import campbot
 from setuptools import setup, find_packages
 
 
@@ -6,7 +7,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='campbot',
-    version="1.3.1",
+    version=campbot.__version__,
     packages=find_packages(),
     author="Charles de Beauchesne",
     author_email="charles.de.beauchesne@gmail.com",
@@ -27,6 +28,8 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Communications",
     ],
 
