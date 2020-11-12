@@ -507,4 +507,10 @@ class TitleLevel(object):
 
         has_level2 =  not new_doc.search( r"(^|\n)##[^#]") == None
         has_level3_or_more = not new_doc.search(r"(^|\n)###*" == None
-        return True, not subtitle or title
+      def check(doc):
+          has_level2 =  doc.search( r"(^|\n)##[^#]") is not None
+          has_level3_or_more = doc.search(r"(^|\n)###*" is not None
+          
+          return not has_level2 and has_level3_or_more
+      
+      return check(old_doc), check(new_doc)
