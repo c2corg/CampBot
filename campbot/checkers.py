@@ -505,6 +505,6 @@ class TitleLevel(object):
         if "redirects_to" in old_doc or "redirects_to" in new_doc:
             return True, True
 
-        title =  not new_doc.search( r"(^|\n)##[^#]") == None
+        has_level2 =  not new_doc.search( r"(^|\n)##[^#]") == None
         subtitle = not new_doc.search(r"(^|\n)###*" == None
         return True, not subtitle or title
