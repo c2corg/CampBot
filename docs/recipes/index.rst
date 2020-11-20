@@ -16,6 +16,7 @@ As a good short example will always be better than a long explanation, here is s
    export_as_csv
    add_area
    CPS_checks
+   get_routes_from_books
 
 
 
