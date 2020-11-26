@@ -491,7 +491,7 @@ class QualityTest(BaseContributionTest):
 class TitleLevel(object):
     def __init__(self):
         self.name = "Titre de niveau trop élevé"
-        self.fail_marker = emoji("/uploads/default/original/2X/0/0178043b1b70e669946f609571bd4b8f7d18e820.png",
+        self.fail_marker = emoji("<strong>H</strong>",
                                  self.name)
         self.success_marker = ""
 
@@ -505,12 +505,10 @@ class TitleLevel(object):
         if "redirects_to" in old_doc or "redirects_to" in new_doc:
             return True, True
 
-        has_level2 =  not new_doc.search( r"(^|\n)##[^#]") == None
-        has_level3_or_more = not new_doc.search(r"(^|\n)###*" == None
-      def check(doc):
-          has_level2 =  doc.search( r"(^|\n)##[^#]") is not None
-          has_level3_or_more = doc.search(r"(^|\n)###*" is not None
+        def check(doc):
+           has_level2 =  doc.search( r"(^|\n)##[^#]") is not None
+           has_level3_or_more = doc.search(r"(^|\n)###*" is not None
           
-          return not has_level2 and has_level3_or_more
+           return not has_level2 and has_level3_or_more
       
       return check(old_doc), check(new_doc)
