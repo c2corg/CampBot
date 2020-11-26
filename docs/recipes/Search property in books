@@ -1,0 +1,18 @@
+from campbot import CampBot
+
+bot = CampBot()
+
+bot.login("Login","Password")
+
+fichier = open("Data.txt", "a")
+
+
+for book in bot.wiki.get_documents(document_type="b"):
+    if book.url is not None:
+        if "amazon" in book.url:
+
+            print("*[{}]({})".format(book.get_title("fr"),book.get_url())) 
+        
+            fichier.write("\n* [{}]({})".format(book.get_title("fr"), book.get_url()))
+
+fichier.close()
