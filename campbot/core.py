@@ -220,6 +220,9 @@ class WikiBot(BaseBot):
 
     def get_xreports(self, filters):
         return self.get_documents(constructor=objects.Xreport, filters=filters)
+    
+    def get_books(self, filters):
+        return self.get_documents(constructor=objects.Book, filters=filters)
 
     def get_documents(self, filters=None, document_type=None, constructor=None):
         """
