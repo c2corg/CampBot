@@ -92,7 +92,7 @@ messages = [
 ]
 
 
-@pytest.yield_fixture()
+@pytest.fixture()
 def fix_dump():
     from campbot import dump
 
@@ -104,7 +104,7 @@ def fix_dump():
     dump._default_db_name = _default_db_name
 
 
-@pytest.yield_fixture()
+@pytest.fixture()
 def fix_requests():
     from requests import Session
     from campbot import core, utils
@@ -161,7 +161,7 @@ def fix_requests():
     utils.today = today
 
 
-@pytest.yield_fixture()
+@pytest.fixture()
 def ids_files():
     filename = "ids.txt"
 
@@ -174,7 +174,7 @@ def ids_files():
     os.remove(filename)
 
 
-@pytest.yield_fixture()
+@pytest.fixture()
 def fix_input():
     from campbot import objects
 

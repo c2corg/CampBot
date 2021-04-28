@@ -428,7 +428,15 @@ class Outing(WikiObject):
 
 
 class ForumUser(BotObject):
-    pass
+    def get_admin_view(self):
+        return self._campbot.forum.get(
+            "/admin/users/{}/{}.json".format(self.id, self.username)
+        )
+
+    def anonymise(self):
+        return self._campbot.forum.put(
+            "/admin/users/{}/anonymize.json".format(self.id), data=None
+        )
 
 
 class Post(BotObject):
