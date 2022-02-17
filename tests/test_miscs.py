@@ -227,6 +227,7 @@ def get_main_args(action, others=None):
         "<days>": "1",
         "<lang>": "fr",
         "<langs>": "fr,de",
+        "<thread_url>": "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480",
         "<url>": "outings#u=286726",
         "<url_or_file>": "outings#u=286726",
         "--ends": "2999-12-31",
