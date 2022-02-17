@@ -21,6 +21,7 @@ from __future__ import unicode_literals, print_function, division
 
 from dateutil import parser
 import datetime
+import logging
 from campbot import utils
 
 
@@ -193,51 +194,51 @@ class DocumentReport(object):
         return "\n".join(result)
 
 
-def report_recent_changes(bot, days, ask_before_saving):
-    check_message_url = (
-        "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480"
-    )
-    lang = "fr"
+def report_recent_changes(bot, days, lang, thread_url):
 
     newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
     oldest_date = newest_date - datetime.timedelta(days=days)
 
     tests = get_fixed_tests(lang)
-    tests += get_re_tests(bot.forum.get_post(url=check_message_url), lang)
+    tests += get_re_tests(bot.forum.get_post(url=thread_url), lang)
 
+    logging.info(f"Get modified documents from {oldest_date} to {newest_date}")
     items = bot.get_modified_documents(
         lang=lang, oldest_date=oldest_date, newest_date=newest_date
     ).values()
 
     reports = []
 
+    logging.info(f"Found {len(items)} contributions, processing...")
+
     for i, contributions in enumerate(items):
-        print("Build report {}/{}".format(i, len(items)))
-        reports.append(DocumentReport(bot, contributions, tests))
+        logging.info("Build report {}/{}".format(i, len(items)))
+        report = DocumentReport(bot, contributions, tests)
+        if report.need_report:
+            reports.append(report)
 
-    messages = [
-        "[Explications]({})\n".format(check_message_url),
-        "[details=Signification des icônes]\n<table>",
-        "<tr><th>Test</th><th>A relire</th><th>Corrigé</th></tr>",
-    ]
+    if len(reports) != 0:
+        messages = [
+            "[Explications]({})\n".format(thread_url),
+            "[details=Signification des icônes]\n<table>",
+            "<tr><th>Test</th><th>A relire</th><th>Corrigé</th></tr>",
+        ]
 
-    for test in tests:
-        messages.append("<tr>")
-        messages.append("<th>{}</th>".format(test.name))
-        messages.append("<td>{}</td>".format(test.fail_marker))
-        messages.append("<td>{}</td>".format(test.success_marker))
-        messages.append("</tr>")
+        for test in tests:
+            messages.append("<tr>")
+            messages.append("<th>{}</th>".format(test.name))
+            messages.append("<td>{}</td>".format(test.fail_marker))
+            messages.append("<td>{}</td>".format(test.success_marker))
+            messages.append("</tr>")
 
-    messages.append("</table>\n[/details]\n\n----\n\n")
-    messages += [
-        report.get_report(bot, lang) for report in reports if report.need_report
-    ]
+        messages.append("</table>\n[/details]\n\n----\n\n")
+        messages += [report.get_report(bot, lang) for report in reports]
 
-    for m in messages:
-        print(m)
+        logging.info(f"Reporting {len(reports)} reports:\n\n" + "\n".join(messages))
 
-    if len(messages) != 0:
-        bot.forum.post_message("\n".join(messages), check_message_url)
+        bot.forum.post_message("\n".join(messages), thread_url)
+    else:
+        logging.info("Nothing to report")
 
 
 def emoji(src, text):

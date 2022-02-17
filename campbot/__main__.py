@@ -3,7 +3,7 @@ CampBot, Python bot framework for camptocamp.org
 
 Usage:
   campbot clean_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
-  campbot report_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
+  campbot report_rc <days> <lang> <thread_url> [--login=<login>] [--password=<password>] [--delay=<seconds>]
   campbot clean <url_or_file> <langs> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch] [--bbcode]
   campbot report <url_or_file> <lang> [--login=<login>] [--password=<password>] [--delay=<seconds>]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
@@ -42,7 +42,9 @@ from docopt import docopt
 import logging
 import os
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)-15s %(levelname)s %(message)s"
+)
 
 
 def get_campbot(args):
@@ -57,6 +59,12 @@ def get_campbot(args):
         args["--login"], args["--password"] = os.environ["CAMPBOT_CREDENTIALS"].split(
             "@", 1
         )
+
+    if "CAMPBOT_LOGIN" in os.environ and not args["--login"]:
+        args["--login"] = os.environ["CAMPBOT_LOGIN"]
+
+    if "CAMPBOT_PASSWORD" in os.environ and not args["--password"]:
+        args["--password"] = os.environ["CAMPBOT_PASSWORD"]
 
     bot = CampBot(proxies=proxies, min_delay=args["--delay"])
 
@@ -76,8 +84,9 @@ def main(args):
 
         report_recent_changes(
             get_campbot(args),
-            days=int(args["<days>"]),
-            ask_before_saving=not args["--batch"],
+            days=float(args["<days>"]),
+            lang=args["<lang>"],
+            thread_url=args["<thread_url>"],
         )
 
     elif args["clean_rc"]:

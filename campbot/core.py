@@ -467,14 +467,19 @@ class CampBot(object):
             
         """
 
+        logging.info(f"Logging to wiki with account {login}...")
         res = self.wiki.post(
             "/users/login", {"username": login, "password": password, "discourse": True}
         )
         token = res["token"]
         self.moderator = "moderator" in res["roles"]
         self.wiki.headers["Authorization"] = 'JWT token="{}"'.format(token)
+
+        logging.info(f"Logging to forum with account {login}...")
         self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
         self.forum.headers["X-CSRF-Token"] = self.forum.get("/session/csrf")["csrf"]
+
+        logging.info(f"Logging with account {login} OK")
 
     def get_documents(self, url_or_filename):
         """
