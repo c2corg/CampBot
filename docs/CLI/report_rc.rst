@@ -23,7 +23,7 @@ Arguments and options
 
 * ``<days>`` : Number of day to check Let says that we are on 17 june 2018, 12h. if ``<days>`` is ``2``, the process will run on all contributions made from ``2018-06-15 00:00:00`` to ``2018-06-16 23:59:59``
 * ``<lang>`` : Only contributions made on this lang will be checked
-* ``<days>`` : Thread's URL where the report will be published
+* ``<thread_url>`` : Thread's URL where the report will be published
 * ``<login>`` : bot's login
 * ``<password>`` : bot's password
 * ``<delay>`` : delay, in seconds between each request. By defaut, 3 seconds 
