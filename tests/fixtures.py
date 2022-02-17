@@ -111,12 +111,7 @@ def fix_requests():
     import datetime
     import re
 
-    try:
-        fullmatch = re.fullmatch
-    except AttributeError:  # py 2.7
-        def fullmatch(regex, string, flags=0):
-            """Emulate python-3.4 re.fullmatch()."""
-            return re.match("(?:" + regex + r")\Z", string, flags=flags)
+    fullmatch = re.fullmatch
 
     class Response(object):
         def __init__(self, method, url, **kwargs):

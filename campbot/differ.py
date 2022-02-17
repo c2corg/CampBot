@@ -36,10 +36,7 @@ def get_diff_report(old, new):
 
 
 def flatten(source, root_path="root"):
-    try:
-        base_types = (unicode, str, int, long, float, bool)  # py 2.7
-    except NameError:
-        base_types = (str, int, float, bool)  # py 3
+    base_types = (str, int, float, bool)
 
     result = {}
 

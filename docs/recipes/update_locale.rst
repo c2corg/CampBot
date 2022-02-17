@@ -2,11 +2,8 @@ Update a locale field
 =====================================
 
 This script will update remarks field.
-Note the coding header, if you're in Python 2.7, and your update contains special characters
 
 .. code-block:: python
-
-    # coding: utf-8
 
     import sys
     from campbot import CampBot

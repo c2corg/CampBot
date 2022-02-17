@@ -5,7 +5,7 @@ Installation
 Requirements
 ------------
 
-* Working `Python <http://www.python.org/>`_ 2.7, 3.4, 3.5 or 3.6
+* Working `Python <http://www.python.org/>`_ 3.6 or higher
 
 and, optionnaly if you need to modify documents :
 
