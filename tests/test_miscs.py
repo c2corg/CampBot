@@ -242,7 +242,8 @@ def get_main_args(action, others=None):
     result[action] = True
 
     os.environ["HTTPS_PROXY"] = ""
-    os.environ["CAMPBOT_CREDENTIALS"] = "patate@douce"
+    os.environ["CAMPBOT_LOGIN"] = "patate"
+    os.environ["CAMPBOT_PASSWORD"] = "douce"
 
     return result
 
@@ -311,8 +312,11 @@ def test_weird(fix_requests, fix_input):
     obj = bot.wiki.get_wiki_object(123, "o")
     assert obj.is_personal() == True
 
-    os.environ["CAMPBOT_CREDENTIALS"] = "x@y"
+    os.environ["CAMPBOT_LOGIN"] = "x"
+    os.environ["CAMPBOT_PASSWORD"] = "y"
     args = get_main_args("clean")
+    assert args["--login"] == "x"
+    assert args["--password"] == "y"
     args["--login"] = False
     __main__.main(args)
 
