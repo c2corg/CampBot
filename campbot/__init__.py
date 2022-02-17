@@ -3,5 +3,4 @@ campbot is a package for automatic edition of camptocamp.org
 """
 
 from campbot.core import CampBot
-
-__version__ = "1.3.2"
+from campbot.version import __version__

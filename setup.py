@@ -5,8 +5,11 @@ from setuptools import setup, find_packages
 with open('requirements.txt') as f:
     install_requires = f.read().splitlines()
 
+exec(open("campbot/version.py").read())
+
+
 setup(
-    name='campbot',
+    name="campbot",
     version=campbot.__version__,
     packages=find_packages(),
     author="Charles de Beauchesne",
@@ -16,7 +19,7 @@ setup(
     install_requires=install_requires,
     include_package_data=True,
 
-    url='http://github.com/c2corg/CampBot',
+    url="http://github.com/c2corg/CampBot",
 
     classifiers=[
         "Programming Language :: Python",
