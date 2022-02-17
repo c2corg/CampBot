@@ -1,4 +1,3 @@
-import campbot
 from setuptools import setup, find_packages
 
 
@@ -10,7 +9,7 @@ exec(open("campbot/version.py").read())
 
 setup(
     name="campbot",
-    version=campbot.__version__,
+    version=__version__,
     packages=find_packages(),
     author="Charles de Beauchesne",
     author_email="charles.de.beauchesne@gmail.com",
