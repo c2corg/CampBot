@@ -25,6 +25,7 @@ We try to use the second way every times it's possible in this documentation.
 from __future__ import print_function, unicode_literals, division
 
 import re
+import logging
 from .differ import get_diff_report
 
 
@@ -289,7 +290,7 @@ class WikiObject(BotObject):
             if _input("Save {} : {}, y/[n] ?\n".format(self.get_url(), message)) != "y":
                 return None
         else:
-            print("Saving {} : {}".format(self.get_url(), message))
+            logging.info(f"Saving {self.get_url()} : {message}")
 
         return self._campbot.wiki.put(
             "/{}/{}".format(self.url_path, self.document_id),

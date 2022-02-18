@@ -202,7 +202,6 @@ def report_recent_changes(bot, days, lang, thread_url):
     tests = get_fixed_tests(lang)
     tests += get_re_tests(bot.forum.get_post(url=thread_url), lang)
 
-    logging.info(f"Get modified documents from {oldest_date} to {newest_date}")
     items = bot.get_modified_documents(
         lang=lang, oldest_date=oldest_date, newest_date=newest_date
     ).values()

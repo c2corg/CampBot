@@ -9,13 +9,13 @@ Command line
 
 .. code-block:: bash
 
-    campbot clean <url> <langs> --login=<login> --password=<password> [--delay=<seconds>] [--bbcode]
+    campbot clean <url> <lang> --login=<login> --password=<password> [--delay=<seconds>] [--bbcode]
 
 Options and arguments 
 ---------------------
 
 * ``<url>`` is like https://www.camptocamp.org/routes#w=940468 : all routes associated to waypoint 940468 will be cleaned. Shorthand ``routes#w=940468`` is accepted.
-* ``<langs>`` is a comma-saprated list of langs, like fr,de. Clean procedure will impacts only this langs.
+* ``<lang>`` is a lang identifier, like fr or de. Clean procedure will impacts only this lang.
 
 Clean processors
 ----------------

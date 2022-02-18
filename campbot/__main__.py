@@ -2,9 +2,9 @@
 CampBot, Python bot framework for camptocamp.org
 
 Usage:
-  campbot clean_rc <days> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
+  campbot clean_rc <days> <lang> <thread_url> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
   campbot report_rc <days> <lang> <thread_url> [--login=<login>] [--password=<password>] [--delay=<seconds>]
-  campbot clean <url_or_file> <langs> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch] [--bbcode]
+  campbot clean <url_or_file> <lang> <thread_url> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch] [--bbcode]
   campbot report <url_or_file> <lang> [--login=<login>] [--password=<password>] [--delay=<seconds>]
   campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
   campbot export <url> [--out=<filename>] [--delay=<seconds>]
@@ -28,7 +28,7 @@ Commands:
                 filename is also accepted, and must be like : 
                 123 | r
                 456 | w
-                <langs> is comma-separated lang identifiers, like fr,de for french and german.
+                <lang> is a lang identifier, like fr for french.
   report        Make quality report on documents.
   contribs      Export all contribution in a CSV file. <start_date> and <end_date> are like 2018-05-12
   export        Export all documents in a CSV file.
@@ -91,7 +91,10 @@ def main(args):
 
     elif args["clean_rc"]:
         get_campbot(args).clean_recent_changes(
-            days=int(args["<days>"]), lang="fr", ask_before_saving=not args["--batch"],
+            days=float(args["<days>"]),
+            lang=args["<lang>"],
+            ask_before_saving=not args["--batch"],
+            thread_url=args["<thread_url>"],
         )
 
     elif args["report"]:
@@ -102,8 +105,9 @@ def main(args):
     elif args["clean"]:
         get_campbot(args).clean(
             args["<url_or_file>"],
-            langs=args["<langs>"].split(","),
+            lang=args["<lang>"],
             ask_before_saving=not args["--batch"],
+            thread_url=args["<thread_url>"],
             clean_bbcode=args["--bbcode"],
         )
 
