@@ -280,7 +280,7 @@ def get_fixed_tests(lang):
 
 
 def get_document_tests(lang):
-    """ Returns a list of tests that can be run on a single document"""
+    """Returns a list of tests that can be run on a single document"""
 
     return [
         HistoryTest(lang),

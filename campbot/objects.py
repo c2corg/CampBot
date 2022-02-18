@@ -149,7 +149,7 @@ class Locale(BotObject):
     def get_title(self):
         """
         Get the title, with prefix if it exists.
-        
+
         :return: String, pretty title
         """
 
@@ -178,7 +178,7 @@ class Locale(BotObject):
     def get_length(self):
         """
         Get text length
-        
+
         :return: Integer, number of characters
         """
 
@@ -209,7 +209,7 @@ class WikiObject(BotObject):
 
     def get_url(self, lang=None):
         """
-        :return: camptocamp.org URL.  
+        :return: camptocamp.org URL.
         """
 
         return "{}/{}/{}{}".format(
@@ -221,7 +221,7 @@ class WikiObject(BotObject):
 
     def get_history_url(self, lang):
         """
-        
+
         :return: camptocamp.org version list URL
         """
 
@@ -236,8 +236,8 @@ class WikiObject(BotObject):
     def get_locale(self, lang):
         """
         :param lang: fr, en, de ...
-        
-        :return: String, or None if locale does not exists in this lang  
+
+        :return: String, or None if locale does not exists in this lang
         """
 
         if "locales" not in self:
@@ -250,9 +250,9 @@ class WikiObject(BotObject):
     def search(self, patterns, lang):
         """
         Search a pattern (regular expression)
-        
+
         :param lang: fr, de, en...
-        
+
         :return: True if pattern is found, False otherwise
         """
 
@@ -277,10 +277,10 @@ class WikiObject(BotObject):
     def save(self, message, ask_before_saving=True):
         """
         Save object to camptocamp.org. Bot must be authentified.
-        
+
         :param message: Modification comment
         :param ask_before_saving: Boolean, ask user before saing document
-        
+
         :return: raw request response, useless.
         """
 

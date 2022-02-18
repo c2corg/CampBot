@@ -99,7 +99,8 @@ def main(args):
 
     elif args["report"]:
         get_campbot(args).report(
-            args["<url_or_file>"], lang=args["<lang>"],
+            args["<url_or_file>"],
+            lang=args["<lang>"],
         )
 
     elif args["clean"]:
