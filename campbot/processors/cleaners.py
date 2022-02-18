@@ -173,11 +173,18 @@ class FixFakeExternalLinks(MarkdownProcessor):
             )
 
         self.modifiers = [
-            Converter(build_pattern(r"(\d+)/?#?\)"), r"[[\2/\3|\1]]",),
             Converter(
-                build_pattern(r"(\d+)/([a-z]{2})(/[\w-]*)?#?\)"), r"[[\2/\3|\1]]",
+                build_pattern(r"(\d+)/?#?\)"),
+                r"[[\2/\3|\1]]",
             ),
-            Converter(build_pattern(r"(\d+)#([a-z0-9\-]+)\)"), r"[[\2/\3#\4|\1]]",),
+            Converter(
+                build_pattern(r"(\d+)/([a-z]{2})(/[\w-]*)?#?\)"),
+                r"[[\2/\3|\1]]",
+            ),
+            Converter(
+                build_pattern(r"(\d+)#([a-z0-9\-]+)\)"),
+                r"[[\2/\3#\4|\1]]",
+            ),
             Converter(
                 build_pattern(r"(\d+)/([a-z]{2})(/[\w-]*)?#([a-z0-9\-]+)\)"),
                 r"[[\2/\3/\4#\6|\1]]",

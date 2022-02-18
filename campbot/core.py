@@ -97,7 +97,7 @@ class BaseBot(object):
 
 class WikiBot(BaseBot):
     """
-        Get functions for all camptocamp.org wiki
+    Get functions for all camptocamp.org wiki
     """
 
     @property
@@ -414,7 +414,7 @@ class ForumBot(BaseBot):
 class CampBot(object):
     """
     CampBot() object is the main class. You must instanciate only one instance of it.
-    It contains two property : 
+    It contains two property :
 
     * ``wiki`` for interacting with camptocamp.org wiki
     * ``forum`` for interacting with camptocamp.org forum
@@ -422,14 +422,14 @@ class CampBot(object):
 
     def __init__(self, min_delay=None, proxies=None, use_demo=False):
         """
-            :param min_delay: in seconds, minimum delay between each request
-            :param proxies: key-url dictionary
-            :param use_demo: Boolean, True if you want to use C2C demo API
-    
-            :Example:
-    
-            >>> bot = CampBot(min_delay=10, proxies={"https": "https://login:password@proxy.com"})
-            
+        :param min_delay: in seconds, minimum delay between each request
+        :param proxies: key-url dictionary
+        :param use_demo: Boolean, True if you want to use C2C demo API
+
+        :Example:
+
+        >>> bot = CampBot(min_delay=10, proxies={"https": "https://login:password@proxy.com"})
+
         """
 
         domain = "camptocamp" if not use_demo else "demov6.camptocamp"
@@ -459,12 +459,12 @@ class CampBot(object):
 
     def login(self, login, password):
         """
-            Login to camptocamp.org, mandatory for write actions. 
-            It also sign-in to forum. 
+        Login to camptocamp.org, mandatory for write actions.
+        It also sign-in to forum.
 
-            :param login: bot login used to sign-in (not the numerical ID)
-            :param password: bot password
-            
+        :param login: bot login used to sign-in (not the numerical ID)
+        :param password: bot password
+
         """
 
         logging.info(f"Logging to wiki with account {login}...")
@@ -527,12 +527,12 @@ class CampBot(object):
         self, url_or_filename, lang, ask_before_saving, thread_url, clean_bbcode=False
     ):
         """
-            Clean a set of document.
+        Clean a set of document.
 
-            :param url_or_filename: Camptocamp.org URL, or filename
-            :param lang: lang identifier
-            :param ask_before_saving: Boolean
-            :param clean_bbcode: Boolean
+        :param url_or_filename: Camptocamp.org URL, or filename
+        :param lang: lang identifier
+        :param ask_before_saving: Boolean
+        :param clean_bbcode: Boolean
 
         """
 
@@ -545,10 +545,10 @@ class CampBot(object):
 
     def report(self, url_or_filename, lang):
         """
-            Make quality report on a set of document.
+        Make quality report on a set of document.
 
-            :param url_or_filename: Camptocamp.org URL, or filename
-            :param langs: comma-separated list of lang identifiers
+        :param url_or_filename: Camptocamp.org URL, or filename
+        :param langs: comma-separated list of lang identifiers
         """
 
         documents = [d for d in self.get_documents(url_or_filename)]
@@ -627,7 +627,12 @@ class CampBot(object):
 
                 for processor in processors:
                     if processor.ready_for_production:
-                        if processor(document, [lang,]):
+                        if processor(
+                            document,
+                            [
+                                lang,
+                            ],
+                        ):
                             messages.append(processor.comment)
                             must_save = True
 
@@ -655,10 +660,10 @@ class CampBot(object):
 
     def export(self, url, filename=None):
         """
-            Export all document given by a camptocamp.org url
+        Export all document given by a camptocamp.org url
 
-            :param url: Camptocamp.org URL
-            :param filename: Output file name. Defaut : <document_type>.csv
+        :param url: Camptocamp.org URL
+        :param filename: Output file name. Defaut : <document_type>.csv
 
         """
 
@@ -702,11 +707,11 @@ class CampBot(object):
 
     def export_contributions(self, starts=None, ends=None, filename=None):
         """
-            Export all document given by a camptocamp.org url
+        Export all document given by a camptocamp.org url
 
-            :param starts: Start date, default is now minus 24 hours
-            :param ends: default is now
-            :param filename: Output file name. Defaut : contributions.csv
+        :param starts: Start date, default is now minus 24 hours
+        :param ends: default is now
+        :param filename: Output file name. Defaut : contributions.csv
 
         """
 
