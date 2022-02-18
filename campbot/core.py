@@ -7,7 +7,7 @@ import io
 import requests
 from datetime import datetime, timedelta
 from dateutil import parser
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 import pytz
 import logging
 import time
@@ -523,24 +523,24 @@ class CampBot(object):
         constructor, filters = _parse_filter(url)
         return self.wiki.get_documents(filters, constructor=constructor)
 
-    def clean(self, url_or_filename, langs, ask_before_saving=True, clean_bbcode=False):
+    def clean(
+        self, url_or_filename, lang, ask_before_saving, thread_url, clean_bbcode=False
+    ):
         """
             Clean a set of document.
 
             :param url_or_filename: Camptocamp.org URL, or filename
-            :param langs: comma-separated list of lang identifiers
+            :param lang: lang identifier
             :param ask_before_saving: Boolean
             :param clean_bbcode: Boolean
 
         """
 
-        assert len(langs) != 0
-
         documents = self.get_documents(url_or_filename)
-        processors = get_automatic_replacments(self, clean_bbcode)
+        report_header = f"Clean documents from `{url_or_filename}`"
 
         self._process_documents(
-            documents, processors, langs, ask_before_saving, excluded_ids=[996571,]
+            documents, lang, ask_before_saving, report_header, thread_url, clean_bbcode
         )
 
     def report(self, url_or_filename, lang):
@@ -581,29 +581,45 @@ class CampBot(object):
         print("\n".join(stdout_report))
 
     def _process_documents(
-        self, documents, processors, langs, ask_before_saving=True, excluded_ids=None
+        self,
+        documents,
+        lang,
+        ask_before_saving,
+        report_header,
+        thread_url,
+        clean_bbcode=False,
     ):
 
+        excluded_document_ids = [
+            996571,  # article with all automatic corrections
+        ]
+
+        processors = get_automatic_replacments(self, clean_bbcode=clean_bbcode)
+
+        report = defaultdict(int)
+
         for document in documents:
-
             if "redirects_to" in document:
-                pass  # document id is not available...
+                continue  # document id is not available...
 
-            elif excluded_ids is not None and document.document_id in excluded_ids:
+            document_url = document.get_url()
+            report[f"Inspected"] += 1
+
+            if document.document_id in excluded_document_ids:
                 pass
 
             elif document.get("protected", False) and not self.moderator:
-                print("{} is a protected".format(document.get_url()))
+                logging.info(f"{document_url} is protected")
+                report["Skipped because protected"] += 1
 
             elif document.is_personal() and not self.moderator:
-                print("{} is a personal".format(document.get_url()))
+                logging.info(f"{document_url} is a personal document")
+                report["Skipped because is not CC-BY-SA"] += 1
 
             elif not document.is_valid():
-                print(
-                    "{} : {}".format(
-                        document.get_url(), document.get_invalidity_reason()
-                    )
-                )
+                reason = document.get_invalidity_reason()
+                logging.info(f"{document_url} : {reason}")
+                report[f"Skipped because {reason}"] += 1
 
             else:
                 messages = []
@@ -611,18 +627,31 @@ class CampBot(object):
 
                 for processor in processors:
                     if processor.ready_for_production:
-                        if processor(document, langs):
+                        if processor(document, [lang,]):
                             messages.append(processor.comment)
                             must_save = True
 
                 if must_save:
                     comment = ", ".join(messages)
                     try:
-                        document.save(comment, ask_before_saving=ask_before_saving)
-                    except Exception as e:
-                        print(
-                            "Error while saving {} :\n{}".format(document.get_url(), e)
+                        new_document = document.save(
+                            comment, ask_before_saving=ask_before_saving
                         )
+                    except Exception as e:
+                        report["Unexpcted error"] += 1
+                        logging.error(f"Error while saving {document_url} :\n{e}")
+                    else:
+                        if new_document is None:
+                            report["Skipped by bot owner"] += 1
+                        else:
+                            report["Corrected"] += 1
+
+        log_report = "\n".join(
+            [f"* `{bucket}`: {count}" for bucket, count in report.items()]
+        )
+        self.forum.post_message(f"### {report_header}\n\n{log_report}", thread_url)
+
+        return report
 
     def export(self, url, filename=None):
         """
@@ -719,6 +748,10 @@ class CampBot(object):
     def get_modified_documents(
         self, lang, oldest_date=None, newest_date=None, excluded_users=()
     ):
+        logging.info(
+            f"Get modified documents from {oldest_date} to {newest_date} in lang:{lang}"
+        )
+
         result = OrderedDict()
         for contrib in self.wiki.get_contributions(
             oldest_date=oldest_date, newest_date=newest_date
@@ -738,15 +771,11 @@ class CampBot(object):
 
         return result
 
-    def clean_recent_changes(self, days, lang, ask_before_saving):
+    def clean_recent_changes(self, days, lang, ask_before_saving, thread_url):
         newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
         oldest_date = newest_date - timedelta(days=days)
 
-        excluded_ids = [
-            996571,
-        ]
-
-        processors = get_automatic_replacments(self)
+        report_header = f"Clean recent change from `{oldest_date}` to `{newest_date}`"
 
         def get_documents():
 
@@ -761,12 +790,11 @@ class CampBot(object):
                     document_id, document_type=document_type
                 )
 
-                if document_id not in excluded_ids:
-                    yield document
+                yield document
 
-        print("Fix recent changes")
-        self._process_documents(get_documents(), processors, [lang,], ask_before_saving)
-        print("Fix recent changes finished")
+        self._process_documents(
+            get_documents(), lang, ask_before_saving, report_header, thread_url
+        )
 
     def get_new_contributors(self, contrib_threshold=20, outings_threshold=15):
         with open("contributors.txt", "r") as f:
