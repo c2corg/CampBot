@@ -643,7 +643,7 @@ class CampBot(object):
                             comment, ask_before_saving=ask_before_saving
                         )
                     except Exception as e:
-                        report["Unexpcted error"] += 1
+                        report["Unexpected error"] += 1
                         logging.error(f"Error while saving {document_url} :\n{e}")
                     else:
                         if new_document is None:
