@@ -425,7 +425,7 @@ class HistoryTest(BaseVersionTest):
 
 class MainWaypointTest(BaseVersionTest):
     def __init__(self):
-        super(MainWaypointTest, self).__init__(name="Main waypoint")
+        super(MainWaypointTest, self).__init__(name="Point de passage principal")
 
         self.fail_marker = emoji(
             "https://forum.camptocamp.org/uploads/default/original/2X/f/f2c72706b83fd5bd21e110cb1b9758c763905023.png",
