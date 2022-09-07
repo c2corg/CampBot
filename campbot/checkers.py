@@ -276,6 +276,7 @@ def get_fixed_tests(lang):
         RouteTypeTest(),
         DistanceTest(),
         QualityTest(),
+        TitleLevel(),
     ]
 
 
@@ -486,3 +487,28 @@ class QualityTest(BaseContributionTest):
 
     def test_contribution(self, old_doc, new_doc):
         return old_doc.quality == new_doc.quality
+
+class TitleLevel(object):
+    def __init__(self):
+        self.name = "Titre de niveau trop élevé"
+        self.fail_marker = emoji("<strong>H</strong>",
+                                 self.name)
+        self.success_marker = ""
+
+    def __call__(self, contrib, old_version, new_version):
+        if old_version is None or new_version is None:
+            return True, True
+
+        old_doc = old_version.document
+        new_doc = new_version.document
+
+        if "redirects_to" in old_doc or "redirects_to" in new_doc:
+            return True, True
+
+        def check(doc):
+           has_level2 =  doc.search( r"(^|\n)##[^#]") is not None
+           has_level3_or_more = doc.search(r"(^|\n)###*" is not None
+          
+           return not has_level2 and has_level3_or_more
+      
+      return check(old_doc), check(new_doc)
