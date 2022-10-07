@@ -2,4 +2,4 @@ pytest
 pytest-cov
 wheel
 setuptools
-black==22.1.0
+black==22.10.0
