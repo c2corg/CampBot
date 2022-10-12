@@ -24,7 +24,9 @@ The rules are :
         809627,
         937458,
         1058594,
-        1058594,
+        1154231,
+        1251594,
+        1350370
     ]
 
     print("Load images of previous challenges", end ="")
