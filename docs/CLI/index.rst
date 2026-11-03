@@ -1,43 +1,32 @@
 Command line interface
 ======================
 
-Here isthe help you get by typing ``campbot`` in you command line tool :
+Here is the help you get by typing ``campbot -h`` in your command line tool.
+Each command has its own help, for instance ``campbot clean -h``:
 
 .. code-block:: bash
 
+    usage: campbot [-h] COMMAND ...
+
     CampBot, Python bot framework for camptocamp.org
 
-    Usage:
-      campbot clean_rc <days> <lang> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
-      campbot report_rc <days> <lang> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch]
-      campbot clean <url_or_file> <lang> [--login=<login>] [--password=<password>] [--delay=<seconds>] [--batch] [--bbcode]
-      campbot contribs [--out=<filename>] [--starts=<start_date>] [--ends=<end_date>] [--delay=<seconds>]
-      campbot export <url> [--out=<filename>] [--delay=<seconds>]
+    positional arguments:
+      COMMAND
+        report_rc  Make quality report on recent changes.
+        clean_rc   Clean recent changes.
+        clean      Clean documents.
+        report     Make quality report on documents.
+        contribs   Export all contributions in a CSV file.
+        export     Export all documents in a CSV file.
 
+    options:
+      -h, --help   show this help message and exit
 
-    Options:
-      --login=<login>           Bot login
-      --password=<password>     Bot password
-      --batch                   Batch mode, means that no confirmation is required before saving
-                                Use very carefully!
-      --delay=<seconds>         Minimum delay between each request. Default : 3 seconds
-      --bbcode                  Clean old BBCode in markdown
-      --out=<filename>          Output file name. Default value will depend on process
-
-
-    Commands:
-      report_rc     Make quality report on recent changes.
-      clean_rc      Clean recent changes.
-      clean         Clean documents.
-                    <url_or_file> is like https://www.camptocamp.org/routes#a=523281, or, simplier, routes#a=523281. 
-                    filename is also accepted, and must be like : 
-                    123 | r
-                    456 | w
-                    <lang> is a lang identifiers, like fr for french.
-      contribs      Export all contribution in a CSV file. <start_date> and <end_date> are like 2018-05-12
-      export        Export all documents in a CSV file.
-                    <url> is like https://www.camptocamp.org/outings#u=2, or, simplier, outings#u=2
-
+    environment variables:
+      CAMPBOT_LOGIN, CAMPBOT_PASSWORD   bot credentials, used when --login and
+                                        --password are not given
+      CAMPBOT_CREDENTIALS               "login@password", same as above
+      HTTPS_PROXY                       proxy used for all requests
 
 .. toctree::
    :maxdepth: 1
