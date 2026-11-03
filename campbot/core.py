@@ -11,6 +11,7 @@ from collections import OrderedDict, defaultdict
 import pytz
 import logging
 import time
+from urllib.parse import parse_qs, urlparse
 from . import utils
 from . import objects
 from campbot.processors import get_automatic_replacments
@@ -467,16 +468,34 @@ class CampBot(object):
 
         """
 
+        # Discourse binds the SSO nonce to the session that requested it, so the
+        # nonce must be asked by the forum session itself, not by the API.
+        logging.info("Asking the forum for a SSO nonce...")
+        res = self.forum._session.get(
+            self.forum.api_url + "/session/sso",
+            proxies=self.forum.proxies,
+            allow_redirects=False,
+        )
+        res.raise_for_status()
+        sso_params = parse_qs(urlparse(res.headers["Location"]).query)
+
         logging.info(f"Logging to wiki with account {login}...")
         res = self.wiki.post(
-            "/users/login", {"username": login, "password": password, "discourse": True}
+            "/users/login",
+            {
+                "username": login,
+                "password": password,
+                "discourse": True,
+                "sso": sso_params["sso"][0],
+                "sig": sso_params["sig"][0],
+            },
         )
         token = res["token"]
         self.moderator = "moderator" in res["roles"]
         self.wiki.headers["Authorization"] = 'JWT token="{}"'.format(token)
 
         logging.info(f"Logging to forum with account {login}...")
-        self.forum.get(res["redirect_internal"].replace(self.forum.api_url, ""))
+        self.forum.get(res["redirect"].replace(self.forum.api_url, ""))
         self.forum.headers["X-CSRF-Token"] = self.forum.get("/session/csrf")["csrf"]
 
         logging.info(f"Logging with account {login} OK")

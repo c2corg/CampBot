@@ -25,8 +25,9 @@ def _forum(method, url, answer):
 messages = [
     # auth
     _forum("GET", r"session/csrf", {"csrf": "csrf"}),
-    _forum('GET', r'sso', ""),
-    _wiki("POST", r"users/login", {"token": "", "redirect_internal": "/sso", "roles": []}),
+    _forum("GET", r"session/sso", {"__headers__": {"Location": "https://www.camptocamp.org/auth-sso?sso=a&sig=b"}}),
+    _forum("GET", r"session/sso_login\?sso=a&sig=b", ""),
+    _wiki("POST", r"users/login", {"token": "", "redirect": "https://forum.camptocamp.org/session/sso_login?sso=a&sig=b", "roles": []}),
 
     # specific responses
     _wiki('GET', r'(outings|routes|articles|waypoints|xreports)\?.*offset=30.*', {"documents": []}),
@@ -123,6 +124,9 @@ def fix_requests():
                 if m == method and fullmatch(pattern, url):
                     self._data = data
                     break
+
+            if isinstance(self._data, dict) and "__headers__" in self._data:
+                self.headers.update(self._data["__headers__"])
 
             self.headers['Content-type'] = 'application/json' if isinstance(self._data, dict) else ''
             assert self._data is not None, "Cant find message for {} {}".format(method, url)
