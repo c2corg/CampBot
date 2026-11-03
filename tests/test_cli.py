@@ -72,3 +72,12 @@ def test_module_can_be_run():
 
     assert result.returncode == 0
     assert "clean_rc" in result.stdout
+
+
+def test_report_over_several_days(fix_requests, credentials, monkeypatch):
+    from campbot.__main__ import main_entry_point
+
+    argv = ["campbot", "report_rc", "3", "fr", THREAD, "--delay=0.001"]
+    monkeypatch.setattr(sys, "argv", argv)
+
+    main_entry_point()
