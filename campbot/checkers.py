@@ -4,7 +4,7 @@
 """
 ## Test contributions validity, and report suspicious contribution.
 
-The main function is `report_recent_changes(bot, days)`, and it will test contributions made in the <days> past days. 
+The main function is `report_recent_changes(bot, days)`, and it will test contributions made in the <days> past days.
 
 A test can inherits one of those two classes:
 
@@ -15,7 +15,6 @@ A test can inherits one of those two classes:
   * implements `test_contribution(old_doc, new_doc)`
   * returns `True` if going from old_doc to old_doc is OK (for instance, not a too big move)
 """
-
 
 from __future__ import unicode_literals, print_function, division
 
