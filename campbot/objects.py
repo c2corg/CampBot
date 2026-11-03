@@ -2,23 +2,23 @@
 
 """
 
-This module contains all data objects getted from forum and wiki API. These API provides JSON data, and this module enhances data model by mirroring data attributes to data model. Here is an exemple : 
+This module contains all data objects getted from forum and wiki API. These API provides JSON data, and this module enhances data model by mirroring data attributes to data model. Here is an exemple :
 
 .. code-block:: python
 
     from campbot import CampBot
-    
+
     bot = CampBot(use_demo=True)
     waypoint = bot.wiki.get_waypoint(107702)
-    
+
     # this two lines are perfectly equivalents
     elevation = waypoint["elevation"]  # standard way to access data
     elevation = waypoint.elevation  # and sexier way.
-    
+
     # set values is possible
-    waypoint.elevation = 1000  
+    waypoint.elevation = 1000
     assert waypoint["elevation"] == 1000  # it's true!
-    
+
 We try to use the second way every times it's possible in this documentation.
 """
 

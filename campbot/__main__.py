@@ -24,8 +24,8 @@ Commands:
   report_rc     Make quality report on recent changes.
   clean_rc      Clean recent changes.
   clean         Clean documents.
-                <url_or_file> is like https://www.camptocamp.org/routes#a=523281, or, simplier, routes#a=523281. 
-                filename is also accepted, and must be like : 
+                <url_or_file> is like https://www.camptocamp.org/routes#a=523281, or, simplier, routes#a=523281.
+                filename is also accepted, and must be like :
                 123 | r
                 456 | w
                 <lang> is a lang identifier, like fr for french.
