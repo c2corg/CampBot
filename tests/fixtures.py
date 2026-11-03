@@ -150,6 +150,8 @@ def fix_requests():
         return Response(method, url, **kwargs)
 
     today = utils.today
+    min_delay = core.BaseBot.min_delay
+    request_backup = Session.request
 
     utils.today = lambda: datetime.datetime(year=2017, month=12, day=21)
     core.BaseBot.min_delay = datetime.timedelta(seconds=0.001)
@@ -158,6 +160,8 @@ def fix_requests():
     yield
 
     utils.today = today
+    core.BaseBot.min_delay = min_delay
+    Session.request = request_backup
 
 
 @pytest.fixture()
