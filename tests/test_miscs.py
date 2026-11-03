@@ -4,6 +4,7 @@ from __future__ import print_function, unicode_literals, division
 
 from tests.fixtures import fix_requests, fix_dump, ids_files, fix_input
 import os
+import types
 import pytest
 
 MESSAGE_URL = (
@@ -54,11 +55,11 @@ def test_main_entry_point(fix_requests, ids_files):
     main(get_main_args("contribs"))
     main(get_main_args("export"))
     main(get_main_args("report_rc"))
-    main(get_main_args("report", {"<url_or_file>": "routes#w=123"}))
+    main(get_main_args("report", {"url_or_file": "routes#w=123"}))
     main(get_main_args("clean_rc"))
-    main(get_main_args("clean", {"<url_or_file>": "routes#w=123"}))
-    main(get_main_args("clean", {"<url_or_file>": "waypoints#w=123"}))
-    main(get_main_args("clean", {"<url_or_file>": ids_files}))
+    main(get_main_args("clean", {"url_or_file": "routes#w=123"}))
+    main(get_main_args("clean", {"url_or_file": "waypoints#w=123"}))
+    main(get_main_args("clean", {"url_or_file": ids_files}))
 
     os.remove("outings.csv")
     os.remove("contributions.csv")
@@ -195,11 +196,10 @@ def test_dump(fix_requests, fix_dump):
 def test_misc():
     from campbot import core, utils
     from campbot.__main__ import main_entry_point
-    from docopt import DocoptExit
 
     utils.today()
 
-    with pytest.raises(DocoptExit):
+    with pytest.raises(SystemExit):
         main_entry_point()
 
     core._parse_filter("outings")
@@ -210,43 +210,60 @@ def test_misc():
 
 
 def get_main_args(action, others=None):
-    # noinspection PyDictCreation
-    result = {
-        "report_rc": False,
-        "clean_rc": False,
-        "contribs": False,
-        "export": False,
-        "clean": False,
-        "report": False,
-        "--delay": 0.01,
-        "--login": "x",
-        "--password": "y",
-        "--lang": "fr",
-        "--bbcode": True,
-        "--batch": True,
-        "<days>": "1",
-        "<lang>": "fr",
-        "<langs>": "fr,de",
-        "<thread_url>": "https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480",
-        "<url>": "outings#u=286726",
-        "<url_or_file>": "outings#u=286726",
-        "--ends": "2999-12-31",
-        "--starts": "2017-06-01",
-        "--out": "",
-    }
+    result = types.SimpleNamespace(
+        command=action,
+        delay=0.01,
+        login="x",
+        password="y",
+        bbcode=True,
+        batch=True,
+        days="1",
+        lang="fr",
+        thread_url="https://forum.camptocamp.org/t/topoguide-verifications-automatiques/201480",
+        url="outings#u=286726",
+        url_or_file="outings#u=286726",
+        ends="2999-12-31",
+        starts="2017-06-01",
+        out="",
+    )
 
     if others:
-        result.update(others)
-
-    assert action in result
-
-    result[action] = True
+        vars(result).update(others)
 
     os.environ["HTTPS_PROXY"] = ""
     os.environ["CAMPBOT_LOGIN"] = "patate"
     os.environ["CAMPBOT_PASSWORD"] = "douce"
 
     return result
+
+
+def test_parser():
+    from campbot.__main__ import build_parser
+
+    parser = build_parser()
+
+    args = parser.parse_args(["report_rc", "1", "fr", "http://thread"])
+    assert (args.command, args.days, args.lang, args.thread_url) == (
+        "report_rc",
+        "1",
+        "fr",
+        "http://thread",
+    )
+
+    args = parser.parse_args(
+        ["clean", "routes#w=1", "fr", "http://thread", "--batch", "--bbcode"]
+    )
+    assert args.batch and args.bbcode and args.url_or_file == "routes#w=1"
+
+    args = parser.parse_args(["clean_rc", "1", "fr", "http://thread"])
+    assert not args.batch
+
+    args = parser.parse_args(["contribs", "--out=x.csv", "--starts=2018-05-12"])
+    assert (args.out, args.starts, args.ends) == ("x.csv", "2018-05-12", None)
+
+    for argv in ([], ["bogus"], ["export"], ["clean", "routes#w=1", "fr"]):
+        with pytest.raises(SystemExit):
+            parser.parse_args(argv)
 
 
 def test_checkers(fix_requests):
@@ -316,9 +333,9 @@ def test_weird(fix_requests, fix_input):
     os.environ["CAMPBOT_LOGIN"] = "x"
     os.environ["CAMPBOT_PASSWORD"] = "y"
     args = get_main_args("clean")
-    assert args["--login"] == "x"
-    assert args["--password"] == "y"
-    args["--login"] = False
+    assert args.login == "x"
+    assert args.password == "y"
+    args.login = False
     __main__.main(args)
 
     with open("contributors.txt", "w") as f:
