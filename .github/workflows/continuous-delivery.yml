@@ -1,49 +1,47 @@
 name: continuous-delivery
 
+# Publishes to PyPI when a version tag is pushed (e.g. v2.0.1). Uses PyPI
+# trusted publishing: no token is stored in this repository, PyPI trusts this
+# workflow (see the "Publishing" settings of the campbot project on PyPI).
 on:
   push:
-    branches:
-      - 'master'
     tags:
-      - '**'
-
+      - "v*"
 
 jobs:
-  build-and-publish:
-    name: Publish release to Pypi
+  build:
+    name: Build the package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-python@v1
-
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Check that the version in the source matches the tag
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(python -c 'exec(open("campbot/version.py").read()); print(__version__)')"
+          echo "Tag: $tag, source version: $version"
+          test "$tag" = "$version"
       - name: Build package
         run: |
-          python --version
-          pip install -r requirements.txt -r dev-requirements.txt
-          python setup.py sdist bdist_wheel
-
-      - name: Publish package to Test PyPI
-        uses: pypa/gh-action-pypi-publish@master
+          pip install build
+          python -m build
+      - uses: actions/upload-artifact@v7
         with:
-          user: __token__
-          password: ${{ secrets.test_pypi_password }}
-          repository_url: https://test.pypi.org/legacy/
-          skip_existing: true
-      - name: Test that package is published on Test PyPI
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install --index-url https://test.pypi.org/simple/ --no-deps campbot
+          name: dist
+          path: dist/
 
-      - name: Check that version number from source is equal to release version number
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-        run: |
-          echo "Tag name is ${GITHUB_REF##*/}"
-          python -c "import campbot; print('Version is ' + campbot.__version__)"
-          python -c "import campbot; exit(1 if campbot.__version__ != '${GITHUB_REF##*/}' else 0)"
-      - name: Publish package to PyPI
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-        uses: pypa/gh-action-pypi-publish@master
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
         with:
-          user: __token__
-          password: ${{ secrets.pypi_password }}
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

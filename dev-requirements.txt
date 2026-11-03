@@ -1,5 +1,4 @@
 pytest
 pytest-cov
-wheel
-setuptools
-black==22.1.0
+build
+black>=26.10.1
