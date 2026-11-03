@@ -1,4 +1,4 @@
 docopt>=0.6.2
-requests>=2.32
-python-dateutil>=2.9
-pytz>=2025.2
+requests>=2.34.2
+python-dateutil>=3.0.0
+pytz>=2026.6

@@ -1,4 +1,4 @@
 pytest
 pytest-cov
 build
-black>=25
+black>=26.10.1
