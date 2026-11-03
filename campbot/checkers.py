@@ -4,7 +4,7 @@
 """
 ## Test contributions validity, and report suspicious contribution.
 
-The main function is `report_recent_changes(bot, days)`, and it will test contributions made in the <days> past days. 
+The main function is `report_recent_changes(bot, days)`, and it will test contributions made in the <days> past days.
 
 A test can inherits one of those two classes:
 
@@ -16,11 +16,11 @@ A test can inherits one of those two classes:
   * returns `True` if going from old_doc to old_doc is OK (for instance, not a too big move)
 """
 
-
 from __future__ import unicode_literals, print_function, division
 
 from dateutil import parser
 import datetime
+import re
 import logging
 from campbot import utils
 
@@ -47,6 +47,10 @@ def _get_diff_url(bot, document, lang, previous_version_id, version_id):
         previous_version_id,
         version_id,
     )
+
+
+def _format_timestamp(written_at, with_date):
+    return parser.parse(written_at).strftime("%d/%m %H:%M" if with_date else "%H:%M")
 
 
 class ContributionReport(object):
@@ -82,7 +86,7 @@ class ContributionReport(object):
         self.delta = self.new.get_locale_length(contrib.lang) if self.new else 0
         self.delta -= self.old.get_locale_length(contrib.lang) if self.old else 0
 
-    def get_multi_report(self, lang):
+    def get_multi_report(self, lang, with_date=False):
 
         result = (
             "  * {timestamp} "
@@ -92,7 +96,7 @@ class ContributionReport(object):
             "[{username}]({user_contrib_url}) →‎ "
             "*{comment}*"
         ).format(
-            timestamp=parser.parse(self.contrib.written_at).strftime("%H:%M"),
+            timestamp=_format_timestamp(self.contrib.written_at, with_date),
             emojis="".join(self.emojis),
             diff_title="diff" if self.new.previous_version_id else "**new**",
             diff_url=self.new.get_diff_url(lang),
@@ -104,7 +108,7 @@ class ContributionReport(object):
 
         return result
 
-    def get_mono_report(self, bot, lang):
+    def get_mono_report(self, bot, lang, with_date=False):
 
         title = bot.wiki.get_wiki_object(
             self.new.document.document_id, self.new.document.type
@@ -119,7 +123,7 @@ class ContributionReport(object):
             "[{username}]({user_contrib_url}) →‎ "
             "*{comment}*"
         ).format(
-            timestamp=parser.parse(self.contrib.written_at).strftime("%H:%M"),
+            timestamp=_format_timestamp(self.contrib.written_at, with_date),
             emojis="".join(self.emojis),
             doc_title=title if len(title) else "*Vide*",
             doc_url=self.new.document.get_url(lang),
@@ -145,11 +149,11 @@ class DocumentReport(object):
             self.sub_reports.append(report)
             self.need_report = self.need_report or report.need_report
 
-    def get_report(self, bot, lang):
+    def get_report(self, bot, lang, with_date=False):
         result = []
 
         if len(self.sub_reports) == 1:
-            result.append(self.sub_reports[0].get_mono_report(bot, lang))
+            result.append(self.sub_reports[0].get_mono_report(bot, lang, with_date))
 
         else:
             newest_report = self.sub_reports[0]
@@ -167,8 +171,8 @@ class DocumentReport(object):
                 "({delta}) **·** "
                 "[{doc_title}]({doc_url}) → "
                 "*{modifications} modifications*".format(
-                    timestamp=parser.parse(newest_report.contrib.written_at).strftime(
-                        "%H:%M"
+                    timestamp=_format_timestamp(
+                        newest_report.contrib.written_at, with_date
                     ),
                     doc_title=title if len(title) else "*Vide*",
                     doc_url=newest_report.new.document.get_url(lang),
@@ -189,7 +193,7 @@ class DocumentReport(object):
             )
 
             for report in self.sub_reports:
-                result.append(report.get_multi_report(lang))
+                result.append(report.get_multi_report(lang, with_date))
 
         return "\n".join(result)
 
@@ -231,7 +235,7 @@ def report_recent_changes(bot, days, lang, thread_url):
             messages.append("</tr>")
 
         messages.append("</table>\n[/details]\n\n----\n\n")
-        messages += [report.get_report(bot, lang) for report in reports]
+        messages += [report.get_report(bot, lang, days > 1) for report in reports]
 
         logging.info(f"Reporting {len(reports)} reports:\n\n" + "\n".join(messages))
 
@@ -276,6 +280,7 @@ def get_fixed_tests(lang):
         RouteTypeTest(),
         DistanceTest(),
         QualityTest(),
+        TitleLevelTest(lang),
     ]
 
 
@@ -486,3 +491,31 @@ class QualityTest(BaseContributionTest):
 
     def test_contribution(self, old_doc, new_doc):
         return old_doc.quality == new_doc.quality
+
+
+class TitleLevelTest(BaseVersionTest):
+    """A text with titles must not use level 1 (#) and needs a level 2 (##)"""
+
+    title = re.compile(r"^(#+)[ 	]", re.MULTILINE)
+
+    def __init__(self, lang):
+        super(TitleLevelTest, self).__init__(name="Niveau des titres", lang=lang)
+        self.fail_marker = emoji("/images/emoji/apple/hash.png?v=3", self.name)
+        self.success_marker = emoji(
+            "/images/emoji/apple/white_check_mark.png?v=3", self.name + " corrigé"
+        )
+
+    def test_document(self, document):
+        locale = document.get_locale(self.lang)
+
+        if not locale:
+            return True
+
+        for field in locale.get_locale_fields():
+            if field in locale and locale[field]:
+                levels = {len(m) for m in self.title.findall(locale[field])}
+
+                if levels and (1 in levels or 2 not in levels):
+                    return False
+
+        return True

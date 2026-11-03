@@ -1,0 +1,23 @@
+name: live
+
+# Read-only checks against the real camptocamp.org servers, to notice early
+# that a server change breaks the bot.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r dev-requirements.txt
+      - name: Run live tests
+        run: pytest tests/test_live.py
+        env:
+          CAMPBOT_LIVE: "1"
