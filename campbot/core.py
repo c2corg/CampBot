@@ -319,7 +319,32 @@ class WikiBot(BaseBot):
             )
 
 
+def split_message(message, max_length):
+    """
+    Split a message into chunks of at most max_length characters, cutting on line
+    boundaries (a single line longer than max_length is cut anyway).
+    """
+    chunks, current, size = [], [], 0
+    for line in message.split("\n"):
+        while len(line) > max_length:
+            if current:
+                chunks.append("\n".join(current))
+                current, size = [], 0
+            chunks.append(line[:max_length])
+            line = line[max_length:]
+        if current and size + 1 + len(line) > max_length:
+            chunks.append("\n".join(current))
+            current, size = [], 0
+        size += len(line) + (1 if current else 0)
+        current.append(line)
+    chunks.append("\n".join(current))
+    return chunks
+
+
 class ForumBot(BaseBot):
+    # Discourse limit is 80000 characters per post (configurable), keep a margin
+    MAX_POST_LENGTH = 78000
+
     def post_message(self, message, url):
         """
         post a message into an existant forum thread
@@ -329,7 +354,8 @@ class ForumBot(BaseBot):
         """
 
         topic_id, _ = self._get_post_ids(url)
-        self.post("/posts", {"topic_id": topic_id, "raw": message})
+        for chunk in split_message(message, self.MAX_POST_LENGTH):
+            self.post("/posts", {"topic_id": topic_id, "raw": chunk})
 
     def get_group_members(self, group_name):
         """
