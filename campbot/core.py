@@ -344,6 +344,9 @@ def split_message(message, max_length):
 class ForumBot(BaseBot):
     # Discourse limit is 80000 characters per post (configurable), keep a margin
     MAX_POST_LENGTH = 78000
+    # seconds between the parts of a split message, and retries when rate limited
+    POST_INTERVAL = 30
+    POST_RETRIES = 5
 
     def post_message(self, message, url):
         """
@@ -354,8 +357,40 @@ class ForumBot(BaseBot):
         """
 
         topic_id, _ = self._get_post_ids(url)
-        for chunk in split_message(message, self.MAX_POST_LENGTH):
-            self.post("/posts", {"topic_id": topic_id, "raw": chunk})
+        for i, chunk in enumerate(split_message(message, self.MAX_POST_LENGTH)):
+            if i > 0:
+                # the forum refuses posts that are too close to each other
+                logging.info("Waiting %ss before the next part", self.POST_INTERVAL)
+                time.sleep(self.POST_INTERVAL)
+            self._post_with_retry({"topic_id": topic_id, "raw": chunk})
+
+    def _post_with_retry(self, data):
+        for attempt in range(self.POST_RETRIES + 1):
+            try:
+                return self.post("/posts", data)
+            except requests.HTTPError as e:
+                response = e.response
+                if (
+                    response is None
+                    or response.status_code != 429
+                    or attempt == self.POST_RETRIES
+                ):
+                    raise
+                wait = self._get_wait_seconds(response)
+                logging.warning("Rate limited by the forum, retrying in %ss", wait)
+                time.sleep(wait)
+
+    @staticmethod
+    def _get_wait_seconds(response):
+        """Seconds asked by Discourse in a 429 answer (plus a margin)"""
+        try:
+            wait = float(response.json()["extras"]["wait_seconds"])
+        except (ValueError, KeyError, TypeError):
+            try:
+                wait = float(response.headers["Retry-After"])
+            except (KeyError, ValueError):
+                wait = 30
+        return wait + 2
 
     def get_group_members(self, group_name):
         """
