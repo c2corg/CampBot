@@ -245,7 +245,11 @@ def report_recent_changes(bot, days, lang, thread_url):
 
 
 def emoji(src, text):
-    return '<img src="{}" class="emoji" title="{}" alt="{}">'.format(src, text, text)
+    # width/height are explicit: the CSS class alone is not enough on the new forum
+    # and the emoji images are 72px wide, which makes them huge
+    return '<img src="{}" class="emoji" width="20" height="20" title="{}" alt="{}">'.format(
+        src, text, text
+    )
 
 
 def get_re_tests(configuration, lang):
