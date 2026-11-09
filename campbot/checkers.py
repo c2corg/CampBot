@@ -252,6 +252,23 @@ def emoji(src, text):
     )
 
 
+def convert_legacy_markup(text):
+    """
+    Convert the HTML markup used by the old forum for the markers
+    (<font color="red"><strong>L#</strong></font>) to the BBCode/Markdown
+    understood by the new one ([color=red]**L#**[/color]).
+    """
+    text = re.sub(
+        r"""<font +color=["']?([#\w]+)["']? *>(.*?)</font>""",
+        r"[color=\1]\2[/color]",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    return re.sub(
+        r"<(strong|b)>(.*?)</\1>", r"**\2**", text, flags=re.IGNORECASE | re.DOTALL
+    )
+
+
 def get_re_tests(configuration, lang):
     result = []
 
@@ -268,9 +285,9 @@ def get_re_tests(configuration, lang):
             parts = line.split(":", 1)
 
             if parts[0].strip() in ("* Erreur",):
-                test.fail_marker = parts[1].strip()
+                test.fail_marker = convert_legacy_markup(parts[1].strip())
             elif parts[0].strip() in ("* Corrigé",):
-                test.success_marker = parts[1].strip()
+                test.success_marker = convert_legacy_markup(parts[1].strip())
 
     return filter(lambda t: len(t.patterns) != 0, result)
 
