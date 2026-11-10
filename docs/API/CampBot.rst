@@ -31,7 +31,7 @@ Name your tool
 
 Every request CampBot sends has a ``User-Agent`` header that names it::
 
-    CampBot/2.1.3 (+https://github.com/c2corg/CampBot)
+    CampBot/2.2.0 (+https://github.com/c2corg/CampBot)
 
 If you build a tool on CampBot, give its name and version with ``user_agent``. It is put before CampBot's own name:
 
@@ -43,7 +43,7 @@ If you build a tool on CampBot, give its name and version with ``user_agent``. I
 
 Requests then send::
 
-    MyTool/1.2 (+https://example.org/mytool) CampBot/2.1.3 (+https://github.com/c2corg/CampBot)
+    MyTool/1.2 (+https://example.org/mytool) CampBot/2.2.0 (+https://github.com/c2corg/CampBot)
 
 Some guidelines:
 
