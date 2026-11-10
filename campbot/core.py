@@ -11,6 +11,7 @@ from collections import OrderedDict, defaultdict
 import pytz
 import logging
 import time
+from email.utils import parsedate_to_datetime
 from urllib.parse import parse_qs, urlparse
 from . import utils
 from . import objects
@@ -44,8 +45,48 @@ class UserInterrupt(BaseException):
     pass
 
 
+def get_retry_wait(response):
+    """Seconds to wait before retrying, or None if the request must not be retried
+
+    429 (rate limited) is always retried. 503 only when the server says when
+    to come back with Retry-After. The request was refused before being
+    processed, so retrying a POST or a PUT does not apply it twice.
+    """
+    if response.status_code not in (429, 503):
+        return None
+
+    wait = None
+    try:
+        # Discourse
+        wait = float(response.json()["extras"]["wait_seconds"])
+    except (ValueError, KeyError, TypeError):
+        pass
+
+    if wait is None:
+        retry_after = response.headers.get("Retry-After")
+        if retry_after:
+            try:
+                wait = float(retry_after)
+            except ValueError:
+                try:
+                    date = parsedate_to_datetime(retry_after)
+                    wait = (date - datetime.now(date.tzinfo)).total_seconds()
+                except (TypeError, ValueError):
+                    pass
+
+    if wait is None:
+        if response.status_code == 503:
+            return None
+        wait = 30
+
+    return max(wait, 0) + 2  # margin
+
+
 class BaseBot(object):
     min_delay = timedelta(seconds=3)
+    # retries of a rate limited request, and longest wait accepted (seconds)
+    max_retries = 5
+    max_wait = 300
 
     def __init__(self, campbot, api_url, proxies=None, min_delay=None, user_agent=None):
         self.campbot = campbot
@@ -69,15 +110,47 @@ class BaseBot(object):
 
         self._next_request_datetime = datetime.now() + self.min_delay
 
-    def get(self, url, **kwargs):
-        key = (url, str(kwargs))
+    def _request(self, method, url, **kwargs):
+        """Send a request, waiting and retrying when the server rate limits us"""
+        for attempt in range(self.max_retries + 1):
+            self._wait()
+            logging.debug("%s %s", method, url)
 
-        self._wait()
-        logging.debug("GET %s", url)
+            res = self._session.request(
+                method, self.api_url + url, proxies=self.proxies, **kwargs
+            )
 
-        res = self._session.get(self.api_url + url, proxies=self.proxies, params=kwargs)
+            wait = get_retry_wait(res)
+            if wait is None or attempt == self.max_retries:
+                break
+            if wait > self.max_wait:
+                logging.error(
+                    "HTTP %s on %s, the server asks to wait %ss: giving up",
+                    res.status_code,
+                    url,
+                    wait,
+                )
+                break
+
+            logging.warning(
+                "HTTP %s on %s, retrying in %ss", res.status_code, url, wait
+            )
+            time.sleep(wait)
+            self._slow_down()
 
         res.raise_for_status()
+        return res
+
+    def _slow_down(self):
+        # once rate limited, space the next requests more: double the delay,
+        # at least 0.1s, at most 30s (a longer delay set by the user is kept)
+        slower = min(
+            max(self.min_delay * 2, timedelta(seconds=0.1)), timedelta(seconds=30)
+        )
+        self.min_delay = max(self.min_delay, slower)
+
+    def get(self, url, **kwargs):
+        res = self._request("GET", url, params=kwargs)
 
         if res.headers["Content-type"].startswith("application/json"):
             return res.json()
@@ -85,24 +158,14 @@ class BaseBot(object):
             return res.content
 
     def post(self, url, data):
-        self._wait()
-        logging.debug("POST %s", url)
-
-        res = self._session.post(self.api_url + url, json=data, proxies=self.proxies)
-
-        res.raise_for_status()
+        res = self._request("POST", url, json=data)
 
         assert res.headers["Content-type"].startswith("application/json")
 
         return res.json()
 
     def put(self, url, data):
-        self._wait()
-        logging.debug("POST %s", url)
-
-        res = self._session.put(self.api_url + url, json=data, proxies=self.proxies)
-
-        res.raise_for_status()
+        res = self._request("PUT", url, json=data)
 
         assert res.headers["Content-type"].startswith("application/json")
 
@@ -357,9 +420,8 @@ def split_message(message, max_length):
 class ForumBot(BaseBot):
     # Discourse limit is 80000 characters per post (configurable), keep a margin
     MAX_POST_LENGTH = 78000
-    # seconds between the parts of a split message, and retries when rate limited
+    # seconds between the parts of a split message
     POST_INTERVAL = 30
-    POST_RETRIES = 5
 
     def post_message(self, message, url):
         """
@@ -375,35 +437,7 @@ class ForumBot(BaseBot):
                 # the forum refuses posts that are too close to each other
                 logging.info("Waiting %ss before the next part", self.POST_INTERVAL)
                 time.sleep(self.POST_INTERVAL)
-            self._post_with_retry({"topic_id": topic_id, "raw": chunk})
-
-    def _post_with_retry(self, data):
-        for attempt in range(self.POST_RETRIES + 1):
-            try:
-                return self.post("/posts", data)
-            except requests.HTTPError as e:
-                response = e.response
-                if (
-                    response is None
-                    or response.status_code != 429
-                    or attempt == self.POST_RETRIES
-                ):
-                    raise
-                wait = self._get_wait_seconds(response)
-                logging.warning("Rate limited by the forum, retrying in %ss", wait)
-                time.sleep(wait)
-
-    @staticmethod
-    def _get_wait_seconds(response):
-        """Seconds asked by Discourse in a 429 answer (plus a margin)"""
-        try:
-            wait = float(response.json()["extras"]["wait_seconds"])
-        except (ValueError, KeyError, TypeError):
-            try:
-                wait = float(response.headers["Retry-After"])
-            except (KeyError, ValueError):
-                wait = 30
-        return wait + 2
+            self.post("/posts", {"topic_id": topic_id, "raw": chunk})
 
     def get_group_members(self, group_name):
         """

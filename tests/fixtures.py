@@ -116,7 +116,7 @@ def fix_requests():
 
     class Response(object):
         def __init__(self, method, url, **kwargs):
-            self.status = 200
+            self.status = self.status_code = 200
             self.headers = {}
 
             self._data = None
@@ -134,7 +134,7 @@ def fix_requests():
             print(method, url, self._data)
 
             if isinstance(self._data, Exception):
-                self.status = 500
+                self.status = self.status_code = 500
 
         def raise_for_status(self):
             pass
