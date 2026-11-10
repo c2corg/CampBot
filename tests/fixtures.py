@@ -98,11 +98,14 @@ def fix_dump():
     from campbot import dump
 
     _default_db_name = dump._default_db_name
+    _min_delay = dump._min_delay
     dump._default_db_name = "test.db"
+    dump._min_delay = 0.001
 
     yield
 
     dump._default_db_name = _default_db_name
+    dump._min_delay = _min_delay
 
 
 @pytest.fixture()
