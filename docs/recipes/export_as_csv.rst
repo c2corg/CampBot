@@ -8,7 +8,7 @@ Here is a code that exports some informations from images associated to an artic
 
     from campbot import CampBot
 
-    bot = CampBot(min_delay=0.01)
+    bot = CampBot(min_delay=0.1)
 
     article = bot.wiki.get_article(1058594)  # Concours Photo Sophie 2018
 

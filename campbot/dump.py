@@ -19,6 +19,10 @@ except NameError:
 
 _default_db_name = "camptocamp.db"
 
+# seconds between requests: the API refuses more than 200 requests per 10s
+# from one address (429), so stay well below 20 requests per second
+_min_delay = 0.1
+
 
 def prepare_for_insertion(doc):
     result = deepcopy(doc)
@@ -306,7 +310,7 @@ class Dump(object):
         return result[0] if result else 0
 
     def complete_contributions(self):
-        bot = CampBot(min_delay=0.01)
+        bot = CampBot(min_delay=_min_delay)
 
         highest_version_id = self.get_highest_version_id("contribution")
 
@@ -341,7 +345,7 @@ class Dump(object):
 
     def complete(self):
 
-        bot = CampBot(min_delay=0.01)
+        bot = CampBot(min_delay=_min_delay)
 
         still_done = []
         highest_version_id = self.get_highest_version_id()
@@ -439,7 +443,7 @@ class Dump(object):
 
         result = c.fetchall()
 
-        bot = CampBot(min_delay=0.01)
+        bot = CampBot(min_delay=_min_delay)
         cur = None
 
         for i, (document_id, typ) in enumerate(result):

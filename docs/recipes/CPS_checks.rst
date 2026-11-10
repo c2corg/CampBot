@@ -31,7 +31,7 @@ the list.
     contest_id = int(sys.argv[1])
     previous_ids = [int(article_id) for article_id in sys.argv[2:]]
 
-    bot = CampBot(min_delay=0.01)
+    bot = CampBot(min_delay=0.1)
 
     print("Load images of previous contests", end="")
     previous_images = {}
