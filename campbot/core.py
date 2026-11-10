@@ -1050,8 +1050,8 @@ class CampBot(object):
                 "<td><strong>{reason}</strong></td>"
                 "<td>@{forum}</td>"
                 '<td><a href="https://www.camptocamp.org/profiles/{user_id}">{name}</a></td>'
-                '<td><a href="https://www.camptocamp.org/whatsnew#u={user_id}">{contribs}</a></td>'
-                '<td><a href="https://www.camptocamp.org/outings#u={user_id}">{outings}</a></td>'
+                '<td><a href="https://www.camptocamp.org/whatsnew?u={user_id}">{contribs}</a></td>'
+                '<td><a href="https://www.camptocamp.org/outings?u={user_id}">{outings}</a></td>'
                 "</tr>"
             )
 
