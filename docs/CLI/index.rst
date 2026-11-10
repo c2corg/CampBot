@@ -28,6 +28,9 @@ Each command has its own help, for instance ``campbot clean -h``:
       CAMPBOT_CREDENTIALS               "login@password", same as above
       HTTPS_PROXY                       proxy used for all requests
 
+All commands accept ``--delay=<seconds>``, the minimum delay between each request, and ``--user-agent=<name>``.
+If you run CampBot from your own tool or script, ``--user-agent`` names it in the requests: see :doc:`/API/CampBot`.
+
 .. toctree::
    :maxdepth: 1
 

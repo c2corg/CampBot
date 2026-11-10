@@ -14,6 +14,7 @@ import time
 from urllib.parse import parse_qs, urlparse
 from . import utils
 from . import objects
+from .version import __version__
 from campbot.processors import get_automatic_replacments
 from campbot.checkers import get_document_tests
 
@@ -28,6 +29,17 @@ except NameError:
 __all__ = ["CampBot", "WikiBot", "ForumBot", "BaseBot"]
 
 
+PROJECT_URL = "https://github.com/c2corg/CampBot"
+
+
+def build_user_agent(user_agent=None):
+    """User-Agent sent with every request: the tool built on CampBot, then CampBot"""
+    campbot = "CampBot/{} (+{})".format(__version__, PROJECT_URL)
+    if user_agent and user_agent.strip():
+        return "{} {}".format(user_agent.strip(), campbot)
+    return campbot
+
+
 class UserInterrupt(BaseException):
     pass
 
@@ -35,10 +47,11 @@ class UserInterrupt(BaseException):
 class BaseBot(object):
     min_delay = timedelta(seconds=3)
 
-    def __init__(self, campbot, api_url, proxies=None, min_delay=None):
+    def __init__(self, campbot, api_url, proxies=None, min_delay=None, user_agent=None):
         self.campbot = campbot
         self.api_url = api_url
         self._session = requests.Session()
+        self._session.headers["User-Agent"] = build_user_agent(user_agent)
         self.proxies = proxies
         self._next_request_datetime = datetime.now()
         if min_delay is not None:
@@ -482,15 +495,19 @@ class CampBot(object):
     * ``forum`` for interacting with camptocamp.org forum
     """
 
-    def __init__(self, min_delay=None, proxies=None, use_demo=False):
+    def __init__(self, min_delay=None, proxies=None, use_demo=False, user_agent=None):
         """
         :param min_delay: in seconds, minimum delay between each request
         :param proxies: key-url dictionary
         :param use_demo: Boolean, True if you want to use C2C demo API
+        :param user_agent: name and version of the tool built on CampBot, like
+            ``"MyTool/1.2 (+https://example.org/mytool)"``. It is put before
+            CampBot's own name in the User-Agent header.
 
         :Example:
 
         >>> bot = CampBot(min_delay=10, proxies={"https": "https://login:password@proxy.com"})
+        >>> bot = CampBot(user_agent="MyTool/1.2")
 
         """
 
@@ -501,6 +518,7 @@ class CampBot(object):
             "https://api.{}.org".format(domain),
             proxies=proxies,
             min_delay=min_delay,
+            user_agent=user_agent,
         )
         """WikiBot instance"""
 
@@ -509,6 +527,7 @@ class CampBot(object):
             "https://forum.{}.org".format(domain),
             proxies=proxies,
             min_delay=min_delay,
+            user_agent=user_agent,
         )
 
         """ForumBot instance"""

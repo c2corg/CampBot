@@ -13,6 +13,24 @@ Bot framework for [camptocamp.org](https://www.camptocamp.org/)
 pip install campbot
 ```
 
+## Name your tool
+
+Every request sends a `User-Agent` header like
+`CampBot/2.1.3 (+https://github.com/c2corg/CampBot)`.
+If you build a tool on CampBot, put its name first:
+
+```python
+from campbot import CampBot
+
+bot = CampBot(user_agent="MyTool/1.2 (+https://example.org/mytool)")
+# User-Agent: MyTool/1.2 (+https://example.org/mytool) CampBot/2.1.3 (+https://github.com/c2corg/CampBot)
+```
+
+On the command line, use `--user-agent=MyTool/1.2`.
+
+The camptocamp.org team can then tell your traffic apart from other CampBot users,
+and contact you rather than block it if something goes wrong.
+
 ## Contribute
 
 ```batch

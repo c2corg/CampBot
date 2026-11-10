@@ -31,6 +31,11 @@ def _credentials_parser():
         metavar="SECONDS",
         help="Minimum delay between each request. Default: 3 seconds",
     )
+    parser.add_argument(
+        "--user-agent",
+        metavar="NAME",
+        help="Name and version of your tool, like MyTool/1.2, sent before CampBot's own",
+    )
     return parser
 
 
@@ -125,7 +130,11 @@ def get_campbot(args):
     if "CAMPBOT_PASSWORD" in os.environ and not args.password:
         args.password = os.environ["CAMPBOT_PASSWORD"]
 
-    bot = CampBot(proxies=proxies, min_delay=args.delay)
+    bot = CampBot(
+        proxies=proxies,
+        min_delay=args.delay,
+        user_agent=getattr(args, "user_agent", None),
+    )
 
     if args.login and args.password:
         bot.login(login=args.login, password=args.password)
