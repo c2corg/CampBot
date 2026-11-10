@@ -164,3 +164,27 @@ def test_a_long_delay_set_by_the_user_is_kept(monkeypatch, sleeps):
     bot.wiki.get("/routes")
 
     assert bot.wiki.min_delay == timedelta(seconds=60)
+
+
+@pytest.mark.parametrize(
+    "answer",
+    [
+        (429, None, {"Retry-After": "nan"}),
+        (429, {"extras": {"wait_seconds": "NaN"}}),
+    ],
+)
+def test_nan_wait_is_ignored(monkeypatch, sleeps, bot, answer):
+    fake_server(monkeypatch, [answer, 200])
+
+    bot.wiki.get("/routes")
+
+    assert 32 in sleeps  # as without hint
+
+
+def test_infinite_wait_gives_up(monkeypatch, sleeps, bot):
+    calls = fake_server(monkeypatch, [(429, None, {"Retry-After": "inf"}), 200])
+
+    with pytest.raises(requests.HTTPError):
+        bot.wiki.get("/routes")
+
+    assert len(calls) == 1

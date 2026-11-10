@@ -10,6 +10,7 @@ from dateutil import parser
 from collections import OrderedDict, defaultdict
 import pytz
 import logging
+import math
 import time
 from email.utils import parsedate_to_datetime
 from urllib.parse import parse_qs, urlparse
@@ -73,6 +74,9 @@ def get_retry_wait(response):
                     wait = (date - datetime.now(date.tzinfo)).total_seconds()
                 except (TypeError, ValueError):
                     pass
+
+    if wait is not None and math.isnan(wait):
+        wait = None  # time.sleep() refuses NaN
 
     if wait is None:
         if response.status_code == 503:
