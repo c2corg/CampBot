@@ -16,14 +16,14 @@ pip install campbot
 ## Name your tool
 
 Every request sends a `User-Agent` header like
-`CampBot/2.1.3 (+https://github.com/c2corg/CampBot)`.
+`CampBot/2.2.0 (+https://github.com/c2corg/CampBot)`.
 If you build a tool on CampBot, put its name first:
 
 ```python
 from campbot import CampBot
 
 bot = CampBot(user_agent="MyTool/1.2 (+https://example.org/mytool)")
-# User-Agent: MyTool/1.2 (+https://example.org/mytool) CampBot/2.1.3 (+https://github.com/c2corg/CampBot)
+# User-Agent: MyTool/1.2 (+https://example.org/mytool) CampBot/2.2.0 (+https://github.com/c2corg/CampBot)
 ```
 
 On the command line, use `--user-agent=MyTool/1.2`.
