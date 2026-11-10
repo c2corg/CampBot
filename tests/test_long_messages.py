@@ -42,56 +42,25 @@ def test_emoji_has_explicit_size():
     assert 'width="20"' in html and 'height="20"' in html
 
 
-def _fake_response(status, payload=None):
-    import requests
-
-    res = requests.Response()
-    res.status_code = status
-    res.headers["Content-type"] = "application/json"
-    res._content = __import__("json").dumps(payload or {}).encode()
-    return res
-
-
 def test_parts_are_spaced_and_rate_limit_is_retried(monkeypatch):
-    import requests
     from campbot import CampBot
     from campbot.core import ForumBot
+    from tests.test_rate_limit import fake_server
 
-    sleeps, calls = [], []
+    sleeps = []
     monkeypatch.setattr("campbot.core.time.sleep", sleeps.append)
     monkeypatch.setattr(ForumBot, "_get_post_ids", lambda self, url: (42, 1))
     monkeypatch.setattr(ForumBot, "MAX_POST_LENGTH", 100)
+    # second request is rate limited once
+    calls = fake_server(
+        monkeypatch, [200, (429, {"extras": {"wait_seconds": 7}}), 200, 200]
+    )
 
-    def fake_post(self, url, data):
-        calls.append(data["raw"])
-        if len(calls) == 2:  # second request is rate limited once
-            raise requests.HTTPError(
-                response=_fake_response(429, {"extras": {"wait_seconds": 7}})
-            )
-        return {}
+    CampBot(min_delay=0).forum.post_message(
+        "\n".join(["y" * 40] * 6), "https://x/t/a/42"
+    )
 
-    monkeypatch.setattr(ForumBot, "post", fake_post)
-
-    CampBot().forum.post_message("\n".join(["y" * 40] * 6), "https://x/t/a/42")
-
+    assert calls[1]["json"] == calls[2]["json"]  # the rate limited part, sent again
     assert len(calls) == 4  # 3 parts, one of them sent twice
     assert 9 in sleeps  # 7s asked by the forum + margin
     assert sleeps.count(ForumBot.POST_INTERVAL) == 2  # between 3 parts
-
-
-def test_other_errors_are_not_retried(monkeypatch):
-    import pytest
-    import requests
-    from campbot import CampBot
-    from campbot.core import ForumBot
-
-    monkeypatch.setattr("campbot.core.time.sleep", lambda s: None)
-    monkeypatch.setattr(ForumBot, "_get_post_ids", lambda self, url: (42, 1))
-
-    def fake_post(self, url, data):
-        raise requests.HTTPError(response=_fake_response(500))
-
-    monkeypatch.setattr(ForumBot, "post", fake_post)
-
-    with pytest.raises(requests.HTTPError):
-        CampBot().forum.post_message("coucou", "https://x/t/a/42")
