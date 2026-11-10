@@ -313,7 +313,7 @@ class WikiObject(BotObject):
 
 class ShortWikiUser(BotObject):
     def get_contributions_url(self):
-        return "{}/whatsnew#u={}".format(self._campbot.wiki.ui_url, self.user_id)
+        return "{}/whatsnew?u={}".format(self._campbot.wiki.ui_url, self.user_id)
 
     def is_newbie(self):
         contribs = self._campbot.wiki.get(
