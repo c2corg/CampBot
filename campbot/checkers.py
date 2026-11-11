@@ -198,6 +198,30 @@ class DocumentReport(object):
         return "\n".join(result)
 
 
+def build_legend(tests):
+    """
+    Legend of the markers, as a Markdown table: BBCode ([color=red]) and Markdown
+    are not interpreted inside HTML blocks (<table>), only in Markdown tables.
+    """
+
+    def cell(text):
+        return str(text).replace("|", "&#124;").replace("\n", " ") or " "
+
+    lines = [
+        "[details=Signification des icônes]\n",
+        "| Test | A relire | Corrigé |",
+        "|---|---|---|",
+    ]
+    for test in tests:
+        lines.append(
+            "| {} | {} | {} |".format(
+                cell(test.name), cell(test.fail_marker), cell(test.success_marker)
+            )
+        )
+    lines.append("\n[/details]")
+    return "\n".join(lines)
+
+
 def report_recent_changes(bot, days, lang, thread_url):
 
     newest_date = utils.today().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -223,18 +247,10 @@ def report_recent_changes(bot, days, lang, thread_url):
     if len(reports) != 0:
         messages = [
             "[Explications]({})\n".format(thread_url),
-            "[details=Signification des icônes]\n<table>",
-            "<tr><th>Test</th><th>A relire</th><th>Corrigé</th></tr>",
+            build_legend(tests),
+            "\n----\n",
         ]
 
-        for test in tests:
-            messages.append("<tr>")
-            messages.append("<th>{}</th>".format(test.name))
-            messages.append("<td>{}</td>".format(test.fail_marker))
-            messages.append("<td>{}</td>".format(test.success_marker))
-            messages.append("</tr>")
-
-        messages.append("</table>\n[/details]\n\n----\n\n")
         messages += [report.get_report(bot, lang, days > 1) for report in reports]
 
         logging.info(f"Reporting {len(reports)} reports:\n\n" + "\n".join(messages))
